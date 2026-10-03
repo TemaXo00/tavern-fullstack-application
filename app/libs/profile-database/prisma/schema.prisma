@@ -15,7 +15,10 @@ model Profile {
   nickname String @unique()
   name String?
   surname String?
+
   email String
+  description String?
+  birthDate DateTime? @map("birth_date")
 
   avatarId String? @map("avatar_id")
 
