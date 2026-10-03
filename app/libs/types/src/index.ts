@@ -28,9 +28,25 @@ export * from './lib/auth/auth.contract.js';
 
 // AUTH MICROSERVICE END
 
+// ------------------------------
+
+// PROFILE MICROSERVICE BEGIN
+
+// PROFILE SERVICE
+
+export * from './lib/profile/profiles/profiles-input.data.js';
+export * from './lib/profile/profiles/profiles-output.data.js';
+
+// CONTRACTS
+
+export * from './lib/profile/profile.contract.js';
+
+// PROFILE MICROSERVICE END
+
 // ENUMS
 
 export * from './lib/enums/auth.enum.js';
+export * from './lib/enums/profile.enum.js';
 
 // SHARED
 
