@@ -1,13 +1,14 @@
 syntax = 'proto3';
 
-import 'shared/shared.proto';
+import 'profile/profiles.proto';
 
 package profile;
 
-message HealthCheck {
-    string status = 1;
-}
-
-service TestService {
-    rpc Health(shared.Empty) returns (HealthCheck);
+service ProfileService {
+    rpc GetMe(profiles.GetMeInput) returns (profiles.ProfileAdvancedOutput);
+    rpc GetProfileByNicknameBase(profiles.GetProfileByNicknameBaseInput) returns (profiles.ProfileBaseOutput);
+    rpc GetProfileByNicknameAdvanced(profiles.GetProfileByNicknameAdvancedInput) returns (profiles.ProfileAdvancedOutput);
+    rpc GetProfilesBase(profiles.GetProfilesInput) returns (profiles.PaginatedProfilesBaseOutput);
+    rpc GetProfilesAdvanced(profiles.GetProfilesAdvancedInput) returns (profiles.PaginatedProfilesAdvancedOutput);
+    rpc UpdateProfile(profiles.UpdateProfileInput) returns (profiles.ProfileBaseOutput);
 }

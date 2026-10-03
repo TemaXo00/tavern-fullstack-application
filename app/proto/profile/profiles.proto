@@ -1,0 +1,142 @@
+syntax = 'proto3';
+
+package profiles;
+
+enum ActivityType {
+    ACTIVE = 0;
+    INACTIVE = 1;
+    BLOCKED = 2;
+}
+
+// Input Messages
+
+message ValidateInput {
+  string accessToken = 1;
+  SessionInput session = 2;
+}
+
+message SessionInput {
+    string os = 1;
+    string device = 2;
+    string browser = 3;
+    string ip = 4;
+}
+
+message PaginationBaseInput {
+    optional int32 page = 1;
+    optional int32 limit = 2;
+    optional string search = 3;
+}
+
+message PaginationAdvancedInput {
+    optional int32 page = 1;
+    optional int32 limit = 2;
+    optional string search = 3;
+    optional string email = 4;
+    optional string birthDateFrom = 5;
+    optional string birthDateTo = 6;
+    optional int32 reputationFrom = 7;
+    optional int32 reputationTo = 8;
+    optional ActivityType currentActivity = 9;
+}
+
+message GetMeInput {
+    ValidateInput validation = 1;
+}
+
+message GetProfilesInput {
+    PaginationBaseInput pagination = 1;
+}
+
+message GetProfilesAdvancedInput {
+    ValidateInput validation = 1;
+    PaginationAdvancedInput pagination = 2;
+}
+
+message GetProfileByNicknameBaseInput {
+    string nickname = 1;
+}
+
+message GetProfileByNicknameAdvancedInput {
+    ValidateInput validation = 1;
+    string nickname = 2;
+}
+
+message UpdateProfileInput {
+    ValidateInput validation = 1;
+    optional string nickname = 2;
+    optional string name = 3;
+    optional string surname = 4;
+    optional string description = 5;
+    optional string birthDate = 6;
+    optional string avatarId = 7;
+}
+
+// Output messages
+
+message ProfileBaseOutput {
+    string nickname = 1;
+    optional string name = 2;
+    optional string surname = 3;
+    optional string description = 4;
+    optional string avatarId = 5;
+    int32 reputationScore = 6;
+    ActivityType currentActivity = 7;
+}
+
+message ProfileAdvancedOutput {
+    string id = 1;
+    string userId = 2;
+    string nickname = 3;
+    optional string name = 4;
+    optional string surname = 5;
+    optional string description = 6;
+    optional string birthDate = 7;
+    optional string avatarId = 8;
+    int32 reputationScore = 9;
+    ActivityType currentActivity = 10;
+    string createdAt = 11;
+    string updatedAt = 12;
+}
+
+message ProfileListOutput {
+    string nickname = 1;
+    optional string avatarId = 2;
+    ActivityType currentActivity = 3;
+}
+
+message PaginationBaseOutput {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 total = 3;
+    int32 totalPages = 4;
+    bool hasNext = 5;
+    bool hasPrev = 6;
+    optional string search = 7;
+}
+
+message PaginationAdvancedOutput {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 total = 3;
+    int32 totalPages = 4;
+    bool hasNext = 5;
+    bool hasPrev = 6;
+    optional string search = 7;
+    optional string email = 8;
+    optional string birthDateFrom = 9;
+    optional string birthDateTo = 10;
+    optional int32 reputationFrom = 11;
+    optional int32 reputationTo = 12;
+    optional ActivityType currentActivity = 13;
+}
+
+message PaginatedProfilesBaseOutput {
+    PaginationBaseOutput pagination = 1;
+    repeated ProfileListOutput profiles = 2;
+}
+
+message PaginatedProfilesAdvancedOutput {
+    PaginationAdvancedOutput pagination = 1;
+    repeated ProfileListOutput profiles = 2;
+}
