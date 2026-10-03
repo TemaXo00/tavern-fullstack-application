@@ -68,6 +68,9 @@
     },
     {
       "path": "./libs/profile-utils"
+    },
+    {
+      "path": "./libs/profile-feature"
     }
   ],
   "compilerOptions": {}
