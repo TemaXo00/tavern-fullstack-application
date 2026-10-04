@@ -4,13 +4,21 @@ import {
   ActivityType,
   type Profile,
   ProfileDatabaseService,
+  ProfileWhereInput,
 } from '@org/profile-database';
-import { RmqLoggerUtil } from '@org/shared-utils';
+import { PaginationUtil, RmqLoggerUtil } from '@org/shared-utils';
 import {
+  ACTIVITY_TO_GRPC,
   AdminBlockUserProfile,
   AdminSetUserActiveMessage,
   AdminUnblockUserMessage,
   AuthRegisteredMessage,
+  PaginatedProfilesAdvancedOutput,
+  PaginatedProfilesBaseOutput,
+  PaginationBaseInput,
+  ProfileListOutput,
+  ProfilePaginationAdvancedInput,
+  ProfilePaginationBaseInput,
   UserSetInactiveMessage,
 } from '@org/types';
 
@@ -23,6 +31,7 @@ export class ProfileDatabaseUtil {
     private readonly db: ProfileDatabaseService,
     private readonly logUtil: RmqLoggerUtil,
     private readonly updateStatusHelper: ProfileUpdateStatusHelper,
+    private readonly paginationUtil: PaginationUtil,
   ) {}
 
   // GET Methods
@@ -34,6 +43,86 @@ export class ProfileDatabaseUtil {
     return this.db.profile.findUnique({
       where: type === 'by-id' ? { userId: input } : { nickname: input },
     });
+  }
+
+  private async getProfileListOutput(
+    where: ProfileWhereInput,
+    skip: number,
+    take: number,
+  ): Promise<ProfileListOutput[]> {
+    const profiles = await this.db.profile.findMany({
+      where,
+      skip,
+      take,
+      select: {
+        nickname: true,
+        avatarId: true,
+        currentActivity: true,
+      },
+    });
+    const mappedProfiles = profiles.map((profile) => {
+      return {
+        ...profile,
+        currentActivity: ACTIVITY_TO_GRPC[profile.currentActivity],
+      };
+    });
+    return mappedProfiles;
+  }
+
+  async getProfilesWithBasePagination(
+    pagination: PaginationBaseInput,
+  ): Promise<PaginatedProfilesBaseOutput> {
+    const safePagination = pagination || {};
+    const where = this.buildProfileBaseQuery(safePagination);
+    const total = await this.db.profile.count({ where });
+    const params = this.paginationUtil.getPaginationParams(
+      total,
+      safePagination.page,
+      safePagination.limit,
+    );
+    return {
+      pagination: {
+        ...params,
+        search: safePagination.search,
+      },
+      profiles: await this.getProfileListOutput(
+        where,
+        params.skip,
+        params.limit,
+      ),
+    };
+  }
+
+  async getProfilesWithAdvancedPagination(
+    pagination: ProfilePaginationAdvancedInput,
+  ): Promise<PaginatedProfilesAdvancedOutput> {
+    const safePagination = pagination || {};
+    const where = this.buildProfileAdvancedQuery(safePagination);
+    const total = await this.db.profile.count({ where });
+    const params = this.paginationUtil.getPaginationParams(
+      total,
+      safePagination.page,
+      safePagination.limit,
+    );
+    return {
+      pagination: {
+        ...params,
+        search: safePagination.search,
+        email: safePagination.email,
+        birthDateFrom: safePagination.birthDateFrom,
+        birthDateTo: safePagination.birthDateTo,
+        reputationFrom: safePagination.reputationFrom,
+        reputationTo: safePagination.reputationTo,
+        currentActivity: safePagination.currentActivity
+          ? ACTIVITY_TO_GRPC[safePagination.currentActivity]
+          : undefined,
+      },
+      profiles: await this.getProfileListOutput(
+        where,
+        params.skip,
+        params.limit,
+      ),
+    };
   }
 
   // CREATE Methods
@@ -153,5 +242,60 @@ export class ProfileDatabaseUtil {
         userId,
       },
     });
+  }
+
+  // QUERY BUILDERS
+
+  buildProfileBaseQuery(query: ProfilePaginationBaseInput): ProfileWhereInput {
+    const where: ProfileWhereInput = {};
+
+    if (query.search) {
+      where.nickname = { contains: query.search, mode: 'insensitive' };
+    }
+
+    return where;
+  }
+
+  buildProfileAdvancedQuery(
+    query: ProfilePaginationAdvancedInput,
+  ): ProfileWhereInput {
+    const where: ProfileWhereInput = {};
+
+    if (query.search) {
+      where.nickname = { contains: query.search, mode: 'insensitive' };
+    }
+
+    if (query.email) {
+      where.email = { contains: query.email, mode: 'insensitive' };
+    }
+
+    if (query.currentActivity) {
+      where.currentActivity = query.currentActivity;
+    }
+
+    if (query.birthDateFrom || query.birthDateTo) {
+      where.birthDate = {};
+      if (query.birthDateFrom) {
+        where.birthDate.gte = query.birthDateFrom;
+      }
+      if (query.birthDateTo) {
+        where.birthDate.lte = query.birthDateTo;
+      }
+    }
+
+    if (
+      query.reputationFrom !== undefined ||
+      query.reputationTo !== undefined
+    ) {
+      where.reputationScore = {};
+      if (query.reputationFrom !== undefined) {
+        where.reputationScore.gte = query.reputationFrom;
+      }
+      if (query.reputationTo !== undefined) {
+        where.reputationScore.lte = query.reputationTo;
+      }
+    }
+
+    return where;
   }
 }

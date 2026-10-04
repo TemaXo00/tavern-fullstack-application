@@ -2,10 +2,10 @@ import { PaginationBaseOutput } from '../../shared/pagination.type.js';
 
 export interface ProfileBaseOutput {
   nickname: string;
-  name?: string;
-  surname?: string;
-  description?: string;
-  avatarId?: string;
+  name: string | null;
+  surname: string | null;
+  description: string | null;
+  avatarId: string | null;
   reputationScore: number;
   currentActivity: number;
 }
@@ -20,7 +20,7 @@ export interface ProfileAdvancedOutput extends ProfileBaseOutput {
 
 export interface ProfileListOutput {
   nickname: string;
-  avatarId?: string;
+  avatarId: string | null;
   currentActivity: number;
 }
 
@@ -28,7 +28,7 @@ export type ProfilePaginationBaseOutput = PaginationBaseOutput;
 export interface ProfilePaginationAdvancedOutput extends ProfilePaginationBaseOutput {
   email?: string;
   birthDateFrom?: Date;
-  birthDateTo: Date;
+  birthDateTo?: Date;
   reputationFrom?: number;
   reputationTo?: number;
   currentActivity?: number;
