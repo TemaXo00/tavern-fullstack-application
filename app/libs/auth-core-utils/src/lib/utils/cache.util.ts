@@ -24,11 +24,12 @@ export class AuthCoreCacheUtil {
     userId: string,
     sessionId: string,
   ): Promise<UserPayload | null> {
-    const payload = await this.cache.get(`session:${userId}:${sessionId}`);
-    if (!payload) {
+    try {
+      const payload = await this.cache.get(`session:${userId}:${sessionId}`);
+      return payload ? JSON.parse(payload) : null;
+    } catch {
       return null;
     }
-    return JSON.parse(payload);
   }
 
   async setPayload(payload: UserPayload): Promise<void> {
