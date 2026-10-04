@@ -16,7 +16,7 @@ export class ProfileUpdateStatusHelper {
 
   async manipulateBlock(options: BlockManipulateOptions): Promise<void> {
     await this.db.$transaction(async (tx) => {
-      const profiles = await tx.profile.updateManyAndReturn({
+      const profile = await tx.profile.update({
         where: {
           userId: options.userId,
           currentActivity: options.searchActivity,
@@ -26,25 +26,16 @@ export class ProfileUpdateStatusHelper {
           reputationScore: { increment: options.reputationScore },
         },
       });
-      if (profiles.length === 0) {
-        this.logUtil.logWarning(
-          'Update Status',
-          options.logMethod,
-          'Cannot find user',
-        );
-        return;
-      }
-      const updatedProfile = profiles[0];
       await tx.profileActivity.create({
         data: {
-          profileId: updatedProfile.id,
+          profileId: profile.id,
           status: options.updatingActivity,
           message: options.message,
         },
       });
       await tx.reputation.create({
         data: {
-          profileId: updatedProfile.id,
+          profileId: profile.id,
           score: options.reputationScore,
           message: options.message,
           action: options.action,

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthValidateService } from '@org/auth-core';
 import {
+  ProfileCacheUtil,
   ProfileDatabaseUtil,
   ProfileMapUtil,
   ProfileValidationUtil,
@@ -27,6 +28,7 @@ export class ProfileFeatureService implements ProfileServiceContract {
     private readonly mapUtil: ProfileMapUtil,
     private readonly validate: AuthValidateService,
     private readonly dbUtil: ProfileDatabaseUtil,
+    private readonly cacheUtil: ProfileCacheUtil,
   ) {}
 
   async GetMe(data: GetMeInput): Promise<ProfileAdvancedOutput> {
@@ -35,17 +37,24 @@ export class ProfileFeatureService implements ProfileServiceContract {
       'by-id',
       payload.id,
     );
-    return this.mapUtil.mapAdvanced(profile);
+    const mappedProfile = this.mapUtil.mapAdvanced(profile);
+    return mappedProfile;
   }
 
   async GetProfileByNicknameBase(
     data: GetProfileByNicknameBaseInput,
   ): Promise<ProfileBaseOutput> {
+    const redisProfile = await this.cacheUtil.getBase(data.nickname);
+    if (redisProfile) {
+      return redisProfile;
+    }
     const profile = await this.validationUtil.checkUserExisting(
       'by-nickname',
       data.nickname,
     );
-    return this.mapUtil.mapBase(profile);
+    const mappedProfile = this.mapUtil.mapBase(profile);
+    await this.cacheUtil.cacheBase(mappedProfile);
+    return mappedProfile;
   }
 
   async GetProfileByNicknameAdvanced(
@@ -55,11 +64,17 @@ export class ProfileFeatureService implements ProfileServiceContract {
       Roles.ADMIN,
       Roles.MODERATOR,
     ]);
+    const redisProfile = await this.cacheUtil.getAdvanced(data.nickname);
+    if (redisProfile) {
+      return redisProfile;
+    }
     const profile = await this.validationUtil.checkUserExisting(
       'by-nickname',
       data.nickname,
     );
-    return this.mapUtil.mapAdvanced(profile);
+    const mappedProfile = this.mapUtil.mapAdvanced(profile);
+    await this.cacheUtil.cacheAdvanced(mappedProfile);
+    return mappedProfile;
   }
 
   async GetProfilesBase(
@@ -89,6 +104,7 @@ export class ProfileFeatureService implements ProfileServiceContract {
     if (data.data.nickname && current.nickname !== data.data.nickname) {
       await this.validationUtil.checkUniqueNickname(data.data.nickname);
     }
+    await this.cacheUtil.deleteCache(current.nickname);
     return this.dbUtil.updateProfile(payload.id, data.data);
   }
 }

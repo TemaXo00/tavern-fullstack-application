@@ -230,7 +230,7 @@ export class ProfileDatabaseUtil {
   }
 
   async updateEmail(userId: string, newEmail: string): Promise<void> {
-    await this.db.profile.updateMany({
+    await this.db.profile.update({
       where: { userId },
       data: { email: newEmail },
     });
@@ -255,7 +255,7 @@ export class ProfileDatabaseUtil {
   // DELETE Methods
 
   async deleteProfile(userId: string): Promise<void> {
-    await this.db.profile.deleteMany({
+    await this.db.profile.delete({
       where: {
         userId,
       },
