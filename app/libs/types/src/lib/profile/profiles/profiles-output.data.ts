@@ -13,7 +13,7 @@ export interface ProfileBaseOutput {
 export interface ProfileAdvancedOutput extends ProfileBaseOutput {
   id: string;
   userId: string;
-  birthDate?: Date;
+  birthDate: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -25,4 +25,17 @@ export class ProfileValidationUtil {
 
     return profile;
   }
+
+  async checkUniqueNickname(
+    nickname: string,
+    currentUserId?: string,
+  ): Promise<void> {
+    const existing = await this.db.getProfile('by-nickname', nickname);
+    if (existing && existing.userId !== currentUserId) {
+      throw new RpcException({
+        message: 'Nickname already taken',
+        code: status.ALREADY_EXISTS,
+      });
+    }
+  }
 }
