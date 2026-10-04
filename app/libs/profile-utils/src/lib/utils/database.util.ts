@@ -13,15 +13,14 @@ import {
   AdminSetUserActiveMessage,
   AdminUnblockUserMessage,
   AuthRegisteredMessage,
+  BaseUpdateProfileInput,
   PaginatedProfilesAdvancedOutput,
   PaginatedProfilesBaseOutput,
   PaginationBaseInput,
-  ProfileAdvancedOutput,
   ProfileBaseOutput,
   ProfileListOutput,
   ProfilePaginationAdvancedInput,
   ProfilePaginationBaseInput,
-  UpdateProfileInput,
   UserSetInactiveMessage,
 } from '@org/types';
 
@@ -46,43 +45,6 @@ export class ProfileDatabaseUtil {
     return this.db.profile.findUnique({
       where: type === 'by-id' ? { userId: input } : { nickname: input },
     });
-  }
-
-  async getProfileByNicknameBase(
-    nickname: string,
-  ): Promise<ProfileBaseOutput | null> {
-    const profile = await this.db.profile.findUnique({
-      where: { nickname },
-      select: {
-        nickname: true,
-        name: true,
-        surname: true,
-        description: true,
-        avatarId: true,
-        reputationScore: true,
-        currentActivity: true,
-      },
-    });
-    if (!profile) {
-      return null;
-    }
-    return {
-      ...profile,
-      currentActivity: ACTIVITY_TO_GRPC[profile.currentActivity],
-    };
-  }
-
-  async getProfileByNicknameAdvanced(
-    nickname: string,
-  ): Promise<ProfileAdvancedOutput | null> {
-    const profile = await this.getProfile('by-nickname', nickname);
-    if (!profile) {
-      return null;
-    }
-    return {
-      ...profile,
-      currentActivity: ACTIVITY_TO_GRPC[profile.currentActivity],
-    };
   }
 
   private async getProfileListOutput(
@@ -276,7 +238,7 @@ export class ProfileDatabaseUtil {
 
   async updateProfile(
     userId: string,
-    data: UpdateProfileInput,
+    data: BaseUpdateProfileInput,
   ): Promise<ProfileBaseOutput> {
     const profile = await this.db.profile.update({
       where: {

@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
+import { AuthCoreModule } from '@org/auth-core';
+
+import { ProfileFeatureController } from './profile-feature.controller';
+import { ProfileFeatureService } from './profile-feature.service';
 
 @Module({
-  controllers: [],
-  providers: [],
-  exports: [],
+  imports: [AuthCoreModule],
+  controllers: [ProfileFeatureController],
+  providers: [ProfileFeatureService],
 })
-export class OrgProfileFeatureModule {}
+export class ProfileFeatureModule {}

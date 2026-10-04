@@ -4,6 +4,7 @@ import { SharedUtilsModule } from '@org/shared-utils';
 
 import { ProfileDatabaseUtil } from './utils/database.util';
 import { ProfileUpdateStatusHelper } from './utils/helpers/update-status.helpers';
+import { ProfileMapUtil } from './utils/map.util';
 import { ProfileReputationUtil } from './utils/reputation.util';
 import { ProfileValidationUtil } from './utils/validation.util';
 
@@ -12,6 +13,7 @@ const UTILS = [
   ProfileValidationUtil,
   ProfileReputationUtil,
   ProfileUpdateStatusHelper,
+  ProfileMapUtil,
 ];
 
 @Global()

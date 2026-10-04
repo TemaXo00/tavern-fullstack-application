@@ -23,7 +23,7 @@ model Profile {
   avatarId String? @map("avatar_id")
 
   reputationScore Int @default(0) @map("reputation_score")
-  currentActivity ActivityType @default(ACTIVE)
+  currentActivity ActivityType @default(ACTIVE) @map("current_activity")
 
   activity_logs ProfileActivity[]
   reputation_logs Reputation[]

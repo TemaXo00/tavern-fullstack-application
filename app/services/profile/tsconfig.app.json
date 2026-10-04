@@ -20,6 +20,9 @@
     },
     {
       "path": "../../libs/profile-rmq-feature/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/profile-feature/tsconfig.lib.json"
     }
   ]
 }

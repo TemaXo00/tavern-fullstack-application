@@ -38,4 +38,4 @@ export interface BaseUpdateProfileInput {
   avatarId?: string;
 }
 
-export type UpdateProfileInput = Protected<BaseUpdateProfileInput>;
+export type UpdateProfileInput = Protected<{ data: BaseUpdateProfileInput }>;

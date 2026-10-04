@@ -62,14 +62,18 @@ message GetProfileByNicknameAdvancedInput {
     string nickname = 2;
 }
 
-message UpdateProfileInput {
-    ValidateInput validation = 1;
+message BaseUpdateProfileInput {
     optional string nickname = 2;
     optional string name = 3;
     optional string surname = 4;
     optional string description = 5;
     optional string birthDate = 6;
     optional string avatarId = 7;
+}
+
+message UpdateProfileInput {
+    ValidateInput validation = 1;
+    BaseUpdateProfileInput data = 2;
 }
 
 // Output messages

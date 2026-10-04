@@ -6,6 +6,8 @@ info:
 collections:
   - name: "Authorization"
     path: "collections/Authorization"
+  - name: "Profile"
+    path: "collections/Profile"
 
 specs:
 
