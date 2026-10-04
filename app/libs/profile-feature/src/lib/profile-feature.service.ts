@@ -78,7 +78,9 @@ export class ProfileFeatureService implements ProfileServiceContract {
     return await this.dbUtil.getProfilesWithAdvancedPagination(data.pagination);
   }
 
-  async UpdateProfile(data: UpdateProfileInput): Promise<ProfileBaseOutput> {
+  async UpdateProfile(
+    data: UpdateProfileInput,
+  ): Promise<ProfileAdvancedOutput> {
     const payload = await this.validate.Validate(data.validation);
     const current = await this.validationUtil.checkUserExisting(
       'by-id',

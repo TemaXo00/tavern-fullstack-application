@@ -55,7 +55,9 @@ export class ProfileFeatureController implements ProfileServiceContract {
   }
 
   @GrpcMethod('ProfileService', 'UpdateProfile')
-  async UpdateProfile(data: UpdateProfileInput): Promise<ProfileBaseOutput> {
+  async UpdateProfile(
+    data: UpdateProfileInput,
+  ): Promise<ProfileAdvancedOutput> {
     return this.service.UpdateProfile(data);
   }
 }

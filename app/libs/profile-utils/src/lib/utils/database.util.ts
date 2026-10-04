@@ -17,7 +17,7 @@ import {
   PaginatedProfilesAdvancedOutput,
   PaginatedProfilesBaseOutput,
   PaginationBaseInput,
-  ProfileBaseOutput,
+  ProfileAdvancedOutput,
   ProfileListOutput,
   ProfilePaginationAdvancedInput,
   ProfilePaginationBaseInput,
@@ -239,21 +239,12 @@ export class ProfileDatabaseUtil {
   async updateProfile(
     userId: string,
     data: BaseUpdateProfileInput,
-  ): Promise<ProfileBaseOutput> {
+  ): Promise<ProfileAdvancedOutput> {
     const profile = await this.db.profile.update({
       where: {
         userId,
       },
       data,
-      select: {
-        nickname: true,
-        name: true,
-        surname: true,
-        description: true,
-        avatarId: true,
-        reputationScore: true,
-        currentActivity: true,
-      },
     });
     return {
       ...profile,

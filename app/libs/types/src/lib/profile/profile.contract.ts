@@ -27,7 +27,7 @@ export interface ProfileServiceContract {
   GetProfilesAdvanced(
     data: GetProfilesAdvancedInput,
   ): Promise<PaginatedProfilesAdvancedOutput>;
-  UpdateProfile(data: UpdateProfileInput): Promise<ProfileBaseOutput>;
+  UpdateProfile(data: UpdateProfileInput): Promise<ProfileAdvancedOutput>;
 }
 
 export type ProfileServiceObservableContract =
