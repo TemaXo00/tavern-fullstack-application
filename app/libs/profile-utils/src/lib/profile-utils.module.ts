@@ -1,7 +1,9 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ClientProviderOptions, ClientsModule } from '@nestjs/microservices';
 import { RedisModule } from '@nestjs-modules/ioredis';
 import { ProfileDatabaseModule } from '@org/profile-database';
+import { RmqModule, RmqService } from '@org/rmq-config';
 import { SharedUtilsModule } from '@org/shared-utils';
 
 import { ProfileCacheUtil } from './utils/cache-util';
@@ -22,6 +24,8 @@ const UTILS = [
   ProfileMessagesUtil,
 ];
 
+const queues: string[] = ['content'];
+
 @Global()
 @Module({
   imports: [
@@ -38,6 +42,16 @@ const UTILS = [
       }),
       inject: [ConfigService],
     }),
+    ClientsModule.registerAsync(
+      queues.map((queue) => ({
+        name: `${queue.toUpperCase()}_CLIENT`,
+        imports: [RmqModule],
+        useFactory: (rmq: RmqService): ClientProviderOptions => {
+          return rmq.getRmqConfig(queue);
+        },
+        inject: [RmqService],
+      })),
+    ),
   ],
   providers: [...UTILS],
   exports: [...UTILS],
