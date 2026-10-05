@@ -36,6 +36,7 @@ export * from './lib/auth/auth.contract.js';
 
 export * from './lib/profile/profiles/profiles-input.data.js';
 export * from './lib/profile/profiles/profiles-output.data.js';
+export * from './lib/profile/profiles/profile-messages.js';
 
 // CONTRACTS
 
@@ -57,3 +58,4 @@ export * from './lib/shared/validation.type.js';
 // MESSAGES
 
 export * from './lib/messages/auth.messages.js';
+export * from './lib/messages/profile.messages.js';
