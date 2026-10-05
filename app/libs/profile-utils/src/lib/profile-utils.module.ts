@@ -8,6 +8,7 @@ import { ProfileCacheUtil } from './utils/cache-util';
 import { ProfileDatabaseUtil } from './utils/database.util';
 import { ProfileUpdateStatusHelper } from './utils/helpers/update-status.helpers';
 import { ProfileMapUtil } from './utils/map.util';
+import { ProfileMessagesUtil } from './utils/messsages.util';
 import { ProfileReputationUtil } from './utils/reputation.util';
 import { ProfileValidationUtil } from './utils/validation.util';
 
@@ -18,6 +19,7 @@ const UTILS = [
   ProfileUpdateStatusHelper,
   ProfileMapUtil,
   ProfileCacheUtil,
+  ProfileMessagesUtil,
 ];
 
 @Global()

@@ -8,3 +8,4 @@ export * from './lib/utils/validation.util';
 export * from './lib/utils/reputation.util';
 export * from './lib/utils/map.util';
 export * from './lib/utils/cache-util';
+export * from './lib/utils/messsages.util';
