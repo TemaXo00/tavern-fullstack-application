@@ -4,6 +4,7 @@ import {
   ProfileCacheUtil,
   ProfileDatabaseUtil,
   ProfileMapUtil,
+  ProfileMessagesUtil,
   ProfileValidationUtil,
 } from '@org/profile-utils';
 import {
@@ -29,6 +30,7 @@ export class ProfileFeatureService implements ProfileServiceContract {
     private readonly validate: AuthValidateService,
     private readonly dbUtil: ProfileDatabaseUtil,
     private readonly cacheUtil: ProfileCacheUtil,
+    private readonly messagesUtil: ProfileMessagesUtil,
   ) {}
 
   async GetMe(data: GetMeInput): Promise<ProfileAdvancedOutput> {
@@ -60,7 +62,7 @@ export class ProfileFeatureService implements ProfileServiceContract {
   async GetProfileByNicknameAdvanced(
     data: GetProfileByNicknameAdvancedInput,
   ): Promise<ProfileAdvancedOutput> {
-    await this.validate.validateWithRoles(data.validation, [
+    const payload = await this.validate.validateWithRoles(data.validation, [
       Roles.ADMIN,
       Roles.MODERATOR,
     ]);
@@ -74,6 +76,10 @@ export class ProfileFeatureService implements ProfileServiceContract {
     );
     const mappedProfile = this.mapUtil.mapAdvanced(profile);
     await this.cacheUtil.cacheAdvanced(mappedProfile);
+    this.messagesUtil.sendAdminCheckProfile({
+      adminId: payload.id,
+      userId: profile.userId,
+    });
     return mappedProfile;
   }
 
@@ -86,10 +92,14 @@ export class ProfileFeatureService implements ProfileServiceContract {
   async GetProfilesAdvanced(
     data: GetProfilesAdvancedInput,
   ): Promise<PaginatedProfilesAdvancedOutput> {
-    await this.validate.validateWithRoles(data.validation, [
+    const payload = await this.validate.validateWithRoles(data.validation, [
       Roles.ADMIN,
       Roles.MODERATOR,
     ]);
+    this.messagesUtil.sendAdminGetPaginatedProfiles({
+      adminId: payload.id,
+      query: data.pagination,
+    });
     return await this.dbUtil.getProfilesWithAdvancedPagination(data.pagination);
   }
 
@@ -105,6 +115,10 @@ export class ProfileFeatureService implements ProfileServiceContract {
       await this.validationUtil.checkUniqueNickname(data.data.nickname);
     }
     await this.cacheUtil.deleteCache(current.nickname);
+    this.messagesUtil.sendUserUpdateProfile({
+      userId: payload.id,
+      data: data.data,
+    });
     return this.dbUtil.updateProfile(payload.id, data.data);
   }
 }
