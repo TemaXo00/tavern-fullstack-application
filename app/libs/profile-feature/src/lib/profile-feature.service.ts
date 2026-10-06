@@ -116,6 +116,7 @@ export class ProfileFeatureService implements ProfileServiceContract {
   async UpdateProfile(
     data: UpdateProfileInput,
   ): Promise<ProfileAdvancedOutput> {
+    this.validationUtil.validateUpdateInput(data.data);
     const payload = await this.validate.Validate(data.validation);
     const current = await this.validationUtil.checkUserExisting(
       'by-id',

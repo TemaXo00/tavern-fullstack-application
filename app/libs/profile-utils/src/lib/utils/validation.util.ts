@@ -2,6 +2,7 @@ import { status } from '@grpc/grpc-js';
 import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { Profile } from '@org/profile-database';
+import { BaseUpdateProfileInput } from '@org/types';
 
 import { ProfileDatabaseUtil } from './database.util';
 import { SearchUserHelperType } from './helpers/types.helper';
@@ -64,6 +65,15 @@ export class ProfileValidationUtil {
       throw new RpcException({
         message: 'Birth date cannot be in future',
         code: status.INVALID_ARGUMENT,
+      });
+    }
+  }
+
+  validateUpdateInput(data: BaseUpdateProfileInput): void {
+    if (!data) {
+      throw new RpcException({
+        message: 'Invalid update data',
+        code: status.DATA_LOSS,
       });
     }
   }

@@ -6,7 +6,11 @@ import {
   ProfileDatabaseService,
   ProfileWhereInput,
 } from '@org/profile-database';
-import { PaginationUtil, RmqLoggerUtil } from '@org/shared-utils';
+import {
+  PaginationUtil,
+  RmqLoggerUtil,
+  StringValidationUtil,
+} from '@org/shared-utils';
 import {
   ACTIVITY_TO_GRPC,
   AdminBlockUserProfile,
@@ -34,6 +38,7 @@ export class ProfileDatabaseUtil {
     private readonly logUtil: RmqLoggerUtil,
     private readonly updateStatusHelper: ProfileUpdateStatusHelper,
     private readonly paginationUtil: PaginationUtil,
+    private readonly stringUtil: StringValidationUtil,
   ) {}
 
   // GET Methods
@@ -42,6 +47,19 @@ export class ProfileDatabaseUtil {
     type: SearchUserHelperType,
     input: string,
   ): Promise<Profile | null> {
+    switch (type) {
+      case 'by-id': {
+        this.stringUtil.validateUUIDV7(input);
+        break;
+      }
+      case 'by-nickname': {
+        this.stringUtil.validateAnyString(input, 'Nickname');
+        break;
+      }
+      default: {
+        this.stringUtil.validateAnyString(input, 'String');
+      }
+    }
     return this.db.profile.findUnique({
       where: type === 'by-id' ? { userId: input } : { nickname: input },
     });
