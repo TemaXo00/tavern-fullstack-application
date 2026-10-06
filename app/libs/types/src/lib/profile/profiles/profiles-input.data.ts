@@ -11,6 +11,18 @@ export interface ProfilePaginationAdvancedInput extends ProfilePaginationBaseInp
   reputationTo?: number;
   currentActivity?: ActivityType;
 }
+export interface GetProfileByNicknameBaseInput {
+  nickname: string;
+}
+
+export interface BaseUpdateProfileInput {
+  nickname?: string;
+  name?: string;
+  surname?: string;
+  description?: string;
+  birthDate?: Date;
+  avatarId?: string;
+}
 
 export type GetMeInput = Protected<null>;
 
@@ -22,20 +34,7 @@ export type GetProfilesAdvancedInput = Protected<{
   pagination: ProfilePaginationAdvancedInput;
 }>;
 
-export interface GetProfileByNicknameBaseInput {
-  nickname: string;
-}
-
 export type GetProfileByNicknameAdvancedInput =
   Protected<GetProfileByNicknameBaseInput>;
-
-export interface BaseUpdateProfileInput {
-  nickname?: string;
-  name?: string;
-  surname?: string;
-  description?: string;
-  birthDate?: Date;
-  avatarId?: string;
-}
 
 export type UpdateProfileInput = Protected<{ data: BaseUpdateProfileInput }>;

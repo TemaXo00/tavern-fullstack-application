@@ -38,4 +38,33 @@ export class ProfileValidationUtil {
       });
     }
   }
+
+  checkBirthDateQuery(birthDateFrom?: Date, birthDateTo?: Date): void {
+    if (birthDateFrom && birthDateFrom >= new Date()) {
+      throw new RpcException({
+        message: 'Birth date from cannot be in future',
+        code: status.INVALID_ARGUMENT,
+      });
+    }
+    if (birthDateTo && birthDateTo >= new Date()) {
+      throw new RpcException({
+        message: 'Birth date from cannot be in future',
+        code: status.INVALID_ARGUMENT,
+      });
+    }
+    if (birthDateFrom && birthDateTo && birthDateFrom >= birthDateTo) {
+      throw new RpcException({
+        message: 'Birth date from cannot be fewer, than birthDateTo',
+      });
+    }
+  }
+
+  checkUpdatedBirthDate(birthDate?: Date): void {
+    if (birthDate && birthDate >= new Date()) {
+      throw new RpcException({
+        message: 'Birth date cannot be in future',
+        code: status.INVALID_ARGUMENT,
+      });
+    }
+  }
 }

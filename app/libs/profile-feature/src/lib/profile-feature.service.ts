@@ -96,6 +96,16 @@ export class ProfileFeatureService implements ProfileServiceContract {
       Roles.ADMIN,
       Roles.MODERATOR,
     ]);
+    if (
+      data.pagination.birthDateFrom ||
+      data.pagination.birthDateTo ||
+      (data.pagination.birthDateFrom && data.pagination.birthDateTo)
+    ) {
+      this.validationUtil.checkBirthDateQuery(
+        data.pagination.birthDateFrom,
+        data.pagination.birthDateTo,
+      );
+    }
     this.messagesUtil.sendAdminGetPaginatedProfiles({
       adminId: payload.id,
       query: data.pagination,
@@ -113,6 +123,9 @@ export class ProfileFeatureService implements ProfileServiceContract {
     );
     if (data.data.nickname && current.nickname !== data.data.nickname) {
       await this.validationUtil.checkUniqueNickname(data.data.nickname);
+    }
+    if (data.data.birthDate) {
+      this.validationUtil.checkUpdatedBirthDate(data.data.birthDate);
     }
     await this.cacheUtil.deleteCache(current.nickname);
     this.messagesUtil.sendUserUpdateProfile({
