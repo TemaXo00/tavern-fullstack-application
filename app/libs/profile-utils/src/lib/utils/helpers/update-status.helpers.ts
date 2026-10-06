@@ -19,7 +19,6 @@ export class ProfileUpdateStatusHelper {
       const profile = await tx.profile.update({
         where: {
           userId: options.userId,
-          currentActivity: options.searchActivity,
         },
         data: {
           currentActivity: options.updatingActivity,
@@ -49,7 +48,6 @@ export class ProfileUpdateStatusHelper {
       const profiles = await tx.profile.updateManyAndReturn({
         where: {
           userId: options.userId,
-          currentActivity: options.searchActivity,
         },
         data: {
           currentActivity: options.updatingActivity,

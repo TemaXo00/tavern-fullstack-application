@@ -214,24 +214,24 @@ export class ProfileDatabaseUtil {
     data: AdminBlockUserProfile,
     reputationScore: number,
   ): Promise<void> {
+    const dateFrom = new Date(data.blockedFrom);
+    const dateTo = new Date(data.blockedUntil);
     await this.updateStatusHelper.manipulateBlock({
       userId: data.userId,
-      searchActivity: ActivityType.ACTIVE,
       updatingActivity: ActivityType.BLOCKED,
       reputationScore,
       action: Actions.BLOCK,
       logMethod: 'Block',
-      message: `The user blocked from ${data.blockedFrom.toISOString()} to ${data.blockedUntil.toISOString()}. Reason: ${data.blockReason}`,
+      message: `The user blocked from ${dateFrom.toISOString()} to ${dateTo.toISOString()}. Reason: ${data.blockReason}`,
     });
   }
 
-  async unblockUser(
+  async earlyUnblockUser(
     data: AdminUnblockUserMessage,
     reputationScore: number,
   ): Promise<void> {
     await this.updateStatusHelper.manipulateBlock({
       userId: data.userId,
-      searchActivity: ActivityType.BLOCKED,
       updatingActivity: ActivityType.ACTIVE,
       reputationScore,
       action: Actions.EARLY_UNBLOCK,
@@ -240,10 +240,20 @@ export class ProfileDatabaseUtil {
     });
   }
 
+  async unblockUser(userId: string): Promise<void> {
+    await this.db.profile.update({
+      where: {
+        userId,
+      },
+      data: {
+        currentActivity: ActivityType.ACTIVE,
+      },
+    });
+  }
+
   async activateUser(data: AdminSetUserActiveMessage): Promise<void> {
     await this.updateStatusHelper.manipulateActivity({
       userId: data.userId,
-      searchActivity: ActivityType.INACTIVE,
       updatingActivity: ActivityType.ACTIVE,
       logMethod: 'Activate user',
       message: 'The user was activated by the service administrator.',
@@ -253,7 +263,6 @@ export class ProfileDatabaseUtil {
   async deactivateUser(data: UserSetInactiveMessage): Promise<void> {
     await this.updateStatusHelper.manipulateActivity({
       userId: data.userId,
-      searchActivity: ActivityType.ACTIVE,
       updatingActivity: ActivityType.INACTIVE,
       logMethod: 'Deactivate user',
       message: 'The user was deactivated at their own request',

@@ -4,6 +4,7 @@ export enum AUTHORIZATION_MESSAGES {
   LOGOUT = 'user.logout',
   FORGOT_PASSWORD = 'user.forgot.password',
   RESTORE_PASSWORD = 'user.restore.password',
+  UNBLOCK = 'user.unblock',
 }
 
 export enum SESSION_MESSAGES {
@@ -25,7 +26,7 @@ export enum USER_MESSAGES {
   CHECK = 'users.check',
   BY_ID = 'user.by.id',
   BLOCK = 'user.block',
-  UNBLOCK = 'user.unblock',
+  EARLY_UNBLOCK = 'user.unblock.early',
   PROMOTE = 'user.promote',
   DEMOTE = 'user.demote',
   EMAIL_CHANGE = 'user.change.email',

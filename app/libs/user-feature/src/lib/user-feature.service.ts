@@ -79,7 +79,8 @@ export class UserFeatureService implements UserServiceContract {
       Roles.MODERATOR,
     ]);
     const user = await this.validateUtil.validateUserExists(data.id);
-    this.validateUtil.validateBlockDate(data.blockedUntil);
+    const blockedUntil = new Date(data.blockedUntil);
+    this.validateUtil.validateBlockDate(blockedUntil);
     this.validateUtil.validateUserCanChangeStatus(
       GRPC_TO_ROLE[payload.role],
       user.role as Roles,
@@ -93,7 +94,7 @@ export class UserFeatureService implements UserServiceContract {
     await this.cacheUtil.delAllPayloads(user.id);
     const blockedUser = await this.dbUtil.blockUser(
       user.id,
-      data.blockedUntil,
+      blockedUntil,
       data.blockReason,
     );
     this.messagesUtil.sendAdminBlockUser({

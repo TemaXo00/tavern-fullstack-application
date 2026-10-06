@@ -4,7 +4,6 @@ export type SearchUserHelperType = 'by-id' | 'by-nickname';
 
 export interface BaseManipulationOptions {
   userId: string;
-  searchActivity: ActivityType;
   updatingActivity: ActivityType;
   logMethod: string;
 }

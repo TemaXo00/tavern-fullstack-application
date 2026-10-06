@@ -40,23 +40,23 @@ export class UserRmqFeatureService {
     this.logUtil.logSuccess(
       'Update Status',
       USER_MESSAGES.BLOCK,
-      `User with id ${data.userId}. Block reason: ${data.blockReason}. Blocked until: ${data.blockedUntil.toISOString()}`,
+      `User with id ${data.userId}. Block reason: ${data.blockReason}. Blocked until: ${data.blockedUntil}`,
     );
   }
 
-  async handleUserUnblock(data: AdminUnblockUserMessage): Promise<void> {
+  async handleUserEarlyUnblock(data: AdminUnblockUserMessage): Promise<void> {
     const profile = await this.validationUtil.checkUserExisting(
       'by-id',
       data.userId,
     );
-    await this.dbUtil.unblockUser(
+    await this.dbUtil.earlyUnblockUser(
       data,
       this.reputationUtil.getScore(Actions.EARLY_UNBLOCK),
     );
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
       'Update Status',
-      USER_MESSAGES.UNBLOCK,
+      USER_MESSAGES.EARLY_UNBLOCK,
       `User ${data.userId} unblocked by admin ${data.adminId}`,
     );
   }

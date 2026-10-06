@@ -35,6 +35,7 @@ import {
   AdminBlockUserMessage,
   AdminBlockUserMail,
   DeleteUserMessage,
+  AuthUserUnblockedMessage,
 } from '@org/types';
 
 @Injectable()
@@ -76,6 +77,12 @@ export class AuthMessagesUtil {
   sendUserRestorePassword(data: AuthRestorePasswordMessage): void {
     this.mail.emit(AUTHORIZATION_MESSAGES.RESTORE_PASSWORD, data);
     this.log.emit(AUTHORIZATION_MESSAGES.RESTORE_PASSWORD, data);
+  }
+
+  sendUserUnblockedMessage(data: AuthUserUnblockedMessage): void {
+    this.profile.emit(AUTHORIZATION_MESSAGES.UNBLOCK, data);
+    this.log.emit(AUTHORIZATION_MESSAGES.UNBLOCK, data);
+    this.mail.emit(AUTHORIZATION_MESSAGES.UNBLOCK, data);
   }
 
   // SESSION
@@ -135,9 +142,9 @@ export class AuthMessagesUtil {
   }
 
   sendAdminUnblockUser(data: AdminUnblockUserMessage): void {
-    this.log.emit(USER_MESSAGES.UNBLOCK, data);
-    this.profile.emit(USER_MESSAGES.UNBLOCK, data);
-    this.mail.emit(USER_MESSAGES.UNBLOCK, data);
+    this.log.emit(USER_MESSAGES.EARLY_UNBLOCK, data);
+    this.profile.emit(USER_MESSAGES.EARLY_UNBLOCK, data);
+    this.mail.emit(USER_MESSAGES.EARLY_UNBLOCK, data);
   }
 
   sendAdminPromoteUser(data: AdminPromoteUserMessage): void {

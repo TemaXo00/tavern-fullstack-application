@@ -34,3 +34,7 @@ export interface AuthRestorePasswordMessage {
   email: string;
   session: SessionInput;
 }
+
+export interface AuthUserUnblockedMessage {
+  userId: string;
+}

@@ -21,9 +21,9 @@ export class UserRmqFeatureController {
     await this.service.handleUserBlock(data);
   }
 
-  @EventPattern(USER_MESSAGES.UNBLOCK)
+  @EventPattern(USER_MESSAGES.EARLY_UNBLOCK)
   async onUserUnblock(@Payload() data: AdminUnblockUserMessage): Promise<void> {
-    await this.service.handleUserUnblock(data);
+    await this.service.handleUserEarlyUnblock(data);
   }
 
   @EventPattern(USER_MESSAGES.SET_INACTIVE)

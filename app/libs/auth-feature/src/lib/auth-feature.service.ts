@@ -79,6 +79,9 @@ export class AuthFeatureService implements AuthServiceContract {
       existingUser.blockedUntil,
       existingUser.blockReason,
     );
+    if (existingUser.isBlocked) {
+      this.messagesUtil.sendUserUnblockedMessage({ userId: existingUser.id });
+    }
     await this.validateCoreUtil.validateUserActive(
       existingUser.id,
       existingUser.isActive,
