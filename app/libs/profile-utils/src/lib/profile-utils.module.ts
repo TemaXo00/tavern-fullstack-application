@@ -24,7 +24,7 @@ const UTILS = [
   ProfileMessagesUtil,
 ];
 
-const queues: string[] = ['content'];
+const queues: string[] = ['log'];
 
 @Global()
 @Module({
