@@ -1,6 +1,8 @@
 syntax = 'proto3';
 
 import 'profile/profiles.proto';
+import 'profile/reputation.proto';
+import 'profile/activity.proto';
 
 package profile;
 
@@ -11,4 +13,14 @@ service ProfileService {
     rpc GetProfilesBase(profiles.GetProfilesInput) returns (profiles.PaginatedProfilesBaseOutput);
     rpc GetProfilesAdvanced(profiles.GetProfilesAdvancedInput) returns (profiles.PaginatedProfilesAdvancedOutput);
     rpc UpdateProfile(profiles.UpdateProfileInput) returns (profiles.ProfileAdvancedOutput);
+}
+
+service ReputationService {
+    rpc GetMyLogs(reputation.GetMyReputationInput) returns (reputation.PaginatedReputationOutput);
+    rpc GetReputationByNickname(reputation.GetReputationByNicknameInput) returns (reputation.PaginatedReputationOutput);
+}
+
+service ActivityService {
+    rpc GetMyLogs(activity.GetMyActivityInput) returns (activity.PaginatedActivityOutput);
+    rpc GetActivityByNickname(activity.GetActivityByNicknameInput) returns (activity.PaginatedActivityOutput);
 }

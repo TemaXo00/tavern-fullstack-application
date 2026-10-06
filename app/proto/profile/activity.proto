@@ -1,0 +1,63 @@
+syntax = 'proto3';
+
+package activity;
+
+enum ActivityType {
+    ACTIVE = 0;
+    INACTIVE = 1;
+    BLOCKED = 2;
+}
+
+// Input Messages
+
+message ValidateInput {
+  string accessToken = 1;
+  SessionInput session = 2;
+}
+
+message SessionInput {
+    string os = 1;
+    string device = 2;
+    string browser = 3;
+    string ip = 4;
+}
+
+message PaginationInput {
+    optional int32 page = 1;
+    optional int32 limit = 2;
+    optional string search = 3;
+    optional ActivityType activityType = 4;
+}
+
+message GetMyActivityInput {
+    ValidateInput validation = 1;
+    PaginationInput pagination = 2;
+}
+
+message GetActivityByNicknameInput {
+    string nickname = 1;
+    ValidateInput validation = 2;
+    PaginationInput pagination = 3;
+}
+
+// Output Messages
+
+message PaginationOutput {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 total = 3;
+    int32 totalPages = 4;
+    bool hasNext = 5;
+    bool hasPrev = 6;
+    optional ActivityType activityType = 7;
+}
+
+message ActivityOutput {
+    ActivityType status = 1;
+    string createdAt = 2;
+}
+
+message PaginatedActivityOutput {
+    PaginationOutput pagination = 1;
+    repeated ActivityOutput activityLogs = 2;
+}
