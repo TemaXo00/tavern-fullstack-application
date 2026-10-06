@@ -106,6 +106,12 @@ export class ProfileFeatureService implements ProfileServiceContract {
         data.pagination.birthDateTo,
       );
     }
+    if (data.pagination.reputationFrom && data.pagination.reputationTo) {
+      this.validationUtil.validateReputationInQuery(
+        data.pagination.reputationFrom,
+        data.pagination.reputationTo,
+      );
+    }
     this.messagesUtil.sendAdminGetPaginatedProfiles({
       adminId: payload.id,
       query: data.pagination,

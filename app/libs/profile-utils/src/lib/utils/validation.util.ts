@@ -77,4 +77,13 @@ export class ProfileValidationUtil {
       });
     }
   }
+
+  validateReputationInQuery(from: number, to: number): void {
+    if (from > to) {
+      throw new RpcException({
+        message: 'Reputation from cannot be more than reputation to',
+        code: status.INVALID_ARGUMENT,
+      });
+    }
+  }
 }
