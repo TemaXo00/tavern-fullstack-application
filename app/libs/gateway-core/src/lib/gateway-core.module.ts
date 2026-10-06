@@ -7,13 +7,14 @@ import { PassportModule } from '@nestjs/passport';
 import { workspaceRoot } from 'nx/src/utils/workspace-root';
 
 import { AUTH_CONTROLLERS } from './controllers/auth/main';
+import { PROFILE_CONTROLLERS } from './controllers/profile/main';
 import { AuthJWTGuard } from './guards/jwt.guard';
 import { RolesGuard } from './guards/roles.guard';
 import { CookieService } from './services/cookie.service';
 import { MAP_SERVICES } from './services/map/map';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
-const SERVICES: string[] = ['AUTH'];
+const SERVICES: string[] = ['AUTH', 'PROFILE'];
 
 @Module({
   imports: [
@@ -41,7 +42,7 @@ const SERVICES: string[] = ['AUTH'];
     ConfigModule,
     PassportModule,
   ],
-  controllers: [...AUTH_CONTROLLERS],
+  controllers: [...AUTH_CONTROLLERS, ...PROFILE_CONTROLLERS],
   providers: [
     JwtStrategy,
     AuthJWTGuard,

@@ -1,7 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsOptional, MinDate } from 'class-validator';
+import { IsDate, IsNotEmpty, IsOptional, MaxDate } from 'class-validator';
 
 export function BirthDate(requirable: boolean): PropertyDecorator {
   const requirableDecorator = requirable ? IsNotEmpty() : IsOptional();
@@ -16,6 +16,6 @@ export function BirthDate(requirable: boolean): PropertyDecorator {
     requirableDecorator,
     Type(() => Date),
     IsDate(),
-    MinDate(() => new Date()),
+    MaxDate(() => new Date()),
   );
 }

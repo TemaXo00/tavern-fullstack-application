@@ -13,3 +13,9 @@ export * from './lib/auth/user/change-email.dto.js';
 export * from './lib/auth/user/change-password.dto.js';
 export * from './lib/auth/user/user-pagination.dto.js';
 export * from './lib/auth/user/delete-user.dto.js';
+
+// PROFILE
+
+export * from './lib/profile/profiles/profile-base-pagination.dto.js';
+export * from './lib/profile/profiles/profle-advanced-pagination.dto.js';
+export * from './lib/profile/profiles/update-profile.dto.js';

@@ -7,6 +7,7 @@ import {
   ProfileWhereInput,
 } from '@org/profile-database';
 import {
+  DateMapUtil,
   PaginationUtil,
   RmqLoggerUtil,
   StringValidationUtil,
@@ -39,6 +40,7 @@ export class ProfileDatabaseUtil {
     private readonly updateStatusHelper: ProfileUpdateStatusHelper,
     private readonly paginationUtil: PaginationUtil,
     private readonly stringUtil: StringValidationUtil,
+    private readonly mapDateUtil: DateMapUtil,
   ) {}
 
   // GET Methods
@@ -117,7 +119,18 @@ export class ProfileDatabaseUtil {
     pagination: ProfilePaginationAdvancedInput,
   ): Promise<PaginatedProfilesAdvancedOutput> {
     const safePagination = pagination || {};
-    const where = this.buildProfileAdvancedQuery(safePagination);
+    const birthDateFrom = safePagination.birthDateFrom
+      ? this.mapDateUtil.mapDateAndValidate(safePagination.birthDateFrom)
+      : undefined;
+    const birthDateTo = safePagination.birthDateTo
+      ? this.mapDateUtil.mapDateAndValidate(safePagination.birthDateTo)
+      : undefined;
+
+    const where = this.buildProfileAdvancedQuery({
+      ...safePagination,
+      birthDateFrom,
+      birthDateTo,
+    });
     const total = await this.db.profile.count({ where });
     const params = this.paginationUtil.getPaginationParams(
       total,
@@ -129,8 +142,8 @@ export class ProfileDatabaseUtil {
         ...params,
         search: safePagination.search,
         email: safePagination.email,
-        birthDateFrom: safePagination.birthDateFrom,
-        birthDateTo: safePagination.birthDateTo,
+        birthDateFrom,
+        birthDateTo,
         reputationFrom: safePagination.reputationFrom,
         reputationTo: safePagination.reputationTo,
         currentActivity: safePagination.currentActivity
@@ -258,11 +271,15 @@ export class ProfileDatabaseUtil {
     userId: string,
     data: BaseUpdateProfileInput,
   ): Promise<ProfileAdvancedOutput> {
+    const mappedData = {
+      ...data,
+      birthDate: data.birthDate
+        ? this.mapDateUtil.mapDateAndValidate(data.birthDate)
+        : undefined,
+    };
     const profile = await this.db.profile.update({
-      where: {
-        userId,
-      },
-      data,
+      where: { userId },
+      data: mappedData,
     });
     return {
       ...profile,
