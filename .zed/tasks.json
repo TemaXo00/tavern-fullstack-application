@@ -30,6 +30,12 @@
     "cwd": "$ZED_WORKTREE_ROOT/app",
   },
   {
+    "label": "NX: Generate Nest App",
+    "command": "nx g @nx/nest:app --linter eslint --e2eTestRunner none --unitTestRunner none",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
     "label": "NX: Generate Nest lib",
     "command": "npx nx g @nx/nest:lib --buildable --linter eslint --unitTestRunner none",
     "use_new_terminal": true,

@@ -71,6 +71,30 @@
     },
     {
       "path": "./libs/profile-feature"
+    },
+    {
+      "path": "./libs/activity-feature"
+    },
+    {
+      "path": "./libs/reputation-feature"
+    },
+    {
+      "path": "./services/event"
+    },
+    {
+      "path": "./services/blog"
+    },
+    {
+      "path": "./services/chat"
+    },
+    {
+      "path": "./services/content"
+    },
+    {
+      "path": "./services/file"
+    },
+    {
+      "path": "./services/forum"
     }
   ],
   "compilerOptions": {}
