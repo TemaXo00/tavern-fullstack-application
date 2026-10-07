@@ -38,6 +38,16 @@ export * from './lib/profile/profiles/profiles-input.data.js';
 export * from './lib/profile/profiles/profiles-output.data.js';
 export * from './lib/profile/profiles/profile-messages.js';
 
+// ACTIVITY SERVICE
+
+export * from './lib/profile/activity/activity-input.data.js';
+export * from './lib/profile/activity/activity-output.data.js';
+
+// REPUTATION SERVICE
+
+export * from './lib/profile/reputation/reputation-input.data.js';
+export * from './lib/profile/reputation/reputation-output.data.js';
+
 // CONTRACTS
 
 export * from './lib/profile/profile.contract.js';
