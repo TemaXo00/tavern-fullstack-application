@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
+  ACTIVITY_TO_GRPC,
   GRPC_TO_ACTIVITY,
   ProfileAdvancedOutput,
   ProfileBaseOutput,
@@ -8,6 +9,8 @@ import {
   ProfileGatewayListOutput,
   ProfileGatewayPaginationAdvancedOutput,
   ProfileListOutput,
+  ProfilePaginationAdvancedGatewayInput,
+  ProfilePaginationAdvancedInput,
   ProfilePaginationAdvancedOutput,
 } from '@org/types';
 
@@ -48,6 +51,17 @@ export class ProfileGatewayMapService {
       ...pagination,
       currentActivity: pagination.currentActivity
         ? GRPC_TO_ACTIVITY[pagination.currentActivity]
+        : undefined,
+    };
+  }
+
+  mapPaginationAdvancedInput(
+    pagination: ProfilePaginationAdvancedGatewayInput,
+  ): ProfilePaginationAdvancedInput {
+    return {
+      ...pagination,
+      currentActivity: pagination.currentActivity
+        ? ACTIVITY_TO_GRPC[pagination.currentActivity]
         : undefined,
     };
   }

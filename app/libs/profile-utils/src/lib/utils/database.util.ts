@@ -19,6 +19,7 @@ import {
   AdminUnblockUserMessage,
   AuthRegisteredMessage,
   BaseUpdateProfileInput,
+  GRPC_TO_ACTIVITY,
   PaginatedProfilesAdvancedOutput,
   PaginatedProfilesBaseOutput,
   PaginationBaseInput,
@@ -146,9 +147,7 @@ export class ProfileDatabaseUtil {
         birthDateTo,
         reputationFrom: safePagination.reputationFrom,
         reputationTo: safePagination.reputationTo,
-        currentActivity: safePagination.currentActivity
-          ? ACTIVITY_TO_GRPC[safePagination.currentActivity]
-          : undefined,
+        currentActivity: safePagination.currentActivity,
       },
       profiles: await this.getProfileListOutput(
         where,
@@ -332,7 +331,7 @@ export class ProfileDatabaseUtil {
     }
 
     if (query.currentActivity) {
-      where.currentActivity = query.currentActivity;
+      where.currentActivity = GRPC_TO_ACTIVITY[query.currentActivity];
     }
 
     if (query.birthDateFrom || query.birthDateTo) {

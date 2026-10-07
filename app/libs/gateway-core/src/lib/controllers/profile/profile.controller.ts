@@ -115,8 +115,9 @@ export class ProfileController implements OnModuleInit {
     @Body() dto: ProfileAdvancedPaginationDto,
     @ValidateInputParam() validation: ValidateInput,
   ): Promise<PaginatedProfilesGatewayAdvancedOutput> {
+    const pagination = this.map.mapPaginationAdvancedInput(dto);
     const response = await firstValueFrom(
-      this.profileContract.GetProfilesAdvanced({ pagination: dto, validation }),
+      this.profileContract.GetProfilesAdvanced({ pagination, validation }),
     );
     return {
       pagination: this.map.mapPaginationAdvanced(response.pagination),

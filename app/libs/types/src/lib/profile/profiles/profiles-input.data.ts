@@ -1,6 +1,7 @@
 import { ActivityType } from '../../enums/profile.enum.js';
 import { PaginationBaseInput } from '../../shared/pagination.type.js';
 import { Protected } from '../../utils/protected.js';
+import { Replace } from '../../utils/replace.js';
 
 export type ProfilePaginationBaseInput = PaginationBaseInput;
 export interface ProfilePaginationAdvancedInput extends ProfilePaginationBaseInput {
@@ -9,7 +10,7 @@ export interface ProfilePaginationAdvancedInput extends ProfilePaginationBaseInp
   birthDateTo?: Date;
   reputationFrom?: number;
   reputationTo?: number;
-  currentActivity?: ActivityType;
+  currentActivity?: number;
 }
 export interface GetProfileByNicknameBaseInput {
   nickname: string;
@@ -38,3 +39,10 @@ export type GetProfileByNicknameAdvancedInput =
   Protected<GetProfileByNicknameBaseInput>;
 
 export type UpdateProfileInput = Protected<{ data: BaseUpdateProfileInput }>;
+
+export type ProfilePaginationAdvancedGatewayInput = Replace<
+  ProfilePaginationAdvancedInput,
+  {
+    currentActivity?: ActivityType;
+  }
+>;

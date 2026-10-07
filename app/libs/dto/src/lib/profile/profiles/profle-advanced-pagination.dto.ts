@@ -1,4 +1,7 @@
-import { ActivityType, ProfilePaginationAdvancedInput } from '@org/types';
+import {
+  ActivityType,
+  ProfilePaginationAdvancedGatewayInput,
+} from '@org/types';
 
 import { Activity } from '../../decorators/profile/activity-type.decorator.js';
 import { BirthDate } from '../../decorators/profile/birth-date.decorator.js';
@@ -8,7 +11,7 @@ import { BasePaginationDto } from '../../shared/pagination-base.dto.js';
 
 export class ProfileAdvancedPaginationDto
   extends BasePaginationDto
-  implements ProfilePaginationAdvancedInput
+  implements ProfilePaginationAdvancedGatewayInput
 {
   @Email(false)
   email?: string;
