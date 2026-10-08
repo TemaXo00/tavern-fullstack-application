@@ -3,7 +3,7 @@ import { PaginationBaseOutput } from '../../shared/pagination.type.js';
 import { Replace } from '../../utils/replace.js';
 
 export interface ActivityPaginationOutput extends PaginationBaseOutput {
-  currentActivity?: number;
+  activityType?: number;
 }
 
 export interface ActivityOutput {
@@ -19,14 +19,14 @@ export interface PaginatedActivityOutput {
 export type ActivityPaginationGatewayOutput = Replace<
   ActivityPaginationOutput,
   {
-    currentActivity?: ActivityType;
+    activityType?: ActivityType;
   }
 >;
 
 export type ActivityGatewayOutput = Replace<
   ActivityOutput,
   {
-    currentActivity: ActivityType;
+    activityType: ActivityType;
   }
 >;
 

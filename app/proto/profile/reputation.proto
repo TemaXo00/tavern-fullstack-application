@@ -49,7 +49,8 @@ message PaginationOutput {
     int32 totalPages = 4;
     bool hasNext = 5;
     bool hasPrev = 6;
-    optional Actions actions = 7;
+    optional string search = 7;
+    optional Actions action = 8;
 }
 
 message ReputationOutput {

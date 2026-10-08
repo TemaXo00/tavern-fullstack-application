@@ -259,7 +259,7 @@ export class ProfileDatabaseUtil {
     return {
       pagination: {
         ...params,
-        currentActivity: safePagination.activityType,
+        activityType: safePagination.activityType,
       },
       activityLogs: await this.getActivityListOutput(
         where,
