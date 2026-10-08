@@ -1,0 +1,26 @@
+info:
+  name: GetProfileByNicknameAdvanced
+  type: grpc
+  seq: 3
+
+grpc:
+  url: "{{PROFILE_GRPC_URL}}"
+  method: /profile.ProfileService/GetProfileByNicknameAdvanced
+  methodType: unary
+  protoFilePath: ../../../app/proto/profile.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "nickname": "temaxo00"
+        }
+  auth: inherit

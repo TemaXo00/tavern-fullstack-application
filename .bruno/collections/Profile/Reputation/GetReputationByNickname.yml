@@ -1,0 +1,21 @@
+info:
+  name: GetReputationByNickname
+  type: grpc
+  seq: 2
+
+grpc:
+  url: "{{PROFILE_GRPC_URL}}"
+  method: /profile.ReputationService/GetReputationByNickname
+  methodType: unary
+  protoFilePath: ../../../app/proto/profile.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "nickname": "temaxo00",
+          "pagination": {
+            "page": 1,
+            "limit": 10
+          }
+        }
+  auth: inherit

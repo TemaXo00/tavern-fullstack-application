@@ -1,0 +1,21 @@
+info:
+  name: GetProfilesBase
+  type: grpc
+  seq: 4
+
+grpc:
+  url: "{{PROFILE_GRPC_URL}}"
+  method: /profile.ProfileService/GetProfilesBase
+  methodType: unary
+  protoFilePath: ../../../app/proto/profile.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "pagination": {
+            "page": 1,
+            "limit": 10,
+            "search": "tem"
+          }
+        }
+  auth: inherit

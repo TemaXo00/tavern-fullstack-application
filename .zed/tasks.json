@@ -24,6 +24,12 @@
     "cwd": "$ZED_WORKTREE_ROOT",
   },
   {
+    "label": "BUILD: PROFILE Microservice",
+    "command": "docker build -f docker-files/Profile.Dockerfile -t tavern/profile:latest ./app",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT",
+  },
+  {
     "label": "NPM: Install deps",
     "command": "npm ci",
     "use_new_terminal": true,

@@ -9,6 +9,7 @@ COPY tsconfig*.json ./
 COPY services/auth ./services/auth
 COPY proto/auth.proto ./proto/auth.proto
 COPY proto/auth ./proto/auth
+COPY proto/shared ./proto/shared
 # Authorization deps
 COPY libs/auth-core ./libs/auth-core
 COPY libs/auth-core-utils ./libs/auth-core-utils

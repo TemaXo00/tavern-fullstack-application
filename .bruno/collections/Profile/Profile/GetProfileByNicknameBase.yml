@@ -1,0 +1,17 @@
+info:
+  name: GetProfileByNicknameBase
+  type: grpc
+  seq: 2
+
+grpc:
+  url: "{{PROFILE_GRPC_URL}}"
+  method: /profile.ProfileService/GetProfileByNicknameBase
+  methodType: unary
+  protoFilePath: ../../../app/proto/profile.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "nickname": "temaxo00"
+        }
+  auth: inherit

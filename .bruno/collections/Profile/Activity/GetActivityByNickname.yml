@@ -1,0 +1,30 @@
+info:
+  name: GetActivityByNickname
+  type: grpc
+  seq: 2
+
+grpc:
+  url: "{{PROFILE_GRPC_URL}}"
+  method: /profile.ActivityService/GetActivityByNickname
+  methodType: unary
+  protoFilePath: ../../../app/proto/profile.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "nickname": "temaxo00",
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "pagination": {
+            "page": 1,
+            "limit": 10
+          }
+        }
+  auth: inherit

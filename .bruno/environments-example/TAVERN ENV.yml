@@ -31,5 +31,5 @@ variables:
     value: localhost:3000
     description: ""
   - name: PROFILE_GRPC_URL
-    value: localhost:5003
+    value: localhost:5009
     description: ""
