@@ -95,6 +95,9 @@
     },
     {
       "path": "./services/forum"
+    },
+    {
+      "path": "./services/appeals"
     }
   ],
   "compilerOptions": {}
