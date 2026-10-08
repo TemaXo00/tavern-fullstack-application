@@ -47,7 +47,7 @@ export interface ActivityServiceContract {
 }
 
 export interface ReputationServiceContract {
-  GetMyLogs(Data: GetMyReputationInput): Promise<PaginatedReputationOutput>;
+  GetMyLogs(data: GetMyReputationInput): Promise<PaginatedReputationOutput>;
   GetReputationByNickname(
     data: GetReputationByNicknameInput,
   ): Promise<PaginatedReputationOutput>;

@@ -3,8 +3,10 @@ import {
   Actions,
   ActivityType,
   type Profile,
+  ProfileActivityWhereInput,
   ProfileDatabaseService,
   ProfileWhereInput,
+  ReputationWhereInput,
 } from '@org/profile-database';
 import {
   DateMapUtil,
@@ -13,20 +15,26 @@ import {
   StringValidationUtil,
 } from '@org/shared-utils';
 import {
+  ACTIONS_TO_GRPC,
   ACTIVITY_TO_GRPC,
+  ActivityPaginationInput,
   AdminBlockUserProfile,
   AdminSetUserActiveMessage,
   AdminUnblockUserMessage,
   AuthRegisteredMessage,
   BaseUpdateProfileInput,
+  GRPC_TO_ACTIONS,
   GRPC_TO_ACTIVITY,
   PaginatedProfilesAdvancedOutput,
   PaginatedProfilesBaseOutput,
+  PaginatedReputationOutput,
   PaginationBaseInput,
   ProfileAdvancedOutput,
   ProfileListOutput,
   ProfilePaginationAdvancedInput,
   ProfilePaginationBaseInput,
+  ReputationOutput,
+  ReputationPaginationInput,
   UserSetInactiveMessage,
 } from '@org/types';
 
@@ -150,6 +158,58 @@ export class ProfileDatabaseUtil {
         currentActivity: safePagination.currentActivity,
       },
       profiles: await this.getProfileListOutput(
+        where,
+        params.skip,
+        params.limit,
+      ),
+    };
+  }
+
+  private async getReputationListOutput(
+    where: ReputationWhereInput,
+    skip: number,
+    take: number,
+  ): Promise<ReputationOutput[]> {
+    const reputationList = await this.db.reputation.findMany({
+      where,
+      skip,
+      take,
+      select: {
+        action: true,
+        message: true,
+        score: true,
+        createdAt: true,
+      },
+    });
+
+    const mappedList = reputationList.map((item) => {
+      return {
+        ...item,
+        action: ACTIONS_TO_GRPC[item.action],
+      };
+    });
+
+    return mappedList;
+  }
+
+  async getReputationPaginatedLogs(
+    profileId: string,
+    pagination: ReputationPaginationInput,
+  ): Promise<PaginatedReputationOutput> {
+    const safePagination = pagination || {};
+    const where = this.buildReputationQuery(profileId, safePagination);
+    const total = await this.db.reputation.count({ where });
+    const params = this.paginationUtil.getPaginationParams(
+      total,
+      safePagination.page,
+      safePagination.limit,
+    );
+    return {
+      pagination: {
+        ...params,
+        action: safePagination.action,
+      },
+      reputationLogs: await this.getReputationListOutput(
         where,
         params.skip,
         params.limit,
@@ -355,6 +415,41 @@ export class ProfileDatabaseUtil {
       if (query.reputationTo !== undefined) {
         where.reputationScore.lte = query.reputationTo;
       }
+    }
+
+    return where;
+  }
+
+  buildReputationQuery(
+    profileId: string,
+    query: ReputationPaginationInput,
+  ): ReputationWhereInput {
+    const where: ReputationWhereInput = {};
+
+    where.profileId = profileId;
+
+    if (query.search) {
+      where.message = { contains: query.search, mode: 'insensitive' };
+    }
+
+    if (query.action) {
+      where.action = GRPC_TO_ACTIONS[query.action];
+    }
+
+    return where;
+  }
+
+  buildActivityQuery(
+    query: ActivityPaginationInput,
+  ): ProfileActivityWhereInput {
+    const where: ProfileActivityWhereInput = {};
+
+    if (query.search) {
+      where.message = { contains: query.search, mode: 'insensitive' };
+    }
+
+    if (query.activityType) {
+      where.status = GRPC_TO_ACTIVITY[query.activityType];
     }
 
     return where;

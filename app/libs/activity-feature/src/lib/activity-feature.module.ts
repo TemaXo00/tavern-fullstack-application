@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
+import { AuthCoreModule } from '@org/auth-core';
 
 @Module({
+  imports: [AuthCoreModule],
   controllers: [],
   providers: [],
-  exports: [],
 })
-export class OrgActivityFeatureModule {}
+export class ActivityFeatureModule {}
