@@ -16,6 +16,9 @@
       "path": "../../libs/bootstrap/tsconfig.lib.json"
     },
     {
+      "path": "../../libs/reputation-feature/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/profile-utils/tsconfig.lib.json"
     },
     {
@@ -23,6 +26,9 @@
     },
     {
       "path": "../../libs/profile-feature/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/activity-feature/tsconfig.lib.json"
     }
   ]
 }

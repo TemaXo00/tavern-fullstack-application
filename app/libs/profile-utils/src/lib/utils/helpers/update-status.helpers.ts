@@ -29,7 +29,6 @@ export class ProfileUpdateStatusHelper {
         data: {
           profileId: profile.id,
           status: options.updatingActivity,
-          message: options.message,
         },
       });
       await tx.reputation.create({
@@ -66,7 +65,6 @@ export class ProfileUpdateStatusHelper {
         data: {
           profileId: updatedProfile.id,
           status: options.updatingActivity,
-          message: options.message,
         },
       });
     });

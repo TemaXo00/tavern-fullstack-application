@@ -16,10 +16,6 @@ export class ProfileReputationUtil {
         'TAVERN_REPUTATION_SCORE_EARLY_UNBLOCK',
         50,
       ),
-      FRIENDSHIP: this.config.get<number>(
-        'TAVERN_REPUTATION_SCORE_FRIENDSHIP',
-        10,
-      ),
       REPORT: this.config.get<number>('TAVERN_REPUTATION_SCORE_REPORT', -10),
     };
   }

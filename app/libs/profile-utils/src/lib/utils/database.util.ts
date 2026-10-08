@@ -226,7 +226,6 @@ export class ProfileDatabaseUtil {
           data: {
             profileId,
             status: ActivityType.ACTIVE,
-            message: 'User successfully registered',
           },
         });
       }
@@ -236,7 +235,6 @@ export class ProfileDatabaseUtil {
         select: {
           id: true,
           activity_logs: {
-            where: { message: 'User successfully registered' },
             select: { id: true },
             take: 1,
           },
@@ -315,7 +313,6 @@ export class ProfileDatabaseUtil {
       userId: data.userId,
       updatingActivity: ActivityType.ACTIVE,
       logMethod: 'Activate user',
-      message: 'The user was activated by the service administrator.',
     });
   }
 
@@ -324,7 +321,6 @@ export class ProfileDatabaseUtil {
       userId: data.userId,
       updatingActivity: ActivityType.INACTIVE,
       logMethod: 'Deactivate user',
-      message: 'The user was deactivated at their own request',
     });
   }
 
@@ -443,10 +439,6 @@ export class ProfileDatabaseUtil {
     query: ActivityPaginationInput,
   ): ProfileActivityWhereInput {
     const where: ProfileActivityWhereInput = {};
-
-    if (query.search) {
-      where.message = { contains: query.search, mode: 'insensitive' };
-    }
 
     if (query.activityType) {
       where.status = GRPC_TO_ACTIVITY[query.activityType];

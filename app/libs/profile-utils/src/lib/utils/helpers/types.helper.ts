@@ -14,6 +14,4 @@ export interface BlockManipulateOptions extends BaseManipulationOptions {
   message: string;
 }
 
-export interface ActivityManipulateOptions extends BaseManipulationOptions {
-  message: string;
-}
+export type ActivityManipulateOptions = BaseManipulationOptions;

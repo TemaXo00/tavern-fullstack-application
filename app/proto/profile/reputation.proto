@@ -4,10 +4,9 @@ package reputation;
 
 enum Actions {
     EVENT = 0;
-    FRIENDSHIP = 1;
-    REPORT = 2;
-    BLOCK = 3;
-    EARLY_UNBLOCK = 4;
+    REPORT = 1;
+    BLOCK = 2;
+    EARLY_UNBLOCK = 3;
 }
 
 // Input Messages
