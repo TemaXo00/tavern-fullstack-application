@@ -26,7 +26,7 @@ export type ActivityPaginationGatewayOutput = Replace<
 export type ActivityGatewayOutput = Replace<
   ActivityOutput,
   {
-    activityType: ActivityType;
+    status: ActivityType;
   }
 >;
 

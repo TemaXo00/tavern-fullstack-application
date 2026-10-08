@@ -55,3 +55,7 @@ export interface ReputationServiceContract {
 
 export type ProfileServiceObservableContract =
   ToObservable<ProfileServiceContract>;
+export type ReputationServiceObservableContract =
+  ToObservable<ReputationServiceContract>;
+export type ActivityServiceObservableContract =
+  ToObservable<ActivityServiceContract>;

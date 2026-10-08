@@ -19,3 +19,7 @@ export * from './lib/auth/user/delete-user.dto.js';
 export * from './lib/profile/profiles/profile-base-pagination.dto.js';
 export * from './lib/profile/profiles/profle-advanced-pagination.dto.js';
 export * from './lib/profile/profiles/update-profile.dto.js';
+
+export * from './lib/profile/activity/activity-pagination.dto.js';
+
+export * from './lib/profile/reputation/reputation-pagination.dto.js';

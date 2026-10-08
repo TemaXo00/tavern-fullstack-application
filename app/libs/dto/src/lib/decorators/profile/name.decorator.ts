@@ -7,6 +7,7 @@ export function Name(): PropertyDecorator {
     ApiProperty({
       description: 'User name',
       example: 'Joe',
+      required: false,
       type: 'string',
       minLength: 2,
       maxLength: 90,

@@ -74,7 +74,7 @@ export class ProfileController implements OnModuleInit {
 
   @GETProtectedMethod({
     path: ':nickname/advanced',
-    operationDesc: 'Get advanced profile by nickname',
+    operationDesc: 'Get advanced profile by nickname. Moderator and admin only',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async getProfileByNicknameAdvanced(
@@ -108,7 +108,8 @@ export class ProfileController implements OnModuleInit {
 
   @QUERYProtectedMethod({
     path: 'advanced',
-    operationDesc: 'Get paginated profiles list with advanced pagination',
+    operationDesc:
+      'Get paginated profiles list with advanced pagination. Moderator and admin only',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async getProfilesAdvanced(

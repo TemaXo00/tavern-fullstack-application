@@ -8,6 +8,7 @@ export function Nickname(): PropertyDecorator {
       description: 'User Nickname',
       example: 'joe_doe',
       type: 'string',
+      required: false,
       minLength: 3,
       maxLength: 80,
     }),

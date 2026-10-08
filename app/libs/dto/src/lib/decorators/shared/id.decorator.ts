@@ -9,6 +9,7 @@ export function Id(required = true): PropertyDecorator {
       description: `ID with UUID v7 format`,
       example: 'valid-uuid-v7',
       type: 'string',
+      required,
     }),
     requiredDecorator,
     IsString(),

@@ -10,6 +10,7 @@ export function Reputation(required = true): PropertyDecorator {
       description: 'Reputation for user',
       type: 'number',
       example: 15,
+      required,
     }),
     requiredDecorator,
     IsNumber(),

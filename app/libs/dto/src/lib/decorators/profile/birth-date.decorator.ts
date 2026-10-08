@@ -7,7 +7,7 @@ export function BirthDate(requirable: boolean): PropertyDecorator {
   const requirableDecorator = requirable ? IsNotEmpty() : IsOptional();
   return applyDecorators(
     ApiProperty({
-      description: 'Set blocked until date and time',
+      description: 'User birth date',
       example: '2026-09-26T09:00:00.000Z',
       type: 'string',
       format: 'date-time',

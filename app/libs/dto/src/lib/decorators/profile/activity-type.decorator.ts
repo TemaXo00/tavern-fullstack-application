@@ -1,16 +1,16 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
-import { TokenStates } from '@org/types';
+import { ActivityType } from '@org/types';
 import { IsEnum, IsOptional } from 'class-validator';
 
 export function Activity(): PropertyDecorator {
   return applyDecorators(
     ApiProperty({
-      description: 'Token state for token',
+      description: 'Activity for current profile activity logs',
       required: false,
-      enum: TokenStates,
+      enum: ActivityType,
     }),
     IsOptional(),
-    IsEnum(TokenStates),
+    IsEnum(ActivityType),
   );
 }

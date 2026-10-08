@@ -9,6 +9,7 @@ export function Description(): PropertyDecorator {
       example:
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
       type: 'string',
+      required: false,
       minLength: 1,
       maxLength: 255,
     }),

@@ -8,6 +8,7 @@ export function Surname(): PropertyDecorator {
       description: 'User surname',
       example: 'Doe',
       type: 'string',
+      required: false,
       minLength: 2,
       maxLength: 90,
     }),
