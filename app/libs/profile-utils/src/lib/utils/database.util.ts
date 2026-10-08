@@ -17,6 +17,7 @@ import {
 import {
   ACTIONS_TO_GRPC,
   ACTIVITY_TO_GRPC,
+  ActivityOutput,
   ActivityPaginationInput,
   AdminBlockUserProfile,
   AdminSetUserActiveMessage,
@@ -25,6 +26,7 @@ import {
   BaseUpdateProfileInput,
   GRPC_TO_ACTIONS,
   GRPC_TO_ACTIVITY,
+  PaginatedActivityOutput,
   PaginatedProfilesAdvancedOutput,
   PaginatedProfilesBaseOutput,
   PaginatedReputationOutput,
@@ -210,6 +212,56 @@ export class ProfileDatabaseUtil {
         action: safePagination.action,
       },
       reputationLogs: await this.getReputationListOutput(
+        where,
+        params.skip,
+        params.limit,
+      ),
+    };
+  }
+
+  private async getActivityListOutput(
+    where: ProfileActivityWhereInput,
+    skip: number,
+    take: number,
+  ): Promise<ActivityOutput[]> {
+    const reputationList = await this.db.profileActivity.findMany({
+      where,
+      skip,
+      take,
+      select: {
+        status: true,
+        createdAt: true,
+      },
+    });
+
+    const mappedList = reputationList.map((item) => {
+      return {
+        ...item,
+        status: ACTIVITY_TO_GRPC[item.status],
+      };
+    });
+
+    return mappedList;
+  }
+
+  async getActivityPaginatedLogs(
+    profileId: string,
+    pagination: ActivityPaginationInput,
+  ): Promise<PaginatedActivityOutput> {
+    const safePagination = pagination || {};
+    const where = this.buildActivityQuery(profileId, safePagination);
+    const total = await this.db.profileActivity.count({ where });
+    const params = this.paginationUtil.getPaginationParams(
+      total,
+      safePagination.page,
+      safePagination.limit,
+    );
+    return {
+      pagination: {
+        ...params,
+        currentActivity: safePagination.activityType,
+      },
+      activityLogs: await this.getActivityListOutput(
         where,
         params.skip,
         params.limit,
@@ -436,9 +488,12 @@ export class ProfileDatabaseUtil {
   }
 
   buildActivityQuery(
+    profileId: string,
     query: ActivityPaginationInput,
   ): ProfileActivityWhereInput {
     const where: ProfileActivityWhereInput = {};
+
+    where.profileId = profileId;
 
     if (query.activityType) {
       where.status = GRPC_TO_ACTIVITY[query.activityType];
