@@ -1,0 +1,39 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
+    "emitDeclarationOnly": false,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node"],
+    "target": "es2021",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictBindCallApply": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../core-libs/rmq-messages/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/enums/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/grpc-types/tsconfig.lib.json"
+    },
+    {
+      "path": "../shared-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/rmq-config/tsconfig.lib.json"
+    },
+    {
+      "path": "../profile-database/tsconfig.lib.json"
+    }
+  ]
+}

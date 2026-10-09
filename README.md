@@ -87,13 +87,13 @@ curl localhost:3000/api/docs/swagger.yaml
 - [NestJS 11.0.0](https://nestjs.com/)
 - [NX 23.1.1](https://nx.dev/)
 - [Prisma ORM 7.9.1](https://www.prisma.io/orm)
-- [PostgreSQL 18.4](https://www.postgresql.org/)
-- [Redis 8.6.5](https://redis.io/)
-- [RabbitMQ 4.2.4](https://www.rabbitmq.com/)
+- [PostgreSQL 18.6](https://www.postgresql.org/)
+- [Redis 8.10.0](https://redis.io/)
+- [RabbitMQ 4.3.6](https://www.rabbitmq.com/)
 
 Разработка приложения велась при помощи следующего программного обеспечения:
 
-- [NodeJS 26.3 и новее](https://nodejs.org/en)
+- [NodeJS 26.8 и новее](https://nodejs.org/en)
 - [Docker 29.7.2 и новее](https://www.docker.com/)
 - [Редактор кода Zed](https://zed.dev/)
 - [API клиент Bruno](https://www.usebruno.com/)

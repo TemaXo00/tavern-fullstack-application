@@ -1,0 +1,48 @@
+import { SessionInput, UserPaginationInput } from '@org/grpc-types';
+
+interface BaseAdminUserMessage {
+  adminId: string;
+  userId: string;
+}
+
+interface BaseUserMessage {
+  userId: string;
+}
+
+export interface UsersCheckByAdminMessage {
+  adminId: string;
+  query: UserPaginationInput;
+}
+
+export type UserByIdAdminCheckMessage = BaseAdminUserMessage;
+
+export interface AdminBlockUserMessage extends BaseAdminUserMessage {
+  blockReason: string;
+  blockedFrom: Date;
+  blockedUntil: Date;
+}
+
+export type AdminBlockUserLog = AdminBlockUserMessage;
+export type AdminBlockUserProfile = Omit<AdminBlockUserMessage, 'adminId'>;
+export type AdminBlockUserMail = Omit<AdminBlockUserMessage, 'adminId'>;
+
+export type AdminUnblockUserMessage = BaseAdminUserMessage;
+
+export type AdminPromoteUserMessage = BaseAdminUserMessage;
+export type AdminDemoteUserMessage = BaseAdminUserMessage;
+
+export interface UserChangeEmailMessage extends BaseUserMessage {
+  newEmail: string;
+  session: SessionInput;
+}
+
+export interface UserChangePasswordMessage extends BaseUserMessage {
+  session: SessionInput;
+}
+
+export type UserSetInactiveMessage = BaseUserMessage;
+export type AdminSetUserActiveMessage = BaseAdminUserMessage;
+
+export interface DeleteUserMessage extends BaseUserMessage {
+  email: string;
+}

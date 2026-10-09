@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## Unreleased
 
 ### Planned
 
@@ -17,12 +17,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Forum microservice
 - Blog microservice
 - Appeals microservice
-- End-to-end tests for the auth and profile flows
+- Client libraries for Vue frontend
+- End-to-end tests for auth and profile flows
 - Unified `docker-compose.yml` for one-command deployment of the entire stack
 - CI/CD pipeline (Gitea Actions)
 - Grafana + Prometheus monitoring stack
 
-## [0.2.0] - 2026-10-08
+## 0.2.1 - 2026-10-09
+
+### Changed
+
+- Restructured monorepo:
+  - `apps/` split into `server/` (NestJS) and `client/` (Vue)
+  - `libs/` split into `core-libs/` (shared types, enums, configs), `server-libs/` (NestJS-specific), and future `client-libs/` (Vue-specific)
+- Split `gateway-core` into five packages:
+  - `@org/gateway-decorators` — method decorators (`@GETProtectedMethod`, `@QUERYProtectedMethod`, etc.)
+  - `@org/gateway-dto` — HTTP DTOs
+  - `@org/gateway-map` — gRPC ↔ HTTP mapping services
+  - `@org/gateway-controllers` — HTTP controllers
+  - `@org/gateway-authorization` — auth guards, strategies, cookie service
+- Split shared types into three packages:
+  - `@org/base-types` — pagination, common primitives
+  - `@org/grpc-types` — gRPC contracts (`AuthServiceContract`, `ProfileServiceContract`, etc.)
+  - `@org/shared-types` — domain types shared between frontend and backend
+- Renamed all server libraries to consistent naming: `<domain>-<layer>` (e.g. `auth-authorization-core`, `profile-profiles-feature`, `profile-reputation-feature`)
+- Grouped auth libraries: `auth-authorization-core`, `auth-authorization-feature`, `auth-authorization-utils`, `auth-session-feature`, `auth-token-feature`, `auth-user-feature`
+- Grouped profile libraries: `profile-database`, `profile-utils`, `profile-profiles-feature`, `profile-activity-feature`, `profile-reputation-feature`, `profile-rmq-handler`
+
+### Fixed
+
+- Docker builds for all services: updated `COPY` paths to match the new monorepo structure (`apps/server/*` → `server/*`, `libs/*` → `core-libs/*` / `server-libs/*`)
+- Db-Migrator Dockerfile: unified path prefixes for both auth and profile Prisma schemas
+
+## 0.2.0 - 2026-10-08
 
 ### Added
 
@@ -38,7 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `ProfileActivity` log table with status and createdAt
   - Automatic status updates via RMQ events from auth
 - Redis caching for point profile queries:
-  - Separate keys for base and advanced output
+  - Separate cache keys for base and advanced output
   - TTL configurable via ENV (default 300 seconds)
   - Cache invalidation on profile update (old and new nickname)
   - Fallback to database when Redis is unavailable
@@ -89,7 +116,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `services/profile` Dockerfile with multi-stage build (builder / deps / worker)
 - Non-root user in Docker container
-- `db_migrator` handles both auth and profile databases (4 + 5 migrations)
+- `db_migrator` handles both auth and profile databases (5 + 4 migrations)
 - Docker Compose test configuration with 7 services (2 PostgreSQL, Redis, RabbitMQ, auth, profile, gateway) + migrator
 - Healthchecks for all infrastructure services with `condition: service_healthy`
 - `condition: service_completed_successfully` for migrator dependency
@@ -115,9 +142,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enum field names in proto aligned with TypeScript types (`activityType`, `actions`)
 - Idempotency in `createProfile` — check existing profile before creation
 - `updateManyAndReturn` with status guard to prevent duplicate reputation decrements
-- Migration of volumes for PostgreSQL (`/var/lib/postgresql/data`)
+- PostgreSQL volume mount path (`/var/lib/postgresql/data`)
 
-## [0.1.0] - 2026-09-27
+## 0.1.0 - 2026-09-27
 
 ### Added
 
@@ -196,7 +223,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Session validation includes device, OS, and browser fingerprint
 - Blocked and inactive users have all sessions invalidated
 - Redis payload cache keyed by user ID and session ID
-
-[Unreleased]: http://gitea.temaxo.com/TAVERN/api/compare/0.2.0...HEAD
-[0.2.0]: http://gitea.temaxo.com/TAVERN/api/releases/tag/0.2.0
-[0.1.0]: http://gitea.temaxo.com/TAVERN/api/releases/tag/0.1.0

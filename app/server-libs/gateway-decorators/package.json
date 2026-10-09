@@ -1,0 +1,27 @@
+{
+  "name": "@org/gateway-decorators",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@org/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/swagger": "^11.4.7",
+    "@org/enums": "0.0.1",
+    "@org/grpc-types": "0.0.1",
+    "@org/gateway-authorization": "0.0.1",
+    "ua-parser-js": "^2.0.10"
+  }
+}

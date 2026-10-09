@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ActivityFeatureModule } from '@org/activity-feature';
-import { ProfileFeatureModule } from '@org/profile-feature';
-import { ProfileRmqFeatureModule } from '@org/profile-rmq-feature';
+import { ProfileActivityFeatureModule } from '@org/profile-activity-feature';
+import { ProfileProfilesFeatureModule } from '@org/profile-profiles-feature';
+import { ProfileReputationFeatureModule } from '@org/profile-reputation-feature';
+import { ProfileRmqHandlerModule } from '@org/profile-rmq-handler';
 import { ProfileUtilsModule } from '@org/profile-utils';
-import { ReputationFeatureModule } from '@org/reputation-feature';
 
 @Module({
   imports: [
@@ -12,10 +12,10 @@ import { ReputationFeatureModule } from '@org/reputation-feature';
       isGlobal: true,
     }),
     ProfileUtilsModule,
-    ProfileRmqFeatureModule,
-    ProfileFeatureModule,
-    ReputationFeatureModule,
-    ActivityFeatureModule,
+    ProfileRmqHandlerModule,
+    ProfileProfilesFeatureModule,
+    ProfileReputationFeatureModule,
+    ProfileActivityFeatureModule,
   ],
 })
 export class AppModule {}

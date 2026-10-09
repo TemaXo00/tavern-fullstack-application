@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AuthFeatureModule } from '@org/auth-feature';
+import { AuthAuthorizationFeatureModule } from '@org/auth-authorization-feature';
+import { AuthSessionFeatureModule } from '@org/auth-session-feature';
+import { AuthTokenFeatureModule } from '@org/auth-token-feature';
+import { AuthUserFeatureModule } from '@org/auth-user-feature';
 import { AuthUtilsModule } from '@org/auth-utils';
-import { SessionFeatureModule } from '@org/session-feature';
-import { TokenFeatureModule } from '@org/token-feature';
-import { UserFeatureModule } from '@org/user-feature';
 
 @Module({
   imports: [
@@ -12,10 +12,10 @@ import { UserFeatureModule } from '@org/user-feature';
       isGlobal: true,
     }),
     AuthUtilsModule,
-    AuthFeatureModule,
-    SessionFeatureModule,
-    TokenFeatureModule,
-    UserFeatureModule,
+    AuthAuthorizationFeatureModule,
+    AuthSessionFeatureModule,
+    AuthTokenFeatureModule,
+    AuthUserFeatureModule,
   ],
 })
 export class AppModule {}

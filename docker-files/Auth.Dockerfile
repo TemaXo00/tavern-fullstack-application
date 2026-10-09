@@ -6,26 +6,28 @@ COPY package*.json ./
 COPY nx.json ./
 COPY tsconfig*.json ./
 
-COPY services/auth ./services/auth
+COPY server/auth ./server/auth
 COPY proto/auth.proto ./proto/auth.proto
 COPY proto/auth ./proto/auth
 COPY proto/shared ./proto/shared
-# Authorization deps
-COPY libs/auth-core ./libs/auth-core
-COPY libs/auth-core-utils ./libs/auth-core-utils
-COPY libs/auth-database ./libs/auth-database
-COPY libs/shared-utils ./libs/shared-utils
-# Application deps
-COPY libs/bootstrap ./libs/bootstrap
-COPY libs/types ./libs/types
-# Microservices deps
-COPY libs/rmq-config ./libs/rmq-config
-# Auth Deps
-COPY libs/auth-utils ./libs/auth-utils
-COPY libs/auth-feature ./libs/auth-feature
-COPY libs/session-feature ./libs/session-feature
-COPY libs/token-feature ./libs/token-feature
-COPY libs/user-feature ./libs/user-feature
+
+COPY server-libs/auth-authorization-core ./server-libs/auth-authorization-core
+COPY server-libs/auth-authorization-utils ./server-libs/auth-authorization-utils
+COPY server-libs/auth-utils ./server-libs/auth-utils
+COPY server-libs/auth-database ./server-libs/auth-database
+COPY server-libs/shared-utils ./server-libs/shared-utils
+COPY server-libs/auth-authorization-feature ./server-libs/auth-authorization-feature
+COPY server-libs/auth-session-feature ./server-libs/auth-session-feature
+COPY server-libs/auth-token-feature ./server-libs/auth-token-feature
+COPY server-libs/auth-user-feature ./server-libs/auth-user-feature
+
+COPY core-libs/bootstrap ./core-libs/bootstrap
+COPY core-libs/base-types ./core-libs/base-types
+COPY core-libs/grpc-types ./core-libs/grpc-types
+COPY core-libs/shared-types ./core-libs/shared-types
+COPY core-libs/enums ./core-libs/enums
+COPY core-libs/rmq-config ./core-libs/rmq-config
+COPY core-libs/rmq-messages ./core-libs/rmq-messages
 
 RUN npm ci
 RUN npm run auth-db:generate
@@ -46,20 +48,27 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-COPY --from=builder /app/services/auth/dist ./dist
+COPY --from=builder /app/server/auth/dist ./dist
 COPY --from=builder /app/proto ./proto
-COPY --from=builder /app/libs/auth-core/dist ./node_modules/@org/auth-core
-COPY --from=builder /app/libs/auth-core-utils/dist ./node_modules/@org/auth-core-utils
-COPY --from=builder /app/libs/auth-database/dist ./node_modules/@org/auth-database
-COPY --from=builder /app/libs/shared-utils/dist ./node_modules/@org/shared-utils
-COPY --from=builder /app/libs/bootstrap/dist ./node_modules/@org/bootstrap
-COPY --from=builder /app/libs/types/dist ./node_modules/@org/types
-COPY --from=builder /app/libs/rmq-config/dist ./node_modules/@org/rmq-config
-COPY --from=builder /app/libs/auth-utils/dist ./node_modules/@org/auth-utils
-COPY --from=builder /app/libs/auth-feature/dist ./node_modules/@org/auth-feature
-COPY --from=builder /app/libs/session-feature/dist ./node_modules/@org/session-feature
-COPY --from=builder /app/libs/token-feature/dist ./node_modules/@org/token-feature
-COPY --from=builder /app/libs/user-feature/dist ./node_modules/@org/user-feature
+
+COPY --from=builder /app/server-libs/auth-authorization-core/dist ./node_modules/@org/auth-authorization-core
+COPY --from=builder /app/server-libs/auth-authorization-utils/dist ./node_modules/@org/auth-authorization-utils
+COPY --from=builder /app/server-libs/auth-utils/dist ./node_modules/@org/auth-utils
+COPY --from=builder /app/server-libs/auth-database/dist ./node_modules/@org/auth-database
+COPY --from=builder /app/server-libs/shared-utils/dist ./node_modules/@org/shared-utils
+COPY --from=builder /app/server-libs/auth-authorization-feature/dist ./node_modules/@org/auth-authorization-feature
+COPY --from=builder /app/server-libs/auth-session-feature/dist ./node_modules/@org/auth-session-feature
+COPY --from=builder /app/server-libs/auth-token-feature/dist ./node_modules/@org/auth-token-feature
+COPY --from=builder /app/server-libs/auth-user-feature/dist ./node_modules/@org/auth-user-feature
+
+COPY --from=builder /app/core-libs/bootstrap/dist ./node_modules/@org/bootstrap
+COPY --from=builder /app/core-libs/base-types/dist ./node_modules/@org/base-types
+COPY --from=builder /app/core-libs/grpc-types/dist ./node_modules/@org/grpc-types
+COPY --from=builder /app/core-libs/shared-types/dist ./node_modules/@org/shared-types
+COPY --from=builder /app/core-libs/enums/dist ./node_modules/@org/enums
+COPY --from=builder /app/core-libs/rmq-config/dist ./node_modules/@org/rmq-config
+COPY --from=builder /app/core-libs/rmq-messages/dist ./node_modules/@org/rmq-messages
+
 COPY --from=deps /app/node_modules ./node_modules
 
 RUN addgroup -g 1001 -S nodejs && \

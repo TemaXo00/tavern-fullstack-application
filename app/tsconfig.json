@@ -4,66 +4,6 @@
   "files": [],
   "references": [
     {
-      "path": "./libs/types"
-    },
-    {
-      "path": "./libs/gateway-core"
-    },
-    {
-      "path": "./libs/dto"
-    },
-    {
-      "path": "./libs/auth-feature"
-    },
-    {
-      "path": "./libs/auth-database"
-    },
-    {
-      "path": "./libs/rmq-config"
-    },
-    {
-      "path": "./libs/auth-utils"
-    },
-    {
-      "path": "./libs/session-feature"
-    },
-    {
-      "path": "./libs/token-feature"
-    },
-    {
-      "path": "./libs/shared-utils"
-    },
-    {
-      "path": "./libs/auth-core"
-    },
-    {
-      "path": "./libs/user-feature"
-    },
-    {
-      "path": "./libs/bootstrap"
-    },
-    {
-      "path": "./libs/auth-core-utils"
-    },
-    {
-      "path": "./libs/profile-database"
-    },
-    {
-      "path": "./libs/profile-rmq-feature"
-    },
-    {
-      "path": "./libs/profile-utils"
-    },
-    {
-      "path": "./libs/profile-feature"
-    },
-    {
-      "path": "./libs/activity-feature"
-    },
-    {
-      "path": "./libs/reputation-feature"
-    },
-    {
       "path": "./client/web"
     },
     {
@@ -104,6 +44,93 @@
     },
     {
       "path": "./server/event"
+    },
+    {
+      "path": "./core-libs/bootstrap"
+    },
+    {
+      "path": "./core-libs/rmq-config"
+    },
+    {
+      "path": "./core-libs/grpc-types"
+    },
+    {
+      "path": "./core-libs/shared-types"
+    },
+    {
+      "path": "./core-libs/validation-config"
+    },
+    {
+      "path": "./core-libs/validation-messages"
+    },
+    {
+      "path": "./server-libs/gateway-dto"
+    },
+    {
+      "path": "./server-libs/gateway-decorators"
+    },
+    {
+      "path": "./server-libs/gateway-controllers"
+    },
+    {
+      "path": "./server-libs/gateway-authorization"
+    },
+    {
+      "path": "./server-libs/profile-database"
+    },
+    {
+      "path": "./server-libs/auth-database"
+    },
+    {
+      "path": "./server-libs/auth-authorization-core"
+    },
+    {
+      "path": "./server-libs/auth-authorization-utils"
+    },
+    {
+      "path": "./server-libs/auth-authorization-feature"
+    },
+    {
+      "path": "./server-libs/profile-activity-feature"
+    },
+    {
+      "path": "./server-libs/auth-utils"
+    },
+    {
+      "path": "./server-libs/profile-profiles-feature"
+    },
+    {
+      "path": "./server-libs/profile-rmq-handler"
+    },
+    {
+      "path": "./server-libs/profile-reputation-feature"
+    },
+    {
+      "path": "./server-libs/profile-utils"
+    },
+    {
+      "path": "./server-libs/auth-session-feature"
+    },
+    {
+      "path": "./server-libs/shared-utils"
+    },
+    {
+      "path": "./server-libs/auth-token-feature"
+    },
+    {
+      "path": "./server-libs/auth-user-feature"
+    },
+    {
+      "path": "./server-libs/gateway-map"
+    },
+    {
+      "path": "./core-libs/rmq-messages"
+    },
+    {
+      "path": "./core-libs/enums"
+    },
+    {
+      "path": "./core-libs/base-types"
     }
   ],
   "compilerOptions": {}
