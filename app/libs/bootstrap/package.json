@@ -21,7 +21,7 @@
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.0",
     "@nestjs/microservices": "^11.2.1",
-    "nx": "23.1.1",
+    "nx": "^23.3.0",
     "@nestjs/swagger": "^11.4.7",
     "compression": "^1.8.1",
     "express-rate-limit": "^8.6.2",

@@ -1,6 +1,6 @@
 services:
   rabbitmq:
-    image: rabbitmq:4.2.4-alpine
+    image: rabbitmq:4.3.6-alpine
     container_name: tavern-test-rmq
     networks:
       - tavern
@@ -16,7 +16,7 @@ services:
       retries: 5
 
   redis:
-    image: redis:8.6.5-alpine
+    image: redis:8.10.2-alpine
     container_name: tavern-test-redis
     networks:
       - tavern
@@ -36,7 +36,7 @@ services:
       retries: 5
 
   auth-db:
-    image: postgres:18.4-alpine
+    image: postgres:18.6-alpine
     container_name: tavern-test-auth-db
     networks:
       - tavern
@@ -59,7 +59,7 @@ services:
       - auth_db_data:/var/lib/postrgesql
 
   profile-db:
-    image: postgres:18.4-alpine
+    image: postgres:18.6-alpine
     container_name: tavern-test-profile-db
     networks:
       - tavern
