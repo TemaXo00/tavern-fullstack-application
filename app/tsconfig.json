@@ -4,16 +4,10 @@
   "files": [],
   "references": [
     {
-      "path": "./services/gateway"
-    },
-    {
       "path": "./libs/types"
     },
     {
       "path": "./libs/gateway-core"
-    },
-    {
-      "path": "./services/auth"
     },
     {
       "path": "./libs/dto"
@@ -26,15 +20,6 @@
     },
     {
       "path": "./libs/rmq-config"
-    },
-    {
-      "path": "./services/log"
-    },
-    {
-      "path": "./services/profile"
-    },
-    {
-      "path": "./services/mail"
     },
     {
       "path": "./libs/auth-utils"
@@ -79,31 +64,46 @@
       "path": "./libs/reputation-feature"
     },
     {
-      "path": "./services/event"
-    },
-    {
-      "path": "./services/blog"
-    },
-    {
-      "path": "./services/chat"
-    },
-    {
-      "path": "./services/content"
-    },
-    {
-      "path": "./services/file"
-    },
-    {
-      "path": "./services/forum"
-    },
-    {
-      "path": "./services/appeals"
-    },
-    {
       "path": "./client/web"
     },
     {
       "path": "./client/docs"
+    },
+    {
+      "path": "./server/gateway"
+    },
+    {
+      "path": "./server/auth"
+    },
+    {
+      "path": "./server/profile"
+    },
+    {
+      "path": "./server/appeals"
+    },
+    {
+      "path": "./server/blog"
+    },
+    {
+      "path": "./server/chat"
+    },
+    {
+      "path": "./server/content"
+    },
+    {
+      "path": "./server/file"
+    },
+    {
+      "path": "./server/forum"
+    },
+    {
+      "path": "./server/log"
+    },
+    {
+      "path": "./server/mail"
+    },
+    {
+      "path": "./server/event"
     }
   ],
   "compilerOptions": {}

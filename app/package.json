@@ -108,9 +108,9 @@
     "webpack-dev-server": "^5.2.1"
   },
   "workspaces": [
-    "services/*",
     "libs/*",
     "client/web",
-    "client/docs"
+    "client/docs",
+    "server/*"
   ]
 }
