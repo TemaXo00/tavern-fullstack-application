@@ -98,6 +98,7 @@ services:
       TAVERN_RMQ_URL: ${TAVERN_RMQ_URL}
       TAVERN_REDIS_URL: ${TAVERN_REDIS_URL}
       TAVERN_REDIS_PASSWORD: ${TAVERN_REDIS_PASSWORD}
+      TAVERN_PROFILE_CACHE_TTL: ${TAVERN_PROFILE_CACHE_TTL}
     depends_on:
       auth-db:
         condition: service_healthy
