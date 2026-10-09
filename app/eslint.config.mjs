@@ -9,11 +9,16 @@ export default [
   ...nx.configs['flat/javascript'],
 
   {
-    ignores: ['**/dist', '**/build', '**/coverage'],
+    ignores: [
+      '**/dist',
+      '**/build',
+      '**/coverage',
+      '**/vite.config.*.timestamp*',
+    ],
   },
 
   {
-    files: ['**/*.{ts,tsx,js,jsx}'],
+    files: ['**/*.{ts,tsx,js,jsx}', '**/*.vue'],
     plugins: {
       import: importPlugin,
       'unused-imports': unusedImports,
