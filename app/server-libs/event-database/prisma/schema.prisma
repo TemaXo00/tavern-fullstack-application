@@ -7,3 +7,99 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model EventUserSnapshot {
+  id String @id @default(uuid(7))
+
+  userId String @unique @map("user_id")
+  nickname String
+  avatarId String? @map("avatar_id")
+
+  organized_events Event[] @relation("EventOrganizer")
+  events_recorded EventParticipant[]
+
+  deletedAt DateTime? @map("deleted_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([deletedAt])
+  @@index([nickname])
+  @@map("event_user_snapshots")
+}
+
+model EventTag {
+  id String @id @default(uuid(7))
+
+  slug String @unique
+  name String
+  description String?
+  color String?
+
+  events Event[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("event_tags")
+}
+
+model Event {
+  id String @id @default(uuid(7))
+
+  name String
+  description String?
+  dateAndTime DateTime @map("date_and_time")
+  totalPlaces Int @map("total_places")
+  leftPlaces Int @map("left_places")
+  status EventStatuses @default(DRAFT)
+
+  tags EventTag[]
+
+  organizerId String @map("organizer_id")
+  organizer EventUserSnapshot @relation("EventOrganizer", fields: [organizerId], references: [userId], onDelete: Restrict)
+
+  participants EventParticipant[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([status])
+  @@index([leftPlaces])
+  @@index([dateAndTime])
+  @@index([organizerId])
+  @@map("events")
+}
+
+model EventParticipant {
+  id String @id @default(uuid(7))
+
+  userId String @map("user_id")
+  user EventUserSnapshot @relation(fields: [userId], references: [userId], onDelete: Restrict)
+
+  eventId String @map("event_id")
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  note String? @db.VarChar(500)
+  status ParticipantStatus @default(WAITLIST)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, eventId])
+  @@index([eventId])
+  @@map("event_participants")
+}
+
+enum ParticipantStatus {
+  CONFIRMED
+  WAITLIST
+  CANCELLED
+}
+
+enum EventStatuses {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+  FINISHED
+}
