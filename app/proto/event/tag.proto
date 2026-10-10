@@ -1,0 +1,98 @@
+syntax = 'proto3';
+
+package tag;
+
+// Input Messages
+
+message ValidateInput {
+  string accessToken = 1;
+  SessionInput session = 2;
+}
+
+message SessionInput {
+    string os = 1;
+    string device = 2;
+    string browser = 3;
+    string ip = 4;
+}
+
+message PaginationInput {
+    optional int32 page = 1;
+    optional int32 limit = 2;
+    optional string search = 3;
+}
+
+message GetPaginatedTagsInput {
+    PaginationInput pagination = 1;
+}
+
+message GetTagInput {
+    string slug = 1;
+}
+
+message CreateTagInput {
+    ValidateInput validation = 1;
+    string name = 2;
+    optional string description = 3;
+    optional string color = 4;
+}
+
+message UpdateTagInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+    optional string description = 3;
+    optional string color = 4;
+}
+
+message DeleteTagInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
+// Output Messages
+
+message TagListOutput {
+    string slug = 1;
+    string name = 2;
+    optional string color = 3;
+}
+
+message PaginationOutput {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 total = 3;
+    int32 totalPages = 4;
+    bool hasNext = 5;
+    bool hasPrev = 6;
+    optional string search = 7;
+}
+
+message EventShortOutput {
+    string name = 1;
+    string dateAndTime = 2;
+    int32 leftPlaces = 3;
+}
+
+message PaginatedTagsOutput {
+    PaginationOutput pagination = 1;
+    repeated TagListOutput tags = 2;
+}
+
+message TagOutput {
+    string slug = 1;
+    string name = 2;
+    optional string description = 3;
+    optional string color = 4;
+    string createdAt = 5;
+    string updatedAt = 6;
+}
+
+message TagDetailedOutput {
+    string slug = 1;
+    string name = 2;
+    optional string description = 3;
+    optional string color = 4;
+    repeated EventShortOutput events = 5;
+    string createdAt = 6;
+    string updatedAt = 7;
+}
