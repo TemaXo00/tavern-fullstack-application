@@ -1,6 +1,12 @@
 [
   {
-    "label": "INFRASTRUCTURE: Up Containers",
+    "label": "DOCKER: Up INFRA Containers",
+    "command": "docker compose -f docker-compose.infra.yml up --build -d",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT",
+  },
+  {
+    "label": "DOCKER: Up DEV TEST Containers",
     "command": "docker compose -f docker-compose.infra.yml up --build -d",
     "use_new_terminal": true,
     "cwd": "$ZED_WORKTREE_ROOT",
@@ -37,13 +43,25 @@
   },
   {
     "label": "NX: Generate Nest App",
-    "command": "nx g @nx/nest:app --linter eslint --e2eTestRunner none --unitTestRunner none",
+    "command": "npx nx g @nx/nest:app --linter eslint --e2eTestRunner none --unitTestRunner none",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
+    "label": "NX: Generate Vue App",
+    "command": "npx nx g @nx/vue:app --bundler vite --linter eslint --unitTestRunner none --e2eTestRunner none --inSourceTest false --routing true -s css",
     "use_new_terminal": true,
     "cwd": "$ZED_WORKTREE_ROOT/app",
   },
   {
     "label": "NX: Generate Nest lib",
     "command": "npx nx g @nx/nest:lib --buildable --linter eslint --unitTestRunner none",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
+    "label": "NX: Generate Vue lib",
+    "command": "npx nx g @nx/vue:lib --linter eslint --unitTestRunner none --bundler vite --component true --inSourceTest false --minimal",
     "use_new_terminal": true,
     "cwd": "$ZED_WORKTREE_ROOT/app",
   },
@@ -132,6 +150,12 @@
     "cwd": "$ZED_WORKTREE_ROOT/app",
   },
   {
+    "label": "AUTH: DB Generate",
+    "command": "npm run auth-db:generate",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
     "label": "PROFILE: Service DEV",
     "command": "npx nx serve profile",
     "use_new_terminal": true,
@@ -158,6 +182,48 @@
   {
     "label": "PROFILE: DB Create Migration",
     "command": "npm run profile-db:migrate-dev",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
+    "label": "PROFILE: DB Generate",
+    "command": "npm run profile-db:generate",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
+    "label": "EVENT: Service DEV",
+    "command": "npx nx serve event",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
+    "label": "EVENT: Service Build",
+    "command": "npx nx build event",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
+    "label": "EVENT: DB studio",
+    "command": "npm run event-db:studio",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
+    "label": "EVENT: DB Apply Migrations",
+    "command": "npm run event-db:migrate-deploy",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
+    "label": "EVENT: DB Create Migration",
+    "command": "npm run event-db:migrate-dev",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
+    "label": "EVENT: DB Generate",
+    "command": "npm run event-db:generate",
     "use_new_terminal": true,
     "cwd": "$ZED_WORKTREE_ROOT/app",
   },

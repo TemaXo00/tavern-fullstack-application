@@ -4,134 +4,140 @@
   "files": [],
   "references": [
     {
-      "path": "./client/web"
+      "path": "./client/web",
     },
     {
-      "path": "./client/docs"
+      "path": "./client/docs",
     },
     {
-      "path": "./server/gateway"
+      "path": "./server/gateway",
     },
     {
-      "path": "./server/auth"
+      "path": "./server/auth",
     },
     {
-      "path": "./server/profile"
+      "path": "./server/profile",
     },
     {
-      "path": "./server/appeals"
+      "path": "./server/appeals",
     },
     {
-      "path": "./server/blog"
+      "path": "./server/blog",
     },
     {
-      "path": "./server/chat"
+      "path": "./server/chat",
     },
     {
-      "path": "./server/content"
+      "path": "./server/content",
     },
     {
-      "path": "./server/file"
+      "path": "./server/file",
     },
     {
-      "path": "./server/forum"
+      "path": "./server/forum",
     },
     {
-      "path": "./server/log"
+      "path": "./server/log",
     },
     {
-      "path": "./server/mail"
+      "path": "./server/mail",
     },
     {
-      "path": "./server/event"
+      "path": "./server/event",
     },
     {
-      "path": "./core-libs/bootstrap"
+      "path": "./core-libs/bootstrap",
     },
     {
-      "path": "./core-libs/rmq-config"
+      "path": "./core-libs/rmq-config",
     },
     {
-      "path": "./core-libs/grpc-types"
+      "path": "./core-libs/grpc-types",
     },
     {
-      "path": "./core-libs/shared-types"
+      "path": "./core-libs/shared-types",
     },
     {
-      "path": "./core-libs/validation-config"
+      "path": "./core-libs/validation-config",
     },
     {
-      "path": "./core-libs/validation-messages"
+      "path": "./core-libs/validation-messages",
     },
     {
-      "path": "./server-libs/gateway-dto"
+      "path": "./server-libs/gateway-dto",
     },
     {
-      "path": "./server-libs/gateway-decorators"
+      "path": "./server-libs/gateway-decorators",
     },
     {
-      "path": "./server-libs/gateway-controllers"
+      "path": "./server-libs/gateway-controllers",
     },
     {
-      "path": "./server-libs/gateway-authorization"
+      "path": "./server-libs/gateway-authorization",
     },
     {
-      "path": "./server-libs/profile-database"
+      "path": "./server-libs/profile-database",
     },
     {
-      "path": "./server-libs/auth-database"
+      "path": "./server-libs/auth-database",
     },
     {
-      "path": "./server-libs/auth-authorization-core"
+      "path": "./server-libs/auth-authorization-core",
     },
     {
-      "path": "./server-libs/auth-authorization-utils"
+      "path": "./server-libs/auth-authorization-utils",
     },
     {
-      "path": "./server-libs/auth-authorization-feature"
+      "path": "./server-libs/auth-authorization-feature",
     },
     {
-      "path": "./server-libs/profile-activity-feature"
+      "path": "./server-libs/profile-activity-feature",
     },
     {
-      "path": "./server-libs/auth-utils"
+      "path": "./server-libs/auth-utils",
     },
     {
-      "path": "./server-libs/profile-profiles-feature"
+      "path": "./server-libs/profile-profiles-feature",
     },
     {
-      "path": "./server-libs/profile-rmq-handler"
+      "path": "./server-libs/profile-rmq-handler",
     },
     {
-      "path": "./server-libs/profile-reputation-feature"
+      "path": "./server-libs/profile-reputation-feature",
     },
     {
-      "path": "./server-libs/profile-utils"
+      "path": "./server-libs/profile-utils",
     },
     {
-      "path": "./server-libs/auth-session-feature"
+      "path": "./server-libs/auth-session-feature",
     },
     {
-      "path": "./server-libs/shared-utils"
+      "path": "./server-libs/shared-utils",
     },
     {
-      "path": "./server-libs/auth-token-feature"
+      "path": "./server-libs/auth-token-feature",
     },
     {
-      "path": "./server-libs/auth-user-feature"
+      "path": "./server-libs/auth-user-feature",
     },
     {
-      "path": "./server-libs/gateway-map"
+      "path": "./server-libs/gateway-map",
     },
     {
-      "path": "./core-libs/rmq-messages"
+      "path": "./core-libs/rmq-messages",
     },
     {
-      "path": "./core-libs/enums"
+      "path": "./core-libs/enums",
     },
     {
-      "path": "./core-libs/base-types"
-    }
+      "path": "./core-libs/base-types",
+    },
+    {
+      "path": "./server-libs/event-database",
+    },
+    {
+      "path": "./client-libs/layout-auth",
+    },
   ],
-  "compilerOptions": {}
+  "compilerOptions": {},
 }
