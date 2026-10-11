@@ -11,7 +11,6 @@ COPY proto ./proto
 
 COPY server-libs/auth-authorization-core ./server-libs/auth-authorization-core
 COPY server-libs/auth-authorization-utils ./server-libs/auth-authorization-utils
-COPY server-libs/auth-utils ./server-libs/auth-utils
 COPY server-libs/auth-database ./server-libs/auth-database
 COPY server-libs/shared-utils ./server-libs/shared-utils
 
@@ -20,14 +19,14 @@ COPY core-libs/base-types ./core-libs/base-types
 COPY core-libs/grpc-types ./core-libs/grpc-types
 COPY core-libs/shared-types ./core-libs/shared-types
 COPY core-libs/enums ./core-libs/enums
+COPY core-libs/validation-config ./core-libs/validation-config
+COPY core-libs/validation-messages ./core-libs/validation-messages
 
 COPY server-libs/gateway-decorators ./server-libs/gateway-decorators
 COPY server-libs/gateway-dto ./server-libs/gateway-dto
 COPY server-libs/gateway-map ./server-libs/gateway-map
 COPY server-libs/gateway-controllers ./server-libs/gateway-controllers
 COPY server-libs/gateway-authorization ./server-libs/gateway-authorization
-COPY core-libs/validation-config ./core-libs/validation-config
-COPY core-libs/validation-messages ./core-libs/validation-messages
 
 RUN npm ci
 RUN npm run auth-db:generate
@@ -53,7 +52,6 @@ COPY --from=builder /app/proto ./proto
 
 COPY --from=builder /app/server-libs/auth-authorization-core/dist ./node_modules/@org/auth-authorization-core
 COPY --from=builder /app/server-libs/auth-authorization-utils/dist ./node_modules/@org/auth-authorization-utils
-COPY --from=builder /app/server-libs/auth-utils/dist ./node_modules/@org/auth-utils
 COPY --from=builder /app/server-libs/auth-database/dist ./node_modules/@org/auth-database
 COPY --from=builder /app/server-libs/shared-utils/dist ./node_modules/@org/shared-utils
 
@@ -62,14 +60,15 @@ COPY --from=builder /app/core-libs/base-types/dist ./node_modules/@org/base-type
 COPY --from=builder /app/core-libs/grpc-types/dist ./node_modules/@org/grpc-types
 COPY --from=builder /app/core-libs/shared-types/dist ./node_modules/@org/shared-types
 COPY --from=builder /app/core-libs/enums/dist ./node_modules/@org/enums
+COPY --from=builder /app/core-libs/validation-config/dist ./node_modules/@org/validation-config
+COPY --from=builder /app/core-libs/validation-messages/dist ./node_modules/@org/validation-messages
 
 COPY --from=builder /app/server-libs/gateway-decorators/dist ./node_modules/@org/gateway-decorators
 COPY --from=builder /app/server-libs/gateway-dto/dist ./node_modules/@org/gateway-dto
 COPY --from=builder /app/server-libs/gateway-map/dist ./node_modules/@org/gateway-map
 COPY --from=builder /app/server-libs/gateway-controllers/dist ./node_modules/@org/gateway-controllers
 COPY --from=builder /app/server-libs/gateway-authorization/dist ./node_modules/@org/gateway-authorization
-COPY --from=builder /app/core-libs/validation-config/dist ./node_modules/@org/validation-config
-COPY --from=builder /app/core-libs/validation-messages/dist ./node_modules/@org/validation-messages
+
 
 COPY --from=deps /app/node_modules ./node_modules
 

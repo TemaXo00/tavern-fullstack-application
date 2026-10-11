@@ -13,9 +13,8 @@ COPY proto/shared ./proto/shared
 
 COPY server-libs/auth-authorization-core ./server-libs/auth-authorization-core
 COPY server-libs/auth-authorization-utils ./server-libs/auth-authorization-utils
-COPY server-libs/auth-utils ./server-libs/auth-utils
-COPY server-libs/auth-database ./server-libs/auth-database
 COPY server-libs/shared-utils ./server-libs/shared-utils
+COPY server-libs/auth-database ./server-libs/auth-database
 
 COPY server-libs/profile-database ./server-libs/profile-database
 COPY server-libs/profile-utils ./server-libs/profile-utils
@@ -59,9 +58,8 @@ COPY --from=builder /app/proto ./proto
 
 COPY --from=builder /app/server-libs/auth-authorization-utils/dist ./node_modules/@org/auth-authorization-utils
 COPY --from=builder /app/server-libs/auth-authorization-core/dist ./node_modules/@org/auth-authorization-core
-COPY --from=builder /app/server-libs/auth-utils/dist ./node_modules/@org/auth-utils
-COPY --from=builder /app/server-libs/auth-database/dist ./node_modules/@org/auth-database
 COPY --from=builder /app/server-libs/shared-utils/dist ./node_modules/@org/shared-utils
+COPY --from=builder /app/server-libs/auth-database/dist ./node_modules/@org/auth-database
 
 COPY --from=builder /app/server-libs/profile-database/dist ./node_modules/@org/profile-database
 COPY --from=builder /app/server-libs/profile-utils/dist ./node_modules/@org/profile-utils

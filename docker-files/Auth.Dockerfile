@@ -11,11 +11,12 @@ COPY proto/auth.proto ./proto/auth.proto
 COPY proto/auth ./proto/auth
 COPY proto/shared ./proto/shared
 
+COPY server-libs/auth-database ./server-libs/auth-database
 COPY server-libs/auth-authorization-core ./server-libs/auth-authorization-core
 COPY server-libs/auth-authorization-utils ./server-libs/auth-authorization-utils
-COPY server-libs/auth-utils ./server-libs/auth-utils
-COPY server-libs/auth-database ./server-libs/auth-database
 COPY server-libs/shared-utils ./server-libs/shared-utils
+
+COPY server-libs/auth-utils ./server-libs/auth-utils
 COPY server-libs/auth-authorization-feature ./server-libs/auth-authorization-feature
 COPY server-libs/auth-session-feature ./server-libs/auth-session-feature
 COPY server-libs/auth-token-feature ./server-libs/auth-token-feature
@@ -53,11 +54,12 @@ ENV NODE_ENV=production
 COPY --from=builder /app/server/auth/dist ./dist
 COPY --from=builder /app/proto ./proto
 
+COPY --from=builder /app/server-libs/auth-database/dist ./node_modules/@org/auth-database
 COPY --from=builder /app/server-libs/auth-authorization-core/dist ./node_modules/@org/auth-authorization-core
 COPY --from=builder /app/server-libs/auth-authorization-utils/dist ./node_modules/@org/auth-authorization-utils
-COPY --from=builder /app/server-libs/auth-utils/dist ./node_modules/@org/auth-utils
-COPY --from=builder /app/server-libs/auth-database/dist ./node_modules/@org/auth-database
 COPY --from=builder /app/server-libs/shared-utils/dist ./node_modules/@org/shared-utils
+
+COPY --from=builder /app/server-libs/auth-utils/dist ./node_modules/@org/auth-utils
 COPY --from=builder /app/server-libs/auth-authorization-feature/dist ./node_modules/@org/auth-authorization-feature
 COPY --from=builder /app/server-libs/auth-session-feature/dist ./node_modules/@org/auth-session-feature
 COPY --from=builder /app/server-libs/auth-token-feature/dist ./node_modules/@org/auth-token-feature
