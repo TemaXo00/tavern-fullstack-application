@@ -10,6 +10,7 @@ COPY server/gateway ./server/gateway
 COPY proto ./proto
 
 COPY server-libs/auth-authorization-core ./server-libs/auth-authorization-core
+COPY server-libs/auth-authorization-utils ./server-libs/auth-authorization-utils
 COPY server-libs/auth-utils ./server-libs/auth-utils
 COPY server-libs/auth-database ./server-libs/auth-database
 COPY server-libs/shared-utils ./server-libs/shared-utils
@@ -51,6 +52,7 @@ COPY --from=builder /app/server/gateway/dist ./dist
 COPY --from=builder /app/proto ./proto
 
 COPY --from=builder /app/server-libs/auth-authorization-core/dist ./node_modules/@org/auth-authorization-core
+COPY --from=builder /app/server-libs/auth-authorization-utils/dist ./node_modules/@org/auth-authorization-utils
 COPY --from=builder /app/server-libs/auth-utils/dist ./node_modules/@org/auth-utils
 COPY --from=builder /app/server-libs/auth-database/dist ./node_modules/@org/auth-database
 COPY --from=builder /app/server-libs/shared-utils/dist ./node_modules/@org/shared-utils
