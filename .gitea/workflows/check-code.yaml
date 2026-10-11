@@ -13,8 +13,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: "npm"
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install deps
+        run: cd app && npm ci
+
       - name: Check ESLint
-        run: cd app && npx --yes eslint@9.8.0 . --max-warnings 0
+        run: cd app && npm run all:lint
 
       - name: Check Prettier
-        run: cd app && npx --yes prettier@3.8.1 --check .
+        run: cd app && npx prettier --check .
