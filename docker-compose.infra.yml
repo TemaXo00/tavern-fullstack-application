@@ -95,11 +95,12 @@ services:
       - event_db_data:/var/lib/postrgesql
 
   db_migrator:
-    image: ${DOCKER_REGISTRY}/temaxo00/tavern-migrator:dev
+    image: tavern-migrator:latest
     container_name: tavern-database-migrator
     environment:
       TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_URL}
       TAVERN_PROFILE_DB_URL: ${TAVERN_PROFILE_DB_URL}
+      TAVERN_EVENT_DB_URL: ${TAVERN_EVENT_DB_URL}
     depends_on:
       auth-db:
         condition: service_healthy

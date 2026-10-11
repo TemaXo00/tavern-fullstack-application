@@ -1,5 +1,11 @@
 [
   {
+    "label": "DEV: Create infrastructure",
+    "command": "./scripts/dev-workspace.setup.sh",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT",
+  },
+  {
     "label": "DOCKER: Up INFRA Containers",
     "command": "docker compose -f docker-compose.infra.yml up --build -d",
     "use_new_terminal": true,
@@ -7,7 +13,7 @@
   },
   {
     "label": "DOCKER: Up DEV TEST Containers",
-    "command": "docker compose -f docker-compose.infra.yml up --build -d",
+    "command": "docker compose -f docker-compose.dev.yml up --build -d",
     "use_new_terminal": true,
     "cwd": "$ZED_WORKTREE_ROOT",
   },
