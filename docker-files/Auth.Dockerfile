@@ -28,6 +28,8 @@ COPY core-libs/shared-types ./core-libs/shared-types
 COPY core-libs/enums ./core-libs/enums
 COPY core-libs/rmq-config ./core-libs/rmq-config
 COPY core-libs/rmq-messages ./core-libs/rmq-messages
+COPY core-libs/validation-config ./core-libs/validation-config
+COPY core-libs/validation-messages ./core-libs/validation-messages
 
 RUN npm ci
 RUN npm run auth-db:generate
@@ -68,6 +70,8 @@ COPY --from=builder /app/core-libs/shared-types/dist ./node_modules/@org/shared-
 COPY --from=builder /app/core-libs/enums/dist ./node_modules/@org/enums
 COPY --from=builder /app/core-libs/rmq-config/dist ./node_modules/@org/rmq-config
 COPY --from=builder /app/core-libs/rmq-messages/dist ./node_modules/@org/rmq-messages
+COPY --from=builder /app/core-libs/validation-config/dist ./node_modules/@org/validation-config
+COPY --from=builder /app/core-libs/validation-messages/dist ./node_modules/@org/validation-messages
 
 COPY --from=deps /app/node_modules ./node_modules
 

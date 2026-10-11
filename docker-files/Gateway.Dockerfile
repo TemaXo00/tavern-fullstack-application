@@ -25,6 +25,8 @@ COPY server-libs/gateway-dto ./server-libs/gateway-dto
 COPY server-libs/gateway-map ./server-libs/gateway-map
 COPY server-libs/gateway-controllers ./server-libs/gateway-controllers
 COPY server-libs/gateway-authorization ./server-libs/gateway-authorization
+COPY core-libs/validation-config ./core-libs/validation-config
+COPY core-libs/validation-messages ./core-libs/validation-messages
 
 RUN npm ci
 RUN npm run auth-db:generate
@@ -64,6 +66,8 @@ COPY --from=builder /app/server-libs/gateway-dto/dist ./node_modules/@org/gatewa
 COPY --from=builder /app/server-libs/gateway-map/dist ./node_modules/@org/gateway-map
 COPY --from=builder /app/server-libs/gateway-controllers/dist ./node_modules/@org/gateway-controllers
 COPY --from=builder /app/server-libs/gateway-authorization/dist ./node_modules/@org/gateway-authorization
+COPY --from=builder /app/core-libs/validation-config/dist ./node_modules/@org/validation-config
+COPY --from=builder /app/core-libs/validation-messages/dist ./node_modules/@org/validation-messages
 
 COPY --from=deps /app/node_modules ./node_modules
 
