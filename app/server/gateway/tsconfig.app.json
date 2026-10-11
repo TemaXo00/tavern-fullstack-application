@@ -23,6 +23,9 @@
     },
     {
       "path": "../../server-libs/gateway-authorization/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/auth-authorization-core/tsconfig.lib.json"
     }
   ]
 }

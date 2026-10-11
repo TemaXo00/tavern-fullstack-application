@@ -29,6 +29,9 @@
     },
     {
       "path": "../../server-libs/profile-activity-feature/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/auth-authorization-core/tsconfig.lib.json"
     }
   ]
 }

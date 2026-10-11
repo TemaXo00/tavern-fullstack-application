@@ -14,6 +14,9 @@
   "references": [
     {
       "path": "../../core-libs/bootstrap/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/auth-authorization-core/tsconfig.lib.json"
     }
   ]
 }

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { AuthAuthorizationCoreModule } from '@org/auth-authorization-core';
 import { ProfileActivityFeatureModule } from '@org/profile-activity-feature';
 import { ProfileProfilesFeatureModule } from '@org/profile-profiles-feature';
 import { ProfileReputationFeatureModule } from '@org/profile-reputation-feature';
@@ -11,6 +12,7 @@ import { ProfileUtilsModule } from '@org/profile-utils';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    AuthAuthorizationCoreModule,
     ProfileUtilsModule,
     ProfileRmqHandlerModule,
     ProfileProfilesFeatureModule,

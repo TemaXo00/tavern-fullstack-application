@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { AuthAuthorizationCoreModule } from '@org/auth-authorization-core';
 import { GatewayAuthorizationModule } from '@org/gateway-authorization';
 import { GatewayControllersModule } from '@org/gateway-controllers';
 import { GatewayMapModule } from '@org/gateway-map';
@@ -7,6 +8,7 @@ import { GatewayMapModule } from '@org/gateway-map';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    AuthAuthorizationCoreModule,
     GatewayAuthorizationModule,
     GatewayMapModule,
     GatewayControllersModule,
