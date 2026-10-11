@@ -17,6 +17,6 @@
     "target": "es2022",
     "customConditions": ["@org/source"],
     "noUncheckedSideEffectImports": false,
-    "types": ["*"],
-  },
+    "types": ["*"]
+  }
 }

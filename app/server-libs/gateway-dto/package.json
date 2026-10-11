@@ -23,6 +23,8 @@
     "class-transformer": "^0.5.1",
     "@org/shared-types": "0.0.1",
     "@org/enums": "0.0.1",
-    "@org/base-types": "0.0.1"
+    "@org/base-types": "0.0.1",
+    "@org/validation-config": "0.0.1",
+    "@org/validation-messages": "0.0.1"
   }
 }

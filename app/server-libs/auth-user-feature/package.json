@@ -21,7 +21,6 @@
     "@org/grpc-types": "0.0.1",
     "@org/auth-authorization-core": "0.0.1",
     "@org/auth-authorization-utils": "0.0.1",
-    "@grpc/grpc-js": "^1.14.4",
     "@org/auth-utils": "0.0.1",
     "@org/enums": "0.0.1"
   }

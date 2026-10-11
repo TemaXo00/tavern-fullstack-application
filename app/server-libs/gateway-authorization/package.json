@@ -27,6 +27,7 @@
     "@org/enums": "0.0.1",
     "express": "^5.2.1",
     "passport-jwt": "^4.0.1",
-    "ua-parser-js": "^2.0.10"
+    "ua-parser-js": "^2.0.10",
+    "@org/validation-messages": "0.0.1"
   }
 }

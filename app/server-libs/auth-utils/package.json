@@ -25,6 +25,8 @@
     "@org/grpc-types": "0.0.1",
     "@org/rmq-messages": "0.0.1",
     "@grpc/grpc-js": "^1.14.4",
-    "argon2": "^0.45.1"
+    "argon2": "^0.45.1",
+    "@org/validation-config": "0.0.1",
+    "@org/validation-messages": "0.0.1"
   }
 }
