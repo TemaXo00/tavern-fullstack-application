@@ -95,7 +95,7 @@ services:
       - event_db_data:/var/lib/postrgesql
 
   db_migrator:
-    image: tavern/migrator:latest
+    image: ${DOCKER_REGISTRY}/temaxo00/tavern-migrator:dev
     container_name: tavern-database-migrator
     environment:
       TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_URL}

@@ -1,11 +1,9 @@
 services:
-  rabbitmq:
+  rabbitmq-dev:
     image: rabbitmq:4.3.6-alpine
-    container_name: tavern-test-rmq
+    container_name: tavern-dev-rmq
     networks:
-      - tavern
-    ports:
-      - "${TAVERN_RMQ_PORT}:5672"
+      - tavern-dev
     environment:
       RABBITMQ_DEFAULT_USER: ${TAVERN_RMQ_USER}
       RABBITMQ_DEFAULT_PASS: ${TAVERN_RMQ_PASSWORD}
@@ -15,15 +13,13 @@ services:
       timeout: 5s
       retries: 5
 
-  redis:
+  redis-dev:
     image: redis:8.10.2-alpine
-    container_name: tavern-test-redis
+    container_name: tavern-dev-redis
     networks:
-      - tavern
-    ports:
-      - "${TAVERN_REDIS_PORT}:6379"
+      - tavern-dev
     volumes:
-      - redis_data:/data
+      - redis_dev_data:/data
     command: >
       redis-server
       --appendonly yes
@@ -35,17 +31,15 @@ services:
       timeout: 5s
       retries: 5
 
-  auth-db:
+  auth-db-dev:
     image: postgres:18.6-alpine
-    container_name: tavern-test-auth-db
+    container_name: tavern-dev-auth-db
     networks:
-      - tavern
+      - tavern-dev
     environment:
       POSTGRES_DB: ${TAVERN_AUTH_DB_NAME}
       POSTGRES_USER: ${TAVERN_AUTH_DB_USER}
       POSTGRES_PASSWORD: ${TAVERN_AUTH_DB_PASSWORD}
-    ports:
-      - "${TAVERN_AUTH_DB_PORT}:5432"
     healthcheck:
       test:
         [
@@ -56,19 +50,17 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - auth_db_data:/var/lib/postrgesql
+      - auth_db_dev_data:/var/lib/postrgesql
 
-  profile-db:
+  profile-db-dev:
     image: postgres:18.6-alpine
-    container_name: tavern-test-profile-db
+    container_name: tavern-dev-profile-db
     networks:
-      - tavern
+      - tavern-dev
     environment:
       POSTGRES_DB: ${TAVERN_PROFILE_DB_NAME}
       POSTGRES_USER: ${TAVERN_PROFILE_DB_USER}
       POSTGRES_PASSWORD: ${TAVERN_PROFILE_DB_PASSWORD}
-    ports:
-      - "${TAVERN_PROFILE_DB_PORT}:5432"
     healthcheck:
       test:
         [
@@ -79,17 +71,15 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - profile_db_data:/var/lib/postrgesql
+      - profile_db_dev_data:/var/lib/postrgesql
 
-  event-db:
+  event-db-dev:
     image: postgres:18.6-alpine
-    container_name: tavern-event-db
+    container_name: tavern-dev-event-db
     environment:
       POSTGRES_DB: ${TAVERN_EVENT_DB_NAME}
       POSTGRES_USER: ${TAVERN_EVENT_DB_USER}
       POSTGRES_PASSWORD: ${TAVERN_EVENT_DB_PASSWORD}
-    ports:
-      - "${TAVERN_EVENT_DB_PORT}:5432"
     healthcheck:
       test:
         [
@@ -100,117 +90,120 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - event_db_data:/var/lib/postrgesql
+      - event_db_dev_data:/var/lib/postrgesql
 
-  auth-service:
+  auth-service-dev:
     image: ${DOCKER_REGISTRY}/temaxo00/tavern-auth:dev
-    container_name: tavern-test-auth-api
+    container_name: tavern-dev-auth-api
     networks:
-      - tavern
+      - tavern-dev
     environment:
       APPS_GLOBAL_SCOPE: "TAVERN"
       TAVERN_DEV_MODE: true
       TAVERN_JWT_SECRET: ${TAVERN_JWT_SECRET}
       TAVERN_JWT_ACCESS_TOKEN_TTL: ${TAVERN_JWT_ACCESS_TOKEN_TTL}
       TAVERN_JWT_REFRESH_TOKEN_TTL: ${TAVERN_JWT_REFRESH_TOKEN_TTL}
-      TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_URL}
+      TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_DEV_URL}
       TAVERN_RMQ_USER: ${TAVERN_RMQ_USER}
       TAVERN_RMQ_PASSWORD: ${TAVERN_RMQ_PASSWORD}
-      TAVERN_RMQ_URL: ${TAVERN_RMQ_URL}
-      TAVERN_REDIS_URL: ${TAVERN_REDIS_URL}
+      TAVERN_RMQ_URL: ${TAVERN_RMQ_DEV_URL}
+      TAVERN_REDIS_URL: ${TAVERN_REDIS_DEV_URL}
       TAVERN_REDIS_PASSWORD: ${TAVERN_REDIS_PASSWORD}
       TAVERN_PROFILE_CACHE_TTL: ${TAVERN_PROFILE_CACHE_TTL}
     depends_on:
-      auth-db:
+      auth-db-dev:
         condition: service_healthy
-      redis:
+      redis-dev:
         condition: service_healthy
-      rabbitmq:
+      rabbitmq-dev:
         condition: service_healthy
 
-  profile-service:
+  profile-service-dev:
     image: ${DOCKER_REGISTRY}/temaxo00/tavern-profile:dev
-    container_name: tavern-test-profile-api
+    container_name: tavern-dev-profile-api
     networks:
-      - tavern
+      - tavern-dev
     environment:
       APPS_GLOBAL_SCOPE: "TAVERN"
       TAVERN_DEV_MODE: true
       TAVERN_JWT_SECRET: ${TAVERN_JWT_SECRET}
       TAVERN_JWT_ACCESS_TOKEN_TTL: ${TAVERN_JWT_ACCESS_TOKEN_TTL}
       TAVERN_JWT_REFRESH_TOKEN_TTL: ${TAVERN_JWT_REFRESH_TOKEN_TTL}
-      TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_URL}
-      TAVERN_PROFILE_DB_URL: ${TAVERN_PROFILE_DB_URL}
+      TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_DEV_URL}
+      TAVERN_PROFILE_DB_URL: ${TAVERN_PROFILE_DB_DEV_URL}
       TAVERN_RMQ_USER: ${TAVERN_RMQ_USER}
       TAVERN_RMQ_PASSWORD: ${TAVERN_RMQ_PASSWORD}
-      TAVERN_RMQ_URL: ${TAVERN_RMQ_URL}
-      TAVERN_REDIS_URL: ${TAVERN_REDIS_URL}
+      TAVERN_RMQ_URL: ${TAVERN_RMQ_DEV_URL}
+      TAVERN_REDIS_URL: ${TAVERN_REDIS_DEV_URL}
       TAVERN_REDIS_PASSWORD: ${TAVERN_REDIS_PASSWORD}
       TAVERN_REPUTATION_SCORE_EVENT: ${TAVERN_REPUTATION_SCORE_EVENT}
       TAVERN_REPUTATION_SCORE_BLOCK: ${TAVERN_REPUTATION_SCORE_BLOCK}
       TAVERN_REPUTATION_SCORE_EARLY_UNBLOCK: ${TAVERN_REPUTATION_SCORE_EARLY_UNBLOCK}
       TAVERN_REPUTATION_SCORE_REPORT: ${TAVERN_REPUTATION_SCORE_REPORT}
     depends_on:
-      auth-db:
+      auth-db-dev:
         condition: service_healthy
-      profile-db:
+      profile-db-dev:
         condition: service_healthy
-      redis:
+      redis-dev:
         condition: service_healthy
-      rabbitmq:
+      rabbitmq-dev:
         condition: service_healthy
 
-  gateway:
+  gateway-dev:
     image: ${DOCKER_REGISTRY}/temaxo00/tavern-gateway:dev
-    container_name: tavern-test-gateway-api
+    container_name: tavern-dev-gateway-api
     ports:
-      - "3000:3000"
+      - "${TAVERN_API_PORT}:3000"
     networks:
-      - tavern
+      - tavern-dev
     environment:
       APPS_GLOBAL_SCOPE: "TAVERN"
       TAVERN_DEV_MODE: true
       TAVERN_JWT_SECRET: ${TAVERN_JWT_SECRET}
       TAVERN_JWT_ACCESS_TOKEN_TTL: ${TAVERN_JWT_ACCESS_TOKEN_TTL}
       TAVERN_JWT_REFRESH_TOKEN_TTL: ${TAVERN_JWT_REFRESH_TOKEN_TTL}
-      TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_URL}
+      TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_DEV_URL}
       TAVERN_RMQ_USER: ${TAVERN_RMQ_USER}
       TAVERN_RMQ_PASSWORD: ${TAVERN_RMQ_PASSWORD}
-      TAVERN_RMQ_URL: ${TAVERN_RMQ_URL}
-      TAVERN_REDIS_URL: ${TAVERN_REDIS_URL}
+      TAVERN_RMQ_URL: ${TAVERN_RMQ_DEV_URL}
+      TAVERN_REDIS_URL: ${TAVERN_REDIS_DEV_URL}
       TAVERN_REDIS_PASSWORD: ${TAVERN_REDIS_PASSWORD}
+      TAVERN_AUTH_GRPC_URL: ${TAVERN_AUTH_GRPC_DEV_URL}
+      TAVERN_PROFILE_GRPC_URL: ${TAVERN_PROFILE_GRPC_DEV_URL}
+      TAVERN_EVENT_GRPC_URL: ${TAVERN_EVENT_GRPC_DEV_URL}
     depends_on:
-      auth-service:
+      auth-service-dev:
         condition: service_started
-      profile-service:
+      profile-service-dev:
         condition: service_started
-      redis:
+      redis-dev:
         condition: service_healthy
-      auth-db:
+      auth-db-dev:
         condition: service_healthy
 
-  db_migrator:
+  db_migrator-dev:
     image: ${DOCKER_REGISTRY}/temaxo00/tavern-migrator:dev
-    container_name: tavern-test-database-migrator
+    container_name: tavern-dev-database-migrator
     networks:
-      - tavern
+      - tavern-dev
     environment:
-      TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_URL}
-      TAVERN_PROFILE_DB_URL: ${TAVERN_PROFILE_DB_URL}
-      TAVERN_EVENT_DB_URL: ${TAVERN_EVENT_DB_URL}
+      TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_DEV_URL}
+      TAVERN_PROFILE_DB_URL: ${TAVERN_PROFILE_DB_DEV_URL}
+      TAVERN_EVENT_DB_URL: ${TAVERN_EVENT_DB_DEV_URL}
     depends_on:
-      auth-db:
+      auth-db-dev:
         condition: service_healthy
-      profile-db:
+      profile-db-dev:
         condition: service_healthy
     restart: "no"
 
 volumes:
-  redis_data:
-  auth_db_data:
-  profile_db_data:
-  event_db_data:
+  redis_dev_data:
+  auth_db_dev_data:
+  profile_db_dev_data:
+  event_db_dev_data:
 
 networks:
-  tavern:
+  tavern-dev:
     driver: bridge

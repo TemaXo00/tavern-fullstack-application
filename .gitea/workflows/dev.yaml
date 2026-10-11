@@ -12,53 +12,26 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set short SHA
-        run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
-
       - name: Build API GATEWAY
-        run: |
-          docker build -f docker-files/Gateway.Dockerfile \
-            -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:${{ env.SHORT_SHA }} \
-            -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:dev \
-            ./app
+        run: docker build -f docker-files/Gateway.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:dev ./app
 
       - name: Push API GATEWAY
-        run: |
-          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:${{ env.SHORT_SHA }}
-          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:dev
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:dev
 
       - name: Build AUTH Microservice
-        run: |
-          docker build -f docker-files/Auth.Dockerfile \
-            -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-auth:${{ env.SHORT_SHA }} \
-            -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-auth:dev \
-            ./app
+        run: docker build -f docker-files/Auth.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-auth:dev ./app
 
       - name: Push AUTH Microservice
-        run: |
-          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-auth:${{ env.SHORT_SHA }}
-          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-auth:dev
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-auth:dev
 
       - name: Build PROFILE Microservice
-        run: |
-          docker build -f docker-files/Profile.Dockerfile \
-            -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:${{ env.SHORT_SHA }} \
-            -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:dev \
-            ./app
+        run: docker build -f docker-files/Profile.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:dev ./app
 
       - name: Push PROFILE Microserivce
-        run: |
-          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:${{ env.SHORT_SHA }}
-          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:dev
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:dev
 
       - name: Build DB Migrator
-        run: |
-          docker build -f docker-files/Db-Migrator.Dockerfile \
-            -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:${{ env.SHORT_SHA }} \
-            -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:dev \
-            .
+        run: docker build -f docker-files/Db-Migrator.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:dev .
 
       - name: Push DB Migrator
-        run: |
-          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:${{ env.SHORT_SHA }}
-          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:dev
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:dev

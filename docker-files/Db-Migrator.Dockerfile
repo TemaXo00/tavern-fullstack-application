@@ -12,6 +12,9 @@ COPY app/server-libs/auth-database/prisma.config.ts ./auth-database/prisma.confi
 COPY app/server-libs/profile-database/prisma ./profile-database/prisma
 COPY app/server-libs/profile-database/prisma.config.ts ./profile-database/prisma.config.ts
 
+COPY app/server-libs/event-database/prisma ./event-database/prisma
+COPY app/server-libs/event-database/prisma.config.ts ./event-database/prisma.config.ts
+
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001 && \
     chown -R nodejs:nodejs /app && \
