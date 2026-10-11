@@ -4,6 +4,8 @@ import { RpcException } from '@nestjs/microservices';
 import { Session, Token, User } from '@org/auth-database';
 import { Roles } from '@org/enums';
 import { StringValidationUtil } from '@org/shared-utils';
+import { AUTH_CONFIG } from '@org/validation-config';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 
 import { AuthDatabaseUtil } from './database.util';
 
@@ -21,7 +23,7 @@ export class AuthValidateUtil {
 
     if (isExists) {
       throw new RpcException({
-        message: 'User with this email already exists',
+        message: AUTH_MESSAGES.USER_WITH_EMAIL_EXISTS,
         code: status.ALREADY_EXISTS,
       });
     }
@@ -32,7 +34,7 @@ export class AuthValidateUtil {
 
     if (!isExists) {
       throw new RpcException({
-        message: 'User not found',
+        message: AUTH_MESSAGES.USER_NOT_FOUND,
         code: status.NOT_FOUND,
       });
     }
@@ -44,7 +46,7 @@ export class AuthValidateUtil {
     const exists = await this.dbUtil.searchUserByEmail(email);
     if (exists) {
       throw new RpcException({
-        message: 'Email already in use',
+        message: AUTH_MESSAGES.USER_WITH_EMAIL_EXISTS,
         code: status.ALREADY_EXISTS,
       });
     }
@@ -57,7 +59,7 @@ export class AuthValidateUtil {
 
     if (!user) {
       throw new RpcException({
-        message: 'User not found',
+        message: AUTH_MESSAGES.USER_NOT_FOUND,
         code: status.NOT_FOUND,
       });
     }
@@ -70,7 +72,7 @@ export class AuthValidateUtil {
 
     if (user.role === 'ADMIN') {
       throw new RpcException({
-        message: 'You cannot promote admin',
+        message: AUTH_MESSAGES.CANNOT_PROMOTE_ADMIN,
         code: status.INVALID_ARGUMENT,
       });
     }
@@ -81,7 +83,7 @@ export class AuthValidateUtil {
 
     if (now <= oneYear) {
       throw new RpcException({
-        message: 'User cannot be promoted',
+        message: AUTH_MESSAGES.CANNOT_PROMOTE_USER,
         code: status.ABORTED,
       });
     }
@@ -90,7 +92,7 @@ export class AuthValidateUtil {
   validateUserModerator(role: Roles): void {
     if (role !== Roles.MODERATOR) {
       throw new RpcException({
-        message: 'User not moderator',
+        message: AUTH_MESSAGES.USER_NOT_MODERATOR,
         code: status.CANCELLED,
       });
     }
@@ -99,14 +101,14 @@ export class AuthValidateUtil {
   validateUserCanChangeStatus(payloadRole: Roles, userRole: Roles): void {
     if (userRole === Roles.ADMIN) {
       throw new RpcException({
-        message: 'You cannot change admin status',
+        message: AUTH_MESSAGES.CANNOT_CNANGE_ADMIN,
         code: status.PERMISSION_DENIED,
       });
     }
 
     if (payloadRole === userRole) {
       throw new RpcException({
-        message: 'Cannot change status of user with similar role',
+        message: AUTH_MESSAGES.CANNOT_CHANGE_SIMILAR,
         code: status.PERMISSION_DENIED,
       });
     }
@@ -115,7 +117,7 @@ export class AuthValidateUtil {
   validateUserNotBlocked(isBlocked: boolean): void {
     if (!isBlocked) {
       throw new RpcException({
-        message: 'User is not blocked',
+        message: AUTH_MESSAGES.USER_NOT_BLOCKED,
         code: status.FAILED_PRECONDITION,
       });
     }
@@ -124,21 +126,23 @@ export class AuthValidateUtil {
   validateBlockDate(blockedUntil: Date): void {
     if (isNaN(blockedUntil.getTime())) {
       throw new RpcException({
-        message: 'Invalid blockedUntil date',
+        message: AUTH_MESSAGES.INVALID_BLOCK_DATE,
         code: status.INVALID_ARGUMENT,
       });
     }
     if (blockedUntil <= new Date()) {
       throw new RpcException({
-        message: 'You cannot block user by previous date',
+        message: AUTH_MESSAGES.BLOCK_PREVIOUS_DATE,
         code: status.INVALID_ARGUMENT,
       });
     }
     const maxBlock = new Date();
-    maxBlock.setFullYear(maxBlock.getFullYear() + 10);
+    maxBlock.setFullYear(
+      maxBlock.getFullYear() + AUTH_CONFIG.BLOCK.MAX_DATE_YEAR,
+    );
     if (blockedUntil > maxBlock) {
       throw new RpcException({
-        message: `blockedUntil too far in the future. Max block date: ${maxBlock.toISOString()}`,
+        message: AUTH_MESSAGES.BLOCK_TOO_FAR,
         code: status.INVALID_ARGUMENT,
       });
     }
@@ -151,7 +155,7 @@ export class AuthValidateUtil {
 
     if (!session) {
       throw new RpcException({
-        message: 'Session not found',
+        message: AUTH_MESSAGES.SESSION_NOT_FOUND,
         code: status.UNAUTHENTICATED,
       });
     }
@@ -165,8 +169,7 @@ export class AuthValidateUtil {
   ): void {
     if (payloadSession === neededSession) {
       throw new RpcException({
-        message:
-          "You can't delete your own session. If you need, you can logout",
+        message: AUTH_MESSAGES.CURRENT_SESSION_DELETE,
         code: status.INVALID_ARGUMENT,
       });
     }
@@ -175,7 +178,7 @@ export class AuthValidateUtil {
   validateSessionOnCurrentUser(userId: string, idFromSession: string): void {
     if (userId !== idFromSession) {
       throw new RpcException({
-        message: "You can't delete this session",
+        message: AUTH_MESSAGES.SESSION_DELETE_FAILED,
         code: status.INVALID_ARGUMENT,
       });
     }
@@ -184,10 +187,12 @@ export class AuthValidateUtil {
   async validatePermissionToDeleteSession(sessionId: string): Promise<void> {
     const userSession = await this.validateSessionExists(sessionId);
     const deletePermited = new Date();
-    deletePermited.setDate(deletePermited.getDate() - 1);
+    deletePermited.setDate(
+      deletePermited.getDate() - AUTH_CONFIG.SESSION.DELETE_PERMISSION_DAYS,
+    );
     if (userSession.createdAt > deletePermited) {
       throw new RpcException({
-        message: "You can't delete sessions",
+        message: AUTH_MESSAGES.SESSION_DELETE_FAILED,
         code: status.PERMISSION_DENIED,
       });
     }
@@ -217,14 +222,14 @@ export class AuthValidateUtil {
 
     if (!token) {
       throw new RpcException({
-        message: 'Token not found',
+        message: AUTH_MESSAGES.TOKEN_NOT_FOUND,
         code: status.NOT_FOUND,
       });
     }
 
     if (token.state === 'USED') {
       throw new RpcException({
-        message: 'Token already used',
+        message: AUTH_MESSAGES.TOKEN_USED,
         code: status.ALREADY_EXISTS,
       });
     }
@@ -232,7 +237,7 @@ export class AuthValidateUtil {
     if (token.expiresAt <= date) {
       await this.dbUtil.updateTokenState(token.id, 'EXPIRED');
       throw new RpcException({
-        message: 'Token expired',
+        message: AUTH_MESSAGES.TOKEN_EXPIRED,
         code: status.ALREADY_EXISTS,
       });
     }

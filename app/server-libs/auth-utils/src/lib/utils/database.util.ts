@@ -26,6 +26,7 @@ import {
   PaginationUtil,
   StringValidationUtil,
 } from '@org/shared-utils';
+import { AUTH_CONFIG } from '@org/validation-config';
 
 @Injectable()
 export class AuthDatabaseUtil {
@@ -173,7 +174,7 @@ export class AuthDatabaseUtil {
   async createToken(dto: { email: string; tokenHash: string }): Promise<void> {
     this.stringUtil.validateEmail(dto.email);
     const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 1);
+    expiresAt.setDate(expiresAt.getDate() + AUTH_CONFIG.TOKEN.EXPIRE_DAYS);
 
     await this.db.token.create({
       data: {

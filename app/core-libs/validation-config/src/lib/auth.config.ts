@@ -18,4 +18,13 @@ export const AUTH_CONFIG = {
     MIN_LENGTH: 3,
     ALLOW_IP_DOMAINS: false,
   },
+  BLOCK: {
+    MAX_DATE_YEAR: 10,
+  },
+  SESSION: {
+    DELETE_PERMISSION_DAYS: 1,
+  },
+  TOKEN: {
+    EXPIRE_DAYS: 1,
+  },
 };

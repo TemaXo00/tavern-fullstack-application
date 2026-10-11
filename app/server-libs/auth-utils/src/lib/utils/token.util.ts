@@ -4,6 +4,7 @@ import { status } from '@grpc/grpc-js';
 import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { StringValidationUtil } from '@org/shared-utils';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 import * as argon2 from 'argon2';
 
 @Injectable()
@@ -27,7 +28,7 @@ export class AuthTokenUtil {
 
     if (!isValid) {
       throw new RpcException({
-        message: 'Invalid token',
+        message: AUTH_MESSAGES.INVALID_TOKEN,
         code: status.UNAUTHENTICATED,
       });
     }

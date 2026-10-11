@@ -2,6 +2,7 @@ import { status } from '@grpc/grpc-js';
 import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { StringValidationUtil } from '@org/shared-utils';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 import * as argon2 from 'argon2';
 
 @Injectable()
@@ -21,14 +22,12 @@ export class AuthPasswordUtil {
   async validatePassword(
     passwordHash: string | null,
     inputPassword: string,
-    errorMessage?: string,
-    errorStatus?: status,
   ): Promise<void> {
     this.stringUtil.validateAnyString(inputPassword, 'Password');
     if (!passwordHash) {
       throw new RpcException({
-        message: errorMessage ?? 'User not found',
-        code: errorStatus ?? status.NOT_FOUND,
+        message: AUTH_MESSAGES.USER_NOT_FOUND,
+        code: status.NOT_FOUND,
       });
     }
 
@@ -36,7 +35,7 @@ export class AuthPasswordUtil {
 
     if (!isValid) {
       throw new RpcException({
-        message: 'User not found',
+        message: AUTH_MESSAGES.USER_NOT_FOUND,
         code: status.NOT_FOUND,
       });
     }
@@ -47,7 +46,7 @@ export class AuthPasswordUtil {
     this.stringUtil.validateAnyString(password, 'Password Confirmation');
     if (password !== passwordConfirmation) {
       throw new RpcException({
-        message: 'Passwords not similar',
+        message: AUTH_MESSAGES.PASSWORDS_NOT_SIMILAR,
         code: status.INVALID_ARGUMENT,
       });
     }
