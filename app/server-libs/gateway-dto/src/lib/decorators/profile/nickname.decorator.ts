@@ -1,5 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
+import { PROFILE_CONFIG } from '@org/validation-config';
 import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export function Nickname(): PropertyDecorator {
@@ -9,12 +10,12 @@ export function Nickname(): PropertyDecorator {
       example: 'joe_doe',
       type: 'string',
       required: false,
-      minLength: 3,
-      maxLength: 80,
+      minLength: PROFILE_CONFIG.NICKNAME.MIN_LENGHT,
+      maxLength: PROFILE_CONFIG.NICKNAME.MAX_LENGTH,
     }),
     IsOptional(),
     IsString(),
-    MinLength(3),
-    MaxLength(80),
+    MinLength(PROFILE_CONFIG.NICKNAME.MIN_LENGHT),
+    MaxLength(PROFILE_CONFIG.NICKNAME.MAX_LENGTH),
   );
 }

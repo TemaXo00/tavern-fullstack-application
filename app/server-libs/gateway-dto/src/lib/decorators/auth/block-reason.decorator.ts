@@ -1,5 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
+import { AUTH_CONFIG } from '@org/validation-config';
 import { IsNotEmpty, IsString, Length } from 'class-validator';
 
 export function BlockReason(): PropertyDecorator {
@@ -8,11 +9,14 @@ export function BlockReason(): PropertyDecorator {
       description: 'Block reason for blocking user',
       example: 'Does not follow rules',
       type: 'string',
-      minLength: 3,
-      maxLength: 800,
+      minLength: AUTH_CONFIG.BLOCK_REASON.MIN_LENGTH,
+      maxLength: AUTH_CONFIG.BLOCK_REASON.MAX_LENGTH,
     }),
     IsNotEmpty(),
     IsString(),
-    Length(3, 800),
+    Length(
+      AUTH_CONFIG.BLOCK_REASON.MIN_LENGTH,
+      AUTH_CONFIG.BLOCK_REASON.MAX_LENGTH,
+    ),
   );
 }

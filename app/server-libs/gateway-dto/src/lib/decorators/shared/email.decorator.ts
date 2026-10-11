@@ -1,5 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
+import { AUTH_CONFIG } from '@org/validation-config';
 import {
   IsEmail,
   IsNotEmpty,
@@ -20,9 +21,9 @@ export function Email(requirable = true): PropertyDecorator {
     }),
     requireDecorator,
     IsString(),
-    MinLength(3),
+    MinLength(AUTH_CONFIG.EMAIL.MIN_LENGTH),
     IsEmail({
-      allow_ip_domain: false,
+      allow_ip_domain: AUTH_CONFIG.EMAIL.ALLOW_IP_DOMAINS,
     }),
   );
 }

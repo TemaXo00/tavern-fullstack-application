@@ -1,5 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
+import { PROFILE_CONFIG } from '@org/validation-config';
 import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export function Description(): PropertyDecorator {
@@ -10,12 +11,12 @@ export function Description(): PropertyDecorator {
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
       type: 'string',
       required: false,
-      minLength: 1,
-      maxLength: 255,
+      minLength: PROFILE_CONFIG.DESCRIPTION.MIN_LENGTH,
+      maxLength: PROFILE_CONFIG.DESCRIPTION.MAX_LENGTH,
     }),
     IsOptional(),
     IsString(),
-    MinLength(1),
-    MaxLength(255),
+    MinLength(PROFILE_CONFIG.DESCRIPTION.MIN_LENGTH),
+    MaxLength(PROFILE_CONFIG.DESCRIPTION.MAX_LENGTH),
   );
 }
