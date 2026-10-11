@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { RpcException } from '@nestjs/microservices';
 import { Actions } from '@org/profile-database';
+import { PROFILE_MESSAGES } from '@org/validation-messages';
 
 @Injectable()
 export class ProfileReputationUtil {
@@ -24,7 +25,7 @@ export class ProfileReputationUtil {
     const score = this.scores[type];
     if (score === undefined) {
       throw new RpcException({
-        message: `Unknown action type: ${type}`,
+        message: PROFILE_MESSAGES.REPUTATION_UNKNOWN_TYPE,
         code: status.INVALID_ARGUMENT,
       });
     }

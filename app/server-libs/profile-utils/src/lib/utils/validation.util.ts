@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { UpdateProfileRequestInput } from '@org/grpc-types';
 import { Profile } from '@org/profile-database';
+import { PROFILE_MESSAGES } from '@org/validation-messages';
 
 import { ProfileDatabaseUtil } from './database.util';
 import { SearchUserHelperType } from './helpers/types.helper';
@@ -19,7 +20,7 @@ export class ProfileValidationUtil {
 
     if (!profile) {
       throw new RpcException({
-        message: 'Profile not found',
+        message: PROFILE_MESSAGES.PROFILE_NOT_FOUND,
         code: status.NOT_FOUND,
       });
     }
@@ -34,7 +35,7 @@ export class ProfileValidationUtil {
     const existing = await this.db.getProfile('by-nickname', nickname);
     if (existing && existing.userId !== currentUserId) {
       throw new RpcException({
-        message: 'Nickname already taken',
+        message: PROFILE_MESSAGES.NICKNAME_TAKEN,
         code: status.ALREADY_EXISTS,
       });
     }
@@ -43,19 +44,19 @@ export class ProfileValidationUtil {
   checkBirthDateQuery(birthDateFrom?: Date, birthDateTo?: Date): void {
     if (birthDateFrom && birthDateFrom >= new Date()) {
       throw new RpcException({
-        message: 'Birth date from cannot be in future',
+        message: PROFILE_MESSAGES.BIRTH_DATE_FUTURE,
         code: status.INVALID_ARGUMENT,
       });
     }
     if (birthDateTo && birthDateTo >= new Date()) {
       throw new RpcException({
-        message: 'Birth date from cannot be in future',
+        message: PROFILE_MESSAGES.BIRTH_DATE_FUTURE,
         code: status.INVALID_ARGUMENT,
       });
     }
     if (birthDateFrom && birthDateTo && birthDateFrom >= birthDateTo) {
       throw new RpcException({
-        message: 'Birth date from cannot be fewer, than birthDateTo',
+        message: PROFILE_MESSAGES.BIRTH_DATE_FROM_FEWER,
       });
     }
   }
@@ -63,7 +64,7 @@ export class ProfileValidationUtil {
   checkUpdatedBirthDate(birthDate?: Date): void {
     if (birthDate && birthDate >= new Date()) {
       throw new RpcException({
-        message: 'Birth date cannot be in future',
+        message: PROFILE_MESSAGES.BIRTH_DATE_FUTURE,
         code: status.INVALID_ARGUMENT,
       });
     }
@@ -72,7 +73,7 @@ export class ProfileValidationUtil {
   validateUpdateInput(data: UpdateProfileRequestInput): void {
     if (!data) {
       throw new RpcException({
-        message: 'Invalid update data',
+        message: PROFILE_MESSAGES.UPDATE_PROFILE_DATA_NOT_FOUND,
         code: status.DATA_LOSS,
       });
     }
@@ -81,7 +82,7 @@ export class ProfileValidationUtil {
   validateReputationInQuery(from: number, to: number): void {
     if (from > to) {
       throw new RpcException({
-        message: 'Reputation from cannot be more than reputation to',
+        message: PROFILE_MESSAGES.REPUTATION_FROM_BIGGER,
         code: status.INVALID_ARGUMENT,
       });
     }

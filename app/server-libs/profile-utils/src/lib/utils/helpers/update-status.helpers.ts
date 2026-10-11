@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ProfileDatabaseService } from '@org/profile-database';
 import { RmqLoggerUtil } from '@org/shared-utils';
+import { PROFILE_MESSAGES } from '@org/validation-messages';
 
 import {
   ActivityManipulateOptions,
@@ -54,9 +55,9 @@ export class ProfileUpdateStatusHelper {
       });
       if (profiles.length === 0) {
         this.logUtil.logWarning(
-          'Update Activity',
+          PROFILE_MESSAGES.UPDATE_ACITIVITY_WARNING.CONTEXT,
           options.logMethod,
-          'Cannot find user',
+          PROFILE_MESSAGES.UPDATE_ACITIVITY_WARNING.MESSAGE,
         );
         return;
       }

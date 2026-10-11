@@ -42,6 +42,7 @@ import {
   RmqLoggerUtil,
   StringValidationUtil,
 } from '@org/shared-utils';
+import { PROFILE_MESSAGES } from '@org/validation-messages';
 
 import { SearchUserHelperType } from './helpers/types.helper';
 import { ProfileUpdateStatusHelper } from './helpers/update-status.helpers';
@@ -299,9 +300,9 @@ export class ProfileDatabaseUtil {
       if (existing) {
         if (existing.activity_logs.length === 0) {
           this.logUtil.logWarning(
-            'CreateProfile',
-            'Register',
-            'User exists but has no activity log, repairing',
+            PROFILE_MESSAGES.CREATE_EXISTING_WARNING.CONTEXT,
+            PROFILE_MESSAGES.CREATE_EXISTING_WARNING.METHOD,
+            PROFILE_MESSAGES.CREATE_EXISTING_WARNING.MESSAGE,
           );
           await createActivityLog(existing.id);
         }
@@ -333,8 +334,12 @@ export class ProfileDatabaseUtil {
       updatingActivity: ActivityType.BLOCKED,
       reputationScore,
       action: Actions.BLOCK,
-      logMethod: 'Block',
-      message: `The user blocked from ${dateFrom.toISOString()} to ${dateTo.toISOString()}. Reason: ${data.blockReason}`,
+      logMethod: PROFILE_MESSAGES.BLOCK_USER.LOG_METHOD,
+      message: PROFILE_MESSAGES.BLOCK_USER.MESSAGE(
+        dateFrom,
+        dateTo,
+        data.blockReason,
+      ),
     });
   }
 
@@ -347,8 +352,8 @@ export class ProfileDatabaseUtil {
       updatingActivity: ActivityType.ACTIVE,
       reputationScore,
       action: Actions.EARLY_UNBLOCK,
-      logMethod: 'Early unblock',
-      message: `The user has been unblocked due to changed circumstances.`,
+      logMethod: PROFILE_MESSAGES.EARLY_UNBLOCK.LOG_METHOD,
+      message: PROFILE_MESSAGES.EARLY_UNBLOCK.MESSAGE,
     });
   }
 
@@ -367,7 +372,7 @@ export class ProfileDatabaseUtil {
     await this.updateStatusHelper.manipulateActivity({
       userId: data.userId,
       updatingActivity: ActivityType.ACTIVE,
-      logMethod: 'Activate user',
+      logMethod: PROFILE_MESSAGES.ACTIVATE_USER,
     });
   }
 
@@ -375,7 +380,7 @@ export class ProfileDatabaseUtil {
     await this.updateStatusHelper.manipulateActivity({
       userId: data.userId,
       updatingActivity: ActivityType.INACTIVE,
-      logMethod: 'Deactivate user',
+      logMethod: PROFILE_MESSAGES.DEACTIVATE_USER,
     });
   }
 
