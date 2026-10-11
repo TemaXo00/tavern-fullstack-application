@@ -27,4 +27,4 @@ export const AUTH_CONFIG = {
   TOKEN: {
     EXPIRE_DAYS: 1,
   },
-};
+} as const;

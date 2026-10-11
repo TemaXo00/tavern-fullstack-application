@@ -1,1 +1,1 @@
-export const SHARED_MESSAGES = {};
+export const SHARED_MESSAGES = {} as const;

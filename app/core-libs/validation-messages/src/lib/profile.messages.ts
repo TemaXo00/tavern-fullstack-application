@@ -1,1 +1,1 @@
-export const PROFILE_MESSAGES = {};
+export const PROFILE_MESSAGES = {} as const;

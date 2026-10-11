@@ -1,4 +1,3 @@
-import { status } from '@grpc/grpc-js';
 import { Injectable } from '@nestjs/common';
 import { AuthValidateService } from '@org/auth-authorization-core';
 import {
@@ -187,8 +186,6 @@ export class AuthUserFeatureService implements UserServiceContract {
     await this.passwordUtil.validatePassword(
       user.passwordHash,
       data.oldPassword,
-      'Invalid password',
-      status.ABORTED,
     );
     const hashedPassword = await this.passwordUtil.hashPassword(
       data.newPassword,
@@ -229,12 +226,7 @@ export class AuthUserFeatureService implements UserServiceContract {
   async DeleteUser(data: UserDeleteInput): Promise<void> {
     const payload = await this.validation.Validate(data.validation);
     const user = await this.validateUtil.validateUserExists(payload.id);
-    await this.passwordUtil.validatePassword(
-      user.passwordHash,
-      data.password,
-      'Invalid password',
-      status.CANCELLED,
-    );
+    await this.passwordUtil.validatePassword(user.passwordHash, data.password);
     await this.cacheUtil.delAllPayloads(user.id);
     await this.dbUtil.removeUser(user.id, user.email);
     this.messagesUtil.sendUserDeleted({ userId: user.id, email: user.email });

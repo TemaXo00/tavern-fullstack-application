@@ -15,4 +15,4 @@ export const PROFILE_CONFIG = {
     MIN_LENGHT: 3,
     MAX_LENGTH: 80,
   },
-};
+} as const;

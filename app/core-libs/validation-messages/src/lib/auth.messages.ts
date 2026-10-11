@@ -22,4 +22,4 @@ export const AUTH_MESSAGES = {
   TOKEN_NOT_FOUND: 'Token not found',
   TOKEN_USED: 'Token used',
   TOKEN_EXPIRED: 'Token expired',
-};
+} as const;
