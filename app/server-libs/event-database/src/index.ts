@@ -1,5 +1,10 @@
-export * from './lib/auth-database.module';
-export * from './lib/auth-database.service';
-export { TokenState, Roles } from './generated/prisma/client';
-export type { User, Session, Token } from './generated/prisma/client';
+export * from './lib/event-database.module';
+export * from './lib/event-database.service';
+export { EventStatuses, ParticipantStatus } from './generated/prisma/client';
+export type {
+  Event,
+  EventParticipant,
+  EventTag,
+  EventUserSnapshot,
+} from './generated/prisma/client';
 export * from './generated/prisma/models';
