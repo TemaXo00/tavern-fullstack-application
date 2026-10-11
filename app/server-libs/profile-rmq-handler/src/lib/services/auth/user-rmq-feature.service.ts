@@ -16,6 +16,7 @@ import {
   UserSetInactiveMessage,
 } from '@org/rmq-messages';
 import { RmqLoggerUtil } from '@org/shared-utils';
+import { PROFILE_MESSAGES } from '@org/validation-messages';
 
 @Injectable()
 export class UserRmqFeatureService {
@@ -38,9 +39,13 @@ export class UserRmqFeatureService {
     );
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
-      'Update Status',
+      PROFILE_MESSAGES.BLOCK_USER.LOG_METHOD,
       USER_MESSAGES.BLOCK,
-      `User with id ${data.userId}. Block reason: ${data.blockReason}. Blocked until: ${data.blockedUntil}`,
+      PROFILE_MESSAGES.BLOCK_USER.MESSAGE(
+        data.blockedFrom,
+        data.blockedUntil,
+        data.blockReason,
+      ),
     );
   }
 
@@ -55,9 +60,9 @@ export class UserRmqFeatureService {
     );
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
-      'Update Status',
+      PROFILE_MESSAGES.EARLY_UNBLOCK.LOG_METHOD,
       USER_MESSAGES.EARLY_UNBLOCK,
-      `User ${data.userId} unblocked by admin ${data.adminId}`,
+      PROFILE_MESSAGES.EARLY_UNBLOCK.MESSAGE,
     );
   }
 
@@ -69,9 +74,9 @@ export class UserRmqFeatureService {
     await this.dbUtil.deactivateUser(data);
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
-      'Update Activity',
+      PROFILE_MESSAGES.INACTIVE.CONTEXT,
       USER_MESSAGES.SET_INACTIVE,
-      `User with ID ${data.userId} deactivated`,
+      PROFILE_MESSAGES.INACTIVE.MESSAGE(data.userId),
     );
   }
 
@@ -83,9 +88,9 @@ export class UserRmqFeatureService {
     await this.dbUtil.activateUser(data);
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
-      'Update Activity',
+      PROFILE_MESSAGES.ACTIVATE_BY_ADMIN.CONTEXT,
       USER_MESSAGES.SET_ACTIVE,
-      `User with ID ${data.userId} activated by admin with ID ${data.adminId}`,
+      PROFILE_MESSAGES.ACTIVATE_BY_ADMIN.MESSAGE(data.userId, data.adminId),
     );
   }
 
@@ -97,9 +102,9 @@ export class UserRmqFeatureService {
     await this.dbUtil.updateEmail(data.userId, data.newEmail);
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
-      'Update Email',
+      PROFILE_MESSAGES.UPDATE_EMAIL.CONTEXT,
       USER_MESSAGES.EMAIL_CHANGE,
-      `User with id ${data.userId} changed email to ${data.newEmail}`,
+      PROFILE_MESSAGES.UPDATE_EMAIL.MESSAGE(data.userId, data.newEmail),
     );
   }
 
@@ -111,9 +116,9 @@ export class UserRmqFeatureService {
     await this.dbUtil.deleteProfile(data.userId);
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
-      'Delete User',
+      PROFILE_MESSAGES.DELETE_USER.CONTEXT,
       USER_MESSAGES.DELETE,
-      `User with id ${data.userId} deleted successfully`,
+      PROFILE_MESSAGES.DELETE_USER.MESSAGE(data.userId),
     );
   }
 }

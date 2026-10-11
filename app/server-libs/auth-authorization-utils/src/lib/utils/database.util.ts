@@ -5,6 +5,7 @@ import {
   type User,
 } from '@org/auth-database';
 import { StringValidationUtil } from '@org/shared-utils';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 
 @Injectable()
 export class AuthCoreDatabaseUtil {
@@ -50,13 +51,19 @@ export class AuthCoreDatabaseUtil {
   }): Promise<void> {
     this.stringUtil.validateId(dto.userId);
     this.stringUtil.validateId(dto.id);
-    this.stringUtil.validateAnyString(dto.device, 'Device');
-    this.stringUtil.validateAnyString(dto.browser, 'Browser');
-    this.stringUtil.validateAnyString(dto.ip, 'IP');
-    this.stringUtil.validateAnyString(dto.os, 'OS');
+    this.stringUtil.validateAnyString(
+      dto.device,
+      AUTH_MESSAGES.INVALID_DEVICE_STRING,
+    );
+    this.stringUtil.validateAnyString(
+      dto.browser,
+      AUTH_MESSAGES.INVALID_BROWSER_STRING,
+    );
+    this.stringUtil.validateAnyString(dto.ip, AUTH_MESSAGES.INVALID_IP_STRING);
+    this.stringUtil.validateAnyString(dto.os, AUTH_MESSAGES.INVALID_OS_STRING);
     this.stringUtil.validateAnyString(
       dto.refreshTokenHash,
-      'Refresh Token Hash',
+      AUTH_MESSAGES.INVALID_REFRESH_STRING,
     );
     await this.db.session.create({
       data: {

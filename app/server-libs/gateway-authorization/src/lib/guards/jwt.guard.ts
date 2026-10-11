@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ValidateInput, AuthServiceObservableContract } from '@org/grpc-types';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 import { firstValueFrom } from 'rxjs';
 
 import { getSessionUtil } from '../utils/get-session.util.js';
@@ -32,11 +33,11 @@ export class AuthJWTGuard extends AuthGuard('jwt') implements OnModuleInit {
     const authHeader = request.headers.authorization;
 
     if (typeof authHeader !== 'string') {
-      throw new UnauthorizedException('Missing access token');
+      throw new UnauthorizedException(AUTH_MESSAGES.TOKEN_INVALID);
     }
 
     if (!authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException('Invalid authorization format');
+      throw new UnauthorizedException(AUTH_MESSAGES.TOKEN_INVALID);
     }
 
     const accessToken = authHeader.replace('Bearer ', '');

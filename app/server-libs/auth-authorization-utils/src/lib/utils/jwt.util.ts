@@ -5,6 +5,7 @@ import { JsonWebTokenError, JwtService, TokenExpiredError } from '@nestjs/jwt';
 import { RpcException } from '@nestjs/microservices';
 import { AuthOutput, UserPayload } from '@org/grpc-types';
 import { StringValidationUtil } from '@org/shared-utils';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 import * as argon2 from 'argon2';
 
 @Injectable()
@@ -48,11 +49,11 @@ export class AuthCoreJWTUtil {
     try {
       return this.jwt.verify(token);
     } catch (error) {
-      let message = 'Invalid or expired token';
+      let message = `${AUTH_MESSAGES.TOKEN_BASE_ERROR}`;
       if (error instanceof TokenExpiredError) {
-        message = 'Token has expired';
+        message = AUTH_MESSAGES.TOKEN_EXPIRED;
       } else if (error instanceof JsonWebTokenError) {
-        message = 'Invalid token';
+        message = AUTH_MESSAGES.INVALID_TOKEN;
       }
       throw new RpcException({
         message,
@@ -77,7 +78,7 @@ export class AuthCoreJWTUtil {
 
     if (!isValid) {
       throw new RpcException({
-        message: 'Token invalid',
+        message: AUTH_MESSAGES.TOKEN_INVALID,
         code: status.UNAUTHENTICATED,
       });
     }

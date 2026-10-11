@@ -42,7 +42,7 @@ import {
   RmqLoggerUtil,
   StringValidationUtil,
 } from '@org/shared-utils';
-import { PROFILE_MESSAGES } from '@org/validation-messages';
+import { PROFILE_MESSAGES, SHARED_MESSAGES } from '@org/validation-messages';
 
 import { SearchUserHelperType } from './helpers/types.helper';
 import { ProfileUpdateStatusHelper } from './helpers/update-status.helpers';
@@ -70,11 +70,14 @@ export class ProfileDatabaseUtil {
         break;
       }
       case 'by-nickname': {
-        this.stringUtil.validateAnyString(input, 'Nickname');
+        this.stringUtil.validateAnyString(
+          input,
+          PROFILE_MESSAGES.INVALID_NICKNAME_STRING,
+        );
         break;
       }
       default: {
-        this.stringUtil.validateAnyString(input, 'String');
+        this.stringUtil.validateAnyString(input, SHARED_MESSAGES.INVALID_DATA);
       }
     }
     return this.db.profile.findUnique({

@@ -1,6 +1,7 @@
 import { status } from '@grpc/grpc-js';
 import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 
 import { AuthCoreDatabaseUtil } from './database.util';
 
@@ -19,7 +20,7 @@ export class AuthCoreValidateUtil {
 
     if (!user) {
       throw new RpcException({
-        message: 'User not found',
+        message: AUTH_MESSAGES.USER_NOT_FOUND,
         code: status.NOT_FOUND,
       });
     }
@@ -37,7 +38,7 @@ export class AuthCoreValidateUtil {
       currSession.browser !== newSession.browser
     ) {
       throw new RpcException({
-        message: 'Invalid session',
+        message: AUTH_MESSAGES.INVALID_SESSION,
         code: status.UNAUTHENTICATED,
       });
     }
@@ -55,7 +56,7 @@ export class AuthCoreValidateUtil {
       if (blockedUntil >= date) {
         await this.dbUtil.removeAllSessions(id);
         throw new RpcException({
-          message: `User blocked until: ${blockedUntil.toDateString()}. Block reason: ${blockReason}`,
+          message: AUTH_MESSAGES.USER_BLOCKED(blockedUntil, blockReason),
           code: status.UNAUTHENTICATED,
         });
       } else {
@@ -68,7 +69,7 @@ export class AuthCoreValidateUtil {
     if (!isActive) {
       await this.dbUtil.removeAllSessions(userId);
       throw new RpcException({
-        message: 'User inactive',
+        message: AUTH_MESSAGES.USER_INACTIVE,
         code: status.UNAUTHENTICATED,
       });
     }

@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 import { Request, Response } from 'express';
 
 @Injectable()
@@ -39,7 +40,7 @@ export class CookieService {
     const token = req.cookies['refreshToken'];
 
     if (!token) {
-      throw new UnauthorizedException('Refresh token not found');
+      throw new UnauthorizedException(AUTH_MESSAGES.TOKEN_NOT_FOUND);
     }
 
     return token;

@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLE_TO_GRPC, Roles } from '@org/enums';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -26,13 +27,13 @@ export class RolesGuard implements CanActivate {
     const user = request.user;
 
     if (!user) {
-      throw new UnauthorizedException('Unauthorized');
+      throw new UnauthorizedException(AUTH_MESSAGES.UNAUTHORIZED);
     }
 
     const allowedGrpcRoles = allowedRoles.map((r) => ROLE_TO_GRPC[r]);
 
     if (!allowedGrpcRoles.includes(user.role)) {
-      throw new ForbiddenException('Access denied');
+      throw new ForbiddenException(AUTH_MESSAGES.ACCESS_DENIED);
     }
 
     return true;

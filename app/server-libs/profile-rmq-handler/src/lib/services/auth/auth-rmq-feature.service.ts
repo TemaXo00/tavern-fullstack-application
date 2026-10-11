@@ -5,6 +5,7 @@ import {
   AuthRegisteredMessage,
 } from '@org/rmq-messages';
 import { RmqLoggerUtil } from '@org/shared-utils';
+import { PROFILE_MESSAGES } from '@org/validation-messages';
 
 @Injectable()
 export class AuthRmqFeatureService {
@@ -17,9 +18,9 @@ export class AuthRmqFeatureService {
   async handleUserRegistered(payload: AuthRegisteredMessage): Promise<void> {
     await this.dbUtil.createProfile(payload);
     this.logUtil.logSuccess(
-      'Create Profile',
+      PROFILE_MESSAGES.CREATE.CONTEXT,
       AUTHORIZATION_MESSAGES.REGISTER,
-      `userId: ${payload.id}`,
+      PROFILE_MESSAGES.CREATE.MESSAGE(payload.id),
     );
   }
 
@@ -27,9 +28,9 @@ export class AuthRmqFeatureService {
     await this.validationUtil.checkUserExisting('by-id', userId);
     await this.dbUtil.unblockUser(userId);
     this.logUtil.logSuccess(
-      'Update Status',
+      PROFILE_MESSAGES.UNBLOCK.CONTEXT,
       AUTHORIZATION_MESSAGES.UNBLOCK,
-      `User ${userId}`,
+      PROFILE_MESSAGES.UNBLOCK.MESSAGE(userId),
     );
   }
 }

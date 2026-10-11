@@ -8,10 +8,46 @@ export const PROFILE_MESSAGES = {
     METHOD: 'Register',
     MESSAGE: 'User exists but has no activity log, repairing',
   },
+  CREATE: {
+    CONTEXT: 'Create Profile',
+    MESSAGE: (userId: string): string => {
+      return `userId: ${userId}`;
+    },
+  },
+  UNBLOCK: {
+    CONTEXT: 'Update Status',
+    MESSAGE: (userId: string): string => {
+      return `User: ${userId}`;
+    },
+  },
+  INACTIVE: {
+    CONTEXT: 'Update activity',
+    MESSAGE: (userId: string): string => {
+      return `User with ID ${userId} deactivated`;
+    },
+  },
   BLOCK_USER: {
     LOG_METHOD: 'Block',
     MESSAGE: (dateFrom: Date, dateTo: Date, reason: string): string => {
       return `The user blocked from ${dateFrom.toISOString()} to ${dateTo.toISOString()}. Reason: ${reason}`;
+    },
+  },
+  ACTIVATE_BY_ADMIN: {
+    CONTEXT: 'Update activity',
+    MESSAGE: (userId: string, adminId: string): string => {
+      return `User with ID ${userId} activated by admin with ID ${adminId}`;
+    },
+  },
+  UPDATE_EMAIL: {
+    CONTEXT: 'Update email',
+    MESSAGE: (userId: string, newEmail: string): string => {
+      return `User with id ${userId} changed email to ${newEmail}`;
+    },
+  },
+  DELETE_USER: {
+    CONTEXT: 'Delete User',
+    MESSAGE: (userId: string): string => {
+      return `User with id ${userId} deleted successfully`;
     },
   },
   EARLY_UNBLOCK: {
@@ -23,6 +59,7 @@ export const PROFILE_MESSAGES = {
   REPUTATION_UNKNOWN_TYPE: 'Unknown action type',
   PROFILE_NOT_FOUND: 'Profile not found',
   NICKNAME_TAKEN: 'Nickname already taken',
+  INVALID_NICKNAME_STRING: 'Nickname',
   BIRTH_DATE_FUTURE: 'Birth date from cannot be in future',
   BIRTH_DATE_FROM_FEWER: 'Birth date from cannot be fewer, than birthDateTo',
   UPDATE_PROFILE_DATA_NOT_FOUND: 'Invalid update data',

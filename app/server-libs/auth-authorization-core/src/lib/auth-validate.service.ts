@@ -8,6 +8,7 @@ import {
 } from '@org/auth-authorization-utils';
 import { ROLE_TO_GRPC, Roles } from '@org/enums';
 import { StringValidationUtil } from '@org/shared-utils';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 
 import type { UserPayload, ValidateInput } from '@org/grpc-types';
 
@@ -51,9 +52,8 @@ export class AuthValidateService {
     const allowedGrpcRoles = allowedRoles.map((r) => ROLE_TO_GRPC[r]);
 
     if (!allowedGrpcRoles.includes(payload.role)) {
-      const roleNames = allowedRoles.join(', ');
       throw new RpcException({
-        message: `Access denied. Required roles: ${roleNames}`,
+        message: AUTH_MESSAGES.ACCESS_DENIED,
         code: status.PERMISSION_DENIED,
       });
     }
@@ -64,22 +64,37 @@ export class AuthValidateService {
   private validateInputFields(validation: ValidateInput): void {
     if (!validation) {
       throw new RpcException({
-        message: 'Validation data is required',
+        message: AUTH_MESSAGES.VALIDATION_DATA_REQUIRED,
         code: status.INVALID_ARGUMENT,
       });
     }
 
     if (!validation.session) {
       throw new RpcException({
-        message: 'Session data is required',
+        message: AUTH_MESSAGES.SESSION_REQUIRED,
         code: status.INVALID_ARGUMENT,
       });
     }
 
-    this.stringUtil.validateAnyString(validation.accessToken, 'Access Token');
-    this.stringUtil.validateAnyString(validation.session.browser, 'Browser');
-    this.stringUtil.validateAnyString(validation.session.ip, 'IP');
-    this.stringUtil.validateAnyString(validation.session.device, 'Device');
-    this.stringUtil.validateAnyString(validation.session.os, 'OS');
+    this.stringUtil.validateAnyString(
+      validation.accessToken,
+      AUTH_MESSAGES.INVALID_TOKEN_STRING,
+    );
+    this.stringUtil.validateAnyString(
+      validation.session.browser,
+      AUTH_MESSAGES.INVALID_BROWSER_STRING,
+    );
+    this.stringUtil.validateAnyString(
+      validation.session.ip,
+      AUTH_MESSAGES.INVALID_IP_STRING,
+    );
+    this.stringUtil.validateAnyString(
+      validation.session.device,
+      AUTH_MESSAGES.INVALID_DEVICE_STRING,
+    );
+    this.stringUtil.validateAnyString(
+      validation.session.os,
+      AUTH_MESSAGES.INVALID_OS_STRING,
+    );
   }
 }

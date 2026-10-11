@@ -9,6 +9,14 @@ export const AUTH_MESSAGES = {
   CANNOT_PROMOTE_USER:
     'You cannot promote user, cause he registered less than 1 year ago',
   USER_NOT_MODERATOR: 'User not moderator',
+  USER_BLOCKED: (blockedUntil: Date, reason: string): string => {
+    return `User blocked until ${blockedUntil.toDateString()}. Reason: ${reason}`;
+  },
+  USER_INACTIVE: 'User inactive',
+  ACCESS_DENIED: 'Access denied',
+  UNAUTHORIZED: 'Unauthorized',
+  VALIDATION_DATA_REQUIRED: 'Validation data required',
+  SESSION_REQUIRED: 'Session data is required',
   CANNOT_CNANGE_ADMIN: 'You cannot change admin role',
   CANNOT_CHANGE_SIMILAR: 'You cannot change user with similar role',
   USER_NOT_BLOCKED: 'User is not blocked',
@@ -18,8 +26,20 @@ export const AUTH_MESSAGES = {
   SESSION_NOT_FOUND: 'Session not found',
   CURRENT_SESSION_DELETE:
     "You can't delete your own session. If you need, you can logout",
+  INVALID_SESSION: 'Invalid session',
   SESSION_DELETE_FAILED: "You can't delete session",
   TOKEN_NOT_FOUND: 'Token not found',
   TOKEN_USED: 'Token used',
   TOKEN_EXPIRED: 'Token expired',
+  TOKEN_INVALID: 'Token invalid',
+  TOKEN_BASE_ERROR: 'Invalid or expired token',
+  INVALID_PASSWORD_STRING: 'Password',
+  INVALID_LOCAL_NAME_STRING: 'Local name',
+  INVALID_BLOCK_REASON_STRING: 'Block reason',
+  INVALID_DEVICE_STRING: 'Device',
+  INVALID_BROWSER_STRING: 'Browser',
+  INVALID_IP_STRING: 'IP',
+  INVALID_OS_STRING: 'OS',
+  INVALID_REFRESH_STRING: 'Refresh token',
+  INVALID_TOKEN_STRING: 'Token',
 } as const;

@@ -1,6 +1,7 @@
 import { status } from '@grpc/grpc-js';
 import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
+import { SHARED_MESSAGES } from '@org/validation-messages';
 
 @Injectable()
 export class DateMapUtil {
@@ -9,7 +10,7 @@ export class DateMapUtil {
 
     if (isNaN(correctDate.getTime())) {
       throw new RpcException({
-        message: 'Invalid date',
+        message: SHARED_MESSAGES.INVALID_DATE,
         code: status.INVALID_ARGUMENT,
       });
     }

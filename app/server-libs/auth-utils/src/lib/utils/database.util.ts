@@ -27,6 +27,7 @@ import {
   StringValidationUtil,
 } from '@org/shared-utils';
 import { AUTH_CONFIG } from '@org/validation-config';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 
 @Injectable()
 export class AuthDatabaseUtil {
@@ -162,7 +163,10 @@ export class AuthDatabaseUtil {
 
   async registerUser(email: string, passwordHash: string): Promise<User> {
     this.stringUtil.validateEmail(email);
-    this.stringUtil.validateAnyString(passwordHash, 'Password');
+    this.stringUtil.validateAnyString(
+      passwordHash,
+      AUTH_MESSAGES.INVALID_PASSWORD_STRING,
+    );
     return await this.db.user.create({
       data: {
         email: email,
@@ -188,7 +192,10 @@ export class AuthDatabaseUtil {
 
   async updateUserPassword(userEmail: string, password: string): Promise<void> {
     this.stringUtil.validateEmail(userEmail);
-    this.stringUtil.validateAnyString(password, 'Password');
+    this.stringUtil.validateAnyString(
+      password,
+      AUTH_MESSAGES.INVALID_PASSWORD_STRING,
+    );
     await this.db.user.update({
       where: { email: userEmail },
       data: {
@@ -215,7 +222,10 @@ export class AuthDatabaseUtil {
     blockReason: string,
   ): Promise<User> {
     this.stringUtil.validateId(id);
-    this.stringUtil.validateAnyString(blockReason, 'block reason');
+    this.stringUtil.validateAnyString(
+      blockReason,
+      AUTH_MESSAGES.INVALID_BLOCK_REASON_STRING,
+    );
 
     const blockedUntilDate = this.mapDateUtil.mapDateAndValidate(blockedUntil);
 
@@ -264,7 +274,10 @@ export class AuthDatabaseUtil {
     sessionId: string,
     localName: string,
   ): Promise<Session> {
-    this.stringUtil.validateAnyString(localName, 'Local name');
+    this.stringUtil.validateAnyString(
+      localName,
+      AUTH_MESSAGES.INVALID_LOCAL_NAME_STRING,
+    );
     return await this.db.session.update({
       where: {
         id: sessionId,
