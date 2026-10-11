@@ -25,7 +25,6 @@ COPY server-libs/auth-user-feature ./server-libs/auth-user-feature
 COPY core-libs/bootstrap ./core-libs/bootstrap
 COPY core-libs/base-types ./core-libs/base-types
 COPY core-libs/grpc-types ./core-libs/grpc-types
-COPY core-libs/shared-types ./core-libs/shared-types
 COPY core-libs/enums ./core-libs/enums
 COPY core-libs/rmq-config ./core-libs/rmq-config
 COPY core-libs/rmq-messages ./core-libs/rmq-messages
@@ -68,7 +67,6 @@ COPY --from=builder /app/server-libs/auth-user-feature/dist ./node_modules/@org/
 COPY --from=builder /app/core-libs/bootstrap/dist ./node_modules/@org/bootstrap
 COPY --from=builder /app/core-libs/base-types/dist ./node_modules/@org/base-types
 COPY --from=builder /app/core-libs/grpc-types/dist ./node_modules/@org/grpc-types
-COPY --from=builder /app/core-libs/shared-types/dist ./node_modules/@org/shared-types
 COPY --from=builder /app/core-libs/enums/dist ./node_modules/@org/enums
 COPY --from=builder /app/core-libs/rmq-config/dist ./node_modules/@org/rmq-config
 COPY --from=builder /app/core-libs/rmq-messages/dist ./node_modules/@org/rmq-messages
