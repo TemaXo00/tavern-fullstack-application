@@ -8,6 +8,6 @@ export class ChangePasswordDto implements ChangePasswordSharedInput {
   oldPassword: string;
   @Password()
   newPassword: string;
-  @Password()
+  @Unvalidated({ required: true, description: 'Password confirmation' })
   newPasswordConfirmation: string;
 }

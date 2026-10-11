@@ -1,6 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { Actions } from '@org/enums';
+import { PROFILE_MESSAGES } from '@org/validation-messages';
 import { IsEnum, IsOptional } from 'class-validator';
 
 export function Action(): PropertyDecorator {
@@ -11,6 +12,6 @@ export function Action(): PropertyDecorator {
       enum: Actions,
     }),
     IsOptional(),
-    IsEnum(Actions),
+    IsEnum(Actions, { message: PROFILE_MESSAGES.ACTION_VALIDATION.ENUM }),
   );
 }

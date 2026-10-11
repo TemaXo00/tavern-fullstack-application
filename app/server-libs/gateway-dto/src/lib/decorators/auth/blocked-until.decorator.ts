@@ -1,5 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
+import { AUTH_MESSAGES } from '@org/validation-messages';
 import { Type } from 'class-transformer';
 import { IsDate, IsNotEmpty, MinDate } from 'class-validator';
 
@@ -12,8 +13,10 @@ export function BlockedUntil(): PropertyDecorator {
       format: 'date-time',
     }),
     Type(() => Date),
-    IsNotEmpty(),
-    IsDate(),
-    MinDate(() => new Date()),
+    IsNotEmpty({ message: AUTH_MESSAGES.BLOCKED_UNTIL_VALIDATION.NOT_EMPTY }),
+    IsDate({ message: AUTH_MESSAGES.BLOCKED_UNTIL_VALIDATION.TYPE }),
+    MinDate(() => new Date(), {
+      message: AUTH_MESSAGES.BLOCKED_UNTIL_VALIDATION.DATE,
+    }),
   );
 }
