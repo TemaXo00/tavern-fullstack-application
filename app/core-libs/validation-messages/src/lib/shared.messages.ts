@@ -5,6 +5,7 @@ export const SHARED_MESSAGES = {
   INVALID_EMAIL: 'Email',
   INVALID_ID: 'ID',
   INVALID_DATA: 'Data',
+  INVALID_SLUG: 'Slug',
   RPC_ERROR: (arg: string): string => {
     return `Invalid ${arg}`;
   },

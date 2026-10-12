@@ -22,8 +22,8 @@ export class EventTagValidateUtil {
   }
 
   async checkSlugUnique(slug: string): Promise<void> {
-    const tag = this.dbUtil.getTagBySlug(slug);
-    if (tag !== null) {
+    const tag = await this.dbUtil.getTagBySlug(slug);
+    if (tag) {
       throw new RpcException({
         message: EVENT_MESSAGES.TAG_SLUG_EXISTING,
         code: status.ALREADY_EXISTS,

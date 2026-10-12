@@ -54,7 +54,12 @@ export class TagFeatureService implements EventTagServiceContract {
     ]);
     const slug = this.slugUtil.createSlug(data.name);
     await this.validateUtil.checkSlugUnique(slug);
-    const tag = await this.dbUtil.createTag(data, slug);
+    const createData = {
+      name: data.name,
+      description: data.description ?? undefined,
+      color: data.color ?? undefined,
+    };
+    const tag = await this.dbUtil.createTag(createData, slug);
     this.messagesUtil.create({ adminId: payload.id, tagSlug: slug });
     return tag;
   }
@@ -64,9 +69,17 @@ export class TagFeatureService implements EventTagServiceContract {
       Roles.ADMIN,
     ]);
     await this.validateUtil.checkTagExisting(data.slug);
-    const updated = await this.dbUtil.updateTag(data.slug, data);
+    const updateData = {
+      color: data.color ?? undefined,
+      description: data.description ?? undefined,
+    };
+    const updated = await this.dbUtil.updateTag(data.slug, updateData);
     await this.cacheUtil.del(data.slug);
-    this.messagesUtil.update({ adminId: payload.id, slug: data.slug, data });
+    this.messagesUtil.update({
+      adminId: payload.id,
+      slug: data.slug,
+      data: updateData,
+    });
     return updated;
   }
 
