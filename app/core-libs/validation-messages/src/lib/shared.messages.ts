@@ -26,4 +26,14 @@ export const SHARED_MESSAGES = {
     TYPE: 'ID should be a string',
     UUID: 'ID should have correct format',
   },
+  DESCRIPTION_VALIDATION: {
+    TYPE: 'Description should be a string',
+    MIN_LENGTH: `Minimal length of description is ${SHARED_CONFIG.DESCRIPTION.MIN_LENGTH}`,
+    MAX_LENGTH: `Maximum length of description is ${SHARED_CONFIG.DESCRIPTION.MAX_LENGTH}`,
+  },
+  NAME_VALIDATION: {
+    TYPE: 'Name should be a string',
+    MIN_LENGTH: `Minimal length of name is ${SHARED_CONFIG.NAME.MIN_LENGTH}`,
+    MAX_LENGTH: `Maximum length of name is ${SHARED_CONFIG.NAME.MAX_LENGTH}`,
+  },
 } as const;

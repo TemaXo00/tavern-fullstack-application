@@ -78,16 +78,6 @@ export const PROFILE_MESSAGES = {
     TYPE: 'Birth date should be in correct format. Example: 2026-06-15T00:00:00.000Z',
     MAX: 'Birth date cannot be in future',
   },
-  DESCRIPTION_VALIDATION: {
-    TYPE: 'Description should be a string',
-    MIN_LENGTH: `Minimal length of description is ${PROFILE_CONFIG.DESCRIPTION.MIN_LENGTH}`,
-    MAX_LENGTH: `Maximum length of description is ${PROFILE_CONFIG.DESCRIPTION.MAX_LENGTH}`,
-  },
-  NAME_VALIDATION: {
-    TYPE: 'Name should be a string',
-    MIN_LENGTH: `Minimal length of name is ${PROFILE_CONFIG.NAME.MIN_LENGTH}`,
-    MAX_LENGTH: `Maximum length of name is ${PROFILE_CONFIG.NAME.MAX_LENGTH}`,
-  },
   SURNAME_VALIDATION: {
     TYPE: 'Surname should be a string',
     MIN_LENGTH: `Minimal length of surname is ${PROFILE_CONFIG.SURNAME.MIN_LENGTH}`,
