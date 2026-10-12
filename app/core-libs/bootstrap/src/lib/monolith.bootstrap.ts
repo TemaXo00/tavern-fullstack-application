@@ -15,6 +15,7 @@ import {
 import { validationPipeConfig } from './configurations/validation-pipe.config.js';
 import { MonolithBootstrapOptions } from './types/monolith.type.js';
 import { AllExceptionsFilter } from './utils/filters/exception.filter.js';
+import { GrpcExceptionInterceptor } from './utils/interceptors/grpc-exception.interceptor.js';
 import { ResponseInterceptor } from './utils/interceptors/response.interceptor.js';
 import { loggingMiddleware } from './utils/middlewares/logging.middleware.js';
 
@@ -60,7 +61,10 @@ export async function monolithLaunch<T>(
   }
 
   if (options.interceptors) {
-    app.useGlobalInterceptors(new ResponseInterceptor());
+    app.useGlobalInterceptors(
+      new ResponseInterceptor(),
+      new GrpcExceptionInterceptor(),
+    );
   }
 
   if (options.filters) {
