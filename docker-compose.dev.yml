@@ -95,7 +95,7 @@ services:
       - event_db_dev_data:/var/lib/postrgesql
 
   auth-service-dev:
-    image: ${DOCKER_REGISTRY}/temaxo00/tavern-auth:dev
+    image: ${DOCKER_REGISTRY}/temaxo00/tavern-auth:${DOCKER_APPS_VERSION}
     container_name: tavern-dev-auth-api
     networks:
       - tavern-dev
@@ -121,7 +121,7 @@ services:
         condition: service_healthy
 
   profile-service-dev:
-    image: ${DOCKER_REGISTRY}/temaxo00/tavern-profile:dev
+    image: ${DOCKER_REGISTRY}/temaxo00/tavern-profile:${DOCKER_APPS_VERSION}
     container_name: tavern-dev-profile-api
     networks:
       - tavern-dev
@@ -153,7 +153,7 @@ services:
         condition: service_healthy
 
   gateway-dev:
-    image: ${DOCKER_REGISTRY}/temaxo00/tavern-gateway:dev
+    image: ${DOCKER_REGISTRY}/temaxo00/tavern-gateway:${DOCKER_APPS_VERSION}
     container_name: tavern-dev-gateway-api
     ports:
       - "${TAVERN_API_PORT}:3000"
@@ -185,7 +185,7 @@ services:
         condition: service_healthy
 
   db_migrator-dev:
-    image: ${DOCKER_REGISTRY}/temaxo00/tavern-migrator:dev
+    image: ${DOCKER_REGISTRY}/temaxo00/tavern-migrator:${DOCKER_APPS_VERSION}
     container_name: tavern-dev-database-migrator
     networks:
       - tavern-dev
