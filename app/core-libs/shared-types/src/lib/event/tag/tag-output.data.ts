@@ -4,6 +4,6 @@ import {
   EventTagDetailedBaseOutput,
 } from '@org/base-types';
 
-export type TagSharedOutput = EventTagBaseOutput;
-export type TagDetailedSharedOutput = EventTagDetailedBaseOutput;
-export type PaginatedTagsSharedOutput = PaginatedEventTagsBaseOutput;
+export type EventTagSharedOutput = EventTagBaseOutput;
+export type EventTagDetailedSharedOutput = EventTagDetailedBaseOutput;
+export type PaginatedEventTagsSharedOutput = PaginatedEventTagsBaseOutput;

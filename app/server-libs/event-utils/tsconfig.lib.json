@@ -18,6 +18,15 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
+      "path": "../../core-libs/rmq-messages/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/validation-messages/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/rmq-config/tsconfig.lib.json"
+    },
+    {
       "path": "../../core-libs/validation-config/tsconfig.lib.json"
     },
     {

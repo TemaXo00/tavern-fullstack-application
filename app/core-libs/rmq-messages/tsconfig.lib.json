@@ -11,6 +11,9 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
+      "path": "../base-types/tsconfig.lib.json"
+    },
+    {
       "path": "../grpc-types/tsconfig.lib.json"
     }
   ]

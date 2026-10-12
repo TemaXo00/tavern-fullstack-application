@@ -2,4 +2,8 @@
 export * from './lib/event-utils.module';
 
 // UTILS
-export * from './lib/utils/database.util';
+// TAG
+export * from './lib/utils/tag/database.util';
+export * from './lib/utils/tag/validate.util';
+export * from './lib/utils/tag/cache.util';
+export * from './lib/utils/tag/messages.util';

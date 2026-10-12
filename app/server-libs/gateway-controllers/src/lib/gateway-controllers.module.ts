@@ -33,7 +33,6 @@ const SERVICES: string[] = ['AUTH', 'PROFILE'];
         inject: [ConfigService],
       })),
     ),
-    ConfigModule,
   ],
   controllers: [...AUTH_CONTROLLERS, ...PROFILE_CONTROLLERS],
 })

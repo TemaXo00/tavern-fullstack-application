@@ -16,6 +16,9 @@
       "path": "../../core-libs/bootstrap/tsconfig.lib.json"
     },
     {
+      "path": "../../server-libs/shared-utils/tsconfig.lib.json"
+    },
+    {
       "path": "../../server-libs/profile-utils/tsconfig.lib.json"
     },
     {

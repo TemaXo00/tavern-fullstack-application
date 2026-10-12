@@ -6,6 +6,7 @@ import { ProfileProfilesFeatureModule } from '@org/profile-profiles-feature';
 import { ProfileReputationFeatureModule } from '@org/profile-reputation-feature';
 import { ProfileRmqHandlerModule } from '@org/profile-rmq-handler';
 import { ProfileUtilsModule } from '@org/profile-utils';
+import { SharedUtilsModule } from '@org/shared-utils';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ProfileUtilsModule } from '@org/profile-utils';
       isGlobal: true,
     }),
     AuthAuthorizationCoreModule,
+    SharedUtilsModule,
     ProfileUtilsModule,
     ProfileRmqHandlerModule,
     ProfileProfilesFeatureModule,

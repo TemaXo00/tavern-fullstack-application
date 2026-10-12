@@ -9,20 +9,21 @@ import {
   PaginatedEventTagsOutput,
   UpdateEventTagGrpcInput,
 } from '@org/grpc-types';
-import { PaginationUtil, SlugUtil } from '@org/shared-utils';
+import { PaginationUtil, StringValidationUtil } from '@org/shared-utils';
+import { EVENT_MESSAGES } from '@org/validation-messages';
 
 import {
   TAG_ADVANCED_OUTPUT_SELECTIONS,
   TAG_BASE_OUTPUT_SELECTIONS,
   TAG_LIST_OUTPUT_SELECTION,
-} from './helpers/selections';
+} from '../helpers/selections';
 
 @Injectable()
-export class EventDatabaseUtil {
+export class EventTagDatabaseUtil {
   constructor(
     private readonly db: EventDatabaseService,
     private readonly paginationUtil: PaginationUtil,
-    private readonly slugUtil: SlugUtil,
+    private readonly stringUtil: StringValidationUtil,
   ) {}
 
   // GET Methods
@@ -63,6 +64,10 @@ export class EventDatabaseUtil {
   }
 
   async getTagBySlug(slug: string): Promise<EventTagDetailedOutput | null> {
+    this.stringUtil.validateAnyString(
+      slug,
+      EVENT_MESSAGES.INVALID_TAG_SLUG_STRING,
+    );
     return await this.db.eventTag.findUnique({
       where: {
         slug,
@@ -73,11 +78,22 @@ export class EventDatabaseUtil {
 
   // CREATE Methods
 
-  async createTag(data: CreateEventTagGrpcInput): Promise<EventTagOutput> {
+  async createTag(
+    data: CreateEventTagGrpcInput,
+    slug: string,
+  ): Promise<EventTagOutput> {
+    this.stringUtil.validateAnyString(
+      data.name,
+      EVENT_MESSAGES.INVALID_TAG_NAME_STRING,
+    );
+    this.stringUtil.validateAnyString(
+      slug,
+      EVENT_MESSAGES.INVALID_TAG_SLUG_STRING,
+    );
     return await this.db.eventTag.create({
       data: {
         ...data,
-        slug: this.slugUtil.createSlug(data.name),
+        slug,
       },
       select: { ...TAG_BASE_OUTPUT_SELECTIONS },
     });
@@ -101,6 +117,10 @@ export class EventDatabaseUtil {
   // DELETE Methods
 
   async deleteTag(slug: string): Promise<void> {
+    this.stringUtil.validateAnyString(
+      slug,
+      EVENT_MESSAGES.INVALID_TAG_SLUG_STRING,
+    );
     await this.db.eventTag.delete({
       where: { slug },
     });

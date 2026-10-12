@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 
 import { DateMapUtil } from './utils/date-map.util';
 import { PaginationUtil } from './utils/pagination.util';
@@ -14,6 +14,7 @@ const UTILS = [
   SlugUtil,
 ];
 
+@Global()
 @Module({
   controllers: [],
   providers: [...UTILS],

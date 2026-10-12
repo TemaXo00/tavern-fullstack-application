@@ -16,5 +16,21 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../shared-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../event-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/enums/tsconfig.lib.json"
+    },
+    {
+      "path": "../auth-authorization-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/grpc-types/tsconfig.lib.json"
+    }
+  ]
 }

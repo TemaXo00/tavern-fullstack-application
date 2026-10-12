@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { SharedUtilsModule } from '@org/shared-utils';
 
 import { AuthRmqFeatureController } from './services/auth/auth-rmq-feature.controller';
 import { AuthRmqFeatureService } from './services/auth/auth-rmq-feature.service';
@@ -7,7 +6,6 @@ import { UserRmqFeatureController } from './services/auth/user-rmq-feature.contr
 import { UserRmqFeatureService } from './services/auth/user-rmq-feature.service';
 
 @Module({
-  imports: [SharedUtilsModule],
   controllers: [AuthRmqFeatureController, UserRmqFeatureController],
   providers: [AuthRmqFeatureService, UserRmqFeatureService],
 })

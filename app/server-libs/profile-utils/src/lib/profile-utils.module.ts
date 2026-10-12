@@ -4,7 +4,6 @@ import { ClientProviderOptions, ClientsModule } from '@nestjs/microservices';
 import { RedisModule } from '@nestjs-modules/ioredis';
 import { ProfileDatabaseModule } from '@org/profile-database';
 import { RmqModule, RmqService } from '@org/rmq-config';
-import { SharedUtilsModule } from '@org/shared-utils';
 
 import { ProfileCacheUtil } from './utils/cache-util';
 import { ProfileDatabaseUtil } from './utils/database.util';
@@ -30,7 +29,6 @@ const queues: string[] = ['log'];
 @Module({
   imports: [
     ProfileDatabaseModule,
-    SharedUtilsModule,
     RedisModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (config: ConfigService) => ({

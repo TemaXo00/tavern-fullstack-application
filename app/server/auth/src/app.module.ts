@@ -6,6 +6,7 @@ import { AuthSessionFeatureModule } from '@org/auth-session-feature';
 import { AuthTokenFeatureModule } from '@org/auth-token-feature';
 import { AuthUserFeatureModule } from '@org/auth-user-feature';
 import { AuthUtilsModule } from '@org/auth-utils';
+import { SharedUtilsModule } from '@org/shared-utils';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AuthUtilsModule } from '@org/auth-utils';
       isGlobal: true,
     }),
     AuthAuthorizationCoreModule,
+    SharedUtilsModule,
     AuthUtilsModule,
     AuthAuthorizationFeatureModule,
     AuthSessionFeatureModule,

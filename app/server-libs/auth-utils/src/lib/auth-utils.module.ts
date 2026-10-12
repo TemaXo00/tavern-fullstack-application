@@ -2,7 +2,6 @@ import { Global, Module } from '@nestjs/common';
 import { ClientProviderOptions, ClientsModule } from '@nestjs/microservices';
 import { AuthDatabaseModule } from '@org/auth-database';
 import { RmqModule, RmqService } from '@org/rmq-config';
-import { SharedUtilsModule } from '@org/shared-utils';
 
 import { AuthDatabaseUtil } from './utils/database.util';
 import { AuthMapUtil } from './utils/map.util';
@@ -26,7 +25,6 @@ const queues: string[] = ['profile', 'log', 'mail'];
 @Module({
   imports: [
     AuthDatabaseModule,
-    SharedUtilsModule,
     RmqModule,
     ClientsModule.registerAsync(
       queues.map((queue) => ({

@@ -11,3 +11,9 @@ export * from './lib/auth/user-messages.js';
 export * from './lib/enums/profile.messages.js';
 
 export * from './lib/profile/profile-messages.js';
+
+// EVENT
+
+export * from './lib/enums/event.messages.js';
+
+export * from './lib/events/tag-messages.js';

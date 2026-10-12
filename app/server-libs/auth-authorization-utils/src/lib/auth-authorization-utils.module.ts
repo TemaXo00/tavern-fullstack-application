@@ -3,7 +3,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { RedisModule } from '@nestjs-modules/ioredis';
 import { AuthDatabaseModule } from '@org/auth-database';
-import { SharedUtilsModule } from '@org/shared-utils';
 
 import { AuthCoreAuthorizeUtil } from './utils/auth.util';
 import { AuthCoreCacheUtil } from './utils/cache.util';
@@ -22,7 +21,6 @@ const UTILS = [
 @Module({
   imports: [
     AuthDatabaseModule,
-    SharedUtilsModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
