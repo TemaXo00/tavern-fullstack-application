@@ -1,9 +1,14 @@
 import { Global, Module } from '@nestjs/common';
+import { EventDatabaseModule } from '@org/event-database';
+import { SharedUtilsModule } from '@org/shared-utils';
 
-export const UTILS = [];
+import { EventDatabaseUtil } from './utils/database.util';
+
+export const UTILS = [EventDatabaseUtil];
 
 @Global()
 @Module({
+  imports: [EventDatabaseModule, SharedUtilsModule],
   providers: [...UTILS],
   exports: [...UTILS],
 })

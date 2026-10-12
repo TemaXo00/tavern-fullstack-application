@@ -1,11 +1,16 @@
 import {
   CreateEventTagBaseInput,
   EventTagBySlugBaseInput,
+  EventTagPaginationBaseInput,
   GetPaginatedEventTagsBaseInput,
   UpdateEventTagBaseInput,
 } from '@org/base-types';
 
 import { Protected } from '../../utils/protected.js';
+
+export type CreateEventTagGrpcInput = CreateEventTagBaseInput;
+export type UpdateEventTagGrpcInput = UpdateEventTagBaseInput;
+export type EventTagPaginationGrpcInput = EventTagPaginationBaseInput;
 
 export type GetPaginatedEventTagsInput = GetPaginatedEventTagsBaseInput;
 export type GetEventTagInput = EventTagBySlugBaseInput;

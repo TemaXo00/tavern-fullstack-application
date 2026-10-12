@@ -3,13 +3,13 @@ import { EventShortBaseOutput } from '../events/event-output.data.js';
 
 export type EventTagPaginationBaseOutput = PaginationBaseOutput;
 
-export interface TagListBaseOutput {
+export interface EventTagListBaseOutput {
   slug: string;
   name: string;
   color: string | null;
 }
 
-export interface TagBaseOutput {
+export interface EventTagBaseOutput {
   slug: string;
   name: string;
   description: string | null;
@@ -18,11 +18,11 @@ export interface TagBaseOutput {
   updatedAt: Date;
 }
 
-export interface TagDetailedBaseOutput extends TagBaseOutput {
-  events: EventShortBaseOutput;
+export interface EventTagDetailedBaseOutput extends EventTagBaseOutput {
+  events: EventShortBaseOutput[];
 }
 
 export interface PaginatedTagsBaseOutput {
   pagination: EventTagPaginationBaseOutput;
-  tags: TagListBaseOutput;
+  tags: EventTagListBaseOutput[];
 }
