@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "tslib": "^2.3.0",
-    "@org/grpc-types": "0.0.1"
+    "@org/grpc-types": "0.0.1",
+    "@org/base-types": "0.0.1"
   }
 }

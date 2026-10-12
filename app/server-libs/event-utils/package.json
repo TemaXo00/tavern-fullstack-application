@@ -20,6 +20,14 @@
     "@org/event-database": "0.0.1",
     "@org/shared-utils": "0.0.1",
     "@org/grpc-types": "0.0.1",
-    "@org/validation-config": "0.0.1"
+    "@org/validation-config": "0.0.1",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/microservices": "^11.2.1",
+    "@nestjs-modules/ioredis": "^2.2.2",
+    "@org/rmq-config": "0.0.1",
+    "ioredis": "^6.0.0",
+    "@org/validation-messages": "0.0.1",
+    "@org/rmq-messages": "0.0.1",
+    "@grpc/grpc-js": "^1.14.4"
   }
 }

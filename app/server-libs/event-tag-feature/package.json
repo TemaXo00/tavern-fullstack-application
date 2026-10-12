@@ -16,6 +16,12 @@
   },
   "dependencies": {
     "tslib": "^2.3.0",
-    "@nestjs/common": "^11.0.0"
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/microservices": "^11.2.1",
+    "@org/grpc-types": "0.0.1",
+    "@org/auth-authorization-core": "0.0.1",
+    "@org/enums": "0.0.1",
+    "@org/event-utils": "0.0.1",
+    "@org/shared-utils": "0.0.1"
   }
 }
