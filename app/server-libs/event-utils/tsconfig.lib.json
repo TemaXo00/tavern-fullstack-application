@@ -16,5 +16,18 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../../core-libs/validation-config/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/grpc-types/tsconfig.lib.json"
+    },
+    {
+      "path": "../shared-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../event-database/tsconfig.lib.json"
+    }
+  ]
 }

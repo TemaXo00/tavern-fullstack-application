@@ -22,7 +22,7 @@ export interface EventTagDetailedBaseOutput extends EventTagBaseOutput {
   events: EventShortBaseOutput[];
 }
 
-export interface PaginatedTagsBaseOutput {
+export interface PaginatedEventTagsBaseOutput {
   pagination: EventTagPaginationBaseOutput;
   tags: EventTagListBaseOutput[];
 }

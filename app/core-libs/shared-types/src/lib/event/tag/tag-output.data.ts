@@ -1,9 +1,9 @@
 import {
-  PaginatedTagsBaseOutput,
-  TagBaseOutput,
-  TagDetailedBaseOutput,
+  PaginatedEventTagsBaseOutput,
+  EventTagBaseOutput,
+  EventTagDetailedBaseOutput,
 } from '@org/base-types';
 
-export type TagSharedOutput = TagBaseOutput;
-export type TagDetailedSharedOutput = TagDetailedBaseOutput;
-export type PaginatedTagsSharedOutput = PaginatedTagsBaseOutput;
+export type TagSharedOutput = EventTagBaseOutput;
+export type TagDetailedSharedOutput = EventTagDetailedBaseOutput;
+export type PaginatedTagsSharedOutput = PaginatedEventTagsBaseOutput;
