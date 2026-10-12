@@ -19,6 +19,7 @@
     "@nestjs/common": "^11.0.0",
     "@grpc/grpc-js": "^1.14.4",
     "@nestjs/microservices": "^11.2.1",
-    "@org/validation-messages": "0.0.1"
+    "@org/validation-messages": "0.0.1",
+    "slugify": "^1.6.9"
   }
 }
