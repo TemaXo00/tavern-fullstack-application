@@ -134,6 +134,12 @@
     },
     {
       "path": "./server-libs/event-database"
+    },
+    {
+      "path": "./server-libs/event-utils"
+    },
+    {
+      "path": "./server-libs/event-tag-feature"
     }
   ],
   "compilerOptions": {}

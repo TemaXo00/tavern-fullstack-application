@@ -16,6 +16,12 @@
       "path": "../../core-libs/bootstrap/tsconfig.lib.json"
     },
     {
+      "path": "../../server-libs/event-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/event-tag-feature/tsconfig.lib.json"
+    },
+    {
       "path": "../../server-libs/auth-authorization-core/tsconfig.lib.json"
     }
   ]
