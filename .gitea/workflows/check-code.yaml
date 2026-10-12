@@ -26,5 +26,8 @@ jobs:
       - name: Check ESLint
         run: cd app && npm run all:lint
 
+      - name: Check Types
+        run: cd app && npm run all:typecheck
+
       - name: Check Prettier
         run: cd app && npx prettier --check .
