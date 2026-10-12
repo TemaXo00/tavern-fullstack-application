@@ -40,3 +40,14 @@ export * from './lib/profile/reputation/reputation-input.data.js';
 export * from './lib/profile/reputation/reputation-output.data.js';
 
 // PROFILE MICROSERVICE END
+
+// ------------------------------
+
+// EVENT MICROSERVICE BEGIN
+
+// TAG SERVICE
+
+export * from './lib/event/tag/tag-input.data.js';
+export * from './lib/event/tag/tag-output.data.js';
+
+// EVENT MICROSERVICE END
