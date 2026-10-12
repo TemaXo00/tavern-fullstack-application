@@ -12,12 +12,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Build API GATEWAY
-        run: docker build -f docker-files/Gateway.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:dev ./app
-
-      - name: Push API GATEWAY
-        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:dev
-
       - name: Build AUTH Microservice
         run: docker build -f docker-files/Auth.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-auth:dev ./app
 
@@ -30,8 +24,20 @@ jobs:
       - name: Push PROFILE Microserivce
         run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:dev
 
+      - name: Build EVENT Microservice
+        run: docker build -f docker-files/Event.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-event:dev ./app
+
+      - name: Push EVENT Microserivce
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-event:dev
+
       - name: Build DB Migrator
         run: docker build -f docker-files/Db-Migrator.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:dev .
 
       - name: Push DB Migrator
         run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:dev
+
+      - name: Build API GATEWAY
+        run: docker build -f docker-files/Gateway.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:dev ./app
+
+      - name: Push API GATEWAY
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:dev

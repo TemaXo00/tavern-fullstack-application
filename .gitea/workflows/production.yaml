@@ -13,18 +13,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Build API GATEWAY
-        run: |
-          docker build -f docker-files/Gateway.Dockerfile \
-          -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:${{ github.ref_name }} \
-          -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:latest \
-          ./app
-
-      - name: Push API GATEWAY
-        run: |
-          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:${{ github.ref_name }}
-          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:latest
-
       - name: Build AUTH Microservice
         run: |
           docker build -f docker-files/Auth.Dockerfile \
@@ -49,6 +37,18 @@ jobs:
           docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:${{ github.ref_name }}
           docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:latest
 
+      - name: Build EVENT Microservice
+        run: |
+          docker build -f docker-files/Event.Dockerfile \
+          -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-event:${{ github.ref_name }} \
+          -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-event:latest \
+          ./app
+
+      - name: Push EVENT Microservice
+        run: |
+          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-event:${{ github.ref_name }}
+          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-event:latest
+
       - name: Build DB Migrator
         run: |
           docker build -f docker-files/Db-Migrator.Dockerfile \
@@ -60,3 +60,15 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:${{ github.ref_name }}
           docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:latest
+
+      - name: Build API GATEWAY
+        run: |
+          docker build -f docker-files/Gateway.Dockerfile \
+          -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:${{ github.ref_name }} \
+          -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:latest \
+          ./app
+
+      - name: Push API GATEWAY
+        run: |
+          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:${{ github.ref_name }}
+          docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:latest

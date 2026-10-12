@@ -7,8 +7,8 @@ COPY nx.json ./
 COPY tsconfig*.json ./
 
 COPY server/event ./server/event
-COPY proto/profile.proto ./proto/profile.proto
-COPY proto/profile ./proto/profile
+COPY proto/event.proto ./proto/event.proto
+COPY proto/event ./proto/event
 COPY proto/shared ./proto/shared
 
 COPY server-libs/auth-authorization-core ./server-libs/auth-authorization-core

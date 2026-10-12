@@ -142,10 +142,44 @@ services:
       TAVERN_REPUTATION_SCORE_BLOCK: ${TAVERN_REPUTATION_SCORE_BLOCK}
       TAVERN_REPUTATION_SCORE_EARLY_UNBLOCK: ${TAVERN_REPUTATION_SCORE_EARLY_UNBLOCK}
       TAVERN_REPUTATION_SCORE_REPORT: ${TAVERN_REPUTATION_SCORE_REPORT}
+      TAVERN_PROFILE_CACHE_TTL: ${TAVERN_PROFILE_CACHE_TTL}
     depends_on:
+      auth-service-dev:
+        condition: service_started
       auth-db-dev:
         condition: service_healthy
       profile-db-dev:
+        condition: service_healthy
+      redis-dev:
+        condition: service_healthy
+      rabbitmq-dev:
+        condition: service_healthy
+
+  event-service-dev:
+    image: ${DOCKER_REGISTRY}/temaxo00/tavern-event:${DOCKER_APPS_VERSION}
+    container_name: tavern-dev-event-api
+    networks:
+      - tavern-dev
+    environment:
+      APPS_GLOBAL_SCOPE: "TAVERN"
+      TAVERN_DEV_MODE: true
+      TAVERN_JWT_SECRET: ${TAVERN_JWT_SECRET}
+      TAVERN_JWT_ACCESS_TOKEN_TTL: ${TAVERN_JWT_ACCESS_TOKEN_TTL}
+      TAVERN_JWT_REFRESH_TOKEN_TTL: ${TAVERN_JWT_REFRESH_TOKEN_TTL}
+      TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_DEV_URL}
+      TAVERN_EVENT_DB_URL: ${TAVERN_EVENT_DB_DEV_URL}
+      TAVERN_RMQ_USER: ${TAVERN_RMQ_USER}
+      TAVERN_RMQ_PASSWORD: ${TAVERN_RMQ_PASSWORD}
+      TAVERN_RMQ_URL: ${TAVERN_RMQ_DEV_URL}
+      TAVERN_REDIS_URL: ${TAVERN_REDIS_DEV_URL}
+      TAVERN_REDIS_PASSWORD: ${TAVERN_REDIS_PASSWORD}
+      TAVERN_EVENT_TAG_CACHE_TTL: ${TAVERN_EVENT_TAG_CACHE_TTL}
+    depends_on:
+      auth-service-dev:
+        condition: service_started
+      auth-db-dev:
+        condition: service_healthy
+      event-db-dev:
         condition: service_healthy
       redis-dev:
         condition: service_healthy
@@ -178,6 +212,8 @@ services:
       auth-service-dev:
         condition: service_started
       profile-service-dev:
+        condition: service_started
+      event-service-dev:
         condition: service_started
       redis-dev:
         condition: service_healthy
