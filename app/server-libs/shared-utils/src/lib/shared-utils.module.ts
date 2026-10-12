@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
 
-import { RmqLoggerUtil } from './utils/logger/rmq-logger.util';
-import { DateMapUtil } from './utils/map/date-map.util';
-import { PaginationUtil } from './utils/pagination/pagination.util';
-import { StringValidationUtil } from './utils/types/string-validation.util';
+import { DateMapUtil } from './utils/date-map.util';
+import { PaginationUtil } from './utils/pagination.util';
+import { RmqLoggerUtil } from './utils/rmq-logger.util';
+import { SlugUtil } from './utils/slug.util';
+import { StringValidationUtil } from './utils/string-validation.util';
 
 const UTILS = [
   PaginationUtil,
   StringValidationUtil,
   DateMapUtil,
   RmqLoggerUtil,
+  SlugUtil,
 ];
 
 @Module({

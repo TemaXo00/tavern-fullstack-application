@@ -9,7 +9,7 @@ import {
   PaginatedEventTagsOutput,
   UpdateEventTagGrpcInput,
 } from '@org/grpc-types';
-import { PaginationUtil } from '@org/shared-utils';
+import { PaginationUtil, SlugUtil } from '@org/shared-utils';
 
 import {
   TAG_ADVANCED_OUTPUT_SELECTIONS,
@@ -22,6 +22,7 @@ export class EventDatabaseUtil {
   constructor(
     private readonly db: EventDatabaseService,
     private readonly paginationUtil: PaginationUtil,
+    private readonly slugUtil: SlugUtil,
   ) {}
 
   // GET Methods
@@ -76,7 +77,7 @@ export class EventDatabaseUtil {
     return await this.db.eventTag.create({
       data: {
         ...data,
-        slug: 'slug',
+        slug: this.slugUtil.createSlug(data.name),
       },
       select: { ...TAG_BASE_OUTPUT_SELECTIONS },
     });
