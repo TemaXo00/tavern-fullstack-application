@@ -33,3 +33,6 @@ variables:
   - name: PROFILE_GRPC_URL
     value: localhost:5009
     description: ""
+  - name: EVENT_GRPC_URL
+    value: localhost:5004
+    description: ""

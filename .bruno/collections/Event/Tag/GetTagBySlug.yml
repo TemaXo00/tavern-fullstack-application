@@ -1,0 +1,17 @@
+info:
+  name: GetTagBySlug
+  type: grpc
+  seq: 2
+
+grpc:
+  url: "{{EVENT_GRPC_URL}}"
+  method: /event.TagService/GetTagBySlug
+  methodType: unary
+  protoFilePath: ../../../app/proto/event.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "slug": "dandd"
+        }
+  auth: inherit

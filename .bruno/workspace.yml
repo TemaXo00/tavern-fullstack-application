@@ -8,6 +8,8 @@ collections:
     path: "collections/Authorization"
   - name: "Profile"
     path: "collections/Profile"
+  - name: "Event"
+    path: "collections/Event"
 
 specs:
 

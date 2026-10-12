@@ -1,0 +1,28 @@
+info:
+  name: CreateTag
+  type: grpc
+  seq: 3
+
+grpc:
+  url: "{{EVENT_GRPC_URL}}"
+  method: /event.TagService/CreateTag
+  methodType: unary
+  protoFilePath: ../../../app/proto/event.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "name": "D&D",
+          "description": "DND is popular game",
+          "color": "#696969",
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          }
+        }
+  auth: inherit

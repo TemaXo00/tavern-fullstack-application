@@ -1,0 +1,26 @@
+info:
+  name: DeleteTag
+  type: grpc
+  seq: 5
+
+grpc:
+  url: "{{EVENT_GRPC_URL}}"
+  method: /event.TagService/DeleteTag
+  methodType: unary
+  protoFilePath: ../../../app/proto/event.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "slug": "dandd",
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          }
+        }
+  auth: inherit

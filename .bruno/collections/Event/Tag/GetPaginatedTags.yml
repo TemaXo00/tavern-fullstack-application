@@ -1,0 +1,21 @@
+info:
+  name: GetPaginatedTags
+  type: grpc
+  seq: 1
+
+grpc:
+  url: "{{EVENT_GRPC_URL}}"
+  method: /event.TagService/GetPaginatedTags
+  methodType: unary
+  protoFilePath: ../../../app/proto/event.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "pagination": {
+            "page": 1,
+            "limit": 20,
+            "search": "dnd"
+          }
+        }
+  auth: inherit
