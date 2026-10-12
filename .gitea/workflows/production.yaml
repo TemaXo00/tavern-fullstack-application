@@ -51,7 +51,7 @@ jobs:
 
       - name: Build DB Migrator
         run: |
-          docker build -f docker-files/Gateway.Dockerfile \
+          docker build -f docker-files/Db-Migrator.Dockerfile \
           -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:${{ github.ref_name }} \
           -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:latest \
           ./app
