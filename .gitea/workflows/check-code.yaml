@@ -23,6 +23,13 @@ jobs:
       - name: Install deps
         run: cd app && npm ci
 
+      - name: Generate Database Models
+        run: |
+          cd app &&
+          npm run auth-db:generate &&
+          npm run profile-db:generate &&
+          npm run event-db:generate
+
       - name: Check ESLint
         run: cd app && npm run all:lint
 
