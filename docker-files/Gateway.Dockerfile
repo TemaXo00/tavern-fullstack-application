@@ -18,7 +18,9 @@ COPY core-libs/bootstrap ./core-libs/bootstrap
 COPY core-libs/base-types ./core-libs/base-types
 COPY core-libs/grpc-types ./core-libs/grpc-types
 COPY core-libs/shared-types ./core-libs/shared-types
+COPY core-libs/response-types ./core-libs/response-types
 COPY core-libs/enums ./core-libs/enums
+COPY core-libs/routes-config ./core-libs/routes-config
 COPY core-libs/validation-config ./core-libs/validation-config
 COPY core-libs/validation-messages ./core-libs/validation-messages
 
@@ -59,7 +61,9 @@ COPY --from=builder /app/core-libs/bootstrap/dist ./node_modules/@org/bootstrap
 COPY --from=builder /app/core-libs/base-types/dist ./node_modules/@org/base-types
 COPY --from=builder /app/core-libs/grpc-types/dist ./node_modules/@org/grpc-types
 COPY --from=builder /app/core-libs/shared-types/dist ./node_modules/@org/shared-types
+COPY --from=builder /app/core-libs/response-types/dist ./node_modules/@org/response-types
 COPY --from=builder /app/core-libs/enums/dist ./node_modules/@org/enums
+COPY --from=builder /app/core-libs/routes-config/dist ./node_modules/@org/routes-config
 COPY --from=builder /app/core-libs/validation-config/dist ./node_modules/@org/validation-config
 COPY --from=builder /app/core-libs/validation-messages/dist ./node_modules/@org/validation-messages
 

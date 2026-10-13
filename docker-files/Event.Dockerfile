@@ -19,10 +19,14 @@ COPY server-libs/auth-database ./server-libs/auth-database
 COPY server-libs/event-database ./server-libs/event-database
 COPY server-libs/event-utils ./server-libs/event-utils
 COPY server-libs/event-tag-feature ./server-libs/event-tag-feature
+COPY server-libs/event-events-feature ./server-libs/event-events-feature
+COPY server-libs/event-participant-feature ./server-libs/event-participant-feature
+COPY server-libs/event-rmq-handler ./server-libs/event-rmq-handler
 
 COPY core-libs/bootstrap ./core-libs/bootstrap
 COPY core-libs/base-types ./core-libs/base-types
 COPY core-libs/grpc-types ./core-libs/grpc-types
+COPY core-libs/response-types ./core-libs/response-types
 COPY core-libs/enums ./core-libs/enums
 COPY core-libs/rmq-config ./core-libs/rmq-config
 COPY core-libs/rmq-messages ./core-libs/rmq-messages
@@ -60,10 +64,14 @@ COPY --from=builder /app/server-libs/auth-database/dist ./node_modules/@org/auth
 COPY --from=builder /app/server-libs/event-database/dist ./node_modules/@org/event-database
 COPY --from=builder /app/server-libs/event-utils/dist ./node_modules/@org/event-utils
 COPY --from=builder /app/server-libs/event-tag-feature/dist ./node_modules/@org/event-tag-feature
+COPY --from=builder /app/server-libs/event-events-feature/dist ./node_modules/@org/event-events-feature
+COPY --from=builder /app/server-libs/event-participant-feature/dist ./node_modules/@org/event-participant-feature
+COPY --from=builder /app/server-libs/event-rmq-handler/dist ./node_modules/@org/event-rmq-handler
 
 COPY --from=builder /app/core-libs/bootstrap/dist ./node_modules/@org/bootstrap
 COPY --from=builder /app/core-libs/base-types/dist ./node_modules/@org/base-types
 COPY --from=builder /app/core-libs/grpc-types/dist ./node_modules/@org/grpc-types
+COPY --from=builder /app/core-libs/response-types/dist ./node_modules/@org/response-types
 COPY --from=builder /app/core-libs/enums/dist ./node_modules/@org/enums
 COPY --from=builder /app/core-libs/rmq-config/dist ./node_modules/@org/rmq-config
 COPY --from=builder /app/core-libs/rmq-messages/dist ./node_modules/@org/rmq-messages
