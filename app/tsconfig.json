@@ -164,6 +164,9 @@
     },
     {
       "path": "./core-libs/routes-config"
+    },
+    {
+      "path": "./client-libs/stores"
     }
   ],
   "compilerOptions": {}
