@@ -1,6 +1,5 @@
-import { apiConfig } from '@org/api-client';
-
 import { useApi } from './useApi.js';
+import { request } from '../../api.client.js';
 import { UseAPIRequest } from '../types/api/request.type.js';
 import { UseBODYMethodsResponse } from '../types/api/response.type.js';
 
@@ -11,9 +10,10 @@ export function usePUT<T, B extends object>(
 
   const put = (data?: B): Promise<T | null> =>
     api.execute(() =>
-      apiConfig<T>(api.apiPath, {
+      request<T>(api.apiPath, {
         method: 'PUT',
         body: data,
+        skipAuthRefresh: options.skipAuthRefresh,
       }),
     );
 

@@ -25,7 +25,7 @@
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.vue"],
   "references": [
     {
-      "path": "../../client-libs/stores/tsconfig.lib.json"
+      "path": "../../client-libs/api-client/tsconfig.lib.json"
     }
   ]
 }
