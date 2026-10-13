@@ -149,6 +149,18 @@
     },
     {
       "path": "./server-libs/event-rmq-handler"
+    },
+    {
+      "path": "./client-libs/composables"
+    },
+    {
+      "path": "./client-libs/api-client"
+    },
+    {
+      "path": "./core-libs/response-types"
+    },
+    {
+      "path": "./core-libs/client-messages"
     }
   ],
   "compilerOptions": {}
