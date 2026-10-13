@@ -48,9 +48,11 @@ const DEFAULT_GRPC_EXCEPTION: GrpcExceptionFactory = (message) =>
 @Injectable()
 export class GrpcExceptionInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    return next.handle().pipe(
-      catchError((error: unknown) => throwError(() => this.mapError(error))),
-    );
+    return next
+      .handle()
+      .pipe(
+        catchError((error: unknown) => throwError(() => this.mapError(error))),
+      );
   }
 
   private mapError(error: unknown): unknown {
@@ -63,7 +65,8 @@ export class GrpcExceptionInterceptor implements NestInterceptor {
 
   private createHttpException(error: ServiceError): HttpException {
     const message = error.details || error.message;
-    const factory = GRPC_TO_HTTP_EXCEPTION[error.code] ?? DEFAULT_GRPC_EXCEPTION;
+    const factory =
+      GRPC_TO_HTTP_EXCEPTION[error.code] ?? DEFAULT_GRPC_EXCEPTION;
 
     return factory(message);
   }

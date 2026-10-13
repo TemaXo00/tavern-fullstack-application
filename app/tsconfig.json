@@ -140,6 +140,15 @@
     },
     {
       "path": "./server-libs/event-tag-feature"
+    },
+    {
+      "path": "./server-libs/event-events-feature"
+    },
+    {
+      "path": "./server-libs/event-participant-feature"
+    },
+    {
+      "path": "./server-libs/event-rmq-handler"
     }
   ],
   "compilerOptions": {}

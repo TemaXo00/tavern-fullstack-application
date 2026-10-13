@@ -25,6 +25,15 @@
       "path": "../../server-libs/event-tag-feature/tsconfig.lib.json"
     },
     {
+      "path": "../../server-libs/event-rmq-handler/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/event-participant-feature/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/event-events-feature/tsconfig.lib.json"
+    },
+    {
       "path": "../../server-libs/auth-authorization-core/tsconfig.lib.json"
     }
   ]
