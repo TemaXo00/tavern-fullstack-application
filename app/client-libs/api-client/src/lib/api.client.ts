@@ -4,6 +4,8 @@ import type { ResponseType } from '@org/response-types';
 
 export const API_URL = '/api';
 
+const accessToken = localStorage.getItem('accessToken');
+
 export const apiConfig = ofetch.create({
   baseURL: API_URL,
   timeout: 10000,
@@ -12,7 +14,7 @@ export const apiConfig = ofetch.create({
   retryStatusCodes: [500, 502, 503, 504],
   retryDelay: 2000,
   onRequest({ options }) {
-    options.headers.set('Authorization', 'Bearer hardcoded access');
+    options.headers.set('Authorization', `Bearer ${accessToken}`);
   },
   onResponse({ response }) {
     if (response.status >= 200 && response.status < 300) {

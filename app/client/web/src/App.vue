@@ -5,7 +5,9 @@ import { RouterView } from 'vue-router';
 
 const store = useAuthStore();
 
-onMounted(store.init());
+onMounted(async () => {
+  await store.init();
+});
 </script>
 
 <template>
