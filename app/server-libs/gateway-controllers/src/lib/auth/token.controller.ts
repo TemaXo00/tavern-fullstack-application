@@ -10,6 +10,7 @@ import {
 } from '@org/gateway-decorators';
 import { TokenPaginationDto } from '@org/gateway-dto';
 import { AuthGatewayMapService } from '@org/gateway-map';
+import { AUTH_TOKEN_ROUTES } from '@org/routes-config';
 import { firstValueFrom } from 'rxjs';
 
 import type { ClientGrpc } from '@nestjs/microservices';
@@ -40,7 +41,7 @@ export class TokenController implements OnModuleInit {
   }
 
   @QUERYProtectedMethod({
-    path: '',
+    path: AUTH_TOKEN_ROUTES.GET_WITH_PAGINATION,
     operationDesc: 'Get all tokens with pagination',
     roles: [Roles.ADMIN],
   })
@@ -62,13 +63,13 @@ export class TokenController implements OnModuleInit {
   }
 
   @GETProtectedMethod({
-    path: ':id',
+    path: AUTH_TOKEN_ROUTES.GET_BY_ID.PATH,
     operationDesc: 'Returns token by ID. Only admin method',
     roles: [Roles.ADMIN],
   })
   async getTokenById(
     @ValidateInputParam() validation: ValidateInput,
-    @Param('id') id: string,
+    @Param(AUTH_TOKEN_ROUTES.GET_BY_ID.PARAM) id: string,
   ): Promise<TokenSharedOutput> {
     const response = await firstValueFrom(
       this.tokenContract.GetTokenById({ id, validation }),
@@ -77,13 +78,13 @@ export class TokenController implements OnModuleInit {
   }
 
   @PATCHProtectedMethod({
-    path: ':id/revoke',
+    path: AUTH_TOKEN_ROUTES.REVOKE.PATH,
     operationDesc: 'Returns revoked token by ID. Only admin method',
     roles: [Roles.ADMIN],
   })
   async revokeToken(
     @ValidateInputParam() validation: ValidateInput,
-    @Param('id') id: string,
+    @Param(AUTH_TOKEN_ROUTES.REVOKE.PARAM) id: string,
   ): Promise<TokenSharedOutput> {
     const response = await firstValueFrom(
       this.tokenContract.SetTokenRevoked({ id, validation }),
@@ -92,13 +93,13 @@ export class TokenController implements OnModuleInit {
   }
 
   @DELETEProtectedMethod({
-    path: ':id/remove',
+    path: AUTH_TOKEN_ROUTES.REMOVE.PATH,
     operationDesc: 'Remove token by ID. Only admin method',
     roles: [Roles.ADMIN],
   })
   async deleteTokensById(
     @ValidateInputParam() validation: ValidateInput,
-    @Param('id') id: string,
+    @Param(AUTH_TOKEN_ROUTES.REMOVE.PARAM) id: string,
   ): Promise<TokenSharedOutput> {
     const response = await firstValueFrom(
       this.tokenContract.DeleteTokenById({ id, validation }),
@@ -107,7 +108,7 @@ export class TokenController implements OnModuleInit {
   }
 
   @DELETEProtectedMethod({
-    path: 'inactive',
+    path: AUTH_TOKEN_ROUTES.REMOVE_INACTIVE,
     operationDesc: 'Remove all inactive tokens. Only admin method',
     roles: [Roles.ADMIN],
   })

@@ -8,6 +8,7 @@ import {
   ValidateInputParam,
 } from '@org/gateway-decorators';
 import { LocalNameDto } from '@org/gateway-dto';
+import { AUTH_SESSION_ROUTES } from '@org/routes-config';
 import { firstValueFrom } from 'rxjs';
 
 import type { ClientGrpc } from '@nestjs/microservices';
@@ -31,13 +32,13 @@ export class SessionController implements OnModuleInit {
   }
 
   @GETProtectedMethod({
-    path: 'user/:id',
+    path: AUTH_SESSION_ROUTES.GET_BY_USER.PATH,
     operationDesc: 'Admin method to check user sessions',
     roles: [Roles.ADMIN],
   })
   async getSessionsByUser(
     @ValidateInputParam() validation: ValidateInput,
-    @Param('id') userId: string,
+    @Param(AUTH_SESSION_ROUTES.GET_BY_USER.PARAM) userId: string,
   ): Promise<AllSessionsOutput> {
     return await firstValueFrom(
       this.sessionContract.GetSessionsByUser({ validation, userId }),
@@ -45,7 +46,7 @@ export class SessionController implements OnModuleInit {
   }
 
   @GETProtectedMethod({
-    path: 'me',
+    path: AUTH_SESSION_ROUTES.GET_MY_SESSIONS,
     operationDesc: 'Get all sessions by current user',
   })
   async getMySessions(
@@ -57,7 +58,7 @@ export class SessionController implements OnModuleInit {
   }
 
   @PATCHProtectedMethod({
-    path: 'me/local-name',
+    path: AUTH_SESSION_ROUTES.CHANGE_LOCAL_NAME,
     operationDesc: 'Updating current user session local name',
   })
   async updateLocalName(
@@ -73,12 +74,12 @@ export class SessionController implements OnModuleInit {
   }
 
   @DELETEProtectedMethod({
-    path: 'me/session/:id',
+    path: AUTH_SESSION_ROUTES.DELETE_SESSION_BY_ID.PATH,
     operationDesc: 'Delete session by id',
   })
   async deleteSessionById(
     @ValidateInputParam() validation: ValidateInput,
-    @Param('id') sessionId: string,
+    @Param(AUTH_SESSION_ROUTES.DELETE_SESSION_BY_ID.PARAM) sessionId: string,
   ): Promise<SessionOutput> {
     return await firstValueFrom(
       this.sessionContract.DeleteSessionById({ validation, sessionId }),

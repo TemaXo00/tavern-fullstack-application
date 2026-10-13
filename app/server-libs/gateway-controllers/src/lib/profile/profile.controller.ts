@@ -15,6 +15,7 @@ import {
   UpdateProfileDto,
 } from '@org/gateway-dto';
 import { ProfileGatewayMapService } from '@org/gateway-map';
+import { PROFILE_PROFILE_ROUTES } from '@org/routes-config';
 import { firstValueFrom } from 'rxjs';
 
 import type { ClientGrpc } from '@nestjs/microservices';
@@ -46,7 +47,7 @@ export class ProfileController implements OnModuleInit {
   }
 
   @GETProtectedMethod({
-    path: 'me',
+    path: PROFILE_PROFILE_ROUTES.GET_ME,
     operationDesc: 'Get my profile',
   })
   async getMyProfile(
@@ -59,11 +60,11 @@ export class ProfileController implements OnModuleInit {
   }
 
   @GETMethod({
-    path: ':nickname/base',
+    path: PROFILE_PROFILE_ROUTES.GET_BY_NICKNAME_BASE.PATH,
     operationDesc: 'Get base profile by nickname',
   })
   async getProfileByNicknameBase(
-    @Param('nickname') nickname: string,
+    @Param(PROFILE_PROFILE_ROUTES.GET_BY_NICKNAME_BASE.PARAM) nickname: string,
   ): Promise<ProfileBaseSharedOutput> {
     const response = await firstValueFrom(
       this.profileContract.GetProfileByNicknameBase({ nickname }),
@@ -72,13 +73,14 @@ export class ProfileController implements OnModuleInit {
   }
 
   @GETProtectedMethod({
-    path: ':nickname/advanced',
+    path: PROFILE_PROFILE_ROUTES.GET_BY_NICKNAME_ADVANCED.PATH,
     operationDesc: 'Get advanced profile by nickname. Moderator and admin only',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async getProfileByNicknameAdvanced(
     @ValidateInputParam() validation: ValidateInput,
-    @Param('nickname') nickname: string,
+    @Param(PROFILE_PROFILE_ROUTES.GET_BY_NICKNAME_ADVANCED.PARAM)
+    nickname: string,
   ): Promise<ProfileAdvancedSharedOutput> {
     const response = await firstValueFrom(
       this.profileContract.GetProfileByNicknameAdvanced({
@@ -90,7 +92,7 @@ export class ProfileController implements OnModuleInit {
   }
 
   @QUERYMethod({
-    path: 'base',
+    path: PROFILE_PROFILE_ROUTES.GET_PROFILES_BASE,
     operationDesc: 'Get paginated profiles list with base pagination',
   })
   async getProfilesBase(
@@ -106,7 +108,7 @@ export class ProfileController implements OnModuleInit {
   }
 
   @QUERYProtectedMethod({
-    path: 'advanced',
+    path: PROFILE_PROFILE_ROUTES.GET_PROFILES_ADVANCED,
     operationDesc:
       'Get paginated profiles list with advanced pagination. Moderator and admin only',
     roles: [Roles.ADMIN, Roles.MODERATOR],
@@ -126,7 +128,7 @@ export class ProfileController implements OnModuleInit {
   }
 
   @PUTProtectedMethod({
-    path: 'me',
+    path: PROFILE_PROFILE_ROUTES.UPDATE_ME,
     operationDesc: 'Update profile data',
   })
   async updateProfileData(

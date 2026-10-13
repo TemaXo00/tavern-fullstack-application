@@ -16,6 +16,7 @@ import {
   UserPaginationDto,
 } from '@org/gateway-dto';
 import { AuthGatewayMapService } from '@org/gateway-map';
+import { AUTH_USER_ROUTES } from '@org/routes-config';
 import { firstValueFrom } from 'rxjs';
 
 import type { ClientGrpc } from '@nestjs/microservices';
@@ -46,7 +47,7 @@ export class UserController implements OnModuleInit {
   }
 
   @QUERYProtectedMethod({
-    path: '',
+    path: AUTH_USER_ROUTES.GET_PAGINATED,
     operationDesc: 'Returns paginated users. Search using email of users',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
@@ -67,13 +68,13 @@ export class UserController implements OnModuleInit {
   }
 
   @GETProtectedMethod({
-    path: ':id',
+    path: AUTH_USER_ROUTES.GET_BY_ID.PATH,
     operationDesc: 'Get User by ID',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async getUserById(
     @ValidateInputParam() validation: ValidateInput,
-    @Param('id') id: string,
+    @Param(AUTH_USER_ROUTES.GET_BY_ID.PARAM) id: string,
   ): Promise<UserSharedOutput> {
     const response = await firstValueFrom(
       this.userContract.GetUserById({ validation, id }),
@@ -82,7 +83,7 @@ export class UserController implements OnModuleInit {
   }
 
   @PATCHProtectedMethod({
-    path: 'me/email',
+    path: AUTH_USER_ROUTES.CHANGE_EMAIL,
     operationDesc: 'Change email',
   })
   async changeEmail(
@@ -96,7 +97,7 @@ export class UserController implements OnModuleInit {
   }
 
   @PATCHProtectedMethod({
-    path: 'me/password',
+    path: AUTH_USER_ROUTES.CHANGE_PASSWORD,
     operationDesc: 'Change password',
   })
   async changePassword(
@@ -110,7 +111,7 @@ export class UserController implements OnModuleInit {
   }
 
   @PATCHProtectedMethod({
-    path: 'me/inactive',
+    path: AUTH_USER_ROUTES.SET_INACTIVE,
     operationDesc: 'Set user inactive',
   })
   async setInactive(
@@ -120,12 +121,12 @@ export class UserController implements OnModuleInit {
   }
 
   @PATCHProtectedMethod({
-    path: ':id/block',
+    path: AUTH_USER_ROUTES.BLOCK.PATH,
     operationDesc: 'Block user by ID. Need to setup blocked until and reason',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async blockUser(
-    @Param('id') id: string,
+    @Param(AUTH_USER_ROUTES.BLOCK.PARAM) id: string,
     @ValidateInputParam() validation: ValidateInput,
     @Body() dto: BlockUserDto,
   ): Promise<UserSharedOutput> {
@@ -140,12 +141,12 @@ export class UserController implements OnModuleInit {
   }
 
   @PATCHProtectedMethod({
-    path: ':id/unblock',
+    path: AUTH_USER_ROUTES.UNBLOCK.PATH,
     operationDesc: 'Unblock user',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async unblockUser(
-    @Param('id') id: string,
+    @Param(AUTH_USER_ROUTES.UNBLOCK.PARAM) id: string,
     @ValidateInputParam() validation: ValidateInput,
   ): Promise<UserSharedOutput> {
     const response = await firstValueFrom(
@@ -155,12 +156,12 @@ export class UserController implements OnModuleInit {
   }
 
   @PATCHProtectedMethod({
-    path: ':id/promote',
+    path: AUTH_USER_ROUTES.PROMOTE.PATH,
     operationDesc: 'Promote user to moderator',
     roles: [Roles.ADMIN],
   })
   async promoteUser(
-    @Param('id') id: string,
+    @Param(AUTH_USER_ROUTES.PROMOTE.PARAM) id: string,
     @ValidateInputParam() validation: ValidateInput,
   ): Promise<UserSharedOutput> {
     const response = await firstValueFrom(
@@ -170,12 +171,12 @@ export class UserController implements OnModuleInit {
   }
 
   @PATCHProtectedMethod({
-    path: ':id/demote',
+    path: AUTH_USER_ROUTES.DEMOTE.PATH,
     operationDesc: 'Demote moderator to user',
     roles: [Roles.ADMIN],
   })
   async demoteModerator(
-    @Param('id') id: string,
+    @Param(AUTH_USER_ROUTES.DEMOTE.PARAM) id: string,
     @ValidateInputParam() validation: ValidateInput,
   ): Promise<UserSharedOutput> {
     const response = await firstValueFrom(
@@ -185,13 +186,13 @@ export class UserController implements OnModuleInit {
   }
 
   @PATCHProtectedMethod({
-    path: ':id/active',
+    path: AUTH_USER_ROUTES.ACTIVE.PATH,
     operationDesc: 'Admin set user as active',
     roles: [Roles.ADMIN],
   })
   async setActive(
     @ValidateInputParam() validation: ValidateInput,
-    @Param('id') id: string,
+    @Param(AUTH_USER_ROUTES.ACTIVE.PARAM) id: string,
   ): Promise<UserSharedOutput> {
     const response = await firstValueFrom(
       this.userContract.ChangeUserToActive({ validation, id }),
@@ -200,7 +201,7 @@ export class UserController implements OnModuleInit {
   }
 
   @DELETEProtectedMethod({
-    path: 'me/delete',
+    path: AUTH_USER_ROUTES.DELETE,
     operationDesc: 'Delete current user with all relations',
   })
   async deleteUser(

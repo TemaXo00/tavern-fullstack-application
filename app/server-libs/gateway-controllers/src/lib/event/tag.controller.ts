@@ -18,6 +18,7 @@ import {
   EventTagServiceObservableContract,
   type ValidateInput,
 } from '@org/grpc-types';
+import { EVENT_TAG_ROUTES } from '@org/routes-config';
 import {
   EventTagDetailedSharedOutput,
   EventTagSharedOutput,
@@ -42,7 +43,7 @@ export class TagController implements OnModuleInit {
   }
 
   @QUERYMethod({
-    path: '',
+    path: EVENT_TAG_ROUTES.GET_PAGINATED,
     operationDesc: 'Get Paginated Tags',
   })
   async getPaginatedTags(
@@ -54,17 +55,17 @@ export class TagController implements OnModuleInit {
   }
 
   @GETMethod({
-    path: ':slug',
+    path: EVENT_TAG_ROUTES.GET_BY_SLUG.PATH,
     operationDesc: 'Get Tag by Slug',
   })
   async getTagBySlug(
-    @Param('slug') slug: string,
+    @Param(EVENT_TAG_ROUTES.GET_BY_SLUG.PARAM) slug: string,
   ): Promise<EventTagDetailedSharedOutput> {
     return await firstValueFrom(this.tagContract.GetTagBySlug({ slug }));
   }
 
   @POSTProtected({
-    path: '',
+    path: EVENT_TAG_ROUTES.CREATE,
     operationDesc: 'Create new tag',
     roles: [Roles.ADMIN],
   })
@@ -78,13 +79,13 @@ export class TagController implements OnModuleInit {
   }
 
   @PUTProtectedMethod({
-    path: ':slug',
+    path: EVENT_TAG_ROUTES.UPDATE.PATH,
     operationDesc: 'Update event tag',
     roles: [Roles.ADMIN],
   })
   async update(
     @ValidateInputParam() validation: ValidateInput,
-    @Param('slug') slug: string,
+    @Param(EVENT_TAG_ROUTES.UPDATE.PARAM) slug: string,
     @Body() dto: UpdateEventTagDto,
   ): Promise<EventTagSharedOutput> {
     return await firstValueFrom(
@@ -97,13 +98,13 @@ export class TagController implements OnModuleInit {
   }
 
   @DELETEProtectedMethod({
-    path: ':slug',
+    path: EVENT_TAG_ROUTES.DELETE.PATH,
     operationDesc: 'Delete tag',
     roles: [Roles.ADMIN],
   })
   async delete(
     @ValidateInputParam() validation: ValidateInput,
-    @Param('slug') slug: string,
+    @Param(EVENT_TAG_ROUTES.DELETE.PARAM) slug: string,
   ): Promise<void> {
     await firstValueFrom(this.tagContract.DeleteTag({ validation, slug }));
   }

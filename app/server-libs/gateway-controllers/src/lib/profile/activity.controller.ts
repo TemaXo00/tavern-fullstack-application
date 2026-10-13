@@ -6,7 +6,7 @@ import {
 } from '@org/gateway-decorators';
 import { ActivityPaginationDto } from '@org/gateway-dto';
 import { ProfileGatewayMapService } from '@org/gateway-map';
-import { PaginatedActivitySharedOutput } from '@org/shared-types';
+import { PROFILE_ACTIVITY_ROUTES } from '@org/routes-config';
 import { firstValueFrom } from 'rxjs';
 
 import type { ClientGrpc } from '@nestjs/microservices';
@@ -14,6 +14,7 @@ import type {
   ActivityServiceObservableContract,
   ValidateInput,
 } from '@org/grpc-types';
+import type { PaginatedActivitySharedOutput } from '@org/shared-types';
 
 @HTTPController({
   microserviceName: 'Profile',
@@ -35,7 +36,7 @@ export class ActivityController implements OnModuleInit {
   }
 
   @QUERYProtectedMethod({
-    path: 'me',
+    path: PROFILE_ACTIVITY_ROUTES.GET_ME,
     operationDesc: 'Get activity logs for current user',
   })
   async getMe(
@@ -55,13 +56,13 @@ export class ActivityController implements OnModuleInit {
   }
 
   @QUERYProtectedMethod({
-    path: ':nickname/logs',
+    path: PROFILE_ACTIVITY_ROUTES.GET_BY_NICKNAME.PATH,
     operationDesc:
       'Get other user activity logs. Need admin or moderator roles',
   })
   async getByNickname(
     @ValidateInputParam() validation: ValidateInput,
-    @Param('nickname') nickname: string,
+    @Param(PROFILE_ACTIVITY_ROUTES.GET_BY_NICKNAME.PARAM) nickname: string,
     @Body() pagination: ActivityPaginationDto,
   ): Promise<PaginatedActivitySharedOutput> {
     const response = await firstValueFrom(

@@ -161,6 +161,9 @@
     },
     {
       "path": "./core-libs/client-messages"
+    },
+    {
+      "path": "./core-libs/routes-config"
     }
   ],
   "compilerOptions": {}

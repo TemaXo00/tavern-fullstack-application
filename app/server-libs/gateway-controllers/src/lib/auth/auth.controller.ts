@@ -14,6 +14,7 @@ import {
   ResetPasswordDto,
 } from '@org/gateway-dto';
 import { AuthGatewayMapService } from '@org/gateway-map';
+import { AUTH_AUTHORIZATION_ROUTES } from '@org/routes-config';
 import { firstValueFrom } from 'rxjs';
 
 import type { ClientGrpc } from '@nestjs/microservices';
@@ -41,7 +42,7 @@ export class AuthController implements OnModuleInit {
   }
 
   @POSTMethod({
-    path: 'register',
+    path: AUTH_AUTHORIZATION_ROUTES.REGISTER,
     operationDesc:
       'Registration method for user. Create new user, session, JWt tokens',
   })
@@ -58,7 +59,7 @@ export class AuthController implements OnModuleInit {
   }
 
   @POSTMethod({
-    path: 'login',
+    path: AUTH_AUTHORIZATION_ROUTES.LOGIN,
     operationDesc: 'Login method for user. Create new session, JWt tokens',
   })
   async login(
@@ -74,7 +75,7 @@ export class AuthController implements OnModuleInit {
   }
 
   @POSTMethod({
-    path: 'refresh',
+    path: AUTH_AUTHORIZATION_ROUTES.REFRESH,
     operationDesc: 'Refresh method by using refresh token',
   })
   async refresh(
@@ -96,7 +97,7 @@ export class AuthController implements OnModuleInit {
   }
 
   @POSTMethod({
-    path: 'logout',
+    path: AUTH_AUTHORIZATION_ROUTES.LOGOUT,
     operationDesc: 'Logout from application. Destroy session and JWT Tokens',
   })
   async logout(
@@ -110,7 +111,7 @@ export class AuthController implements OnModuleInit {
   }
 
   @POSTMethod({
-    path: 'forgot-password',
+    path: AUTH_AUTHORIZATION_ROUTES.FORGOT_PASSWORD,
     operationDesc: 'Using for forgotted passwords. Sends email if user exists',
   })
   async forgotPassword(@Body() dto: ForgotPasswordDto): Promise<void> {
@@ -118,12 +119,12 @@ export class AuthController implements OnModuleInit {
   }
 
   @POSTMethod({
-    path: 'reset-password/:token',
+    path: AUTH_AUTHORIZATION_ROUTES.RESET_PASSWORD.PATH,
     operationDesc:
       'Reset your current password. Destroys all sessions of current user',
   })
   async resetPassword(
-    @Param('token') token: string,
+    @Param(AUTH_AUTHORIZATION_ROUTES.RESET_PASSWORD.PARAM) token: string,
     @SessionInputParam() session: SessionInput,
     @Body() dto: ResetPasswordDto,
   ): Promise<void> {

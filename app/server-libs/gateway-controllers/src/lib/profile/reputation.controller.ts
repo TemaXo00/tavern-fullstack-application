@@ -7,6 +7,7 @@ import {
 } from '@org/gateway-decorators';
 import { ReputationPaginationDto } from '@org/gateway-dto';
 import { ProfileGatewayMapService } from '@org/gateway-map';
+import { PROFILE_REPUTATION_ROUTES } from '@org/routes-config';
 import { firstValueFrom } from 'rxjs';
 
 import type { ClientGrpc } from '@nestjs/microservices';
@@ -36,7 +37,7 @@ export class ReputationController implements OnModuleInit {
   }
 
   @QUERYProtectedMethod({
-    path: 'me',
+    path: PROFILE_REPUTATION_ROUTES.GET_ME,
     operationDesc: 'Get reputation logs for current user',
   })
   async getMe(
@@ -56,11 +57,11 @@ export class ReputationController implements OnModuleInit {
   }
 
   @QUERYMethod({
-    path: ':nickname/logs',
+    path: PROFILE_REPUTATION_ROUTES.GET_BY_NICKNAME.PATH,
     operationDesc: 'Get other user reputation logs',
   })
   async getByNickname(
-    @Param('nickname') nickname: string,
+    @Param(PROFILE_REPUTATION_ROUTES.GET_BY_NICKNAME.PARAM) nickname: string,
     @Body() pagination: ReputationPaginationDto,
   ): Promise<PaginatedReputationSharedOutput> {
     const response = await firstValueFrom(
