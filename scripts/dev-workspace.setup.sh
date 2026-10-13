@@ -12,7 +12,7 @@ fi
 [ -d .bruno/environments ] || cp -r .bruno/environments-example .bruno/environments
 
 cd app
-# npm ci
+npm ci
 npm run nx:sync
 npm run auth-db:generate
 npm run profile-db:generate
