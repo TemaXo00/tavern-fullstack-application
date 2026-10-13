@@ -9,7 +9,7 @@ export function usePOST<T, B extends object>(
 ): UseBODYMethodsResponse<T, B> {
   const api = useApi<T>(options);
 
-  const post = (data: B): Promise<T | null> =>
+  const post = (data?: B): Promise<T | null> =>
     api.execute(() =>
       apiConfig<T>(api.apiPath, {
         method: 'POST',

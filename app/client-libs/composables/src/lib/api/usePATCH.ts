@@ -9,7 +9,7 @@ export function usePATCH<T, B extends object>(
 ): UseBODYMethodsResponse<T, B> {
   const api = useApi<T>(options);
 
-  const patch = (data: B): Promise<T | null> =>
+  const patch = (data?: B): Promise<T | null> =>
     api.execute(() =>
       apiConfig<T>(api.apiPath, {
         method: 'PATCH',

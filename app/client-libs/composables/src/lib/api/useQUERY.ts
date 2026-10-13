@@ -9,7 +9,7 @@ export function useQUERY<T, B extends object>(
 ): UseBODYMethodsResponse<T, B> {
   const api = useApi<T>(options);
 
-  const query = (data: B): Promise<T | null> =>
+  const query = (data?: B): Promise<T | null> =>
     api.execute(() =>
       apiConfig<T>(api.apiPath, {
         method: 'QUERY',

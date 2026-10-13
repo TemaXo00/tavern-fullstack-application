@@ -9,7 +9,7 @@ export function usePUT<T, B extends object>(
 ): UseBODYMethodsResponse<T, B> {
   const api = useApi<T>(options);
 
-  const put = (data: B): Promise<T | null> =>
+  const put = (data?: B): Promise<T | null> =>
     api.execute(() =>
       apiConfig<T>(api.apiPath, {
         method: 'PUT',
