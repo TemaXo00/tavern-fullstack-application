@@ -16,6 +16,8 @@
     }
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@org/api-client": "0.0.1",
+    "vue": "^3.5.13"
   }
 }

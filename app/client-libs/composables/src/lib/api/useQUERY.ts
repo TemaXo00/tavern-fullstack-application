@@ -4,7 +4,7 @@ import { useApi } from './useApi.js';
 import { UseAPIRequest } from '../types/api/request.type.js';
 import { UseBODYMethodsResponse } from '../types/api/response.type.js';
 
-export function useQUERY<T, B extends Record<string, unknown>>(
+export function useQUERY<T, B extends object>(
   options: UseAPIRequest,
 ): UseBODYMethodsResponse<T, B> {
   const api = useApi<T>(options);

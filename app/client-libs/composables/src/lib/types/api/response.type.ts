@@ -16,5 +16,5 @@ export interface UseWithoutBODYResponse<T> extends BaseAPIResponse<T> {
 }
 
 export interface UseBODYMethodsResponse<T, B> extends BaseAPIResponse<T> {
-  method: (body: B) => Promise<T | null>;
+  method: (body?: B) => Promise<T | null>;
 }

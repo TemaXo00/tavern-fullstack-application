@@ -9,5 +9,15 @@
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../../core-libs/shared-types/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/routes-config/tsconfig.lib.json"
+    },
+    {
+      "path": "../composables/tsconfig.lib.json"
+    }
+  ]
 }

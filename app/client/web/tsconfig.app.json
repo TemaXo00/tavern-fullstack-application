@@ -23,5 +23,9 @@
     "eslint.config.mjs"
   ],
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.vue"],
-  "references": []
+  "references": [
+    {
+      "path": "../../client-libs/stores/tsconfig.lib.json"
+    }
+  ]
 }

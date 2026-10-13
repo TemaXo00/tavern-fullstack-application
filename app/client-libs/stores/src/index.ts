@@ -1,1 +1,1 @@
-export * from './lib/stores.js';
+export * from './lib/auth.store.js';
