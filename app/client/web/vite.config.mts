@@ -6,6 +6,9 @@ export default defineConfig(() => ({
   resolve: {
     conditions: ['@org/source'],
   },
+  optimizeDeps: {
+    exclude: ['ofetch'],
+  },
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/client/web',
   server: {

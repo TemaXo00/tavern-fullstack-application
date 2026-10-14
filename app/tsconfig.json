@@ -167,6 +167,21 @@
     },
     {
       "path": "./client-libs/stores"
+    },
+    {
+      "path": "./client-libs/ui"
+    },
+    {
+      "path": "./client-libs/layout-main"
+    },
+    {
+      "path": "./client-libs/home-page"
+    },
+    {
+      "path": "./client-libs/layout-admin"
+    },
+    {
+      "path": "./client-libs/layout-auth"
     }
   ],
   "compilerOptions": {}

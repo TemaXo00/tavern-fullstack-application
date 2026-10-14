@@ -11,8 +11,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  {{ auth }}
-  <h1>Welcome to TAVERN WEB APPLICATION</h1>
   <RouterView />
 </template>
 

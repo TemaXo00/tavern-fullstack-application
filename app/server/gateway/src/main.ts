@@ -12,7 +12,7 @@ void monolithLaunch<AppModule>({
   rateLimit: true,
   filters: true,
   cookie: true,
-  cors: true,
+  cors: false,
   swagger: true,
   compression: true,
 });

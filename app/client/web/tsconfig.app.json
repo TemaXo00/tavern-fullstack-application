@@ -25,6 +25,18 @@
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.vue"],
   "references": [
     {
+      "path": "../../client-libs/layout-auth/tsconfig.lib.json"
+    },
+    {
+      "path": "../../client-libs/layout-admin/tsconfig.lib.json"
+    },
+    {
+      "path": "../../client-libs/home-page/tsconfig.lib.json"
+    },
+    {
+      "path": "../../client-libs/layout-main/tsconfig.lib.json"
+    },
+    {
       "path": "../../client-libs/api-client/tsconfig.lib.json"
     }
   ]
