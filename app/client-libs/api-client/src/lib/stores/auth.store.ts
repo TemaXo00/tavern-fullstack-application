@@ -12,11 +12,7 @@ import { useAccessToken } from '../composables/token/useAccessToken.js';
 
 import type {
   AuthSharedOutput,
-  ForgotPasswordSharedInput,
-  LoginSharedInput,
   ProfileAdvancedSharedOutput,
-  RegisterSharedInput,
-  ResetPasswordSharedInput,
   UserSharedEntity,
 } from '@org/shared-types';
 
@@ -37,16 +33,6 @@ export const useAuthStore = defineStore('auth', () => {
   const me = ref<AuthMe | null>(null);
   const isAuthenticated = computed<boolean>(() => accessToken.value !== null);
 
-  const loginRequest = usePOST<AuthSharedOutput, LoginSharedInput>({
-    path: authPath(AUTH_BASE, AUTH_AUTHORIZATION_ROUTES.LOGIN),
-    skipAuthRefresh: true,
-  });
-
-  const registerRequest = usePOST<AuthSharedOutput, RegisterSharedInput>({
-    path: authPath(AUTH_BASE, AUTH_AUTHORIZATION_ROUTES.REGISTER),
-    skipAuthRefresh: true,
-  });
-
   const refreshRequest = usePOST<AuthSharedOutput, Record<string, never>>({
     path: authPath(AUTH_BASE, AUTH_AUTHORIZATION_ROUTES.REFRESH),
     skipAuthRefresh: true,
@@ -54,11 +40,6 @@ export const useAuthStore = defineStore('auth', () => {
 
   const logoutRequest = usePOST<null, Record<string, never>>({
     path: authPath(AUTH_BASE, AUTH_AUTHORIZATION_ROUTES.LOGOUT),
-    skipAuthRefresh: true,
-  });
-
-  const forgotPasswordRequest = usePOST<null, ForgotPasswordSharedInput>({
-    path: authPath(AUTH_BASE, AUTH_AUTHORIZATION_ROUTES.FORGOT_PASSWORD),
     skipAuthRefresh: true,
   });
 
@@ -72,28 +53,11 @@ export const useAuthStore = defineStore('auth', () => {
 
   const loading = computed<boolean>(
     () =>
-      loginRequest.loading.value ||
-      registerRequest.loading.value ||
       refreshRequest.loading.value ||
       logoutRequest.loading.value ||
-      forgotPasswordRequest.loading.value ||
       getMeRequest.loading.value ||
       getMyProfileRequest.loading.value,
   );
-
-  const applyAccessToken = (
-    data: AuthSharedOutput | null,
-    error: string | null,
-  ): boolean => {
-    const token = data?.accessToken;
-
-    if (error !== null || !token) {
-      return false;
-    }
-
-    setAccessToken(token);
-    return true;
-  };
 
   let refreshPromise: Promise<boolean> | null = null;
 
@@ -101,10 +65,15 @@ export const useAuthStore = defineStore('auth', () => {
     refreshPromise ??= (async (): Promise<boolean> => {
       try {
         await refreshRequest.method();
-        return applyAccessToken(
-          refreshRequest.data.value,
-          refreshRequest.error.value,
-        );
+
+        const token = refreshRequest.data.value?.accessToken;
+
+        if (refreshRequest.error.value !== null || !token) {
+          return false;
+        }
+
+        setAccessToken(token);
+        return true;
       } finally {
         refreshPromise = null;
       }
@@ -116,6 +85,7 @@ export const useAuthStore = defineStore('auth', () => {
   const clearSession = (): void => {
     clearAccessToken();
     me.value = null;
+    initialized.value = false;
   };
 
   const getMyProfile = async (): Promise<boolean> => {
@@ -137,52 +107,9 @@ export const useAuthStore = defineStore('auth', () => {
     return true;
   };
 
-  const login = async (input: LoginSharedInput): Promise<boolean> => {
-    await loginRequest.method(input);
-
-    if (!applyAccessToken(loginRequest.data.value, loginRequest.error.value)) {
-      return false;
-    }
-
-    return getMyProfile();
-  };
-
-  const register = async (input: RegisterSharedInput): Promise<boolean> => {
-    await registerRequest.method(input);
-
-    if (
-      !applyAccessToken(registerRequest.data.value, registerRequest.error.value)
-    ) {
-      return false;
-    }
-
-    return getMyProfile();
-  };
-
   const logout = async (): Promise<void> => {
     await logoutRequest.method();
     clearSession();
-  };
-
-  const forgotPassword = async (
-    input: ForgotPasswordSharedInput,
-  ): Promise<boolean> => {
-    await forgotPasswordRequest.method(input);
-    return forgotPasswordRequest.error.value === null;
-  };
-
-  const resetPassword = async (
-    token: string,
-    input: ResetPasswordSharedInput,
-  ): Promise<boolean> => {
-    const resetRequest = usePOST<null, ResetPasswordSharedInput>({
-      path: authPath(AUTH_BASE, AUTH_AUTHORIZATION_ROUTES.RESET_PASSWORD.PATH),
-      params: { [AUTH_AUTHORIZATION_ROUTES.RESET_PASSWORD.PARAM]: token },
-      skipAuthRefresh: true,
-    });
-
-    await resetRequest.method(input);
-    return resetRequest.error.value === null;
   };
 
   let isHandlingUnauthorized = false;
@@ -231,20 +158,14 @@ export const useAuthStore = defineStore('auth', () => {
     accessToken,
     isAuthenticated,
     initialized,
+    setAccessToken,
     loading,
-    login,
-    register,
     refresh,
     logout,
-    forgotPassword,
-    resetPassword,
     getMyProfile,
     init,
-    loginError: loginRequest.error,
-    registerError: registerRequest.error,
     refreshError: refreshRequest.error,
     logoutError: logoutRequest.error,
-    forgotPasswordError: forgotPasswordRequest.error,
     getMeError: getMeRequest.error,
     getMyProfileError: getMyProfileRequest.error,
   };

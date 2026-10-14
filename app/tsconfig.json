@@ -172,16 +172,25 @@
       "path": "./client-libs/ui"
     },
     {
-      "path": "./client-libs/layout-main"
+      "path": "./client-libs/auth-layout"
     },
     {
-      "path": "./client-libs/home-page"
+      "path": "./client-libs/auth-register-page"
     },
     {
-      "path": "./client-libs/layout-admin"
+      "path": "./client-libs/auth-login-page"
     },
     {
-      "path": "./client-libs/layout-auth"
+      "path": "./client-libs/main-layout"
+    },
+    {
+      "path": "./client-libs/main-home-page"
+    },
+    {
+      "path": "./client-libs/admin-layout"
+    },
+    {
+      "path": "./client-libs/admin-home-page"
     }
   ],
   "compilerOptions": {}

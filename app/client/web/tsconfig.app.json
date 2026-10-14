@@ -9,7 +9,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
+    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
+    "lib": ["DOM"]
   },
   "exclude": [
     "out-tsc",
@@ -25,16 +26,28 @@
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.vue"],
   "references": [
     {
-      "path": "../../client-libs/layout-auth/tsconfig.lib.json"
+      "path": "../../client-libs/auth-register-page/tsconfig.lib.json"
     },
     {
-      "path": "../../client-libs/layout-admin/tsconfig.lib.json"
+      "path": "../../client-libs/auth-login-page/tsconfig.lib.json"
     },
     {
-      "path": "../../client-libs/home-page/tsconfig.lib.json"
+      "path": "../../client-libs/auth-layout/tsconfig.lib.json"
     },
     {
-      "path": "../../client-libs/layout-main/tsconfig.lib.json"
+      "path": "../../client-libs/admin-home-page/tsconfig.lib.json"
+    },
+    {
+      "path": "../../client-libs/admin-layout/tsconfig.lib.json"
+    },
+    {
+      "path": "../../client-libs/main-home-page/tsconfig.lib.json"
+    },
+    {
+      "path": "../../client-libs/main-layout/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/enums/tsconfig.lib.json"
     },
     {
       "path": "../../client-libs/api-client/tsconfig.lib.json"
