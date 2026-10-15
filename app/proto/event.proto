@@ -20,9 +20,9 @@ service EventService {
     rpc GetMyEvents(events.PaginatedPrivateEventsInput) returns (events.PaginatedPrivateEventsOutput);
     rpc GetPublicUserEvents(events.GetPublicUserEventsInput) returns (events.PaginatedPublicEventsOutput);
     rpc GetPrivateUserEvents(events.GetPrivateUserEventsInput) returns (events.PaginatedPrivateEventsOutput);
-    rpc GetPublicEventBySlug(events.PublicGetEventBySlug) returns (events.EventOutput);
-    rpc GetPrivateEventBySlug(events.PrivateGetEventBySlug) returns (events.EventOutput);
-    rpc GetMyEventBySlug(events.PrivateGetEventBySlug) returns (events.EventOutput);
+    rpc GetPublicEventBySlug(events.PublicGetEventBySlugInput) returns (events.EventOutput);
+    rpc GetPrivateEventBySlug(events.PrivateGetEventBySlugInput) returns (events.EventOutput);
+    rpc GetMyEventBySlug(events.PrivateGetEventBySlugInput) returns (events.EventOutput);
     rpc CreateEvent(events.CreateEventInput) returns (events.EventMethodsOutput);
     rpc PublishEvent(events.PublishEventInput) returns (events.EventMethodsOutput);
     rpc CancelEvent(events.CancelEventInput) returns (events.EventMethodsOutput);

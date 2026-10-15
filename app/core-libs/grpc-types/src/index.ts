@@ -58,6 +58,11 @@ export * from './lib/profile/profile.contract.js';
 export * from './lib/event/tag/tag-input.data.js';
 export * from './lib/event/tag/tag-output.data.js';
 
+// EVENT SERVICE
+
+export * from './lib/event/events/event-input.data.js';
+export * from './lib/event/events/event-output.data.js';
+
 // CONTRACTS
 
 export * from './lib/event/event.contract.js';

@@ -50,4 +50,9 @@ export * from './lib/profile/reputation/reputation-output.data.js';
 export * from './lib/event/tag/tag-input.data.js';
 export * from './lib/event/tag/tag-output.data.js';
 
+// EVENT SERVICE
+
+export * from './lib/event/events/event-input.data.js';
+export * from './lib/event/events/event-output.data.js';
+
 // EVENT MICROSERVICE END

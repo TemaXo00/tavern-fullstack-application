@@ -6,6 +6,7 @@ import { TagFeatureService } from './event-tag-feature.service';
 import type {
   CreateEventTagInput,
   DeleteEventTagInput,
+  Empty,
   EventTagDetailedOutput,
   EventTagOutput,
   EventTagServiceContract,
@@ -42,7 +43,7 @@ export class TagFeatureController implements EventTagServiceContract {
   }
 
   @GrpcMethod('TagService', 'DeleteTag')
-  async DeleteTag(data: DeleteEventTagInput): Promise<void> {
-    await this.service.DeleteTag(data);
+  async DeleteTag(data: DeleteEventTagInput): Promise<Empty> {
+    return await this.service.DeleteTag(data);
   }
 }

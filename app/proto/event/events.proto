@@ -68,11 +68,11 @@ message GetPrivateUserEventsInput {
     string nickname = 3;
 }
 
-message PublicGetEventBySlug {
+message PublicGetEventBySlugInput {
     string slug = 1;
 }
 
-message PrivateGetEventBySlug {
+message PrivateGetEventBySlugInput {
     ValidateInput validation = 1;
     string slug = 2;
 }

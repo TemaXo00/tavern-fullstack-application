@@ -1,6 +1,6 @@
 import { PaginationBaseOutput } from '../../shared/pagination.type.js';
 
-export interface EventShortBaseOutput {
+interface EventShortBaseOutput {
   id: string;
   name: string;
   dateAndTime: Date;

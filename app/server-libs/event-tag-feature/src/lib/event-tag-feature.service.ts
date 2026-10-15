@@ -12,6 +12,7 @@ import { SlugUtil } from '@org/shared-utils';
 import type {
   CreateEventTagInput,
   DeleteEventTagInput,
+  Empty,
   EventTagDetailedOutput,
   EventTagOutput,
   EventTagServiceContract,
@@ -83,7 +84,7 @@ export class TagFeatureService implements EventTagServiceContract {
     return updated;
   }
 
-  async DeleteTag(data: DeleteEventTagInput): Promise<void> {
+  async DeleteTag(data: DeleteEventTagInput): Promise<Empty> {
     const payload = await this.validation.validateWithRoles(data.validation, [
       Roles.ADMIN,
     ]);
@@ -91,5 +92,6 @@ export class TagFeatureService implements EventTagServiceContract {
     await this.dbUtil.deleteTag(data.slug);
     await this.cacheUtil.del(data.slug);
     this.messagesUtil.delete({ adminId: payload.id, tagSlug: data.slug });
+    return {};
   }
 }
