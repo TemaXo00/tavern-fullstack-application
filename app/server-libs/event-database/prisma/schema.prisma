@@ -12,7 +12,7 @@ model EventUserSnapshot {
   id String @id @default(uuid(7))
 
   userId String @unique @map("user_id")
-  nickname String
+  nickname String @unique
   avatarId String? @map("avatar_id")
 
   organized_events Event[] @relation("EventOrganizer")
@@ -47,6 +47,7 @@ model EventTag {
 model Event {
   id String @id @default(uuid(7))
 
+  slug String @unique
   name String
   description String?
   dateAndTime DateTime @map("date_and_time")

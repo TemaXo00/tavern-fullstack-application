@@ -1,5 +1,11 @@
 import { PaginationBaseOutput } from '../../shared/pagination.type.js';
-import { EventShortBaseOutput } from '../events/event-output.data.js';
+
+export interface EventShortBaseOutput {
+  id: string;
+  name: string;
+  dateAndTime: Date;
+  leftPlaces: number;
+}
 
 export type EventTagPaginationBaseOutput = PaginationBaseOutput;
 

@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+package events;
+
+enum EventStatuses {
+    DRAFT = 0;
+    PUBLISHED = 1;
+    CANCELLED = 2;
+    FINISHED = 3;
+}
+
+// Input Messages
+
+message ValidateInput {
+  string accessToken = 1;
+  SessionInput session = 2;
+}
+
+message SessionInput {
+    string os = 1;
+    string device = 2;
+    string browser = 3;
+    string ip = 4;
+}
+
+message PublicPaginationInput {
+    optional int32 page = 1;
+    optional int32 limit = 2;
+    optional string search = 3;
+    optional string dateFrom = 4;
+    optional string dateTo = 5;
+    optional int32 leftPlacesFrom = 6;
+    optional int32 leftPlacesTo = 7;
+    repeated string tags = 8;
+}
+
+message PrivatePaginationInput {
+    optional int32 page = 1;
+    optional int32 limit = 2;
+    optional string search = 3;
+    optional string dateFrom = 4;
+    optional string dateTo = 5;
+    optional int32 totalPlacesFrom = 6;
+    optional int32 totalPlacesTo = 7;
+    optional int32 leftPlacesFrom = 8;
+    optional int32 leftPlacesTo = 9;
+    optional EventStatuses status = 10;
+    repeated string tags = 11;
+}
+
+message PaginatedPublicEventsInput {
+    PublicPaginationInput pagination = 1;
+}
+
+message PaginatedPrivateEventsInput {
+    ValidateInput validation = 1;
+    PrivatePaginationInput pagination = 2;
+}
+
+message GetUserEventsInput {
+    PublicPaginationInput pagination = 1;
+    string nickname = 2;
+}
+
+message PublicGetEventBySlug {
+    string slug = 1;
+}
+
+message PrivateGetEventBySlug {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
+message CreateEventInput {
+    ValidateInput validation = 1;
+    string name = 2;
+    optional string description = 3;
+    string dateAndTime = 4;
+    int32 totalPlaces = 5;
+    repeated string tags = 6;
+}
+
+message PublishEventInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
+message CancelEventInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
+message FinishEventInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
+message UpdateEventDataInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+    optional string description = 3;
+    optional string dateAndTime = 4;
+    optional int32 totalPlaces = 5;
+}
+
+message SwitchOrganizerInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+    string organizerNickname = 3;
+}
+
+message DeleteEventInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
+message DeleteOtherEventInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+    string message = 3;
+}

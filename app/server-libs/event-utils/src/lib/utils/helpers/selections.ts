@@ -21,6 +21,7 @@ export const TAG_ADVANCED_OUTPUT_SELECTIONS: EventTagSelect = {
   events: {
     where: {
       leftPlaces: { gte: 1 },
+      status: 'PUBLISHED',
     },
     orderBy: {
       dateAndTime: 'asc',
