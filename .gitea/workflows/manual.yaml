@@ -20,34 +20,34 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.ref }}
+          ref: ${{ github.event.inputs.ref }}
 
       - name: Build AUTH Microservice
-        run: docker build -f docker-files/Auth.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-auth:${{ inputs.tag }} ./app
+        run: docker build -f docker-files/Auth.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-auth:${{ github.event.inputs.tag }} ./app
 
       - name: Push AUTH Microservice
-        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-auth:${{ inputs.tag }}
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-auth:${{ github.event.inputs.tag }}
 
       - name: Build PROFILE Microservice
-        run: docker build -f docker-files/Profile.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:${{ inputs.tag }} ./app
+        run: docker build -f docker-files/Profile.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:${{ github.event.inputs.tag }} ./app
 
       - name: Push PROFILE Microservice
-        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:${{ inputs.tag }}
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-profile:${{ github.event.inputs.tag }}
 
       - name: Build EVENT Microservice
-        run: docker build -f docker-files/Event.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-event:${{ inputs.tag }} ./app
+        run: docker build -f docker-files/Event.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-event:${{ github.event.inputs.tag }} ./app
 
       - name: Push EVENT Microservice
-        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-event:${{ inputs.tag }}
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-event:${{ github.event.inputs.tag }}
 
       - name: Build DB Migrator
-        run: docker build -f docker-files/Db-Migrator.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:${{ inputs.tag }} .
+        run: docker build -f docker-files/Db-Migrator.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:${{ github.event.inputs.tag }} .
 
       - name: Push DB Migrator
-        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:${{ inputs.tag }}
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-migrator:${{ github.event.inputs.tag }}
 
       - name: Build API GATEWAY
-        run: docker build -f docker-files/Gateway.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:${{ inputs.tag }} ./app
+        run: docker build -f docker-files/Gateway.Dockerfile -t ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:${{ github.event.inputs.tag }} ./app
 
       - name: Push API GATEWAY
-        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:${{ inputs.tag }}
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/temaxo00/tavern-gateway:${{ github.event.inputs.tag }}
