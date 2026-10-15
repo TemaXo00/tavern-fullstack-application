@@ -1,6 +1,7 @@
 syntax = 'proto3';
 
 import 'event/tag.proto';
+import 'event/events.proto';
 import 'shared/shared.proto';
 
 package event;
@@ -11,4 +12,23 @@ service TagService {
     rpc CreateTag(tag.CreateTagInput) returns (tag.TagOutput);
     rpc UpdateTag(tag.UpdateTagInput) returns (tag.TagOutput);
     rpc DeleteTag(tag.DeleteTagInput) returns (shared.Empty);
+}
+
+service EventService {
+    rpc GetPublicEvents(events.PaginatedPublicEventsInput) returns (events.PaginatedPublicEventsOutput);
+    rpc GetPrivateEvents(events.PaginatedPrivateEventsInput) returns (events.PaginatedPrivateEventsOutput);
+    rpc GetMyEvents(events.PaginatedPrivateEventsInput) returns (events.PaginatedPrivateEventsOutput);
+    rpc GetPublicUserEvents(events.GetPublicUserEventsInput) returns (events.PaginatedPublicEventsOutput);
+    rpc GetPrivateUserEvents(events.GetPrivateUserEventsInput) returns (events.PaginatedPrivateEventsOutput);
+    rpc GetPublicEventBySlug(events.PublicGetEventBySlug) returns (events.EventOutput);
+    rpc GetPrivateEventBySlug(events.PrivateGetEventBySlug) returns (events.EventOutput);
+    rpc GetMyEventBySlug(events.PrivateGetEventBySlug) returns (events.EventOutput);
+    rpc CreateEvent(events.CreateEventInput) returns (events.EventMethodsOutput);
+    rpc PublishEvent(events.PublishEventInput) returns (events.EventMethodsOutput);
+    rpc CancelEvent(events.CancelEventInput) returns (events.EventMethodsOutput);
+    rpc FinishEvent(events.FinishEventInput) returns (events.EventMethodsOutput);
+    rpc SwitchOrganizer(events.SwitchOrganizerInput) returns (events.EventMethodsOutput);
+    rpc UpdateEvent(events.UpdateEventDataInput) returns (events.EventMethodsOutput);
+    rpc DeleteEvent(events.DeleteEventInput) returns (shared.Empty);
+    rpc DeleteOtherEvent(events.DeleteOtherEventInput) returns (shared.Empty);
 }

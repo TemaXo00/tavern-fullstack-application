@@ -57,9 +57,15 @@ message PaginatedPrivateEventsInput {
     PrivatePaginationInput pagination = 2;
 }
 
-message GetUserEventsInput {
+message GetPublicUserEventsInput {
     PublicPaginationInput pagination = 1;
     string nickname = 2;
+}
+
+message GetPrivateUserEventsInput {
+    ValidateInput validation = 1;
+    PrivatePaginationInput pagination = 2;
+    string nickname = 3;
 }
 
 message PublicGetEventBySlug {
@@ -118,4 +124,98 @@ message DeleteOtherEventInput {
     ValidateInput validation = 1;
     string slug = 2;
     string message = 3;
+}
+
+// Output Messages
+
+message PublicPaginationOutput {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 total = 3;
+    int32 totalPages = 4;
+    bool hasNext = 5;
+    bool hasPrev = 6;
+    optional string search = 7;
+    optional string dateFrom = 8;
+    optional string dateTo = 9;
+    optional int32 leftPlacesFrom = 10;
+    optional int32 leftPlacesTo = 11;
+    repeated string tags = 12;
+}
+
+message PrivatePaginationOutput {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 total = 3;
+    int32 totalPages = 4;
+    bool hasNext = 5;
+    bool hasPrev = 6;
+    optional string search = 7;
+    optional string dateFrom = 8;
+    optional string dateTo = 9;
+    optional int32 totalPlacesFrom = 10;
+    optional int32 totalPlacesTo = 11;
+    optional int32 leftPlacesFrom = 12;
+    optional int32 leftPlacesTo = 13;
+    optional EventStatuses status = 14;
+    repeated string tags = 15;
+}
+
+message EventUserShortOutput {
+    string nickname = 1;
+    optional string avatarId = 2;
+}
+
+message EventTagShortOutput {
+    string slug = 1;
+    string name = 2;
+    optional string color = 3;
+}
+
+message EventListOutput {
+    string slug = 1;
+    string name = 2;
+    string dateAndTime = 3;
+    int32 leftPlaces = 4;
+    int32 waitingUsers = 5;
+    EventStatuses status = 6;
+    EventUserShortOutput organizer = 7;
+    repeated EventTagShortOutput tags = 8;
+}
+
+message EventOutput {
+    string slug = 1;
+    string name = 2;
+    optional string description = 3;
+    string dateAndTime = 4;
+    int32 totalPlaces = 5;
+    int32 leftPlaces = 6;
+    int32 waitingUsers = 7;
+    EventStatuses status = 8;
+    repeated EventTagShortOutput tags = 9;
+    EventUserShortOutput organizer = 10;
+    repeated EventUserShortOutput participants = 11;
+    string createdAt = 12;
+}
+
+message EventMethodsOutput {
+    string slug = 1;
+    string name = 2;
+    optional string description = 3;
+    string dateAndTime = 4;
+    int32 totalPlaces = 5;
+    int32 leftPlaces = 6;
+    int32 waitingUsers = 7;
+    EventStatuses status = 8;
+    string organizerId = 9;
+}
+
+message PaginatedPublicEventsOutput {
+    PublicPaginationOutput pagination = 1;
+    repeated EventListOutput events = 2;
+}
+
+message PaginatedPrivateEventsOutput {
+    PrivatePaginationOutput pagination = 1;
+    repeated EventListOutput events = 2;
 }

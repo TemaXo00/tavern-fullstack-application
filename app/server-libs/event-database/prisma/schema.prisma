@@ -53,6 +53,7 @@ model Event {
   dateAndTime DateTime @map("date_and_time")
   totalPlaces Int @map("total_places")
   leftPlaces Int @map("left_places")
+  waitingUsers Int @map("waiting_users")
   status EventStatuses @default(DRAFT)
 
   tags EventTag[]
