@@ -1,8 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useAuthStore } from '@org/api-client';
+
+const store = useAuthStore();
+</script>
 
 <template>
   <p>Welcome to Main Home Page!</p>
-  <RouterLink to="/admin"> В админ панель </RouterLink>
+  <p>{{ store.isAuthenticated }}</p>
+  <RouterLink to="/admin">
+    В админ панель
+  </RouterLink>
 </template>
 
 <style scoped></style>

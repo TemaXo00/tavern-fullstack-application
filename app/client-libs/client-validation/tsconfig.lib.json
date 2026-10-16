@@ -9,5 +9,12 @@
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../../core-libs/validation-messages/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/validation-config/tsconfig.lib.json"
+    }
+  ]
 }

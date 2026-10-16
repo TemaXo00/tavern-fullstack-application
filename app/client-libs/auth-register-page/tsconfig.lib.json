@@ -18,5 +18,16 @@
     "src/**/*.tsx",
     "src/**/*.vue"
   ],
-  "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"]
+  "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
+  "references": [
+    {
+      "path": "../../core-libs/shared-types/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/routes-config/tsconfig.lib.json"
+    },
+    {
+      "path": "../api-client/tsconfig.lib.json"
+    }
+  ]
 }
