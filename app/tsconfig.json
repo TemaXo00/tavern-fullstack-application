@@ -191,6 +191,9 @@
     },
     {
       "path": "./client-libs/admin-home-page"
+    },
+    {
+      "path": "./client-libs/client-validation"
     }
   ],
   "compilerOptions": {}
