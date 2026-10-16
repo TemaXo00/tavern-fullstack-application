@@ -8,7 +8,6 @@ import type {
   CreateEventInput,
   DeleteEventInput,
   DeleteOtherEventInput,
-  Empty,
   EventEventsServiceContract,
   EventMethodsOutput,
   EventOutput,
@@ -115,12 +114,14 @@ export class EventEventsFeatureController implements EventEventsServiceContract 
   }
 
   @GrpcMethod('EventService', 'DeleteEvent')
-  async DeleteEvent(data: DeleteEventInput): Promise<Empty> {
+  async DeleteEvent(data: DeleteEventInput): Promise<EventMethodsOutput> {
     return await this.service.DeleteEvent(data);
   }
 
   @GrpcMethod('EventService', 'DeleteOtherEvent')
-  async DeleteOtherEvent(data: DeleteOtherEventInput): Promise<Empty> {
+  async DeleteOtherEvent(
+    data: DeleteOtherEventInput,
+  ): Promise<EventMethodsOutput> {
     return await this.service.DeleteOtherEvent(data);
   }
 }

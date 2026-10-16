@@ -70,8 +70,8 @@ export interface EventEventsServiceContract {
   FinishEvent(data: FinishEventInput): Promise<EventMethodsOutput>;
   SwitchOrganizer(data: SwitchOrganizerInput): Promise<EventMethodsOutput>;
   UpdateEvent(data: UpdateEventDataInput): Promise<EventMethodsOutput>;
-  DeleteEvent(data: DeleteEventInput): Promise<Empty>;
-  DeleteOtherEvent(data: DeleteOtherEventInput): Promise<Empty>;
+  DeleteEvent(data: DeleteEventInput): Promise<EventMethodsOutput>;
+  DeleteOtherEvent(data: DeleteOtherEventInput): Promise<EventMethodsOutput>;
 }
 
 export type EventTagServiceObservableContract =

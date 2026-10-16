@@ -58,6 +58,7 @@ export interface UpdateEventDataBaseInput {
   description?: string;
   dateAndTime?: Date;
   totalPlaces?: number;
+  tags: string[];
 }
 
 export interface DeleteOtherEventBaseInput extends EventActionBaseInput {

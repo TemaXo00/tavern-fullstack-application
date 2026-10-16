@@ -4,7 +4,6 @@ import {
   CreateEventInput,
   DeleteEventInput,
   DeleteOtherEventInput,
-  Empty,
   EventEventsServiceContract,
   EventMethodsOutput,
   EventOutput,
@@ -94,11 +93,13 @@ export class EventEventsFeatureService implements EventEventsServiceContract {
     throw new Error('Method not implemented.');
   }
 
-  async DeleteEvent(data: DeleteEventInput): Promise<Empty> {
+  async DeleteEvent(data: DeleteEventInput): Promise<EventMethodsOutput> {
     throw new Error('Method not implemented.');
   }
 
-  async DeleteOtherEvent(data: DeleteOtherEventInput): Promise<Empty> {
+  async DeleteOtherEvent(
+    data: DeleteOtherEventInput,
+  ): Promise<EventMethodsOutput> {
     throw new Error('Method not implemented.');
   }
 }

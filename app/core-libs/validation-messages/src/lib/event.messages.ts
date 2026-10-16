@@ -30,6 +30,12 @@ export const EVENT_MESSAGES = {
     ARRAY_MAX: `Maximum size of array is ${EVENT_CONFIG.TAG.ARRAY_MAX_SIZE}`,
     ARRAY_UNIQUE: 'Tags entries must be unique',
   },
+  MESSAGE_VALIDATION: {
+    NOT_EMPTY: 'Message should not be empty',
+    TYPE: 'Message should be a string',
+    MIN_LENGTH: `Minimal length of message is ${EVENT_CONFIG.MESSAGE.MIN_LENGTH}`,
+    MAX_LENGTH: `Maximum length of message is ${EVENT_CONFIG.MESSAGE.MAX_LENGTH}`,
+  },
   EVENT_STATUS_VALIDATION: {
     ENUM: (): string =>
       `Invalid status. Available options: ${Object.values(EventStatuses).join(', ')}`,

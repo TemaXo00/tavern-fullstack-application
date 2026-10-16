@@ -22,6 +22,6 @@ export type SwitchEventOrganizerSharedInput = Omit<
   'slug'
 >;
 export type UpdateEventDataSharedInput = Omit<UpdateEventDataBaseInput, 'slug'>;
-export interface DeleteOtherEventBaseInput {
+export interface DeleteOtherEventSharedInput {
   message: string;
 }
