@@ -13,6 +13,7 @@ model EventUserSnapshot {
 
   userId String @unique @map("user_id")
   nickname String @unique
+  email String
   avatarId String? @map("avatar_id")
 
   organized_events Event[] @relation("EventOrganizer")
