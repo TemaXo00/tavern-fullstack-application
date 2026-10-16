@@ -2,6 +2,7 @@ import {
   CreateEventBaseInput,
   DeleteOtherEventBaseInput,
   EventActionBaseInput,
+  EventPrivatePaginationBaseInput,
   GetEventBySlugBaseInput,
   GetPrivateUserEventsBaseInput,
   GetPublicUserEventsBaseInput,
@@ -12,6 +13,8 @@ import {
 } from '@org/base-types';
 
 import { Protected } from '../../utils/protected.js';
+
+export type EventPrivatePaginationGrpcInput = EventPrivatePaginationBaseInput;
 
 export type PaginatedPublicEventsInput = PaginatedPublicEventsBaseInput;
 export type PaginatedPrivateEventsInput =

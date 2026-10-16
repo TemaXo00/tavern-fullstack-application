@@ -1,9 +1,14 @@
 import {
   EventBaseOutput,
+  EventListBaseOutput,
   EventMethodsBaseOutput,
+  EventPrivatePaginationBaseOutput,
   PaginatedPrivateEventsBaseOutput,
   PaginatedPublicEventsBaseOutput,
 } from '@org/base-types';
+
+export type EventPrivatePaginationGrpcOutput = EventPrivatePaginationBaseOutput;
+export type EventListGrpcOutput = EventListBaseOutput;
 
 export type EventOutput = EventBaseOutput;
 export type EventMethodsOutput = EventMethodsBaseOutput;

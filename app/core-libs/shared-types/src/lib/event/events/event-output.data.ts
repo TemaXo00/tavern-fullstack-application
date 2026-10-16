@@ -12,7 +12,7 @@ import { Replace } from '../../utils/replace.js';
 export type EventPublicPaginationSharedOutput = EventPublicPaginationBaseOutput;
 export type EventPrivatePaginationSharedOutput = Replace<
   EventPrivatePaginationBaseOutput,
-  { status: EventStatuses }
+  { status?: EventStatuses }
 >;
 export type EventListSharedOutput = Replace<
   EventListBaseOutput,
@@ -22,7 +22,7 @@ export type EventSharedOutput = Replace<
   EventBaseOutput,
   { status: EventStatuses }
 >;
-export type EventMethodsOutput = Replace<
+export type EventMethodsSharedOutput = Replace<
   EventMethodsBaseOutput,
   { status: EventStatuses }
 >;
