@@ -5,7 +5,7 @@ export interface EventPublicPaginationBaseInput extends PaginationBaseInput {
   dateTo?: Date;
   leftPlacesFrom?: number;
   leftPlacesTo?: number;
-  tags: string[];
+  tags?: string[];
 }
 
 export interface EventPrivatePaginationBaseInput extends EventPublicPaginationBaseInput {

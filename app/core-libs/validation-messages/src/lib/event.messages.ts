@@ -1,3 +1,6 @@
+import { EventStatuses } from '@org/enums';
+import { EVENT_CONFIG } from '@org/validation-config';
+
 export const EVENT_MESSAGES = {
   TAG_NOT_FOUND: 'Tag not found',
   TAG_SLUG_EXISTING:
@@ -8,5 +11,27 @@ export const EVENT_MESSAGES = {
     TYPE: 'Color must be in string format',
     FORMAT: 'Color must be in HEX format (example: #696969)',
     LENGTH: 'Color must contain 7 characters',
+  },
+  DATE_VALIDATION: {
+    NOT_EMPTY: 'Date should not be empty',
+    TYPE: 'Date should be in correct format. Example: 2026-06-15T00:00:00.000Z',
+    MAX: 'Date cannot be in future',
+  },
+  PLACES_VALIDATION: {
+    NOT_EMPTY: 'Places should not be empty',
+    TYPE: 'Places should be a number',
+    MIN: 'Places cannot be less than 0',
+  },
+  TAGS_VALIDATION: {
+    NOT_EMPTY: 'Tags cannot be empty array',
+    NOT_ARRAY: 'Tags should be in array format',
+    NOT_STRING: 'Each tag in array must be a string value',
+    ARRAY_MIN: 'Minimal size of array is 1 entry',
+    ARRAY_MAX: `Maximum size of array is ${EVENT_CONFIG.TAG.ARRAY_MAX_SIZE}`,
+    ARRAY_UNIQUE: 'Tags entries must be unique',
+  },
+  EVENT_STATUS_VALIDATION: {
+    ENUM: (): string =>
+      `Invalid status. Available options: ${Object.values(EventStatuses).join(', ')}`,
   },
 } as const;

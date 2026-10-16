@@ -29,3 +29,9 @@ export * from './lib/profile/reputation/reputation-pagination.dto.js';
 export * from './lib/event/tag/create-tag.dto.js';
 export * from './lib/event/tag/tag-pagination.dto.js';
 export * from './lib/event/tag/update-tag.dto.js';
+
+export * from './lib/event/events/create-event.dto.js';
+export * from './lib/event/events/event-public-pagination.dto.js';
+export * from './lib/event/events/event-private.pagination.dto.js';
+export * from './lib/event/events/switch-organizer.dto.js';
+export * from './lib/event/events/update-event.dto.js';

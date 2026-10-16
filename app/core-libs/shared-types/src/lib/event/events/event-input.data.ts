@@ -13,7 +13,7 @@ export type EventPublicPaginationSharedInput = EventPublicPaginationBaseInput;
 export type EventPrivatePaginationSharedInput = Replace<
   EventPrivatePaginationBaseInput,
   {
-    status: EventStatuses;
+    status?: EventStatuses;
   }
 >;
 export type CreateEventSharedInput = CreateEventBaseInput;
