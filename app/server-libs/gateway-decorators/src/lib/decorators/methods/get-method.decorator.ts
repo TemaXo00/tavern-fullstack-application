@@ -1,7 +1,9 @@
 import { applyDecorators, Get } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
@@ -13,23 +15,27 @@ import type { Roles } from '@org/enums';
 
 interface IGETProtectedMethodOptions {
   path: string;
-  okDesc?: string;
+  summary: string;
   operationDesc: string;
-  unauthorizedDesc?: string;
-  forbiddenDesc?: string;
   roles?: Roles[];
 }
 
-type IGETMethodOptions = Omit<
-  IGETProtectedMethodOptions,
-  'unauthorizedDesc' | 'forbiddenDesc' | 'roles'
->;
+type IGETMethodOptions = Omit<IGETProtectedMethodOptions, 'roles'>;
 
 export const GETMethod = (options: IGETMethodOptions): MethodDecorator => {
   return applyDecorators(
-    ApiOperation({ description: options.operationDesc }),
+    ApiOperation({
+      summary: options.summary,
+      description: options.operationDesc,
+    }),
     ApiOkResponse({
-      description: options.okDesc || 'OK Response',
+      description: 'The request was processed successfully',
+    }),
+    ApiBadRequestResponse({
+      description: 'The request contains invalid data',
+    }),
+    ApiInternalServerErrorResponse({
+      description: 'Internal server error',
     }),
     Get(options.path),
   );
@@ -39,16 +45,25 @@ export const GETProtectedMethod = (
   options: IGETProtectedMethodOptions,
 ): MethodDecorator => {
   return applyDecorators(
-    ApiOperation({ description: options.operationDesc }),
+    ApiOperation({
+      summary: options.summary,
+      description: options.operationDesc,
+    }),
     ApiBearerAuth(),
     ApiOkResponse({
-      description: options.okDesc || 'OK Response',
+      description: 'The request was processed successfully',
+    }),
+    ApiBadRequestResponse({
+      description: 'The request contains invalid data',
     }),
     ApiUnauthorizedResponse({
-      description: options.unauthorizedDesc || 'Unauthorized',
+      description: 'Authentication is required',
     }),
     ApiForbiddenResponse({
-      description: options.forbiddenDesc || 'Forbidden',
+      description: 'Insufficient permissions to perform this action',
+    }),
+    ApiInternalServerErrorResponse({
+      description: 'Internal server error',
     }),
     Get(options.path),
     Validate(...(options.roles || [])),

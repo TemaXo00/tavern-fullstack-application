@@ -38,7 +38,9 @@ export class ReputationController implements OnModuleInit {
 
   @QUERYProtectedMethod({
     path: PROFILE_REPUTATION_ROUTES.GET_ME,
-    operationDesc: 'Get reputation logs for current user',
+    summary: 'Get my reputation logs',
+    operationDesc:
+      'Returns a paginated list of reputation change logs for the currently authenticated user. Supports filtering by action and search query.',
   })
   async getMe(
     @ValidateInputParam() validation: ValidateInput,
@@ -58,7 +60,9 @@ export class ReputationController implements OnModuleInit {
 
   @QUERYMethod({
     path: PROFILE_REPUTATION_ROUTES.GET_BY_NICKNAME.PATH,
-    operationDesc: 'Get other user reputation logs',
+    summary: 'Get reputation logs of a user',
+    operationDesc:
+      'Returns a paginated list of reputation change logs for the specified user. Available to everyone.',
   })
   async getByNickname(
     @Param(PROFILE_REPUTATION_ROUTES.GET_BY_NICKNAME.PARAM) nickname: string,

@@ -33,7 +33,9 @@ export class SessionController implements OnModuleInit {
 
   @GETProtectedMethod({
     path: AUTH_SESSION_ROUTES.GET_BY_USER.PATH,
-    operationDesc: 'Admin method to check user sessions',
+    summary: 'Get sessions of a specific user',
+    operationDesc:
+      'Returns all active sessions for the specified user. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async getSessionsByUser(
@@ -47,7 +49,9 @@ export class SessionController implements OnModuleInit {
 
   @GETProtectedMethod({
     path: AUTH_SESSION_ROUTES.GET_MY_SESSIONS,
-    operationDesc: 'Get all sessions by current user',
+    summary: 'Get my active sessions',
+    operationDesc:
+      'Returns all active sessions of the currently authenticated user.',
   })
   async getMySessions(
     @ValidateInputParam() validation: ValidateInput,
@@ -59,7 +63,9 @@ export class SessionController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: AUTH_SESSION_ROUTES.CHANGE_LOCAL_NAME,
-    operationDesc: 'Updating current user session local name',
+    summary: 'Rename the current session',
+    operationDesc:
+      'Updates the local name of the current session. Useful for identifying sessions across multiple devices.',
   })
   async updateLocalName(
     @ValidateInputParam() validation: ValidateInput,
@@ -75,7 +81,9 @@ export class SessionController implements OnModuleInit {
 
   @DELETEProtectedMethod({
     path: AUTH_SESSION_ROUTES.DELETE_SESSION_BY_ID.PATH,
-    operationDesc: 'Delete session by id',
+    summary: 'Delete a session by ID',
+    operationDesc:
+      'Terminates the specified session. The user will be logged out on the device associated with that session.',
   })
   async deleteSessionById(
     @ValidateInputParam() validation: ValidateInput,
@@ -88,8 +96,9 @@ export class SessionController implements OnModuleInit {
 
   @DELETEProtectedMethod({
     path: 'me/session',
-    operationDesc: 'Delete all sessions from current user, exclude current',
-    noContent: true,
+    summary: 'Delete all other sessions',
+    operationDesc:
+      'Terminates all sessions of the current user except the one used to make this request.',
   })
   async deleteAllSessions(
     @ValidateInputParam() validation: ValidateInput,

@@ -4,6 +4,7 @@ import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -14,27 +15,27 @@ import type { Roles } from '@org/enums';
 
 interface IPOSTProtectedMethodOptions {
   path: string;
+  summary: string;
   operationDesc: string;
-  createdDesc?: string;
-  badRequestDesc?: string;
-  unauthorizedDesc?: string;
-  forbiddenDesc?: string;
   roles?: Roles[];
 }
 
-type IPOSTMethodOptions = Omit<
-  IPOSTProtectedMethodOptions,
-  'unauthorizedDesc' | 'forbiddenDesc' | 'roles'
->;
+type IPOSTMethodOptions = Omit<IPOSTProtectedMethodOptions, 'roles'>;
 
 export const POSTMethod = (options: IPOSTMethodOptions): MethodDecorator => {
   return applyDecorators(
-    ApiOperation({ description: options.operationDesc }),
+    ApiOperation({
+      summary: options.summary,
+      description: options.operationDesc,
+    }),
     ApiCreatedResponse({
-      description: options.createdDesc || 'CREATED Response',
+      description: 'The resource was created successfully',
     }),
     ApiBadRequestResponse({
-      description: options.badRequestDesc || 'Bad Request',
+      description: 'The request contains invalid data',
+    }),
+    ApiInternalServerErrorResponse({
+      description: 'Internal server error',
     }),
     Post(options.path),
   );
@@ -44,19 +45,25 @@ export const POSTProtected = (
   options: IPOSTProtectedMethodOptions,
 ): MethodDecorator => {
   return applyDecorators(
-    ApiOperation({ description: options.operationDesc }),
+    ApiOperation({
+      summary: options.summary,
+      description: options.operationDesc,
+    }),
     ApiBearerAuth(),
     ApiCreatedResponse({
-      description: options.createdDesc || 'CREATED Response',
+      description: 'The resource was created successfully',
     }),
     ApiBadRequestResponse({
-      description: options.badRequestDesc || 'Bad Request',
+      description: 'The request contains invalid data',
     }),
     ApiUnauthorizedResponse({
-      description: options.unauthorizedDesc || 'Unauthorized',
+      description: 'Authentication is required',
     }),
     ApiForbiddenResponse({
-      description: options.forbiddenDesc || 'Forbidden',
+      description: 'Insufficient permissions to perform this action',
+    }),
+    ApiInternalServerErrorResponse({
+      description: 'Internal server error',
     }),
     Post(options.path),
     Validate(...(options.roles || [])),

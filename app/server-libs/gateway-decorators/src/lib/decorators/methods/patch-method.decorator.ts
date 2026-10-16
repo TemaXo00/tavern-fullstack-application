@@ -3,6 +3,7 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
@@ -14,28 +15,27 @@ import type { Roles } from '@org/enums';
 
 interface IPATCHProtectedMethodOptions {
   path: string;
+  summary: string;
   operationDesc: string;
-  okDesc?: string;
-  noContent?: boolean;
-  badRequestDesc?: string;
-  unauthorizedDesc?: string;
-  forbiddenDesc?: string;
   roles?: Roles[];
 }
 
-type IPATCHMethodOptions = Omit<
-  IPATCHProtectedMethodOptions,
-  'unauthorizedDesc' | 'forbiddenDesc' | 'roles' | 'noContent'
->;
+type IPATCHMethodOptions = Omit<IPATCHProtectedMethodOptions, 'roles'>;
 
 export const PATCHMethod = (options: IPATCHMethodOptions): MethodDecorator => {
   return applyDecorators(
-    ApiOperation({ description: options.operationDesc }),
+    ApiOperation({
+      summary: options.summary,
+      description: options.operationDesc,
+    }),
     ApiOkResponse({
-      description: options.okDesc || 'PATCH Response',
+      description: 'The resource was updated successfully',
     }),
     ApiBadRequestResponse({
-      description: options.badRequestDesc || 'Bad Request',
+      description: 'The request contains invalid data',
+    }),
+    ApiInternalServerErrorResponse({
+      description: 'Internal server error',
     }),
     Patch(options.path),
   );
@@ -45,19 +45,25 @@ export const PATCHProtectedMethod = (
   options: IPATCHProtectedMethodOptions,
 ): MethodDecorator => {
   return applyDecorators(
-    ApiOperation({ description: options.operationDesc }),
+    ApiOperation({
+      summary: options.summary,
+      description: options.operationDesc,
+    }),
     ApiBearerAuth(),
     ApiOkResponse({
-      description: options.okDesc || 'PATCH Response',
+      description: 'The resource was updated successfully',
     }),
     ApiBadRequestResponse({
-      description: options.badRequestDesc || 'Bad Request',
+      description: 'The request contains invalid data',
     }),
     ApiUnauthorizedResponse({
-      description: options.unauthorizedDesc || 'Unauthorized',
+      description: 'Authentication is required',
     }),
     ApiForbiddenResponse({
-      description: options.forbiddenDesc || 'Forbidden',
+      description: 'Insufficient permissions to perform this action',
+    }),
+    ApiInternalServerErrorResponse({
+      description: 'Internal server error',
     }),
     Patch(options.path),
     Validate(...(options.roles || [])),

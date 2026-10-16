@@ -42,7 +42,9 @@ export class TokenController implements OnModuleInit {
 
   @QUERYProtectedMethod({
     path: AUTH_TOKEN_ROUTES.GET_WITH_PAGINATION,
-    operationDesc: 'Get all tokens with pagination',
+    summary: 'Get paginated tokens',
+    operationDesc:
+      'Returns a paginated list of tokens. Supports filtering by state and search query. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async getTokensWithPagination(
@@ -64,7 +66,9 @@ export class TokenController implements OnModuleInit {
 
   @GETProtectedMethod({
     path: AUTH_TOKEN_ROUTES.GET_BY_ID.PATH,
-    operationDesc: 'Returns token by ID. Only admin method',
+    summary: 'Get token by ID',
+    operationDesc:
+      'Returns detailed information about a specific token by its ID. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async getTokenById(
@@ -79,7 +83,9 @@ export class TokenController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: AUTH_TOKEN_ROUTES.REVOKE.PATH,
-    operationDesc: 'Returns revoked token by ID. Only admin method',
+    summary: 'Revoke a token',
+    operationDesc:
+      'Marks the specified token as revoked, preventing further use. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async revokeToken(
@@ -94,7 +100,9 @@ export class TokenController implements OnModuleInit {
 
   @DELETEProtectedMethod({
     path: AUTH_TOKEN_ROUTES.REMOVE.PATH,
-    operationDesc: 'Remove token by ID. Only admin method',
+    summary: 'Delete a token by ID',
+    operationDesc:
+      'Permanently removes the specified token from the system. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async deleteTokensById(
@@ -109,7 +117,9 @@ export class TokenController implements OnModuleInit {
 
   @DELETEProtectedMethod({
     path: AUTH_TOKEN_ROUTES.REMOVE_INACTIVE,
-    operationDesc: 'Remove all inactive tokens. Only admin method',
+    summary: 'Delete all inactive tokens',
+    operationDesc:
+      'Removes all tokens that are no longer active (expired, revoked, used). Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async deleteAllTokens(

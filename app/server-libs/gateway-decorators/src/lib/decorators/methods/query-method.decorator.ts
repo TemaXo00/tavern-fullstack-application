@@ -3,6 +3,7 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
@@ -14,27 +15,27 @@ import type { Roles } from '@org/enums';
 
 interface IQUERYProtectedMethodOptions {
   path: string;
-  okDesc?: string;
+  summary: string;
   operationDesc: string;
-  badRequestDesc?: string;
-  unauthorizedDesc?: string;
-  forbiddenDesc?: string;
   roles?: Roles[];
 }
 
-type IQUERYMethodOptions = Omit<
-  IQUERYProtectedMethodOptions,
-  'unauthorizedDesc' | 'forbiddenDesc' | 'roles'
->;
+type IQUERYMethodOptions = Omit<IQUERYProtectedMethodOptions, 'roles'>;
 
 export const QUERYMethod = (options: IQUERYMethodOptions): MethodDecorator => {
   return applyDecorators(
-    ApiOperation({ description: options.operationDesc }),
+    ApiOperation({
+      summary: options.summary,
+      description: options.operationDesc,
+    }),
     ApiOkResponse({
-      description: options.okDesc || 'OK Response',
+      description: 'The request was processed successfully',
     }),
     ApiBadRequestResponse({
-      description: options.badRequestDesc || 'Bad Request',
+      description: 'The request contains invalid data',
+    }),
+    ApiInternalServerErrorResponse({
+      description: 'Internal server error',
     }),
     QueryMethod(options.path),
   );
@@ -44,19 +45,25 @@ export const QUERYProtectedMethod = (
   options: IQUERYProtectedMethodOptions,
 ): MethodDecorator => {
   return applyDecorators(
-    ApiOperation({ description: options.operationDesc }),
+    ApiOperation({
+      summary: options.summary,
+      description: options.operationDesc,
+    }),
     ApiBearerAuth(),
     ApiOkResponse({
-      description: options.okDesc || 'OK Response',
-    }),
-    ApiUnauthorizedResponse({
-      description: options.unauthorizedDesc || 'Unauthorized',
-    }),
-    ApiForbiddenResponse({
-      description: options.forbiddenDesc || 'Forbidden',
+      description: 'The request was processed successfully',
     }),
     ApiBadRequestResponse({
-      description: options.badRequestDesc || 'Bad Request',
+      description: 'The request contains invalid data',
+    }),
+    ApiUnauthorizedResponse({
+      description: 'Authentication is required',
+    }),
+    ApiForbiddenResponse({
+      description: 'Insufficient permissions to perform this action',
+    }),
+    ApiInternalServerErrorResponse({
+      description: 'Internal server error',
     }),
     QueryMethod(options.path),
     Validate(...(options.roles || [])),

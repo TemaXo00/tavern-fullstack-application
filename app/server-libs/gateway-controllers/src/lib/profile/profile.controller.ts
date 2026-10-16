@@ -48,7 +48,9 @@ export class ProfileController implements OnModuleInit {
 
   @GETProtectedMethod({
     path: PROFILE_PROFILE_ROUTES.GET_ME,
-    operationDesc: 'Get my profile',
+    summary: 'Get my profile',
+    operationDesc:
+      'Returns the full profile of the currently authenticated user, including private fields.',
   })
   async getMyProfile(
     @ValidateInputParam() validation: ValidateInput,
@@ -61,7 +63,9 @@ export class ProfileController implements OnModuleInit {
 
   @GETMethod({
     path: PROFILE_PROFILE_ROUTES.GET_BY_NICKNAME_BASE.PATH,
-    operationDesc: 'Get base profile by nickname',
+    summary: 'Get base profile by nickname',
+    operationDesc:
+      'Returns the public (base) profile of the specified user. Available to everyone.',
   })
   async getProfileByNicknameBase(
     @Param(PROFILE_PROFILE_ROUTES.GET_BY_NICKNAME_BASE.PARAM) nickname: string,
@@ -74,7 +78,9 @@ export class ProfileController implements OnModuleInit {
 
   @GETProtectedMethod({
     path: PROFILE_PROFILE_ROUTES.GET_BY_NICKNAME_ADVANCED.PATH,
-    operationDesc: 'Get advanced profile by nickname. Moderator and admin only',
+    summary: 'Get advanced profile by nickname',
+    operationDesc:
+      'Returns the full profile of the specified user, including private fields. Available only to administrators and moderators.',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async getProfileByNicknameAdvanced(
@@ -93,7 +99,9 @@ export class ProfileController implements OnModuleInit {
 
   @QUERYMethod({
     path: PROFILE_PROFILE_ROUTES.GET_PROFILES_BASE,
-    operationDesc: 'Get paginated profiles list with base pagination',
+    summary: 'Get paginated base profiles',
+    operationDesc:
+      'Returns a paginated list of public (base) profiles. Supports search by nickname.',
   })
   async getProfilesBase(
     @Body() dto: ProfileBasePaginationDto,
@@ -109,8 +117,9 @@ export class ProfileController implements OnModuleInit {
 
   @QUERYProtectedMethod({
     path: PROFILE_PROFILE_ROUTES.GET_PROFILES_ADVANCED,
+    summary: 'Get paginated advanced profiles',
     operationDesc:
-      'Get paginated profiles list with advanced pagination. Moderator and admin only',
+      'Returns a paginated list of full profiles with advanced filters such as email, birth date, reputation, and activity. Available only to administrators and moderators.',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async getProfilesAdvanced(
@@ -129,7 +138,9 @@ export class ProfileController implements OnModuleInit {
 
   @PUTProtectedMethod({
     path: PROFILE_PROFILE_ROUTES.UPDATE_ME,
-    operationDesc: 'Update profile data',
+    summary: 'Update my profile',
+    operationDesc:
+      'Updates the profile data of the currently authenticated user: nickname, name, surname, description, birth date, or avatar.',
   })
   async updateProfileData(
     @ValidateInputParam() validation: ValidateInput,

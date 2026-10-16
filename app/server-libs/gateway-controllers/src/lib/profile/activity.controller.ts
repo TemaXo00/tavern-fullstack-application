@@ -1,4 +1,5 @@
 import { Body, Inject, OnModuleInit, Param } from '@nestjs/common';
+import { Roles } from '@org/enums';
 import {
   HTTPController,
   QUERYProtectedMethod,
@@ -37,7 +38,9 @@ export class ActivityController implements OnModuleInit {
 
   @QUERYProtectedMethod({
     path: PROFILE_ACTIVITY_ROUTES.GET_ME,
-    operationDesc: 'Get activity logs for current user',
+    summary: 'Get my activity logs',
+    operationDesc:
+      'Returns a paginated list of activity logs for the currently authenticated user. Supports filtering by activity type and search query.',
   })
   async getMe(
     @ValidateInputParam() validation: ValidateInput,
@@ -57,8 +60,10 @@ export class ActivityController implements OnModuleInit {
 
   @QUERYProtectedMethod({
     path: PROFILE_ACTIVITY_ROUTES.GET_BY_NICKNAME.PATH,
+    summary: 'Get activity logs of a user',
     operationDesc:
-      'Get other user activity logs. Need admin or moderator roles',
+      'Returns a paginated list of activity logs for the specified user. Available only to administrators and moderators.',
+    roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async getByNickname(
     @ValidateInputParam() validation: ValidateInput,

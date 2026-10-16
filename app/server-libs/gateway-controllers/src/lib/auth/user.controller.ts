@@ -48,7 +48,9 @@ export class UserController implements OnModuleInit {
 
   @QUERYProtectedMethod({
     path: AUTH_USER_ROUTES.GET_PAGINATED,
-    operationDesc: 'Returns paginated users. Search using email of users',
+    summary: 'Get paginated users',
+    operationDesc:
+      'Returns a paginated list of users. Supports search by email and filtering by role, activity, and blocked status. Available to administrators and moderators.',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async getPaginatedUsers(
@@ -69,7 +71,9 @@ export class UserController implements OnModuleInit {
 
   @GETProtectedMethod({
     path: AUTH_USER_ROUTES.GET_BY_ID.PATH,
-    operationDesc: 'Get User by ID',
+    summary: 'Get user by ID',
+    operationDesc:
+      'Returns detailed information about a specific user by their ID. Available to administrators and moderators.',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async getUserById(
@@ -84,7 +88,9 @@ export class UserController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: AUTH_USER_ROUTES.CHANGE_EMAIL,
-    operationDesc: 'Change email',
+    summary: 'Change current user email',
+    operationDesc:
+      'Updates the email address of the currently authenticated user. The new email must not be already taken.',
   })
   async changeEmail(
     @ValidateInputParam() validation: ValidateInput,
@@ -98,7 +104,9 @@ export class UserController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: AUTH_USER_ROUTES.CHANGE_PASSWORD,
-    operationDesc: 'Change password',
+    summary: 'Change current user password',
+    operationDesc:
+      'Updates the password of the currently authenticated user. Requires the old password for verification.',
   })
   async changePassword(
     @ValidateInputParam() validation: ValidateInput,
@@ -112,7 +120,9 @@ export class UserController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: AUTH_USER_ROUTES.SET_INACTIVE,
-    operationDesc: 'Set user inactive',
+    summary: 'Set my account as inactive',
+    operationDesc:
+      'Marks the current user account as inactive. The user will not be able to log in until reactivated by an administrator.',
   })
   async setInactive(
     @ValidateInputParam() validation: ValidateInput,
@@ -122,7 +132,9 @@ export class UserController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: AUTH_USER_ROUTES.BLOCK.PATH,
-    operationDesc: 'Block user by ID. Need to setup blocked until and reason',
+    summary: 'Block a user',
+    operationDesc:
+      'Blocks the specified user. Requires a reason and an optional block expiration date. Available to administrators and moderators.',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async blockUser(
@@ -142,7 +154,9 @@ export class UserController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: AUTH_USER_ROUTES.UNBLOCK.PATH,
-    operationDesc: 'Unblock user',
+    summary: 'Unblock a user',
+    operationDesc:
+      'Removes the block from the specified user. Available to administrators and moderators.',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async unblockUser(
@@ -157,7 +171,9 @@ export class UserController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: AUTH_USER_ROUTES.PROMOTE.PATH,
-    operationDesc: 'Promote user to moderator',
+    summary: 'Promote a user to moderator',
+    operationDesc:
+      'Grants the moderator role to the specified user. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async promoteUser(
@@ -172,7 +188,9 @@ export class UserController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: AUTH_USER_ROUTES.DEMOTE.PATH,
-    operationDesc: 'Demote moderator to user',
+    summary: 'Demote a moderator to user',
+    operationDesc:
+      'Revokes the moderator role from the specified user. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async demoteModerator(
@@ -187,7 +205,9 @@ export class UserController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: AUTH_USER_ROUTES.ACTIVE.PATH,
-    operationDesc: 'Admin set user as active',
+    summary: 'Set user as active',
+    operationDesc:
+      'Marks the specified user account as active. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async setActive(
@@ -202,7 +222,9 @@ export class UserController implements OnModuleInit {
 
   @DELETEProtectedMethod({
     path: AUTH_USER_ROUTES.DELETE,
-    operationDesc: 'Delete current user with all relations',
+    summary: 'Delete my account',
+    operationDesc:
+      'Permanently deletes the current user account along with all related data. Requires password confirmation.',
   })
   async deleteUser(
     @ValidateInputParam() validation: ValidateInput,

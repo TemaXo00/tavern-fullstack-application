@@ -44,7 +44,9 @@ export class TagController implements OnModuleInit {
 
   @QUERYMethod({
     path: EVENT_TAG_ROUTES.GET_PAGINATED,
-    operationDesc: 'Get Paginated Tags',
+    summary: 'Get paginated tags',
+    operationDesc:
+      'Returns a paginated list of all event tags. Supports search by name or slug.',
   })
   async getPaginatedTags(
     @Body() pagination: EventTagPaginationDto,
@@ -56,7 +58,9 @@ export class TagController implements OnModuleInit {
 
   @GETMethod({
     path: EVENT_TAG_ROUTES.GET_BY_SLUG.PATH,
-    operationDesc: 'Get Tag by Slug',
+    summary: 'Get tag by slug',
+    operationDesc:
+      'Returns detailed information about a specific tag by its slug.',
   })
   async getTagBySlug(
     @Param(EVENT_TAG_ROUTES.GET_BY_SLUG.PARAM) slug: string,
@@ -66,7 +70,9 @@ export class TagController implements OnModuleInit {
 
   @POSTProtected({
     path: EVENT_TAG_ROUTES.CREATE,
-    operationDesc: 'Create new tag',
+    summary: 'Create a new tag',
+    operationDesc:
+      'Creates a new event tag with a unique name and slug. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async create(
@@ -80,7 +86,9 @@ export class TagController implements OnModuleInit {
 
   @PUTProtectedMethod({
     path: EVENT_TAG_ROUTES.UPDATE.PATH,
-    operationDesc: 'Update event tag',
+    summary: 'Update a tag',
+    operationDesc:
+      'Updates the name, description, or color of the tag. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async update(
@@ -99,7 +107,9 @@ export class TagController implements OnModuleInit {
 
   @DELETEProtectedMethod({
     path: EVENT_TAG_ROUTES.DELETE.PATH,
-    operationDesc: 'Delete tag',
+    summary: 'Delete a tag',
+    operationDesc:
+      'Permanently removes the tag from the system. Events using this tag will lose the association. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async delete(

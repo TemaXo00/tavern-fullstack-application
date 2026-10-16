@@ -57,7 +57,9 @@ export class EventController implements OnModuleInit {
 
   @QUERYMethod({
     path: EVENT_EVENTS_ROUTES.GET_PUBLIC_PAGINATED,
-    operationDesc: 'Get paginated all public events',
+    summary: 'Get paginated public events',
+    operationDesc:
+      'Returns a paginated list of all public events. Only events with the PUBLISHED status are included. Supports filtering by date, available places, tags, and search query.',
   })
   async getPublicPaginated(
     @Body() pagination: EventPublicPaginationDto,
@@ -73,7 +75,9 @@ export class EventController implements OnModuleInit {
 
   @QUERYProtectedMethod({
     path: EVENT_EVENTS_ROUTES.GET_PRIVATE_PAGINATED,
-    operationDesc: 'Get paginated all private events. Admin route',
+    summary: 'Get paginated private events',
+    operationDesc:
+      'Returns a paginated list of all events with any status, including DRAFT and CANCELLED. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async getPrivatePaginated(
@@ -94,7 +98,9 @@ export class EventController implements OnModuleInit {
 
   @QUERYMethod({
     path: EVENT_EVENTS_ROUTES.GET_PUBLIC_BY_USER.PATH,
-    operationDesc: 'Get paginated public events by user',
+    summary: 'Get public events of a user',
+    operationDesc:
+      'Returns a paginated list of public events organized by the specified user. Only events with PUBLISHED or FINISHED status are included.',
   })
   async getPublicByUser(
     @Body() pagination: EventPublicPaginationDto,
@@ -111,7 +117,9 @@ export class EventController implements OnModuleInit {
 
   @QUERYProtectedMethod({
     path: EVENT_EVENTS_ROUTES.GET_PRIVATE_BY_USER.PATH,
-    operationDesc: 'Get paginated private events by user. Admin route',
+    summary: 'Get private events of a user',
+    operationDesc:
+      'Returns a paginated list of all events organized by the specified user, including DRAFT and CANCELLED. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async getPrivateByUser(
@@ -134,7 +142,9 @@ export class EventController implements OnModuleInit {
 
   @QUERYProtectedMethod({
     path: EVENT_EVENTS_ROUTES.GET_MY_PAGINATED,
-    operationDesc: 'Get my paginated events',
+    summary: 'Get my events',
+    operationDesc:
+      'Returns a paginated list of all events organized by the currently authenticated user, including DRAFT and CANCELLED.',
   })
   async getMyEvents(
     @ValidateInputParam() validation: ValidateInput,
@@ -154,7 +164,9 @@ export class EventController implements OnModuleInit {
 
   @GETMethod({
     path: EVENT_EVENTS_ROUTES.GET_PUBLIC_BY_SLUG.PATH,
-    operationDesc: 'Get public event by slug',
+    summary: 'Get public event by slug',
+    operationDesc:
+      'Returns detailed information about a public event by its slug. Only events with PUBLISHED or FINISHED status are available.',
   })
   async getPublicBySlug(
     @Param(EVENT_EVENTS_ROUTES.GET_PUBLIC_BY_SLUG.PARAM) slug: string,
@@ -167,7 +179,9 @@ export class EventController implements OnModuleInit {
 
   @GETProtectedMethod({
     path: EVENT_EVENTS_ROUTES.GET_PRIVATE_BY_SLUG.PATH,
-    operationDesc: 'Get private event by slug. Admin route',
+    summary: 'Get private event by slug',
+    operationDesc:
+      'Returns detailed information about any event by its slug, except DRAFT. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async getPrivateBySlug(
@@ -182,7 +196,9 @@ export class EventController implements OnModuleInit {
 
   @GETProtectedMethod({
     path: EVENT_EVENTS_ROUTES.GET_MY_BY_SLUG.PATH,
-    operationDesc: 'Get my event by slug',
+    summary: 'Get my event by slug',
+    operationDesc:
+      'Returns detailed information about an event organized by the currently authenticated user. DRAFT events are available only to the organizer.',
   })
   async getMyBySlug(
     @ValidateInputParam() validation: ValidateInput,
@@ -196,7 +212,9 @@ export class EventController implements OnModuleInit {
 
   @POSTProtected({
     path: EVENT_EVENTS_ROUTES.CREATE,
-    operationDesc: 'Create event. Can only admin or moderator',
+    summary: 'Create a new event',
+    operationDesc:
+      'Creates a new event in DRAFT status. Available to administrators and moderators. The organizer is set to the currently authenticated user.',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async create(
@@ -211,7 +229,9 @@ export class EventController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: EVENT_EVENTS_ROUTES.PUBLISH.PATH,
-    operationDesc: 'Publish event. Can only current user',
+    summary: 'Publish an event',
+    operationDesc:
+      'Changes the event status from DRAFT to PUBLISHED, making it visible to all users. Available only to the organizer.',
   })
   async publish(
     @ValidateInputParam() validation: ValidateInput,
@@ -225,7 +245,9 @@ export class EventController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: EVENT_EVENTS_ROUTES.CANCEL.PATH,
-    operationDesc: 'Cancel event. Can only current user',
+    summary: 'Cancel an event',
+    operationDesc:
+      'Changes the event status to CANCELLED. The event remains visible but is marked as cancelled. Available only to the organizer.',
   })
   async cancel(
     @ValidateInputParam() validation: ValidateInput,
@@ -239,7 +261,9 @@ export class EventController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: EVENT_EVENTS_ROUTES.FINISH.PATH,
-    operationDesc: 'Finish event. Can only current user',
+    summary: 'Finish an event',
+    operationDesc:
+      'Changes the event status to FINISHED after it has taken place. Available only to the organizer.',
   })
   async finish(
     @ValidateInputParam() validation: ValidateInput,
@@ -253,7 +277,9 @@ export class EventController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: EVENT_EVENTS_ROUTES.SWITCH_ORGANIZER.PATH,
-    operationDesc: 'Switch organizer. Can only admin',
+    summary: 'Switch the event organizer',
+    operationDesc:
+      'Transfers ownership of the event to another user. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async switchOrganizer(
@@ -269,7 +295,9 @@ export class EventController implements OnModuleInit {
 
   @PUTProtectedMethod({
     path: EVENT_EVENTS_ROUTES.UPDATE.PATH,
-    operationDesc: 'Update event data. Can only current user',
+    summary: 'Update event data',
+    operationDesc:
+      'Updates the description, date and time, total places, or tags of the event. Available only to the organizer.',
   })
   async update(
     @ValidateInputParam() validation: ValidateInput,
@@ -284,7 +312,9 @@ export class EventController implements OnModuleInit {
 
   @DELETEProtectedMethod({
     path: EVENT_EVENTS_ROUTES.DELETE.PATH,
-    operationDesc: 'Delete my event by slug',
+    summary: 'Delete my event',
+    operationDesc:
+      'Permanently deletes the event organized by the currently authenticated user. All participants will be removed.',
   })
   async deleteMy(
     @ValidateInputParam() validation: ValidateInput,
@@ -298,7 +328,9 @@ export class EventController implements OnModuleInit {
 
   @DELETEProtectedMethod({
     path: EVENT_EVENTS_ROUTES.DELETE_OTHER.PATH,
-    operationDesc: 'Delete other event by slug. Only admin route',
+    summary: 'Delete another user event',
+    operationDesc:
+      'Permanently deletes an event organized by another user and sends a notification message to the organizer. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async deleteOther(

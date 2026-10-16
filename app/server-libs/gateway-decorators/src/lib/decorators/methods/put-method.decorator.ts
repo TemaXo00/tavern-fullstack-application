@@ -3,6 +3,7 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
@@ -14,27 +15,27 @@ import type { Roles } from '@org/enums';
 
 interface IPUTProtectedMethodOptions {
   path: string;
+  summary: string;
   operationDesc: string;
-  okDesc?: string;
-  badRequestDesc?: string;
-  unauthorizedDesc?: string;
-  forbiddenDesc?: string;
   roles?: Roles[];
 }
 
-type IPUTMethodOptions = Omit<
-  IPUTProtectedMethodOptions,
-  'unauthorizedDesc' | 'forbiddenDesc' | 'roles'
->;
+type IPUTMethodOptions = Omit<IPUTProtectedMethodOptions, 'roles'>;
 
 export const PUTMethod = (options: IPUTMethodOptions): MethodDecorator => {
   return applyDecorators(
-    ApiOperation({ description: options.operationDesc }),
+    ApiOperation({
+      summary: options.summary,
+      description: options.operationDesc,
+    }),
     ApiOkResponse({
-      description: options.okDesc || 'PUT Response',
+      description: 'The resource was updated successfully',
     }),
     ApiBadRequestResponse({
-      description: options.badRequestDesc || 'Bad Request',
+      description: 'The request contains invalid data',
+    }),
+    ApiInternalServerErrorResponse({
+      description: 'Internal server error',
     }),
     Put(options.path),
   );
@@ -44,19 +45,25 @@ export const PUTProtectedMethod = (
   options: IPUTProtectedMethodOptions,
 ): MethodDecorator => {
   return applyDecorators(
-    ApiOperation({ description: options.operationDesc }),
+    ApiOperation({
+      summary: options.summary,
+      description: options.operationDesc,
+    }),
     ApiBearerAuth(),
     ApiOkResponse({
-      description: options.okDesc || 'PUT Response',
+      description: 'The resource was updated successfully',
     }),
     ApiBadRequestResponse({
-      description: options.badRequestDesc || 'Bad Request',
+      description: 'The request contains invalid data',
     }),
     ApiUnauthorizedResponse({
-      description: options.unauthorizedDesc || 'Unauthorized',
+      description: 'Authentication is required',
     }),
     ApiForbiddenResponse({
-      description: options.forbiddenDesc || 'Forbidden',
+      description: 'Insufficient permissions to perform this action',
+    }),
+    ApiInternalServerErrorResponse({
+      description: 'Internal server error',
     }),
     Put(options.path),
     Validate(...(options.roles || [])),
