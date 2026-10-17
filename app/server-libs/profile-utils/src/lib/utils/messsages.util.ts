@@ -10,7 +10,10 @@ import type { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class ProfileMessagesUtil {
-  constructor(@Inject('LOG_CLIENT') private readonly log: ClientProxy) {}
+  constructor(
+    @Inject('LOG_CLIENT') private readonly log: ClientProxy,
+    @Inject('EVENT_CLIENT') private readonly event: ClientProxy,
+  ) {}
 
   sendAdminGetPaginatedProfiles(data: AdminCheckPaginatedProfiles): void {
     this.log.emit(PROFILES_MESSAGES.GET_PAGINATED_ADVANCED, data);
@@ -22,5 +25,6 @@ export class ProfileMessagesUtil {
 
   sendUserUpdateProfile(data: UpdateProfile): void {
     this.log.emit(PROFILES_MESSAGES.UPDATE, data);
+    this.event.emit(PROFILES_MESSAGES.UPDATE, data);
   }
 }

@@ -36,6 +36,7 @@ import {
   AdminBlockUserMail,
   DeleteUserMessage,
   AuthUserUnblockedMessage,
+  AdminBlockUserEvent,
 } from '@org/rmq-messages';
 
 @Injectable()
@@ -44,6 +45,7 @@ export class AuthMessagesUtil {
     @Inject('PROFILE_CLIENT') private readonly profile: ClientProxy,
     @Inject('LOG_CLIENT') private readonly log: ClientProxy,
     @Inject('MAIL_CLIENT') private readonly mail: ClientProxy,
+    @Inject('EVENT_CLIENT') private readonly event: ClientProxy,
   ) {}
 
   // AUTHORIZATION
@@ -52,6 +54,7 @@ export class AuthMessagesUtil {
     this.profile.emit(AUTHORIZATION_MESSAGES.REGISTER, data);
     this.log.emit(AUTHORIZATION_MESSAGES.REGISTER, data);
     this.mail.emit(AUTHORIZATION_MESSAGES.REGISTER, data);
+    this.event.emit(AUTHORIZATION_MESSAGES.REGISTER, data);
   }
 
   sendUserLoginMessage(data: AuthLoginMessage): void {
@@ -139,12 +142,14 @@ export class AuthMessagesUtil {
     this.log.emit(USER_MESSAGES.BLOCK, data as AdminBlockUserLog);
     this.profile.emit(USER_MESSAGES.BLOCK, data as AdminBlockUserProfile);
     this.mail.emit(USER_MESSAGES.BLOCK, data as AdminBlockUserMail);
+    this.event.emit(USER_MESSAGES.BLOCK, data as AdminBlockUserEvent);
   }
 
   sendAdminUnblockUser(data: AdminUnblockUserMessage): void {
     this.log.emit(USER_MESSAGES.EARLY_UNBLOCK, data);
     this.profile.emit(USER_MESSAGES.EARLY_UNBLOCK, data);
     this.mail.emit(USER_MESSAGES.EARLY_UNBLOCK, data);
+    this.event.emit(USER_MESSAGES.EARLY_UNBLOCK, data);
   }
 
   sendAdminPromoteUser(data: AdminPromoteUserMessage): void {
@@ -161,6 +166,7 @@ export class AuthMessagesUtil {
     this.log.emit(USER_MESSAGES.EMAIL_CHANGE, data);
     this.profile.emit(USER_MESSAGES.EMAIL_CHANGE, data);
     this.mail.emit(USER_MESSAGES.EMAIL_CHANGE, data);
+    this.event.emit(USER_MESSAGES.EMAIL_CHANGE, data);
   }
 
   sendUserChangePassword(data: UserChangePasswordMessage): void {
@@ -172,17 +178,20 @@ export class AuthMessagesUtil {
     this.log.emit(USER_MESSAGES.SET_INACTIVE, data);
     this.profile.emit(USER_MESSAGES.SET_INACTIVE, data);
     this.mail.emit(USER_MESSAGES.SET_INACTIVE, data);
+    this.event.emit(USER_MESSAGES.SET_INACTIVE, data);
   }
 
   sendAdminSetUserActive(data: AdminSetUserActiveMessage): void {
     this.log.emit(USER_MESSAGES.SET_ACTIVE, data);
     this.profile.emit(USER_MESSAGES.SET_ACTIVE, data);
     this.mail.emit(USER_MESSAGES.SET_ACTIVE, data);
+    this.event.emit(USER_MESSAGES.SET_ACTIVE, data);
   }
 
   sendUserDeleted(data: DeleteUserMessage): void {
     this.log.emit(USER_MESSAGES.DELETE, data);
     this.profile.emit(USER_MESSAGES.DELETE, data);
     this.mail.emit(USER_MESSAGES.DELETE, data);
+    this.event.emit(USER_MESSAGES.DELETE, data);
   }
 }

@@ -25,6 +25,7 @@ export interface AdminBlockUserMessage extends BaseAdminUserMessage {
 export type AdminBlockUserLog = AdminBlockUserMessage;
 export type AdminBlockUserProfile = Omit<AdminBlockUserMessage, 'adminId'>;
 export type AdminBlockUserMail = Omit<AdminBlockUserMessage, 'adminId'>;
+export type AdminBlockUserEvent = BaseAdminUserMessage;
 
 export type AdminUnblockUserMessage = BaseAdminUserMessage;
 

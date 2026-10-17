@@ -13,8 +13,9 @@ model EventUserSnapshot {
 
   userId String @unique @map("user_id")
   nickname String @unique
-  email String
+  email String @unique
   avatarId String? @map("avatar_id")
+  isActive Boolean @default(true) @map("is_active")
 
   organized_events Event[] @relation("EventOrganizer")
   events_recorded EventParticipant[]

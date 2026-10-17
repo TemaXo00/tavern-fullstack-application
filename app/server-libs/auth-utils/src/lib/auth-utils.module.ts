@@ -19,7 +19,7 @@ const UTILS = [
   AuthMapUtil,
 ];
 
-const queues: string[] = ['profile', 'log', 'mail'];
+const queues: string[] = ['profile', 'log', 'mail', 'event'];
 
 @Global()
 @Module({
