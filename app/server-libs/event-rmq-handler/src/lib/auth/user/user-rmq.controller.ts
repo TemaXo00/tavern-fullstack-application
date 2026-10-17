@@ -22,30 +22,22 @@ export class UserRmqController {
   }
 
   @EventPattern(USER_MESSAGES.EARLY_UNBLOCK)
-  async handleUserEarlyUnblocked(
-    @Payload() data: AdminUnblockUserMessage,
-  ): Promise<void> {
+  async handleUserEarlyUnblocked(@Payload() data: AdminUnblockUserMessage): Promise<void> {
     await this.service.handleUserChangeState(data.userId, true);
   }
 
   @EventPattern(USER_MESSAGES.EMAIL_CHANGE)
-  async handleEmailChange(
-    @Payload() data: UserChangeEmailMessage,
-  ): Promise<void> {
+  async handleEmailChange(@Payload() data: UserChangeEmailMessage): Promise<void> {
     await this.service.handleUserChangeEmail(data);
   }
 
   @EventPattern(USER_MESSAGES.SET_INACTIVE)
-  async handleUserSetInactive(
-    @Payload() data: UserSetInactiveMessage,
-  ): Promise<void> {
+  async handleUserSetInactive(@Payload() data: UserSetInactiveMessage): Promise<void> {
     await this.service.handleUserChangeState(data.userId, false);
   }
 
   @EventPattern(USER_MESSAGES.SET_ACTIVE)
-  async handleUserSetActive(
-    @Payload() data: AdminSetUserActiveMessage,
-  ): Promise<void> {
+  async handleUserSetActive(@Payload() data: AdminSetUserActiveMessage): Promise<void> {
     await this.service.handleUserChangeState(data.userId, true);
   }
 

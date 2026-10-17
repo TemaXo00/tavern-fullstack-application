@@ -1,4 +1,4 @@
-import { EventTagSelect } from '@org/event-database';
+import { EventSelect, EventTagSelect } from '@org/event-database';
 import { EVENT_CONFIG } from '@org/validation-config';
 
 export const TAG_LIST_OUTPUT_SELECTION: EventTagSelect = {
@@ -32,6 +32,28 @@ export const TAG_ADVANCED_OUTPUT_SELECTIONS: EventTagSelect = {
       name: true,
       dateAndTime: true,
       leftPlaces: true,
+    },
+  },
+};
+
+export const EVENT_LIST_SELECTIONS: EventSelect = {
+  slug: true,
+  name: true,
+  dateAndTime: true,
+  leftPlaces: true,
+  waitingUsers: true,
+  status: true,
+  organizer: {
+    select: {
+      nickname: true,
+      avatarId: true,
+    },
+  },
+  tags: {
+    select: {
+      slug: true,
+      name: true,
+      color: true,
     },
   },
 };

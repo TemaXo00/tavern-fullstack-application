@@ -20,9 +20,7 @@ export class AuthTokenFeatureController implements TokenServiceContract {
   constructor(private readonly service: AuthTokenFeatureService) {}
 
   @GrpcMethod('TokenService', 'GetTokensWithPagination')
-  async GetTokensWithPagination(
-    data: GetTokensInput,
-  ): Promise<AllTokensOutput> {
+  async GetTokensWithPagination(data: GetTokensInput): Promise<AllTokensOutput> {
     return await this.service.GetTokensWithPagination(data);
   }
 
@@ -42,9 +40,7 @@ export class AuthTokenFeatureController implements TokenServiceContract {
   }
 
   @GrpcMethod('TokenService', 'DeleteAllNotActiveTokens')
-  async DeleteAllNotActiveTokens(
-    data: DeleteAllNotActiveTokensInput,
-  ): Promise<Empty> {
+  async DeleteAllNotActiveTokens(data: DeleteAllNotActiveTokensInput): Promise<Empty> {
     return await this.service.DeleteAllNotActiveTokens(data);
   }
 }

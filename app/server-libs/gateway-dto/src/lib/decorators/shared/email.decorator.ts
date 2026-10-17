@@ -2,13 +2,7 @@ import { applyDecorators } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { AUTH_CONFIG } from '@org/validation-config';
 import { AUTH_MESSAGES } from '@org/validation-messages';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
 
 export function Email(requirable = true): PropertyDecorator {
   const requireDecorator = requirable

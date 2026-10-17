@@ -7,22 +7,13 @@ import {
   SessionInputParam,
   ValidateInputParam,
 } from '@org/gateway-decorators';
-import {
-  ForgotPasswordDto,
-  LoginDto,
-  RegisterDto,
-  ResetPasswordDto,
-} from '@org/gateway-dto';
+import { ForgotPasswordDto, LoginDto, RegisterDto, ResetPasswordDto } from '@org/gateway-dto';
 import { AuthGatewayMapService } from '@org/gateway-map';
 import { AUTH_AUTHORIZATION_ROUTES } from '@org/routes-config';
 import { firstValueFrom } from 'rxjs';
 
 import type { ClientGrpc } from '@nestjs/microservices';
-import type {
-  AuthServiceObservableContract,
-  SessionInput,
-  ValidateInput,
-} from '@org/grpc-types';
+import type { AuthServiceObservableContract, SessionInput, ValidateInput } from '@org/grpc-types';
 import type { AuthSharedOutput, UserSharedEntity } from '@org/shared-types';
 import type { Request, Response } from 'express';
 
@@ -37,8 +28,7 @@ export class AuthController implements OnModuleInit {
   ) {}
 
   onModuleInit(): void {
-    this.authContract =
-      this.client.getService<AuthServiceObservableContract>('AuthService');
+    this.authContract = this.client.getService<AuthServiceObservableContract>('AuthService');
   }
 
   @POSTMethod({
@@ -52,9 +42,7 @@ export class AuthController implements OnModuleInit {
     @SessionInputParam() session: SessionInput,
     @Res({ passthrough: true }) res: Response,
   ): Promise<AuthSharedOutput> {
-    const response = await firstValueFrom(
-      this.authContract.Register({ session, ...dto }),
-    );
+    const response = await firstValueFrom(this.authContract.Register({ session, ...dto }));
     this.cookie.setRefreshToken(res, response.refreshToken);
     return { accessToken: response.accessToken };
   }
@@ -70,9 +58,7 @@ export class AuthController implements OnModuleInit {
     @SessionInputParam() session: SessionInput,
     @Res({ passthrough: true }) res: Response,
   ): Promise<AuthSharedOutput> {
-    const response = await firstValueFrom(
-      this.authContract.Login({ session, ...dto }),
-    );
+    const response = await firstValueFrom(this.authContract.Login({ session, ...dto }));
     this.cookie.setRefreshToken(res, response.refreshToken);
     return { accessToken: response.accessToken };
   }
@@ -90,9 +76,7 @@ export class AuthController implements OnModuleInit {
   ): Promise<AuthSharedOutput> {
     const refreshToken = this.cookie.getRefreshToken(req);
     try {
-      const response = await firstValueFrom(
-        this.authContract.Refresh({ refreshToken, session }),
-      );
+      const response = await firstValueFrom(this.authContract.Refresh({ refreshToken, session }));
       this.cookie.setRefreshToken(res, response.refreshToken);
       return { accessToken: response.accessToken };
     } catch (err: unknown) {
@@ -138,22 +122,15 @@ export class AuthController implements OnModuleInit {
     @SessionInputParam() session: SessionInput,
     @Body() dto: ResetPasswordDto,
   ): Promise<void> {
-    await firstValueFrom(
-      this.authContract.ResetPassword({ token, session, ...dto }),
-    );
+    await firstValueFrom(this.authContract.ResetPassword({ token, session, ...dto }));
   }
 
   @GETProtectedMethod({
     path: 'me',
     summary: 'Get current authenticated user',
-    operationDesc:
-      'Returns the profile of the currently authenticated user based on the provided access token.',
+    operationDesc: 'Returns the profile of the currently authenticated user based on the provided access token.',
   })
-  async me(
-    @ValidateInputParam() validation: ValidateInput,
-  ): Promise<UserSharedEntity> {
-    return this.map.mapUserEntity(
-      await firstValueFrom(this.authContract.GetMe(validation)),
-    );
+  async me(@ValidateInputParam() validation: ValidateInput): Promise<UserSharedEntity> {
+    return this.map.mapUserEntity(await firstValueFrom(this.authContract.GetMe(validation)));
   }
 }

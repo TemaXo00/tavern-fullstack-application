@@ -1,8 +1,4 @@
-import {
-  PaginatedEventTagsBaseOutput,
-  EventTagBaseOutput,
-  EventTagDetailedBaseOutput,
-} from '@org/base-types';
+import { PaginatedEventTagsBaseOutput, EventTagBaseOutput, EventTagDetailedBaseOutput } from '@org/base-types';
 
 export type EventTagSharedOutput = EventTagBaseOutput;
 export type EventTagDetailedSharedOutput = EventTagDetailedBaseOutput;

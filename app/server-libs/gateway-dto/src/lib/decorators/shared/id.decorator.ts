@@ -4,9 +4,7 @@ import { SHARED_MESSAGES } from '@org/validation-messages';
 import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export function Id(required = true): PropertyDecorator {
-  const requiredDecorator = required
-    ? IsNotEmpty({ message: SHARED_MESSAGES.ID_VALIDATION.NOT_EMPTY })
-    : IsOptional();
+  const requiredDecorator = required ? IsNotEmpty({ message: SHARED_MESSAGES.ID_VALIDATION.NOT_EMPTY }) : IsOptional();
   return applyDecorators(
     ApiProperty({
       description: `ID with UUID v7 format`,

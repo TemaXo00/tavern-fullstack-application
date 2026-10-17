@@ -16,12 +16,7 @@ export class EventTagCacheUtil {
   }
 
   async set(tag: EventTagDetailedOutput): Promise<void> {
-    await this.redis.set(
-      `event-tag:${tag.slug}`,
-      JSON.stringify(tag),
-      'EX',
-      this.TTL,
-    );
+    await this.redis.set(`event-tag:${tag.slug}`, JSON.stringify(tag), 'EX', this.TTL);
   }
 
   async get(slug: string): Promise<EventTagDetailedOutput | null> {

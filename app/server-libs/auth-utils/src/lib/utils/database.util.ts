@@ -8,24 +8,9 @@ import {
   User,
   UserWhereInput,
 } from '@org/auth-database';
-import {
-  Roles,
-  GRPC_TO_ROLE,
-  GRPC_TO_TOKEN_STATE,
-  TOKEN_STATE_TO_GRPC,
-  ROLE_TO_GRPC,
-} from '@org/enums';
-import {
-  AllTokensOutput,
-  PaginatedUserOutput,
-  TokenPaginationInput,
-  UserPaginationInput,
-} from '@org/grpc-types';
-import {
-  DateMapUtil,
-  PaginationUtil,
-  StringValidationUtil,
-} from '@org/shared-utils';
+import { Roles, GRPC_TO_ROLE, GRPC_TO_TOKEN_STATE, TOKEN_STATE_TO_GRPC, ROLE_TO_GRPC } from '@org/enums';
+import { AllTokensOutput, PaginatedUserOutput, TokenPaginationInput, UserPaginationInput } from '@org/grpc-types';
+import { DateMapUtil, PaginationUtil, StringValidationUtil } from '@org/shared-utils';
 import { AUTH_CONFIG } from '@org/validation-config';
 import { AUTH_MESSAGES } from '@org/validation-messages';
 
@@ -100,17 +85,11 @@ export class AuthDatabaseUtil {
     }));
   }
 
-  async getPaginatedTokens(
-    pagination?: TokenPaginationInput,
-  ): Promise<AllTokensOutput> {
+  async getPaginatedTokens(pagination?: TokenPaginationInput): Promise<AllTokensOutput> {
     const safePagination = pagination || {};
     const where = this.buildQueryForToken(safePagination);
     const total = await this.db.token.count({ where });
-    const params = this.paginationUtil.getPaginationParams(
-      total,
-      safePagination.page,
-      safePagination.limit,
-    );
+    const params = this.paginationUtil.getPaginationParams(total, safePagination.page, safePagination.limit);
     const tokens = await this.db.token.findMany({
       where,
       skip: params.skip,
@@ -130,17 +109,11 @@ export class AuthDatabaseUtil {
     };
   }
 
-  async getPaginatedUsers(
-    pagination?: UserPaginationInput,
-  ): Promise<PaginatedUserOutput> {
+  async getPaginatedUsers(pagination?: UserPaginationInput): Promise<PaginatedUserOutput> {
     const safePagination = pagination || {};
     const where = this.buildQueryForUser(safePagination);
     const total = await this.db.user.count({ where });
-    const params = this.paginationUtil.getPaginationParams(
-      total,
-      safePagination.page,
-      safePagination.limit,
-    );
+    const params = this.paginationUtil.getPaginationParams(total, safePagination.page, safePagination.limit);
     const users = await this.db.user.findMany({
       where,
       skip: params.skip,
@@ -163,10 +136,7 @@ export class AuthDatabaseUtil {
 
   async registerUser(email: string, passwordHash: string): Promise<User> {
     this.stringUtil.validateEmail(email);
-    this.stringUtil.validateAnyString(
-      passwordHash,
-      AUTH_MESSAGES.INVALID_PASSWORD_STRING,
-    );
+    this.stringUtil.validateAnyString(passwordHash, AUTH_MESSAGES.INVALID_PASSWORD_STRING);
     return await this.db.user.create({
       data: {
         email: email,
@@ -192,10 +162,7 @@ export class AuthDatabaseUtil {
 
   async updateUserPassword(userEmail: string, password: string): Promise<void> {
     this.stringUtil.validateEmail(userEmail);
-    this.stringUtil.validateAnyString(
-      password,
-      AUTH_MESSAGES.INVALID_PASSWORD_STRING,
-    );
+    this.stringUtil.validateAnyString(password, AUTH_MESSAGES.INVALID_PASSWORD_STRING);
     await this.db.user.update({
       where: { email: userEmail },
       data: {
@@ -216,16 +183,9 @@ export class AuthDatabaseUtil {
     });
   }
 
-  async blockUser(
-    id: string,
-    blockedUntil: Date,
-    blockReason: string,
-  ): Promise<User> {
+  async blockUser(id: string, blockedUntil: Date, blockReason: string): Promise<User> {
     this.stringUtil.validateId(id);
-    this.stringUtil.validateAnyString(
-      blockReason,
-      AUTH_MESSAGES.INVALID_BLOCK_REASON_STRING,
-    );
+    this.stringUtil.validateAnyString(blockReason, AUTH_MESSAGES.INVALID_BLOCK_REASON_STRING);
 
     const blockedUntilDate = this.mapDateUtil.mapDateAndValidate(blockedUntil);
 
@@ -270,14 +230,8 @@ export class AuthDatabaseUtil {
     });
   }
 
-  async updateSessionLocalname(
-    sessionId: string,
-    localName: string,
-  ): Promise<Session> {
-    this.stringUtil.validateAnyString(
-      localName,
-      AUTH_MESSAGES.INVALID_LOCAL_NAME_STRING,
-    );
+  async updateSessionLocalname(sessionId: string, localName: string): Promise<Session> {
+    this.stringUtil.validateAnyString(localName, AUTH_MESSAGES.INVALID_LOCAL_NAME_STRING);
     return await this.db.session.update({
       where: {
         id: sessionId,
@@ -311,10 +265,7 @@ export class AuthDatabaseUtil {
     });
   }
 
-  async removeSessionsNotIncludeCurrent(
-    userId: string,
-    sessionId: string,
-  ): Promise<void> {
+  async removeSessionsNotIncludeCurrent(userId: string, sessionId: string): Promise<void> {
     this.stringUtil.validateId(userId);
     this.stringUtil.validateId(sessionId);
     await this.db.session.deleteMany({

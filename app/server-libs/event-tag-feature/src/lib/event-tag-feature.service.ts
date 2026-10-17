@@ -1,12 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthValidateService } from '@org/auth-authorization-core';
 import { Roles } from '@org/enums';
-import {
-  EventTagCacheUtil,
-  EventTagDatabaseUtil,
-  EventTagMessagesUtil,
-  EventTagValidateUtil,
-} from '@org/event-utils';
+import { EventTagCacheUtil, EventTagDatabaseUtil, EventTagMessagesUtil, EventTagValidateUtil } from '@org/event-utils';
 import { SlugUtil } from '@org/shared-utils';
 
 import type {
@@ -33,9 +28,7 @@ export class TagFeatureService implements EventTagServiceContract {
     private readonly slugUtil: SlugUtil,
   ) {}
 
-  async GetPaginatedTags(
-    data: GetPaginatedEventTagsInput,
-  ): Promise<PaginatedEventTagsOutput> {
+  async GetPaginatedTags(data: GetPaginatedEventTagsInput): Promise<PaginatedEventTagsOutput> {
     return await this.dbUtil.getPaginatedTags(data.pagination);
   }
 
@@ -50,9 +43,7 @@ export class TagFeatureService implements EventTagServiceContract {
   }
 
   async CreateTag(data: CreateEventTagInput): Promise<EventTagOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN]);
     const slug = this.slugUtil.createSlug(data.name);
     await this.validateUtil.checkSlugUnique(slug);
     const createData = {
@@ -66,9 +57,7 @@ export class TagFeatureService implements EventTagServiceContract {
   }
 
   async UpdateTag(data: UpdateEventTagInput): Promise<EventTagOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN]);
     await this.validateUtil.checkTagExisting(data.slug);
     const updateData = {
       color: data.color ?? undefined,
@@ -85,9 +74,7 @@ export class TagFeatureService implements EventTagServiceContract {
   }
 
   async DeleteTag(data: DeleteEventTagInput): Promise<Empty> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN]);
     await this.validateUtil.checkTagExisting(data.slug);
     await this.dbUtil.deleteTag(data.slug);
     await this.cacheUtil.del(data.slug);

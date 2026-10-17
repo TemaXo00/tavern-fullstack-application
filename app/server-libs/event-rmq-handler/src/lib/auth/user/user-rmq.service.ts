@@ -1,10 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EventRmqDatabaseUtil, EventRmqValidateUtil } from '@org/event-utils';
-import {
-  AdminBlockUserEvent,
-  DeleteUserMessage,
-  UserChangeEmailMessage,
-} from '@org/rmq-messages';
+import { AdminBlockUserEvent, DeleteUserMessage, UserChangeEmailMessage } from '@org/rmq-messages';
 import { RmqLoggerUtil } from '@org/shared-utils';
 import { EVENT_MESSAGES } from '@org/validation-messages';
 
@@ -17,19 +13,13 @@ export class UserRmqService {
   ) {}
 
   async handleUserBlocked(data: AdminBlockUserEvent): Promise<void> {
-    if (
-      !(await this.validation.isUserExisting(data.userId)) ||
-      !(await this.validation.isUserExisting(data.adminId))
-    ) {
+    if (!(await this.validation.isUserExisting(data.userId)) || !(await this.validation.isUserExisting(data.adminId))) {
       return;
     }
     await this.dbUtil.blockUser(data);
     this.logger.logSuccess(
       EVENT_MESSAGES.USER_SNAPHSOT_BLOCK_SUCCESS.CONTEXT,
-      EVENT_MESSAGES.USER_SNAPHSOT_BLOCK_SUCCESS.METHOD(
-        data.userId,
-        data.adminId,
-      ),
+      EVENT_MESSAGES.USER_SNAPHSOT_BLOCK_SUCCESS.METHOD(data.userId, data.adminId),
     );
   }
 

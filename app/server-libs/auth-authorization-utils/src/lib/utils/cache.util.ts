@@ -12,18 +12,12 @@ export class AuthCoreCacheUtil {
     @InjectRedis() private readonly cache: Redis,
     private readonly config: ConfigService,
   ) {
-    const accessMinutes = this.config.get<number>(
-      'TAVERN_JWT_ACCESS_TOKEN_TTL',
-      15,
-    );
+    const accessMinutes = this.config.get<number>('TAVERN_JWT_ACCESS_TOKEN_TTL', 15);
 
     this.accessTTL = accessMinutes * 60;
   }
 
-  async getPayload(
-    userId: string,
-    sessionId: string,
-  ): Promise<UserPayload | null> {
+  async getPayload(userId: string, sessionId: string): Promise<UserPayload | null> {
     try {
       const payload = await this.cache.get(`session:${userId}:${sessionId}`);
       return payload ? JSON.parse(payload) : null;
@@ -33,12 +27,7 @@ export class AuthCoreCacheUtil {
   }
 
   async setPayload(payload: UserPayload): Promise<void> {
-    await this.cache.set(
-      `session:${payload.id}:${payload.sessionId}`,
-      JSON.stringify(payload),
-      'EX',
-      this.accessTTL,
-    );
+    await this.cache.set(`session:${payload.id}:${payload.sessionId}`, JSON.stringify(payload), 'EX', this.accessTTL);
   }
 
   async delPayload(userId: string, sessionId: string): Promise<void> {

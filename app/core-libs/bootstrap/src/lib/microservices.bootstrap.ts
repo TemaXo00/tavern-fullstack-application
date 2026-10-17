@@ -8,9 +8,7 @@ import { workspaceRoot } from 'nx/src/utils/workspace-root';
 
 import { MicroserviceBoostrapOptions } from './types/microservice.type.js';
 
-export async function microserviceLaunch<T>(
-  options: MicroserviceBoostrapOptions<T>,
-): Promise<void> {
+export async function microserviceLaunch<T>(options: MicroserviceBoostrapOptions<T>): Promise<void> {
   const APP_ENV_NAME = options.name.toUpperCase();
   const APP_LOCAL_NAME = options.name.toLowerCase();
   const LOGGER_NAME = `${APP_ENV_NAME} Microservice`;
@@ -32,22 +30,12 @@ export async function microserviceLaunch<T>(
   const config = app.get(ConfigService);
 
   const GLOBAL_SCOPE = config.get<string>('APPS_GLOBAL_SCOPE', 'EXAMPLE');
-  const IS_DEV =
-    config.get<string>(`${GLOBAL_SCOPE}_DEV_MODE`, 'false') === 'true';
-  const PORT = config.get<number>(
-    `${GLOBAL_SCOPE}_${APP_ENV_NAME}_GRPC_PORT`,
-    5000,
-  );
+  const IS_DEV = config.get<string>(`${GLOBAL_SCOPE}_DEV_MODE`, 'false') === 'true';
+  const PORT = config.get<number>(`${GLOBAL_SCOPE}_${APP_ENV_NAME}_GRPC_PORT`, 5000);
 
-  const RMQ_URL = config.get<string>(
-    `${GLOBAL_SCOPE}_RMQ_URL`,
-    'rabbitmq:5672',
-  );
+  const RMQ_URL = config.get<string>(`${GLOBAL_SCOPE}_RMQ_URL`, 'rabbitmq:5672');
   const RMQ_USER = config.get<string>(`${GLOBAL_SCOPE}_RMQ_USER`, 'user');
-  const RMQ_PASSWORD = config.get<string>(
-    `${GLOBAL_SCOPE}_RMQ_PASSWORD`,
-    '123456',
-  );
+  const RMQ_PASSWORD = config.get<string>(`${GLOBAL_SCOPE}_RMQ_PASSWORD`, '123456');
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
@@ -73,12 +61,8 @@ export async function microserviceLaunch<T>(
 
   if (IS_DEV) {
     logger.log(`${LOGGER_NAME} started in DEV Mode`);
-    logger.log(
-      `Global scope of applications: ${GLOBAL_SCOPE}. Using for configure ENV variables`,
-    );
-    logger.log(
-      `To disable DEV mode, remove or set 'false' variable ${GLOBAL_SCOPE}_DEV_MODE`,
-    );
+    logger.log(`Global scope of applications: ${GLOBAL_SCOPE}. Using for configure ENV variables`);
+    logger.log(`To disable DEV mode, remove or set 'false' variable ${GLOBAL_SCOPE}_DEV_MODE`);
     logger.log('');
 
     logger.log(`gRPC URL: 0.0.0.0:${PORT}`);
@@ -96,26 +80,14 @@ export async function microserviceLaunch<T>(
 
     logger.log('To configure Bootstrap, use next variables:');
     logger.log('APPS_GLOBAL_SCOPE - Global name. Used for ENV variables');
-    logger.log(
-      `${GLOBAL_SCOPE}_DEV_MODE - DEV mode. Accepts "true" or "false"`,
-    );
-    logger.log(
-      `${GLOBAL_SCOPE}_${APP_ENV_NAME}_GRPC_PORT - gRPC Port. Default: 5000`,
-    );
+    logger.log(`${GLOBAL_SCOPE}_DEV_MODE - DEV mode. Accepts "true" or "false"`);
+    logger.log(`${GLOBAL_SCOPE}_${APP_ENV_NAME}_GRPC_PORT - gRPC Port. Default: 5000`);
     if (options.rmq) {
-      logger.log(
-        `${GLOBAL_SCOPE}_RMQ_URL - RabbitMQ URL. Default: rabbitmq:5672`,
-      );
+      logger.log(`${GLOBAL_SCOPE}_RMQ_URL - RabbitMQ URL. Default: rabbitmq:5672`);
       logger.log(`${GLOBAL_SCOPE}_RMQ_USER - RabbitMQ User. Default: user`);
-      logger.log(
-        `${GLOBAL_SCOPE}_RMQ_PASSWORD - RabbitMQ Password. Default: 123456`,
-      );
-      logger.log(
-        `${GLOBAL_SCOPE}_${APP_ENV_NAME}_RMQ_TTL - Message TTL in ms. Default: 60000`,
-      );
-      logger.log(
-        `${GLOBAL_SCOPE}_${APP_ENV_NAME}_RMQ_MAX_LENGTH - Max queue length. Default: 1000`,
-      );
+      logger.log(`${GLOBAL_SCOPE}_RMQ_PASSWORD - RabbitMQ Password. Default: 123456`);
+      logger.log(`${GLOBAL_SCOPE}_${APP_ENV_NAME}_RMQ_TTL - Message TTL in ms. Default: 60000`);
+      logger.log(`${GLOBAL_SCOPE}_${APP_ENV_NAME}_RMQ_MAX_LENGTH - Max queue length. Default: 1000`);
     }
     logger.log('');
   }

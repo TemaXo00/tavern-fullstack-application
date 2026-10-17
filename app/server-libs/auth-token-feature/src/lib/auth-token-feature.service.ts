@@ -1,11 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AuthValidateService } from '@org/auth-authorization-core';
-import {
-  AuthDatabaseUtil,
-  AuthMapUtil,
-  AuthMessagesUtil,
-  AuthValidateUtil,
-} from '@org/auth-utils';
+import { AuthDatabaseUtil, AuthMapUtil, AuthMessagesUtil, AuthValidateUtil } from '@org/auth-utils';
 import { Roles, TokenStates } from '@org/enums';
 import {
   AllTokensOutput,
@@ -29,12 +24,8 @@ export class AuthTokenFeatureService implements TokenServiceContract {
     private readonly mapUtil: AuthMapUtil,
   ) {}
 
-  async GetTokensWithPagination(
-    data: GetTokensInput,
-  ): Promise<AllTokensOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-    ]);
+  async GetTokensWithPagination(data: GetTokensInput): Promise<AllTokensOutput> {
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN]);
     this.messagesUtil.sendAdminCheckTokens({
       id: payload.id,
       pagination: data.pagination,
@@ -43,9 +34,7 @@ export class AuthTokenFeatureService implements TokenServiceContract {
   }
 
   async GetTokenById(data: TokenByIdInput): Promise<TokenOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN]);
     const token = await this.validateUtil.validateTokenFound(data.id, 'id');
     this.messagesUtil.sendAdminGetToken({
       adminId: payload.id,
@@ -55,14 +44,9 @@ export class AuthTokenFeatureService implements TokenServiceContract {
   }
 
   async SetTokenRevoked(data: RevokeTokenInput): Promise<TokenOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN]);
     await this.validateUtil.validateTokenFound(data.id, 'id');
-    const token = await this.dbUtil.updateTokenState(
-      data.id,
-      TokenStates.REVOKED,
-    );
+    const token = await this.dbUtil.updateTokenState(data.id, TokenStates.REVOKED);
     this.messagesUtil.sendAdminRevokeToken({
       adminId: payload.id,
       tokenId: data.id,
@@ -71,9 +55,7 @@ export class AuthTokenFeatureService implements TokenServiceContract {
   }
 
   async DeleteTokenById(data: DeleteTokenInput): Promise<TokenOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN]);
     await this.validateUtil.validateTokenFound(data.id, 'id');
     const token = await this.dbUtil.removeToken(data.id);
     this.messagesUtil.sendAdminDeleteToken({
@@ -83,12 +65,8 @@ export class AuthTokenFeatureService implements TokenServiceContract {
     return this.mapUtil.mapToken(token);
   }
 
-  async DeleteAllNotActiveTokens(
-    data: DeleteAllNotActiveTokensInput,
-  ): Promise<Empty> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-    ]);
+  async DeleteAllNotActiveTokens(data: DeleteAllNotActiveTokensInput): Promise<Empty> {
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN]);
     const deleteAmount = await this.dbUtil.removeInactiveTokens();
     this.messagesUtil.sendAdminDeleteInactiveTokens({
       adminId: payload.id,

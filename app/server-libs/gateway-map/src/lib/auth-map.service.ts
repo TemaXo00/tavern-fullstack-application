@@ -1,10 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  GRPC_TO_ROLE,
-  GRPC_TO_TOKEN_STATE,
-  ROLE_TO_GRPC,
-  TOKEN_STATE_TO_GRPC,
-} from '@org/enums';
+import { GRPC_TO_ROLE, GRPC_TO_TOKEN_STATE, ROLE_TO_GRPC, TOKEN_STATE_TO_GRPC } from '@org/enums';
 import {
   TokenOutput,
   TokenPaginationInput,
@@ -33,18 +28,14 @@ export class AuthGatewayMapService {
     };
   }
 
-  mapUserPaginationRequest(
-    pagination: UserPaginationSharedInput,
-  ): UserPaginationInput {
+  mapUserPaginationRequest(pagination: UserPaginationSharedInput): UserPaginationInput {
     return {
       ...pagination,
       role: pagination.role ? ROLE_TO_GRPC[pagination.role] : undefined,
     };
   }
 
-  mapUserPaginationResponse(
-    pagination: UserPaginationOutput,
-  ): UserPaginationSharedOutput {
+  mapUserPaginationResponse(pagination: UserPaginationOutput): UserPaginationSharedOutput {
     return {
       ...pagination,
       role: pagination.role ? GRPC_TO_ROLE[pagination.role] : undefined,
@@ -85,25 +76,17 @@ export class AuthGatewayMapService {
     }));
   }
 
-  mapTokenPaginationResponse(
-    pagination: TokenPaginationOutput,
-  ): TokenPaginationSharedOutput {
+  mapTokenPaginationResponse(pagination: TokenPaginationOutput): TokenPaginationSharedOutput {
     return {
       ...pagination,
-      state: pagination.state
-        ? GRPC_TO_TOKEN_STATE[pagination.state]
-        : undefined,
+      state: pagination.state ? GRPC_TO_TOKEN_STATE[pagination.state] : undefined,
     };
   }
 
-  mapTokenPaginationRequest(
-    pagination: TokenPaginationSharedInput,
-  ): TokenPaginationInput {
+  mapTokenPaginationRequest(pagination: TokenPaginationSharedInput): TokenPaginationInput {
     return {
       ...pagination,
-      state: pagination.state
-        ? TOKEN_STATE_TO_GRPC[pagination.state]
-        : undefined,
+      state: pagination.state ? TOKEN_STATE_TO_GRPC[pagination.state] : undefined,
     };
   }
 }

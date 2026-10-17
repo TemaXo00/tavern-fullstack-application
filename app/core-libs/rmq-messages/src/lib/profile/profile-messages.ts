@@ -1,7 +1,4 @@
-import {
-  ProfilePaginationAdvancedInput,
-  UpdateProfileRequestInput,
-} from '@org/grpc-types';
+import { ProfilePaginationAdvancedInput, UpdateProfileRequestInput } from '@org/grpc-types';
 
 export interface AdminCheckPaginatedProfiles {
   adminId: string;

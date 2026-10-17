@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EventRmqDatabaseUtil, EventRmqValidateUtil } from '@org/event-utils';
-import {
-  AuthRegisteredMessage,
-  AuthUserUnblockedMessage,
-} from '@org/rmq-messages';
+import { AuthRegisteredMessage, AuthUserUnblockedMessage } from '@org/rmq-messages';
 import { RmqLoggerUtil } from '@org/shared-utils';
 import { EVENT_MESSAGES } from '@org/validation-messages';
 

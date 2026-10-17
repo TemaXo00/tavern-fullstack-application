@@ -4,16 +4,14 @@ import { getSessionUtil } from '../utils/get-session.util.js';
 
 import type { ValidateInput } from '@org/grpc-types';
 
-export const ValidateInputParam = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext): ValidateInput => {
-    const request = ctx.switchToHttp().getRequest();
-    const authHeader = request.headers.authorization;
+export const ValidateInputParam = createParamDecorator((data: unknown, ctx: ExecutionContext): ValidateInput => {
+  const request = ctx.switchToHttp().getRequest();
+  const authHeader = request.headers.authorization;
 
-    const accessToken = authHeader?.replace('Bearer ', '') || '';
+  const accessToken = authHeader?.replace('Bearer ', '') || '';
 
-    return {
-      accessToken,
-      session: getSessionUtil(ctx),
-    };
-  },
-);
+  return {
+    accessToken,
+    session: getSessionUtil(ctx),
+  };
+});

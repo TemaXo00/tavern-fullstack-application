@@ -30,8 +30,7 @@ const GRPC_TO_HTTP_EXCEPTION: Record<number, GrpcExceptionFactory> = {
   [status.NOT_FOUND]: (message) => new NotFoundException(message),
   [status.ALREADY_EXISTS]: (message) => new ConflictException(message),
   [status.PERMISSION_DENIED]: (message) => new ForbiddenException(message),
-  [status.RESOURCE_EXHAUSTED]: (message) =>
-    new HttpException(message, HttpStatus.TOO_MANY_REQUESTS),
+  [status.RESOURCE_EXHAUSTED]: (message) => new HttpException(message, HttpStatus.TOO_MANY_REQUESTS),
   [status.FAILED_PRECONDITION]: (message) => new BadRequestException(message),
   [status.ABORTED]: (message) => new ConflictException(message),
   [status.OUT_OF_RANGE]: (message) => new BadRequestException(message),
@@ -42,17 +41,12 @@ const GRPC_TO_HTTP_EXCEPTION: Record<number, GrpcExceptionFactory> = {
   [status.UNAUTHENTICATED]: (message) => new UnauthorizedException(message),
 };
 
-const DEFAULT_GRPC_EXCEPTION: GrpcExceptionFactory = (message) =>
-  new InternalServerErrorException(message);
+const DEFAULT_GRPC_EXCEPTION: GrpcExceptionFactory = (message) => new InternalServerErrorException(message);
 
 @Injectable()
 export class GrpcExceptionInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    return next
-      .handle()
-      .pipe(
-        catchError((error: unknown) => throwError(() => this.mapError(error))),
-      );
+    return next.handle().pipe(catchError((error: unknown) => throwError(() => this.mapError(error))));
   }
 
   private mapError(error: unknown): unknown {
@@ -65,8 +59,7 @@ export class GrpcExceptionInterceptor implements NestInterceptor {
 
   private createHttpException(error: ServiceError): HttpException {
     const message = error.details || error.message;
-    const factory =
-      GRPC_TO_HTTP_EXCEPTION[error.code] ?? DEFAULT_GRPC_EXCEPTION;
+    const factory = GRPC_TO_HTTP_EXCEPTION[error.code] ?? DEFAULT_GRPC_EXCEPTION;
 
     return factory(message);
   }
@@ -78,9 +71,6 @@ export class GrpcExceptionInterceptor implements NestInterceptor {
 
     const candidate = error as ServiceError;
 
-    return (
-      typeof candidate.code === 'number' &&
-      typeof candidate.details === 'string'
-    );
+    return typeof candidate.code === 'number' && typeof candidate.details === 'string';
   }
 }

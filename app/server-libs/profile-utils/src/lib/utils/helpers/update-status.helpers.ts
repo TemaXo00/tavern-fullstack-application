@@ -3,10 +3,7 @@ import { ProfileDatabaseService } from '@org/profile-database';
 import { RmqLoggerUtil } from '@org/shared-utils';
 import { PROFILE_MESSAGES } from '@org/validation-messages';
 
-import {
-  ActivityManipulateOptions,
-  BlockManipulateOptions,
-} from './types.helper';
+import { ActivityManipulateOptions, BlockManipulateOptions } from './types.helper';
 
 @Injectable()
 export class ProfileUpdateStatusHelper {

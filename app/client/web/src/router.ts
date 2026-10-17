@@ -9,14 +9,12 @@ const router = createRouter({
     {
       path: '',
       name: 'MainLayout',
-      component: (): Promise<Component> =>
-        import('@org/main-layout').then((m) => m.MainLayout),
+      component: (): Promise<Component> => import('@org/main-layout').then((m) => m.MainLayout),
       children: [
         {
           path: '',
           name: 'MainHomePage',
-          component: (): Promise<Component> =>
-            import('@org/main-home-page').then((m) => m.MainHomePage),
+          component: (): Promise<Component> => import('@org/main-home-page').then((m) => m.MainHomePage),
           meta: {
             title: 'Home',
           },
@@ -26,14 +24,12 @@ const router = createRouter({
     {
       path: '/admin',
       name: 'AdminLayout',
-      component: (): Promise<Component> =>
-        import('@org/admin-layout').then((m) => m.AdminLayout),
+      component: (): Promise<Component> => import('@org/admin-layout').then((m) => m.AdminLayout),
       children: [
         {
           path: '',
           name: 'AdminMainPage',
-          component: (): Promise<Component> =>
-            import('@org/admin-home-page').then((m) => m.AdminHomePage),
+          component: (): Promise<Component> => import('@org/admin-home-page').then((m) => m.AdminHomePage),
           meta: {
             title: 'Admin Home',
             requiredAuth: true,
@@ -45,14 +41,12 @@ const router = createRouter({
     {
       path: '/auth',
       name: 'AuthLayout',
-      component: (): Promise<Component> =>
-        import('@org/auth-layout').then((m) => m.AuthLayout),
+      component: (): Promise<Component> => import('@org/auth-layout').then((m) => m.AuthLayout),
       children: [
         {
           path: 'login',
           name: 'AuthLoginPage',
-          component: (): Promise<Component> =>
-            import('@org/auth-login-page').then((m) => m.AuthLoginPage),
+          component: (): Promise<Component> => import('@org/auth-login-page').then((m) => m.AuthLoginPage),
           meta: {
             title: 'Login',
             guestOnly: true,
@@ -61,8 +55,7 @@ const router = createRouter({
         {
           path: 'register',
           name: 'AuthRegisterPage',
-          component: (): Promise<Component> =>
-            import('@org/auth-register-page').then((m) => m.AuthRegisterPage),
+          component: (): Promise<Component> => import('@org/auth-register-page').then((m) => m.AuthRegisterPage),
           meta: {
             title: 'Register',
             guestOnly: true,

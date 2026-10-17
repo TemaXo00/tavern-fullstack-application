@@ -14,14 +14,8 @@ import { AUTH_TOKEN_ROUTES } from '@org/routes-config';
 import { firstValueFrom } from 'rxjs';
 
 import type { ClientGrpc } from '@nestjs/microservices';
-import type {
-  TokenServiceObservableContract,
-  ValidateInput,
-} from '@org/grpc-types';
-import type {
-  AllTokensSharedOutput,
-  TokenSharedOutput,
-} from '@org/shared-types';
+import type { TokenServiceObservableContract, ValidateInput } from '@org/grpc-types';
+import type { AllTokensSharedOutput, TokenSharedOutput } from '@org/shared-types';
 
 @HTTPController({
   microserviceName: 'Auth',
@@ -36,8 +30,7 @@ export class TokenController implements OnModuleInit {
   ) {}
 
   onModuleInit(): void {
-    this.tokenContract =
-      this.client.getService<TokenServiceObservableContract>('TokenService');
+    this.tokenContract = this.client.getService<TokenServiceObservableContract>('TokenService');
   }
 
   @QUERYProtectedMethod({
@@ -67,51 +60,42 @@ export class TokenController implements OnModuleInit {
   @GETProtectedMethod({
     path: AUTH_TOKEN_ROUTES.GET_BY_ID.PATH,
     summary: 'Get token by ID',
-    operationDesc:
-      'Returns detailed information about a specific token by its ID. Available only to administrators.',
+    operationDesc: 'Returns detailed information about a specific token by its ID. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async getTokenById(
     @ValidateInputParam() validation: ValidateInput,
     @Param(AUTH_TOKEN_ROUTES.GET_BY_ID.PARAM) id: string,
   ): Promise<TokenSharedOutput> {
-    const response = await firstValueFrom(
-      this.tokenContract.GetTokenById({ id, validation }),
-    );
+    const response = await firstValueFrom(this.tokenContract.GetTokenById({ id, validation }));
     return this.map.mapTokenResponse(response);
   }
 
   @PATCHProtectedMethod({
     path: AUTH_TOKEN_ROUTES.REVOKE.PATH,
     summary: 'Revoke a token',
-    operationDesc:
-      'Marks the specified token as revoked, preventing further use. Available only to administrators.',
+    operationDesc: 'Marks the specified token as revoked, preventing further use. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async revokeToken(
     @ValidateInputParam() validation: ValidateInput,
     @Param(AUTH_TOKEN_ROUTES.REVOKE.PARAM) id: string,
   ): Promise<TokenSharedOutput> {
-    const response = await firstValueFrom(
-      this.tokenContract.SetTokenRevoked({ id, validation }),
-    );
+    const response = await firstValueFrom(this.tokenContract.SetTokenRevoked({ id, validation }));
     return this.map.mapTokenResponse(response);
   }
 
   @DELETEProtectedMethod({
     path: AUTH_TOKEN_ROUTES.REMOVE.PATH,
     summary: 'Delete a token by ID',
-    operationDesc:
-      'Permanently removes the specified token from the system. Available only to administrators.',
+    operationDesc: 'Permanently removes the specified token from the system. Available only to administrators.',
     roles: [Roles.ADMIN],
   })
   async deleteTokensById(
     @ValidateInputParam() validation: ValidateInput,
     @Param(AUTH_TOKEN_ROUTES.REMOVE.PARAM) id: string,
   ): Promise<TokenSharedOutput> {
-    const response = await firstValueFrom(
-      this.tokenContract.DeleteTokenById({ id, validation }),
-    );
+    const response = await firstValueFrom(this.tokenContract.DeleteTokenById({ id, validation }));
     return this.map.mapTokenResponse(response);
   }
 
@@ -122,11 +106,7 @@ export class TokenController implements OnModuleInit {
       'Removes all tokens that are no longer active (expired, revoked, used). Available only to administrators.',
     roles: [Roles.ADMIN],
   })
-  async deleteAllTokens(
-    @ValidateInputParam() validation: ValidateInput,
-  ): Promise<void> {
-    await firstValueFrom(
-      this.tokenContract.DeleteAllNotActiveTokens({ validation }),
-    );
+  async deleteAllTokens(@ValidateInputParam() validation: ValidateInput): Promise<void> {
+    await firstValueFrom(this.tokenContract.DeleteAllNotActiveTokens({ validation }));
   }
 }

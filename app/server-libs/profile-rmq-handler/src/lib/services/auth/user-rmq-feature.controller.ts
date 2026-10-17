@@ -32,16 +32,12 @@ export class UserRmqFeatureController {
   }
 
   @EventPattern(USER_MESSAGES.SET_ACTIVE)
-  async onUserActive(
-    @Payload() data: AdminSetUserActiveMessage,
-  ): Promise<void> {
+  async onUserActive(@Payload() data: AdminSetUserActiveMessage): Promise<void> {
     await this.service.handleUserActive(data);
   }
 
   @EventPattern(USER_MESSAGES.EMAIL_CHANGE)
-  async onUserChangeEmail(
-    @Payload() data: UserChangeEmailMessage,
-  ): Promise<void> {
+  async onUserChangeEmail(@Payload() data: UserChangeEmailMessage): Promise<void> {
     await this.service.handleUserChangeEmail(data);
   }
 

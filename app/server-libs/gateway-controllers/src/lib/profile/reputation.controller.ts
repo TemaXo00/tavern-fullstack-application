@@ -1,20 +1,12 @@
 import { Body, Inject, OnModuleInit, Param } from '@nestjs/common';
-import {
-  HTTPController,
-  QUERYMethod,
-  QUERYProtectedMethod,
-  ValidateInputParam,
-} from '@org/gateway-decorators';
+import { HTTPController, QUERYMethod, QUERYProtectedMethod, ValidateInputParam } from '@org/gateway-decorators';
 import { ReputationPaginationDto } from '@org/gateway-dto';
 import { ProfileGatewayMapService } from '@org/gateway-map';
 import { PROFILE_REPUTATION_ROUTES } from '@org/routes-config';
 import { firstValueFrom } from 'rxjs';
 
 import type { ClientGrpc } from '@nestjs/microservices';
-import type {
-  ReputationServiceObservableContract,
-  ValidateInput,
-} from '@org/grpc-types';
+import type { ReputationServiceObservableContract, ValidateInput } from '@org/grpc-types';
 import type { PaginatedReputationSharedOutput } from '@org/shared-types';
 
 @HTTPController({
@@ -30,10 +22,7 @@ export class ReputationController implements OnModuleInit {
   ) {}
 
   onModuleInit(): void {
-    this.reputationContract =
-      this.client.getService<ReputationServiceObservableContract>(
-        'ReputationService',
-      );
+    this.reputationContract = this.client.getService<ReputationServiceObservableContract>('ReputationService');
   }
 
   @QUERYProtectedMethod({
@@ -61,8 +50,7 @@ export class ReputationController implements OnModuleInit {
   @QUERYMethod({
     path: PROFILE_REPUTATION_ROUTES.GET_BY_NICKNAME.PATH,
     summary: 'Get reputation logs of a user',
-    operationDesc:
-      'Returns a paginated list of reputation change logs for the specified user. Available to everyone.',
+    operationDesc: 'Returns a paginated list of reputation change logs for the specified user. Available to everyone.',
   })
   async getByNickname(
     @Param(PROFILE_REPUTATION_ROUTES.GET_BY_NICKNAME.PARAM) nickname: string,

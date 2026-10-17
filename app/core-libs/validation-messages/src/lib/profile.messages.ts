@@ -85,9 +85,7 @@ export const PROFILE_MESSAGES = {
   },
   NICKNAME_VALIDATION: {
     TYPE: 'Nickname should be a string',
-    MIN_LENGTH: `Minimal length of nickname is ${
-      PROFILE_CONFIG.NICKNAME.MIN_LENGHT
-    }`,
+    MIN_LENGTH: `Minimal length of nickname is ${PROFILE_CONFIG.NICKNAME.MIN_LENGHT}`,
     MAX_LENGTH: `Maximum length of nickname is ${PROFILE_CONFIG.NICKNAME.MAX_LENGTH}`,
   },
   REPUTATION_VALIDATION: {

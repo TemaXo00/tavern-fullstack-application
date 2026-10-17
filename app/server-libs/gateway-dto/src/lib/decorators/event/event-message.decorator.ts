@@ -8,8 +8,7 @@ export function EventMessage(): PropertyDecorator {
   return applyDecorators(
     ApiProperty({
       description: 'Message',
-      example:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      example: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
       type: 'string',
       required: false,
       minLength: EVENT_CONFIG.MESSAGE.MIN_LENGTH,

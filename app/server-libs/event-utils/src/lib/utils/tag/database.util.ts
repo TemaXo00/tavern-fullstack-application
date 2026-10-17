@@ -28,11 +28,7 @@ export class EventTagDatabaseUtil {
 
   // GET Methods
 
-  private async getTagListOutput(
-    where: EventTagWhereInput,
-    skip: number,
-    take: number,
-  ): Promise<EventTagListOutput[]> {
+  private async getTagListOutput(where: EventTagWhereInput, skip: number, take: number): Promise<EventTagListOutput[]> {
     return this.db.eventTag.findMany({
       where,
       skip,
@@ -43,17 +39,11 @@ export class EventTagDatabaseUtil {
     });
   }
 
-  async getPaginatedTags(
-    pagination: EventTagPaginationGrpcInput,
-  ): Promise<PaginatedEventTagsOutput> {
+  async getPaginatedTags(pagination: EventTagPaginationGrpcInput): Promise<PaginatedEventTagsOutput> {
     const safePagination = pagination || {};
     const where = this.buildQueryForTag(safePagination);
     const total = await this.db.eventTag.count({ where });
-    const params = this.paginationUtil.getPaginationParams(
-      total,
-      safePagination.page,
-      safePagination.limit,
-    );
+    const params = this.paginationUtil.getPaginationParams(total, safePagination.page, safePagination.limit);
     return {
       pagination: {
         ...params,
@@ -64,10 +54,7 @@ export class EventTagDatabaseUtil {
   }
 
   async getTagBySlug(slug: string): Promise<EventTagDetailedOutput | null> {
-    this.stringUtil.validateAnyString(
-      slug,
-      EVENT_MESSAGES.INVALID_TAG_SLUG_STRING,
-    );
+    this.stringUtil.validateAnyString(slug, EVENT_MESSAGES.INVALID_TAG_SLUG_STRING);
     return await this.db.eventTag.findUnique({
       where: {
         slug,
@@ -78,18 +65,9 @@ export class EventTagDatabaseUtil {
 
   // CREATE Methods
 
-  async createTag(
-    data: CreateEventTagGrpcInput,
-    slug: string,
-  ): Promise<EventTagOutput> {
-    this.stringUtil.validateAnyString(
-      data.name,
-      EVENT_MESSAGES.INVALID_TAG_NAME_STRING,
-    );
-    this.stringUtil.validateAnyString(
-      slug,
-      EVENT_MESSAGES.INVALID_TAG_SLUG_STRING,
-    );
+  async createTag(data: CreateEventTagGrpcInput, slug: string): Promise<EventTagOutput> {
+    this.stringUtil.validateAnyString(data.name, EVENT_MESSAGES.INVALID_TAG_NAME_STRING);
+    this.stringUtil.validateAnyString(slug, EVENT_MESSAGES.INVALID_TAG_SLUG_STRING);
     return await this.db.eventTag.create({
       data: {
         ...data,
@@ -101,10 +79,7 @@ export class EventTagDatabaseUtil {
 
   // UPDATE Methods
 
-  async updateTag(
-    slug: string,
-    data: UpdateEventTagGrpcInput,
-  ): Promise<EventTagOutput> {
+  async updateTag(slug: string, data: UpdateEventTagGrpcInput): Promise<EventTagOutput> {
     return await this.db.eventTag.update({
       where: {
         slug,
@@ -117,10 +92,7 @@ export class EventTagDatabaseUtil {
   // DELETE Methods
 
   async deleteTag(slug: string): Promise<void> {
-    this.stringUtil.validateAnyString(
-      slug,
-      EVENT_MESSAGES.INVALID_TAG_SLUG_STRING,
-    );
+    this.stringUtil.validateAnyString(slug, EVENT_MESSAGES.INVALID_TAG_SLUG_STRING);
     await this.db.eventTag.delete({
       where: { slug },
     });

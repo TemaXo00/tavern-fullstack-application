@@ -17,18 +17,14 @@ import {
 
 @Injectable()
 export class EventGatewayMapService {
-  mapPaginationPrivateInput(
-    input: EventPrivatePaginationSharedInput,
-  ): EventPrivatePaginationGrpcInput {
+  mapPaginationPrivateInput(input: EventPrivatePaginationSharedInput): EventPrivatePaginationGrpcInput {
     return {
       ...input,
       status: input.status ? EVENT_STATUSES_TO_GRPC[input.status] : undefined,
     };
   }
 
-  mapPaginationPrivateOutput(
-    output: EventPrivatePaginationGrpcOutput,
-  ): EventPrivatePaginationSharedOutput {
+  mapPaginationPrivateOutput(output: EventPrivatePaginationGrpcOutput): EventPrivatePaginationSharedOutput {
     return {
       ...output,
       status: output.status ? GRPC_TO_EVENT_STATUSES[output.status] : undefined,

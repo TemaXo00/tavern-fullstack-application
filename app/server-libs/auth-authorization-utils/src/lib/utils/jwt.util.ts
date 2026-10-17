@@ -18,14 +18,8 @@ export class AuthCoreJWTUtil {
     private readonly config: ConfigService,
     private readonly stringUtil: StringValidationUtil,
   ) {
-    const accessMinutes = this.config.get<number>(
-      'TAVERN_JWT_ACCESS_TOKEN_TTL',
-      15,
-    );
-    const refreshDays = this.config.get<number>(
-      'TAVERN_JWT_REFRESH_TOKEN_TTL',
-      30,
-    );
+    const accessMinutes = this.config.get<number>('TAVERN_JWT_ACCESS_TOKEN_TTL', 15);
+    const refreshDays = this.config.get<number>('TAVERN_JWT_REFRESH_TOKEN_TTL', 30);
 
     this.accessTTL = accessMinutes * 60;
     this.refreshTTL = refreshDays * 24 * 60 * 60;

@@ -9,20 +9,13 @@ import {
   QUERYProtectedMethod,
   ValidateInputParam,
 } from '@org/gateway-decorators';
-import {
-  ProfileAdvancedPaginationDto,
-  ProfileBasePaginationDto,
-  UpdateProfileDto,
-} from '@org/gateway-dto';
+import { ProfileAdvancedPaginationDto, ProfileBasePaginationDto, UpdateProfileDto } from '@org/gateway-dto';
 import { ProfileGatewayMapService } from '@org/gateway-map';
 import { PROFILE_PROFILE_ROUTES } from '@org/routes-config';
 import { firstValueFrom } from 'rxjs';
 
 import type { ClientGrpc } from '@nestjs/microservices';
-import type {
-  ProfileServiceObservableContract,
-  ValidateInput,
-} from '@org/grpc-types';
+import type { ProfileServiceObservableContract, ValidateInput } from '@org/grpc-types';
 import type {
   PaginatedProfilesBaseSharedOutput,
   PaginatedProfilesGatewayAdvancedOutput,
@@ -40,39 +33,28 @@ export class ProfileController implements OnModuleInit {
   ) {}
 
   onModuleInit(): void {
-    this.profileContract =
-      this.client.getService<ProfileServiceObservableContract>(
-        'ProfileService',
-      );
+    this.profileContract = this.client.getService<ProfileServiceObservableContract>('ProfileService');
   }
 
   @GETProtectedMethod({
     path: PROFILE_PROFILE_ROUTES.GET_ME,
     summary: 'Get my profile',
-    operationDesc:
-      'Returns the full profile of the currently authenticated user, including private fields.',
+    operationDesc: 'Returns the full profile of the currently authenticated user, including private fields.',
   })
-  async getMyProfile(
-    @ValidateInputParam() validation: ValidateInput,
-  ): Promise<ProfileAdvancedSharedOutput> {
-    const response = await firstValueFrom(
-      this.profileContract.GetMe({ validation }),
-    );
+  async getMyProfile(@ValidateInputParam() validation: ValidateInput): Promise<ProfileAdvancedSharedOutput> {
+    const response = await firstValueFrom(this.profileContract.GetMe({ validation }));
     return this.map.mapProfileAdvancedOutput(response);
   }
 
   @GETMethod({
     path: PROFILE_PROFILE_ROUTES.GET_BY_NICKNAME_BASE.PATH,
     summary: 'Get base profile by nickname',
-    operationDesc:
-      'Returns the public (base) profile of the specified user. Available to everyone.',
+    operationDesc: 'Returns the public (base) profile of the specified user. Available to everyone.',
   })
   async getProfileByNicknameBase(
     @Param(PROFILE_PROFILE_ROUTES.GET_BY_NICKNAME_BASE.PARAM) nickname: string,
   ): Promise<ProfileBaseSharedOutput> {
-    const response = await firstValueFrom(
-      this.profileContract.GetProfileByNicknameBase({ nickname }),
-    );
+    const response = await firstValueFrom(this.profileContract.GetProfileByNicknameBase({ nickname }));
     return this.map.mapProfileBaseOutput(response);
   }
 
@@ -100,15 +82,10 @@ export class ProfileController implements OnModuleInit {
   @QUERYMethod({
     path: PROFILE_PROFILE_ROUTES.GET_PROFILES_BASE,
     summary: 'Get paginated base profiles',
-    operationDesc:
-      'Returns a paginated list of public (base) profiles. Supports search by nickname.',
+    operationDesc: 'Returns a paginated list of public (base) profiles. Supports search by nickname.',
   })
-  async getProfilesBase(
-    @Body() dto: ProfileBasePaginationDto,
-  ): Promise<PaginatedProfilesBaseSharedOutput> {
-    const response = await firstValueFrom(
-      this.profileContract.GetProfilesBase({ pagination: dto }),
-    );
+  async getProfilesBase(@Body() dto: ProfileBasePaginationDto): Promise<PaginatedProfilesBaseSharedOutput> {
+    const response = await firstValueFrom(this.profileContract.GetProfilesBase({ pagination: dto }));
     return {
       pagination: response.pagination,
       profiles: this.map.mapProfileList(response.profiles),
@@ -127,9 +104,7 @@ export class ProfileController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
   ): Promise<PaginatedProfilesGatewayAdvancedOutput> {
     const pagination = this.map.mapPaginationAdvancedInput(dto);
-    const response = await firstValueFrom(
-      this.profileContract.GetProfilesAdvanced({ pagination, validation }),
-    );
+    const response = await firstValueFrom(this.profileContract.GetProfilesAdvanced({ pagination, validation }));
     return {
       pagination: this.map.mapPaginationAdvanced(response.pagination),
       profiles: this.map.mapProfileList(response.profiles),
@@ -146,9 +121,7 @@ export class ProfileController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Body() data: UpdateProfileDto,
   ): Promise<ProfileAdvancedSharedOutput> {
-    const response = await firstValueFrom(
-      this.profileContract.UpdateProfile({ validation, data }),
-    );
+    const response = await firstValueFrom(this.profileContract.UpdateProfile({ validation, data }));
     return this.map.mapProfileAdvancedOutput(response);
   }
 }

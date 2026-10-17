@@ -1,9 +1,4 @@
-import {
-  ForgotPasswordBaseInput,
-  LoginBaseInput,
-  RegisterBaseInput,
-  ResetPasswordBaseInput,
-} from '@org/base-types';
+import { ForgotPasswordBaseInput, LoginBaseInput, RegisterBaseInput, ResetPasswordBaseInput } from '@org/base-types';
 
 export type RegisterSharedInput = RegisterBaseInput;
 export type LoginSharedInput = LoginBaseInput;

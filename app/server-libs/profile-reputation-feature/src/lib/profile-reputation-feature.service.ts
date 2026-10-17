@@ -17,30 +17,14 @@ export class ProfileReputationFeatureService implements ReputationServiceContrac
     private readonly validationUtil: ProfileValidationUtil,
   ) {}
 
-  async GetMyLogs(
-    data: GetMyReputationInput,
-  ): Promise<PaginatedReputationOutput> {
+  async GetMyLogs(data: GetMyReputationInput): Promise<PaginatedReputationOutput> {
     const payload = await this.validate.Validate(data.validation);
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-id',
-      payload.id,
-    );
-    return await this.dbUtil.getReputationPaginatedLogs(
-      profile.id,
-      data.pagination,
-    );
+    const profile = await this.validationUtil.checkUserExisting('by-id', payload.id);
+    return await this.dbUtil.getReputationPaginatedLogs(profile.id, data.pagination);
   }
 
-  async GetReputationByNickname(
-    data: GetReputationByNicknameInput,
-  ): Promise<PaginatedReputationOutput> {
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-nickname',
-      data.nickname,
-    );
-    return await this.dbUtil.getReputationPaginatedLogs(
-      profile.id,
-      data.pagination,
-    );
+  async GetReputationByNickname(data: GetReputationByNicknameInput): Promise<PaginatedReputationOutput> {
+    const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname);
+    return await this.dbUtil.getReputationPaginatedLogs(profile.id, data.pagination);
   }
 }

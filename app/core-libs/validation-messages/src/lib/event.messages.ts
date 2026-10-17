@@ -3,8 +3,7 @@ import { EVENT_CONFIG } from '@org/validation-config';
 
 export const EVENT_MESSAGES = {
   TAG_NOT_FOUND: 'Tag not found',
-  TAG_SLUG_EXISTING:
-    'Tag with this name or slug already existing. Please, change name',
+  TAG_SLUG_EXISTING: 'Tag with this name or slug already existing. Please, change name',
   INVALID_TAG_SLUG_STRING: 'Slug',
   INVALID_TAG_NAME_STRING: 'Name',
   COLOR_VALIDATION: {
@@ -37,8 +36,7 @@ export const EVENT_MESSAGES = {
     MAX_LENGTH: `Maximum length of message is ${EVENT_CONFIG.MESSAGE.MAX_LENGTH}`,
   },
   EVENT_STATUS_VALIDATION: {
-    ENUM: (): string =>
-      `Invalid status. Available options: ${Object.values(EventStatuses).join(', ')}`,
+    ENUM: (): string => `Invalid status. Available options: ${Object.values(EventStatuses).join(', ')}`,
   },
   USER_SNAPSHOT_EXISTING_ERROR: {
     CONTEXT: 'ManipulateUserSnapshot',

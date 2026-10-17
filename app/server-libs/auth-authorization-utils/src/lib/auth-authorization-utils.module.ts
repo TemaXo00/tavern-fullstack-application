@@ -10,13 +10,7 @@ import { AuthCoreDatabaseUtil } from './utils/database.util';
 import { AuthCoreJWTUtil } from './utils/jwt.util';
 import { AuthCoreValidateUtil } from './utils/validate.util';
 
-const UTILS = [
-  AuthCoreAuthorizeUtil,
-  AuthCoreCacheUtil,
-  AuthCoreJWTUtil,
-  AuthCoreDatabaseUtil,
-  AuthCoreValidateUtil,
-];
+const UTILS = [AuthCoreAuthorizeUtil, AuthCoreCacheUtil, AuthCoreJWTUtil, AuthCoreDatabaseUtil, AuthCoreValidateUtil];
 
 @Module({
   imports: [
@@ -25,10 +19,7 @@ const UTILS = [
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        secret: config.get<string>(
-          'TAVERN_JWT_SECRET',
-          'DEFAULT_JWT_SECRET_DONT_USE_IN_PRODUCTION',
-        ),
+        secret: config.get<string>('TAVERN_JWT_SECRET', 'DEFAULT_JWT_SECRET_DONT_USE_IN_PRODUCTION'),
         signOptions: {
           algorithm: 'HS256',
         },

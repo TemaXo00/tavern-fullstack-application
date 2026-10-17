@@ -15,12 +15,8 @@ export function LocalName(): PropertyDecorator {
     }),
     IsNotEmpty({ message: AUTH_MESSAGES.LOCAL_NAME_VALIDATION.NOT_EMPTY }),
     IsString({ message: AUTH_MESSAGES.LOCAL_NAME_VALIDATION.TYPE }),
-    Length(
-      AUTH_CONFIG.LOCAL_NAME.MIN_LENGTH,
-      AUTH_CONFIG.LOCAL_NAME.MAX_LENGTH,
-      {
-        message: AUTH_MESSAGES.LOCAL_NAME_VALIDATION.LENGTH,
-      },
-    ),
+    Length(AUTH_CONFIG.LOCAL_NAME.MIN_LENGTH, AUTH_CONFIG.LOCAL_NAME.MAX_LENGTH, {
+      message: AUTH_MESSAGES.LOCAL_NAME_VALIDATION.LENGTH,
+    }),
   );
 }

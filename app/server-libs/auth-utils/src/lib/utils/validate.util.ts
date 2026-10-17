@@ -137,9 +137,7 @@ export class AuthValidateUtil {
       });
     }
     const maxBlock = new Date();
-    maxBlock.setFullYear(
-      maxBlock.getFullYear() + AUTH_CONFIG.BLOCK.MAX_DATE_YEAR,
-    );
+    maxBlock.setFullYear(maxBlock.getFullYear() + AUTH_CONFIG.BLOCK.MAX_DATE_YEAR);
     if (blockedUntil > maxBlock) {
       throw new RpcException({
         message: AUTH_MESSAGES.BLOCK_TOO_FAR,
@@ -163,10 +161,7 @@ export class AuthValidateUtil {
     return session;
   }
 
-  validateNotCurrentSession(
-    payloadSession: string,
-    neededSession: string,
-  ): void {
+  validateNotCurrentSession(payloadSession: string, neededSession: string): void {
     if (payloadSession === neededSession) {
       throw new RpcException({
         message: AUTH_MESSAGES.CURRENT_SESSION_DELETE,
@@ -187,9 +182,7 @@ export class AuthValidateUtil {
   async validatePermissionToDeleteSession(sessionId: string): Promise<void> {
     const userSession = await this.validateSessionExists(sessionId);
     const deletePermited = new Date();
-    deletePermited.setDate(
-      deletePermited.getDate() - AUTH_CONFIG.SESSION.DELETE_PERMISSION_DAYS,
-    );
+    deletePermited.setDate(deletePermited.getDate() - AUTH_CONFIG.SESSION.DELETE_PERMISSION_DAYS);
     if (userSession.createdAt > deletePermited) {
       throw new RpcException({
         message: AUTH_MESSAGES.SESSION_DELETE_FAILED,
@@ -204,10 +197,7 @@ export class AuthValidateUtil {
     return !!(await this.dbUtil.searchTokenByEmail(email));
   }
 
-  async validateTokenFound(
-    value: string,
-    format: 'email' | 'id',
-  ): Promise<Token> {
+  async validateTokenFound(value: string, format: 'email' | 'id'): Promise<Token> {
     const date = new Date();
 
     let token: Token | null;

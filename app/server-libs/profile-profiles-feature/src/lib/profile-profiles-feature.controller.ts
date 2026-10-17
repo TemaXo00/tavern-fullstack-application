@@ -27,37 +27,27 @@ export class ProfileProfilesFeatureController implements ProfileServiceContract 
   }
 
   @GrpcMethod('ProfileService', 'GetProfileByNicknameBase')
-  async GetProfileByNicknameBase(
-    data: GetProfileByNicknameInput,
-  ): Promise<ProfileBaseOutput> {
+  async GetProfileByNicknameBase(data: GetProfileByNicknameInput): Promise<ProfileBaseOutput> {
     return this.service.GetProfileByNicknameBase(data);
   }
 
   @GrpcMethod('ProfileService', 'GetProfileByNicknameAdvanced')
-  async GetProfileByNicknameAdvanced(
-    data: GetProfileByNicknameAdvancedInput,
-  ): Promise<ProfileAdvancedOutput> {
+  async GetProfileByNicknameAdvanced(data: GetProfileByNicknameAdvancedInput): Promise<ProfileAdvancedOutput> {
     return this.service.GetProfileByNicknameAdvanced(data);
   }
 
   @GrpcMethod('ProfileService', 'GetProfilesBase')
-  async GetProfilesBase(
-    data: GetProfilesInput,
-  ): Promise<PaginatedProfilesBaseOutput> {
+  async GetProfilesBase(data: GetProfilesInput): Promise<PaginatedProfilesBaseOutput> {
     return this.service.GetProfilesBase(data);
   }
 
   @GrpcMethod('ProfileService', 'GetProfilesAdvanced')
-  async GetProfilesAdvanced(
-    data: GetProfilesAdvancedInput,
-  ): Promise<PaginatedProfilesAdvancedOutput> {
+  async GetProfilesAdvanced(data: GetProfilesAdvancedInput): Promise<PaginatedProfilesAdvancedOutput> {
     return this.service.GetProfilesAdvanced(data);
   }
 
   @GrpcMethod('ProfileService', 'UpdateProfile')
-  async UpdateProfile(
-    data: UpdateProfileInput,
-  ): Promise<ProfileAdvancedOutput> {
+  async UpdateProfile(data: UpdateProfileInput): Promise<ProfileAdvancedOutput> {
     return this.service.UpdateProfile(data);
   }
 }

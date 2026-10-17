@@ -13,7 +13,4 @@ export type BlockUserSharedInput = BlockUserBaseInput;
 export type ChangePasswordSharedInput = ChangePasswordBaseInput;
 export type ChangeEmailSharedInput = ChangeEmailBaseInput;
 export type UserDeleteSharedInput = UserDeleteBaseInput;
-export type UserPaginationSharedInput = Replace<
-  UserPaginationBaseInput,
-  { role?: Roles }
->;
+export type UserPaginationSharedInput = Replace<UserPaginationBaseInput, { role?: Roles }>;

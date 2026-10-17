@@ -1,11 +1,6 @@
 import { DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger';
 
-import {
-  AUTHOR_GITHUB,
-  AUTHOR_MAIL,
-  AUTHOR_NAME,
-  SWAGGER_PATH,
-} from './info.config.js';
+import { AUTHOR_GITHUB, AUTHOR_MAIL, AUTHOR_NAME, SWAGGER_PATH } from './info.config.js';
 
 export const swaggerConfig = new DocumentBuilder()
   .setTitle('API')
@@ -20,10 +15,7 @@ export const swaggerUIConfig: SwaggerCustomOptions = {
     docExpansion: 'list',
     filter: true,
     displayRequestDuration: true,
-    operationsSorter: (
-      a: { get: (arg0: string) => string },
-      b: { get: (arg0: string) => string },
-    ) => {
+    operationsSorter: (a: { get: (arg0: string) => string }, b: { get: (arg0: string) => string }) => {
       const methodOrder: Record<string, number> = {
         get: 1,
         query: 2,

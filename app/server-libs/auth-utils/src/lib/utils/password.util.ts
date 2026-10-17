@@ -19,10 +19,7 @@ export class AuthPasswordUtil {
     });
   }
 
-  async validatePassword(
-    passwordHash: string | null,
-    inputPassword: string,
-  ): Promise<void> {
+  async validatePassword(passwordHash: string | null, inputPassword: string): Promise<void> {
     this.stringUtil.validateAnyString(inputPassword, 'Password');
     if (!passwordHash) {
       throw new RpcException({

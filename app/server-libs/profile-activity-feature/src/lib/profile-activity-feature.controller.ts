@@ -20,9 +20,7 @@ export class ProfileActivityFeatureController implements ActivityServiceContract
   }
 
   @GrpcMethod('ActivityService', 'GetActivityByNickname')
-  async GetActivityByNickname(
-    data: GetActivityByNicknameInput,
-  ): Promise<PaginatedActivityOutput> {
+  async GetActivityByNickname(data: GetActivityByNicknameInput): Promise<PaginatedActivityOutput> {
     return await this.service.GetActivityByNickname(data);
   }
 }

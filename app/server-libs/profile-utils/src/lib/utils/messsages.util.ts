@@ -1,10 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  AdminCheckPaginatedProfiles,
-  AdminCheckProfile,
-  PROFILES_MESSAGES,
-  UpdateProfile,
-} from '@org/rmq-messages';
+import { AdminCheckPaginatedProfiles, AdminCheckProfile, PROFILES_MESSAGES, UpdateProfile } from '@org/rmq-messages';
 
 import type { ClientProxy } from '@nestjs/microservices';
 

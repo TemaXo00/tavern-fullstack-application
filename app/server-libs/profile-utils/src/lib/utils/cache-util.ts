@@ -17,21 +17,11 @@ export class ProfileCacheUtil {
   }
 
   async cacheBase(profile: ProfileBaseOutput): Promise<void> {
-    await this.cache.set(
-      `profile-base:${profile.nickname}`,
-      JSON.stringify(profile),
-      'EX',
-      this.TTL,
-    );
+    await this.cache.set(`profile-base:${profile.nickname}`, JSON.stringify(profile), 'EX', this.TTL);
   }
 
   async cacheAdvanced(profile: ProfileAdvancedOutput): Promise<void> {
-    await this.cache.set(
-      `profile-advanced:${profile.nickname}`,
-      JSON.stringify(profile),
-      'EX',
-      this.TTL,
-    );
+    await this.cache.set(`profile-advanced:${profile.nickname}`, JSON.stringify(profile), 'EX', this.TTL);
   }
 
   async getBase(nickname: string): Promise<ProfileBaseOutput | null> {

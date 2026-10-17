@@ -41,9 +41,7 @@ export const POSTMethod = (options: IPOSTMethodOptions): MethodDecorator => {
   );
 };
 
-export const POSTProtected = (
-  options: IPOSTProtectedMethodOptions,
-): MethodDecorator => {
+export const POSTProtected = (options: IPOSTProtectedMethodOptions): MethodDecorator => {
   return applyDecorators(
     ApiOperation({
       summary: options.summary,

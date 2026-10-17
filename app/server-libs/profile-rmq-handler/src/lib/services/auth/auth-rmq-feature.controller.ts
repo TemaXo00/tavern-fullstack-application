@@ -1,10 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
-import {
-  AUTHORIZATION_MESSAGES,
-  type AuthUserUnblockedMessage,
-  type AuthRegisteredMessage,
-} from '@org/rmq-messages';
+import { AUTHORIZATION_MESSAGES, type AuthUserUnblockedMessage, type AuthRegisteredMessage } from '@org/rmq-messages';
 
 import { AuthRmqFeatureService } from './auth-rmq-feature.service';
 

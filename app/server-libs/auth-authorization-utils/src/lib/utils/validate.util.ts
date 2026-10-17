@@ -12,10 +12,7 @@ import type { SessionInput } from '@org/grpc-types';
 export class AuthCoreValidateUtil {
   constructor(private readonly dbUtil: AuthCoreDatabaseUtil) {}
 
-  async validateUserWithSessionExists(
-    id: string,
-    sessionId: string,
-  ): Promise<{ user: User; session: Session }> {
+  async validateUserWithSessionExists(id: string, sessionId: string): Promise<{ user: User; session: Session }> {
     const user = await this.dbUtil.getUserWithSession(id, sessionId);
 
     if (!user) {
@@ -28,10 +25,7 @@ export class AuthCoreValidateUtil {
     return user;
   }
 
-  validateSessionsSimilar(
-    currSession: SessionInput,
-    newSession: SessionInput,
-  ): void {
+  validateSessionsSimilar(currSession: SessionInput, newSession: SessionInput): void {
     if (
       currSession.device !== newSession.device ||
       currSession.os !== newSession.os ||

@@ -4,10 +4,7 @@ import { BasePaginationDto } from '../../shared/pagination-base.dto.js';
 import type { ActivityType } from '@org/enums';
 import type { ActivityPaginationSharedInput } from '@org/shared-types';
 
-export class ActivityPaginationDto
-  extends BasePaginationDto
-  implements ActivityPaginationSharedInput
-{
+export class ActivityPaginationDto extends BasePaginationDto implements ActivityPaginationSharedInput {
   @Activity()
   activityType?: ActivityType;
 }

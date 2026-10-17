@@ -3,6 +3,7 @@ import {
   DeleteOtherEventBaseInput,
   EventActionBaseInput,
   EventPrivatePaginationBaseInput,
+  EventPublicPaginationBaseInput,
   GetEventBySlugBaseInput,
   GetPrivateUserEventsBaseInput,
   GetPublicUserEventsBaseInput,
@@ -14,14 +15,13 @@ import {
 
 import { Protected } from '../../utils/protected.js';
 
+export type EventPublicPaginationGrpcInput = EventPublicPaginationBaseInput;
 export type EventPrivatePaginationGrpcInput = EventPrivatePaginationBaseInput;
 
 export type PaginatedPublicEventsInput = PaginatedPublicEventsBaseInput;
-export type PaginatedPrivateEventsInput =
-  Protected<PaginatedPrivateEventsBaseInput>;
+export type PaginatedPrivateEventsInput = Protected<PaginatedPrivateEventsBaseInput>;
 export type GetPublicUserEventsInput = GetPublicUserEventsBaseInput;
-export type GetPrivateUserEventsInput =
-  Protected<GetPrivateUserEventsBaseInput>;
+export type GetPrivateUserEventsInput = Protected<GetPrivateUserEventsBaseInput>;
 export type GetPublicEventBySlug = GetEventBySlugBaseInput;
 export type GetPrivateEventBySlug = Protected<GetEventBySlugBaseInput>;
 export type CreateEventInput = Protected<CreateEventBaseInput>;

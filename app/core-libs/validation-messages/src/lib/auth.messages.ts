@@ -7,8 +7,7 @@ export const AUTH_MESSAGES = {
   INVALID_TOKEN: 'Invalid token',
   USER_WITH_EMAIL_EXISTS: 'User with this email already exists',
   CANNOT_PROMOTE_ADMIN: 'You cannot promote admin',
-  CANNOT_PROMOTE_USER:
-    'You cannot promote user, cause he registered less than 1 year ago',
+  CANNOT_PROMOTE_USER: 'You cannot promote user, cause he registered less than 1 year ago',
   USER_NOT_MODERATOR: 'User not moderator',
   USER_BLOCKED: (blockedUntil: Date, reason: string): string => {
     return `User blocked until ${blockedUntil.toDateString()}. Reason: ${reason}`;
@@ -25,8 +24,7 @@ export const AUTH_MESSAGES = {
   BLOCK_PREVIOUS_DATE: 'You cannot block user by previous date',
   BLOCK_TOO_FAR: `The block date is too far in the future. The maximum duration for blocking a user is ${AUTH_CONFIG.BLOCK.MAX_DATE_YEAR} years.`,
   SESSION_NOT_FOUND: 'Session not found',
-  CURRENT_SESSION_DELETE:
-    "You can't delete your own session. If you need, you can logout",
+  CURRENT_SESSION_DELETE: "You can't delete your own session. If you need, you can logout",
   INVALID_SESSION: 'Invalid session',
   SESSION_DELETE_FAILED: "You can't delete session",
   TOKEN_NOT_FOUND: 'Token not found',
@@ -71,13 +69,11 @@ export const AUTH_MESSAGES = {
   },
   ROLE_VALIDATION: {
     NOT_EMPTY: 'Role cannot be empty',
-    ENUM: (): string =>
-      `Invalid role. Available options: ${Object.values(Roles).join(', ')}`,
+    ENUM: (): string => `Invalid role. Available options: ${Object.values(Roles).join(', ')}`,
   },
   TOKEN_STATE_VALIDATION: {
     NOT_EMPTY: 'Token state cannot be empty',
-    ENUM: (): string =>
-      `Invalid token state. Available options: ${Object.values(TokenStates).join(', ')}`,
+    ENUM: (): string => `Invalid token state. Available options: ${Object.values(TokenStates).join(', ')}`,
   },
   EMAIL_VALIDATION: {
     NOT_EMPTY: 'Email should not be empty string',

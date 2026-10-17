@@ -12,10 +12,7 @@ export class StringValidationUtil {
   }
 
   validateEmail(email: string): void {
-    if (
-      !email ||
-      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
-    ) {
+    if (!email || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
       this.throwRPCError(SHARED_MESSAGES.INVALID_EMAIL);
     }
   }
@@ -27,9 +24,7 @@ export class StringValidationUtil {
   }
 
   validateUUIDV7(id: string): boolean {
-    return /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-      id,
-    );
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id);
   }
 
   private throwRPCError(arg: string): void {

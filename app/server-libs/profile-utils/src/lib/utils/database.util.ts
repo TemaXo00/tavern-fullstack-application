@@ -1,10 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  ACTIONS_TO_GRPC,
-  ACTIVITY_TO_GRPC,
-  GRPC_TO_ACTIONS,
-  GRPC_TO_ACTIVITY,
-} from '@org/enums';
+import { ACTIONS_TO_GRPC, ACTIVITY_TO_GRPC, GRPC_TO_ACTIONS, GRPC_TO_ACTIVITY } from '@org/enums';
 import {
   ActivityOutput,
   ActivityPaginationInput,
@@ -36,12 +31,7 @@ import {
   AuthRegisteredMessage,
   UserSetInactiveMessage,
 } from '@org/rmq-messages';
-import {
-  DateMapUtil,
-  PaginationUtil,
-  RmqLoggerUtil,
-  StringValidationUtil,
-} from '@org/shared-utils';
+import { DateMapUtil, PaginationUtil, RmqLoggerUtil, StringValidationUtil } from '@org/shared-utils';
 import { PROFILE_MESSAGES, SHARED_MESSAGES } from '@org/validation-messages';
 
 import { SearchUserHelperType } from './helpers/types.helper';
@@ -60,20 +50,14 @@ export class ProfileDatabaseUtil {
 
   // GET Methods
 
-  async getProfile(
-    type: SearchUserHelperType,
-    input: string,
-  ): Promise<Profile | null> {
+  async getProfile(type: SearchUserHelperType, input: string): Promise<Profile | null> {
     switch (type) {
       case 'by-id': {
         this.stringUtil.validateUUIDV7(input);
         break;
       }
       case 'by-nickname': {
-        this.stringUtil.validateAnyString(
-          input,
-          PROFILE_MESSAGES.INVALID_NICKNAME_STRING,
-        );
+        this.stringUtil.validateAnyString(input, PROFILE_MESSAGES.INVALID_NICKNAME_STRING);
         break;
       }
       default: {
@@ -109,27 +93,17 @@ export class ProfileDatabaseUtil {
     return mappedProfiles;
   }
 
-  async getProfilesWithBasePagination(
-    pagination: ProfilePaginationBaseInput,
-  ): Promise<PaginatedProfilesBaseOutput> {
+  async getProfilesWithBasePagination(pagination: ProfilePaginationBaseInput): Promise<PaginatedProfilesBaseOutput> {
     const safePagination = pagination || {};
     const where = this.buildProfileBaseQuery(safePagination);
     const total = await this.db.profile.count({ where });
-    const params = this.paginationUtil.getPaginationParams(
-      total,
-      safePagination.page,
-      safePagination.limit,
-    );
+    const params = this.paginationUtil.getPaginationParams(total, safePagination.page, safePagination.limit);
     return {
       pagination: {
         ...params,
         search: safePagination.search,
       },
-      profiles: await this.getProfileListOutput(
-        where,
-        params.skip,
-        params.limit,
-      ),
+      profiles: await this.getProfileListOutput(where, params.skip, params.limit),
     };
   }
 
@@ -150,11 +124,7 @@ export class ProfileDatabaseUtil {
       birthDateTo,
     });
     const total = await this.db.profile.count({ where });
-    const params = this.paginationUtil.getPaginationParams(
-      total,
-      safePagination.page,
-      safePagination.limit,
-    );
+    const params = this.paginationUtil.getPaginationParams(total, safePagination.page, safePagination.limit);
     return {
       pagination: {
         ...params,
@@ -166,11 +136,7 @@ export class ProfileDatabaseUtil {
         reputationTo: safePagination.reputationTo,
         currentActivity: safePagination.currentActivity,
       },
-      profiles: await this.getProfileListOutput(
-        where,
-        params.skip,
-        params.limit,
-      ),
+      profiles: await this.getProfileListOutput(where, params.skip, params.limit),
     };
   }
 
@@ -208,21 +174,13 @@ export class ProfileDatabaseUtil {
     const safePagination = pagination || {};
     const where = this.buildReputationQuery(profileId, safePagination);
     const total = await this.db.reputation.count({ where });
-    const params = this.paginationUtil.getPaginationParams(
-      total,
-      safePagination.page,
-      safePagination.limit,
-    );
+    const params = this.paginationUtil.getPaginationParams(total, safePagination.page, safePagination.limit);
     return {
       pagination: {
         ...params,
         action: safePagination.action,
       },
-      reputationLogs: await this.getReputationListOutput(
-        where,
-        params.skip,
-        params.limit,
-      ),
+      reputationLogs: await this.getReputationListOutput(where, params.skip, params.limit),
     };
   }
 
@@ -258,21 +216,13 @@ export class ProfileDatabaseUtil {
     const safePagination = pagination || {};
     const where = this.buildActivityQuery(profileId, safePagination);
     const total = await this.db.profileActivity.count({ where });
-    const params = this.paginationUtil.getPaginationParams(
-      total,
-      safePagination.page,
-      safePagination.limit,
-    );
+    const params = this.paginationUtil.getPaginationParams(total, safePagination.page, safePagination.limit);
     return {
       pagination: {
         ...params,
         activityType: safePagination.activityType,
       },
-      activityLogs: await this.getActivityListOutput(
-        where,
-        params.skip,
-        params.limit,
-      ),
+      activityLogs: await this.getActivityListOutput(where, params.skip, params.limit),
     };
   }
 
@@ -326,10 +276,7 @@ export class ProfileDatabaseUtil {
 
   // UPDATE Methods
 
-  async blockUser(
-    data: AdminBlockUserProfile,
-    reputationScore: number,
-  ): Promise<void> {
+  async blockUser(data: AdminBlockUserProfile, reputationScore: number): Promise<void> {
     const dateFrom = new Date(data.blockedFrom);
     const dateTo = new Date(data.blockedUntil);
     await this.updateStatusHelper.manipulateBlock({
@@ -338,18 +285,11 @@ export class ProfileDatabaseUtil {
       reputationScore,
       action: Actions.BLOCK,
       logMethod: PROFILE_MESSAGES.BLOCK_USER.LOG_METHOD,
-      message: PROFILE_MESSAGES.BLOCK_USER.MESSAGE(
-        dateFrom,
-        dateTo,
-        data.blockReason,
-      ),
+      message: PROFILE_MESSAGES.BLOCK_USER.MESSAGE(dateFrom, dateTo, data.blockReason),
     });
   }
 
-  async earlyUnblockUser(
-    data: AdminUnblockUserMessage,
-    reputationScore: number,
-  ): Promise<void> {
+  async earlyUnblockUser(data: AdminUnblockUserMessage, reputationScore: number): Promise<void> {
     await this.updateStatusHelper.manipulateBlock({
       userId: data.userId,
       updatingActivity: ActivityType.ACTIVE,
@@ -394,15 +334,10 @@ export class ProfileDatabaseUtil {
     });
   }
 
-  async updateProfile(
-    userId: string,
-    data: UpdateProfileRequestInput,
-  ): Promise<ProfileAdvancedOutput> {
+  async updateProfile(userId: string, data: UpdateProfileRequestInput): Promise<ProfileAdvancedOutput> {
     const mappedData = {
       ...data,
-      birthDate: data.birthDate
-        ? this.mapDateUtil.mapDateAndValidate(data.birthDate)
-        : undefined,
+      birthDate: data.birthDate ? this.mapDateUtil.mapDateAndValidate(data.birthDate) : undefined,
     };
     const profile = await this.db.profile.update({
       where: { userId },
@@ -436,9 +371,7 @@ export class ProfileDatabaseUtil {
     return where;
   }
 
-  buildProfileAdvancedQuery(
-    query: ProfilePaginationAdvancedInput,
-  ): ProfileWhereInput {
+  buildProfileAdvancedQuery(query: ProfilePaginationAdvancedInput): ProfileWhereInput {
     const where: ProfileWhereInput = {};
 
     if (query.search) {
@@ -463,10 +396,7 @@ export class ProfileDatabaseUtil {
       }
     }
 
-    if (
-      query.reputationFrom !== undefined ||
-      query.reputationTo !== undefined
-    ) {
+    if (query.reputationFrom !== undefined || query.reputationTo !== undefined) {
       where.reputationScore = {};
       if (query.reputationFrom !== undefined) {
         where.reputationScore.gte = query.reputationFrom;
@@ -479,10 +409,7 @@ export class ProfileDatabaseUtil {
     return where;
   }
 
-  buildReputationQuery(
-    profileId: string,
-    query: ReputationPaginationInput,
-  ): ReputationWhereInput {
+  buildReputationQuery(profileId: string, query: ReputationPaginationInput): ReputationWhereInput {
     const where: ReputationWhereInput = {};
 
     where.profileId = profileId;
@@ -498,10 +425,7 @@ export class ProfileDatabaseUtil {
     return where;
   }
 
-  buildActivityQuery(
-    profileId: string,
-    query: ActivityPaginationInput,
-  ): ProfileActivityWhereInput {
+  buildActivityQuery(profileId: string, query: ActivityPaginationInput): ProfileActivityWhereInput {
     const where: ProfileActivityWhereInput = {};
 
     where.profileId = profileId;

@@ -19,30 +19,13 @@ export class ProfileActivityFeatureService implements ActivityServiceContract {
 
   async GetMyLogs(data: GetMyActivityInput): Promise<PaginatedActivityOutput> {
     const payload = await this.validate.Validate(data.validation);
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-id',
-      payload.id,
-    );
-    return await this.dbUtil.getActivityPaginatedLogs(
-      profile.id,
-      data.pagination,
-    );
+    const profile = await this.validationUtil.checkUserExisting('by-id', payload.id);
+    return await this.dbUtil.getActivityPaginatedLogs(profile.id, data.pagination);
   }
 
-  async GetActivityByNickname(
-    data: GetActivityByNicknameInput,
-  ): Promise<PaginatedActivityOutput> {
-    await this.validate.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-      Roles.MODERATOR,
-    ]);
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-nickname',
-      data.nickname,
-    );
-    return await this.dbUtil.getActivityPaginatedLogs(
-      profile.id,
-      data.pagination,
-    );
+  async GetActivityByNickname(data: GetActivityByNicknameInput): Promise<PaginatedActivityOutput> {
+    await this.validate.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR]);
+    const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname);
+    return await this.dbUtil.getActivityPaginatedLogs(profile.id, data.pagination);
   }
 }

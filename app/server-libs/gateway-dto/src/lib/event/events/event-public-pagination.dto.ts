@@ -5,10 +5,7 @@ import { EventPlaces } from '../../decorators/event/event-places.decorator.js';
 import { EventTags } from '../../decorators/event/event-tags.decorator.js';
 import { BasePaginationDto } from '../../shared/pagination-base.dto.js';
 
-export class EventPublicPaginationDto
-  extends BasePaginationDto
-  implements EventPublicPaginationSharedInput
-{
+export class EventPublicPaginationDto extends BasePaginationDto implements EventPublicPaginationSharedInput {
   @EventDate(false)
   dateFrom?: Date;
 

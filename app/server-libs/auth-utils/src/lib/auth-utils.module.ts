@@ -10,14 +10,7 @@ import { AuthPasswordUtil } from './utils/password.util';
 import { AuthTokenUtil } from './utils/token.util';
 import { AuthValidateUtil } from './utils/validate.util';
 
-const UTILS = [
-  AuthDatabaseUtil,
-  AuthMessagesUtil,
-  AuthPasswordUtil,
-  AuthValidateUtil,
-  AuthTokenUtil,
-  AuthMapUtil,
-];
+const UTILS = [AuthDatabaseUtil, AuthMessagesUtil, AuthPasswordUtil, AuthValidateUtil, AuthTokenUtil, AuthMapUtil];
 
 const queues: string[] = ['profile', 'log', 'mail', 'event'];
 

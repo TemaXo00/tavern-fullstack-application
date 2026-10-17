@@ -1,23 +1,12 @@
-import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-} from '@nestjs/common';
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import type { ResponseType } from '@org/response-types';
 
 @Injectable()
-export class ResponseInterceptor<T> implements NestInterceptor<
-  T,
-  ResponseType<T>
-> {
-  intercept(
-    context: ExecutionContext,
-    next: CallHandler,
-  ): Observable<ResponseType<T>> {
+export class ResponseInterceptor<T> implements NestInterceptor<T, ResponseType<T>> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<ResponseType<T>> {
     const request = context.switchToHttp().getRequest();
     const startedAt = Date.now();
 

@@ -1,8 +1,4 @@
-import {
-  ActivityBaseOutput,
-  ActivityPaginationBaseOutput,
-  PaginatedActivityBaseOutput,
-} from '@org/base-types';
+import { ActivityBaseOutput, ActivityPaginationBaseOutput, PaginatedActivityBaseOutput } from '@org/base-types';
 
 export type ActivityPaginationOutput = ActivityPaginationBaseOutput;
 export type ActivityOutput = ActivityBaseOutput;

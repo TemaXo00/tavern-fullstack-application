@@ -22,9 +22,7 @@ interface IDELETEProtectedMethodOptions {
 
 type IDELETEMethodOptions = Omit<IDELETEProtectedMethodOptions, 'roles'>;
 
-export const DELETEMethod = (
-  options: IDELETEMethodOptions,
-): MethodDecorator => {
+export const DELETEMethod = (options: IDELETEMethodOptions): MethodDecorator => {
   return applyDecorators(
     ApiOperation({
       summary: options.summary,
@@ -43,9 +41,7 @@ export const DELETEMethod = (
   );
 };
 
-export const DELETEProtectedMethod = (
-  options: IDELETEProtectedMethodOptions,
-): MethodDecorator => {
+export const DELETEProtectedMethod = (options: IDELETEProtectedMethodOptions): MethodDecorator => {
   return applyDecorators(
     ApiOperation({
       summary: options.summary,

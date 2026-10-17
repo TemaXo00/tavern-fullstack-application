@@ -17,10 +17,7 @@ export type EventPrivatePaginationSharedInput = Replace<
   }
 >;
 export type CreateEventSharedInput = CreateEventBaseInput;
-export type SwitchEventOrganizerSharedInput = Omit<
-  SwitchEventOrganizerBaseInput,
-  'slug'
->;
+export type SwitchEventOrganizerSharedInput = Omit<SwitchEventOrganizerBaseInput, 'slug'>;
 export type UpdateEventDataSharedInput = Omit<UpdateEventDataBaseInput, 'slug'>;
 export interface DeleteOtherEventSharedInput {
   message: string;

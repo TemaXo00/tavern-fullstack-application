@@ -15,12 +15,8 @@ export function BlockReason(): PropertyDecorator {
     }),
     IsNotEmpty({ message: AUTH_MESSAGES.BLOCK_REASON_VALIDATION.NOT_EMPTY }),
     IsString({ message: AUTH_MESSAGES.BLOCK_REASON_VALIDATION.TYPE }),
-    Length(
-      AUTH_CONFIG.BLOCK_REASON.MIN_LENGTH,
-      AUTH_CONFIG.BLOCK_REASON.MAX_LENGTH,
-      {
-        message: AUTH_MESSAGES.BLOCK_REASON_VALIDATION.LENGTH,
-      },
-    ),
+    Length(AUTH_CONFIG.BLOCK_REASON.MIN_LENGTH, AUTH_CONFIG.BLOCK_REASON.MAX_LENGTH, {
+      message: AUTH_MESSAGES.BLOCK_REASON_VALIDATION.LENGTH,
+    }),
   );
 }

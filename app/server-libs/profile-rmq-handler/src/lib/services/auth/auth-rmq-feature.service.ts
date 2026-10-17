@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ProfileDatabaseUtil, ProfileValidationUtil } from '@org/profile-utils';
-import {
-  AUTHORIZATION_MESSAGES,
-  AuthRegisteredMessage,
-} from '@org/rmq-messages';
+import { AUTHORIZATION_MESSAGES, AuthRegisteredMessage } from '@org/rmq-messages';
 import { RmqLoggerUtil } from '@org/shared-utils';
 import { PROFILE_MESSAGES } from '@org/validation-messages';
 

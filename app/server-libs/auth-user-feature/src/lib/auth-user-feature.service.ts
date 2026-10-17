@@ -1,17 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthValidateService } from '@org/auth-authorization-core';
-import {
-  AuthCoreCacheUtil,
-  AuthCoreDatabaseUtil,
-  AuthCoreValidateUtil,
-} from '@org/auth-authorization-utils';
-import {
-  AuthDatabaseUtil,
-  AuthMapUtil,
-  AuthMessagesUtil,
-  AuthPasswordUtil,
-  AuthValidateUtil,
-} from '@org/auth-utils';
+import { AuthCoreCacheUtil, AuthCoreDatabaseUtil, AuthCoreValidateUtil } from '@org/auth-authorization-utils';
+import { AuthDatabaseUtil, AuthMapUtil, AuthMessagesUtil, AuthPasswordUtil, AuthValidateUtil } from '@org/auth-utils';
 import { GRPC_TO_ROLE, Roles } from '@org/enums';
 import {
   UserDeleteInput,
@@ -46,10 +36,7 @@ export class AuthUserFeatureService implements UserServiceContract {
   ) {}
 
   async GetAllUsers(data: GetAllUsersInput): Promise<PaginatedUserOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-      Roles.MODERATOR,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR]);
     const response = await this.dbUtil.getPaginatedUsers(data.pagination);
     this.messagesUtil.sendAdminCheckUsers({
       adminId: payload.id,
@@ -59,10 +46,7 @@ export class AuthUserFeatureService implements UserServiceContract {
   }
 
   async GetUserById(data: GetUserByIdInput): Promise<UserOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-      Roles.MODERATOR,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR]);
     const user = await this.validateUtil.validateUserExists(data.id);
     this.messagesUtil.sendAdminGetUser({
       adminId: payload.id,
@@ -72,29 +56,14 @@ export class AuthUserFeatureService implements UserServiceContract {
   }
 
   async BlockUser(data: BlockUserInput): Promise<UserOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-      Roles.MODERATOR,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR]);
     const user = await this.validateUtil.validateUserExists(data.id);
     const blockedUntil = new Date(data.blockedUntil);
     this.validateUtil.validateBlockDate(blockedUntil);
-    this.validateUtil.validateUserCanChangeStatus(
-      GRPC_TO_ROLE[payload.role],
-      user.role as Roles,
-    );
-    await this.validateCoreUtil.validateUserBlock(
-      user.id,
-      user.isBlocked,
-      user.blockedUntil,
-      user.blockReason,
-    );
+    this.validateUtil.validateUserCanChangeStatus(GRPC_TO_ROLE[payload.role], user.role as Roles);
+    await this.validateCoreUtil.validateUserBlock(user.id, user.isBlocked, user.blockedUntil, user.blockReason);
     await this.cacheUtil.delAllPayloads(user.id);
-    const blockedUser = await this.dbUtil.blockUser(
-      user.id,
-      blockedUntil,
-      data.blockReason,
-    );
+    const blockedUser = await this.dbUtil.blockUser(user.id, blockedUntil, data.blockReason);
     this.messagesUtil.sendAdminBlockUser({
       adminId: payload.id,
       userId: user.id,
@@ -106,15 +75,9 @@ export class AuthUserFeatureService implements UserServiceContract {
   }
 
   async UnblockUser(data: UnblockUserInput): Promise<UserOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-      Roles.MODERATOR,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR]);
     const user = await this.validateUtil.validateUserExists(data.id);
-    this.validateUtil.validateUserCanChangeStatus(
-      GRPC_TO_ROLE[payload.role],
-      user.role as Roles,
-    );
+    this.validateUtil.validateUserCanChangeStatus(GRPC_TO_ROLE[payload.role], user.role as Roles);
     this.validateUtil.validateUserNotBlocked(user.isBlocked);
     const unblockedUser = await this.dbCoreUtil.unblockUser(user.id);
     await this.cacheUtil.delAllPayloads(user.id);
@@ -126,14 +89,9 @@ export class AuthUserFeatureService implements UserServiceContract {
   }
 
   async PromoteToModerator(data: PromoteToModeratorInput): Promise<UserOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN]);
     await this.validateUtil.validateUserCanBePromoted(data.id);
-    const newModerator = await this.dbUtil.changeUserRole(
-      data.id,
-      Roles.MODERATOR,
-    );
+    const newModerator = await this.dbUtil.changeUserRole(data.id, Roles.MODERATOR);
     await this.cacheUtil.delAllPayloads(newModerator.id);
     this.messagesUtil.sendAdminPromoteUser({
       adminId: payload.id,
@@ -142,12 +100,8 @@ export class AuthUserFeatureService implements UserServiceContract {
     return this.mapUtil.mapUser(newModerator);
   }
 
-  async DemoteFromModerator(
-    data: DemoteFromModeratorInput,
-  ): Promise<UserOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-    ]);
+  async DemoteFromModerator(data: DemoteFromModeratorInput): Promise<UserOutput> {
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN]);
     const user = await this.validateUtil.validateUserExists(data.id);
     this.validateUtil.validateUserModerator(user.role as Roles);
     const demotedUser = await this.dbUtil.changeUserRole(data.id, Roles.USER);
@@ -164,10 +118,7 @@ export class AuthUserFeatureService implements UserServiceContract {
     const user = await this.validateUtil.validateUserExists(payload.id);
     await this.validateUtil.validateEmailNotExists(data.newEmail);
     await this.cacheUtil.delAllPayloads(user.id);
-    const updatedUser = await this.dbUtil.updateUserEmail(
-      user.id,
-      data.newEmail,
-    );
+    const updatedUser = await this.dbUtil.updateUserEmail(user.id, data.newEmail);
     this.messagesUtil.sendUserChangeEmail({
       userId: payload.id,
       session: data.validation.session,
@@ -179,17 +130,9 @@ export class AuthUserFeatureService implements UserServiceContract {
   async ChangePassword(data: ChangePasswordInput): Promise<UserOutput> {
     const payload = await this.validation.Validate(data.validation);
     const user = await this.validateUtil.validateUserExists(payload.id);
-    this.passwordUtil.validatePasswordInput(
-      data.newPassword,
-      data.newPasswordConfirmation,
-    );
-    await this.passwordUtil.validatePassword(
-      user.passwordHash,
-      data.oldPassword,
-    );
-    const hashedPassword = await this.passwordUtil.hashPassword(
-      data.newPassword,
-    );
+    this.passwordUtil.validatePasswordInput(data.newPassword, data.newPasswordConfirmation);
+    await this.passwordUtil.validatePassword(user.passwordHash, data.oldPassword);
+    const hashedPassword = await this.passwordUtil.hashPassword(data.newPassword);
     await this.dbUtil.updateUserPassword(user.email, hashedPassword);
     await this.dbCoreUtil.removeAllSessions(user.id);
     await this.cacheUtil.delAllPayloads(user.id);
@@ -210,9 +153,7 @@ export class AuthUserFeatureService implements UserServiceContract {
   }
 
   async ChangeUserToActive(data: ChangeUserToActiveInput): Promise<UserOutput> {
-    const payload = await this.validation.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-    ]);
+    const payload = await this.validation.validateWithRoles(data.validation, [Roles.ADMIN]);
     const user = await this.validateUtil.validateUserExists(data.id);
     const updatedUser = await this.dbUtil.setUserActive(user.id);
     await this.cacheUtil.delAllPayloads(user.id);

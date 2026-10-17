@@ -5,7 +5,7 @@ export interface EventPublicPaginationBaseOutput extends PaginationBaseOutput {
   dateTo?: Date;
   leftPlacesFrom?: number;
   leftPlacesTo?: number;
-  tags: string[];
+  tags?: string[];
 }
 
 export interface EventPrivatePaginationBaseOutput extends EventPublicPaginationBaseOutput {
@@ -16,13 +16,13 @@ export interface EventPrivatePaginationBaseOutput extends EventPublicPaginationB
 
 export interface EventUserShortBaseOutput {
   nickname: string;
-  avatarId?: string;
+  avatarId: string | null;
 }
 
 export interface EventTagShortBaseOutput {
   slug: string;
   name: string;
-  color?: string;
+  color: string | null;
 }
 
 export interface EventListBaseOutput {

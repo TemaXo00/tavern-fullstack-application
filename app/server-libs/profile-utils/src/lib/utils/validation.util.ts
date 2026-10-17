@@ -12,10 +12,7 @@ import { SearchUserHelperType } from './helpers/types.helper';
 export class ProfileValidationUtil {
   constructor(private readonly db: ProfileDatabaseUtil) {}
 
-  async checkUserExisting(
-    type: SearchUserHelperType,
-    input: string,
-  ): Promise<Profile> {
+  async checkUserExisting(type: SearchUserHelperType, input: string): Promise<Profile> {
     const profile = await this.db.getProfile(type, input);
 
     if (!profile) {
@@ -28,10 +25,7 @@ export class ProfileValidationUtil {
     return profile;
   }
 
-  async checkUniqueNickname(
-    nickname: string,
-    currentUserId?: string,
-  ): Promise<void> {
+  async checkUniqueNickname(nickname: string, currentUserId?: string): Promise<void> {
     const existing = await this.db.getProfile('by-nickname', nickname);
     if (existing && existing.userId !== currentUserId) {
       throw new RpcException({

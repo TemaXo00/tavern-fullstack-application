@@ -23,10 +23,7 @@ export interface AuthForgotPasswordMessage {
   tokenHash: string;
 }
 
-export type AuthMailForgotPassword = Omit<
-  AuthForgotPasswordMessage,
-  'tokenHash'
->;
+export type AuthMailForgotPassword = Omit<AuthForgotPasswordMessage, 'tokenHash'>;
 
 export type AuthLogForgotPassword = Omit<AuthForgotPasswordMessage, 'token'>;
 

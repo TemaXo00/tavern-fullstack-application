@@ -65,11 +65,7 @@ export class AuthCoreAuthorizeUtil {
     userSession: SessionInput,
     checkActive?: boolean,
   ): Promise<User> {
-    const { user, session } =
-      await this.validationUtil.validateUserWithSessionExists(
-        userId,
-        sessionId,
-      );
+    const { user, session } = await this.validationUtil.validateUserWithSessionExists(userId, sessionId);
     const validateSession: SessionInput = {
       ip: session.ip,
       device: session.device,
@@ -82,12 +78,7 @@ export class AuthCoreAuthorizeUtil {
       await this.jwtUtil.validateRefreshToken(session.refreshTokenHash, token);
     }
     this.validationUtil.validateSessionsSimilar(userSession, validateSession);
-    await this.validationUtil.validateUserBlock(
-      user.id,
-      user.isBlocked,
-      user.blockedUntil,
-      user.blockReason,
-    );
+    await this.validationUtil.validateUserBlock(user.id, user.isBlocked, user.blockedUntil, user.blockReason);
     if (checkActive) {
       await this.validationUtil.validateUserActive(user.id, user.isActive);
     }

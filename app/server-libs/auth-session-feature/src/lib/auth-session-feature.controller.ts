@@ -20,9 +20,7 @@ export class AuthSessionFeatureController implements SessionServiceContract {
   constructor(private readonly service: AuthSessionFeatureService) {}
 
   @GrpcMethod('SessionService', 'GetSessionsByUser')
-  async GetSessionsByUser(
-    data: AllSessionsByUserInput,
-  ): Promise<AllSessionsOutput> {
+  async GetSessionsByUser(data: AllSessionsByUserInput): Promise<AllSessionsOutput> {
     return await this.service.GetSessionsByUser(data);
   }
 
@@ -32,16 +30,12 @@ export class AuthSessionFeatureController implements SessionServiceContract {
   }
 
   @GrpcMethod('SessionService', 'ChangeSessionLocalName')
-  async ChangeSessionLocalName(
-    data: SessionLocalNameInput,
-  ): Promise<SessionOutput> {
+  async ChangeSessionLocalName(data: SessionLocalNameInput): Promise<SessionOutput> {
     return await this.service.ChangeSessionLocalName(data);
   }
 
   @GrpcMethod('SessionService', 'DeleteSessionById')
-  async DeleteSessionById(
-    data: DeleteSessionByIdInput,
-  ): Promise<SessionOutput> {
+  async DeleteSessionById(data: DeleteSessionByIdInput): Promise<SessionOutput> {
     return await this.service.DeleteSessionById(data);
   }
 

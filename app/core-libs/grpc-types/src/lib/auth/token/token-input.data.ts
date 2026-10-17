@@ -1,8 +1,4 @@
-import {
-  GetTokensBaseInput,
-  TokenByIdBaseInput,
-  TokenPaginationBaseInput,
-} from '@org/base-types';
+import { GetTokensBaseInput, TokenByIdBaseInput, TokenPaginationBaseInput } from '@org/base-types';
 
 import { Protected } from '../../utils/protected.js';
 

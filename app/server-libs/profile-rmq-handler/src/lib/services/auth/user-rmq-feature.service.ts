@@ -29,35 +29,19 @@ export class UserRmqFeatureService {
   ) {}
 
   async handleUserBlock(data: AdminBlockUserProfile): Promise<void> {
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-id',
-      data.userId,
-    );
-    await this.dbUtil.blockUser(
-      data,
-      this.reputationUtil.getScore(Actions.BLOCK),
-    );
+    const profile = await this.validationUtil.checkUserExisting('by-id', data.userId);
+    await this.dbUtil.blockUser(data, this.reputationUtil.getScore(Actions.BLOCK));
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
       PROFILE_MESSAGES.BLOCK_USER.LOG_METHOD,
       USER_MESSAGES.BLOCK,
-      PROFILE_MESSAGES.BLOCK_USER.MESSAGE(
-        data.blockedFrom,
-        data.blockedUntil,
-        data.blockReason,
-      ),
+      PROFILE_MESSAGES.BLOCK_USER.MESSAGE(data.blockedFrom, data.blockedUntil, data.blockReason),
     );
   }
 
   async handleUserEarlyUnblock(data: AdminUnblockUserMessage): Promise<void> {
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-id',
-      data.userId,
-    );
-    await this.dbUtil.earlyUnblockUser(
-      data,
-      this.reputationUtil.getScore(Actions.EARLY_UNBLOCK),
-    );
+    const profile = await this.validationUtil.checkUserExisting('by-id', data.userId);
+    await this.dbUtil.earlyUnblockUser(data, this.reputationUtil.getScore(Actions.EARLY_UNBLOCK));
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
       PROFILE_MESSAGES.EARLY_UNBLOCK.LOG_METHOD,
@@ -67,10 +51,7 @@ export class UserRmqFeatureService {
   }
 
   async handleUserInactive(data: UserSetInactiveMessage): Promise<void> {
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-id',
-      data.userId,
-    );
+    const profile = await this.validationUtil.checkUserExisting('by-id', data.userId);
     await this.dbUtil.deactivateUser(data);
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
@@ -81,10 +62,7 @@ export class UserRmqFeatureService {
   }
 
   async handleUserActive(data: AdminSetUserActiveMessage): Promise<void> {
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-id',
-      data.userId,
-    );
+    const profile = await this.validationUtil.checkUserExisting('by-id', data.userId);
     await this.dbUtil.activateUser(data);
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
@@ -95,10 +73,7 @@ export class UserRmqFeatureService {
   }
 
   async handleUserChangeEmail(data: UserChangeEmailMessage): Promise<void> {
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-id',
-      data.userId,
-    );
+    const profile = await this.validationUtil.checkUserExisting('by-id', data.userId);
     await this.dbUtil.updateEmail(data.userId, data.newEmail);
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(
@@ -109,10 +84,7 @@ export class UserRmqFeatureService {
   }
 
   async handleUserDeleted(data: DeleteUserMessage): Promise<void> {
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-id',
-      data.userId,
-    );
+    const profile = await this.validationUtil.checkUserExisting('by-id', data.userId);
     await this.dbUtil.deleteProfile(data.userId);
     await this.cacheUtil.deleteCache(profile.nickname);
     this.logUtil.logSuccess(

@@ -1,7 +1,4 @@
-import {
-  ReputationBaseOutput,
-  ReputationPaginationBaseOutput,
-} from '@org/base-types';
+import { ReputationBaseOutput, ReputationPaginationBaseOutput } from '@org/base-types';
 import { Actions } from '@org/enums';
 
 import { Replace } from '../../utils/replace.js';

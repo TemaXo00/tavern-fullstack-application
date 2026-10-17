@@ -41,9 +41,7 @@ export const PUTMethod = (options: IPUTMethodOptions): MethodDecorator => {
   );
 };
 
-export const PUTProtectedMethod = (
-  options: IPUTProtectedMethodOptions,
-): MethodDecorator => {
+export const PUTProtectedMethod = (options: IPUTProtectedMethodOptions): MethodDecorator => {
   return applyDecorators(
     ApiOperation({
       summary: options.summary,

@@ -1,10 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  ACTIONS_TO_GRPC,
-  ACTIVITY_TO_GRPC,
-  GRPC_TO_ACTIONS,
-  GRPC_TO_ACTIVITY,
-} from '@org/enums';
+import { ACTIONS_TO_GRPC, ACTIVITY_TO_GRPC, GRPC_TO_ACTIONS, GRPC_TO_ACTIVITY } from '@org/enums';
 import {
   ActivityOutput,
   ActivityPaginationInput,
@@ -41,9 +36,7 @@ export class ProfileGatewayMapService {
     };
   }
 
-  mapProfileAdvancedOutput(
-    response: ProfileAdvancedOutput,
-  ): ProfileAdvancedSharedOutput {
+  mapProfileAdvancedOutput(response: ProfileAdvancedOutput): ProfileAdvancedSharedOutput {
     return {
       ...response,
       currentActivity: GRPC_TO_ACTIVITY[response.currentActivity],
@@ -62,47 +55,31 @@ export class ProfileGatewayMapService {
     });
   }
 
-  mapPaginationAdvanced(
-    pagination: ProfilePaginationAdvancedOutput,
-  ): ProfilePaginationAdvancedSharedOutput {
+  mapPaginationAdvanced(pagination: ProfilePaginationAdvancedOutput): ProfilePaginationAdvancedSharedOutput {
     return {
       ...pagination,
-      currentActivity: pagination.currentActivity
-        ? GRPC_TO_ACTIVITY[pagination.currentActivity]
-        : undefined,
+      currentActivity: pagination.currentActivity ? GRPC_TO_ACTIVITY[pagination.currentActivity] : undefined,
     };
   }
 
-  mapPaginationAdvancedInput(
-    pagination: ProfilePaginationAdvancedSharedInput,
-  ): ProfilePaginationAdvancedInput {
+  mapPaginationAdvancedInput(pagination: ProfilePaginationAdvancedSharedInput): ProfilePaginationAdvancedInput {
     return {
       ...pagination,
-      currentActivity: pagination.currentActivity
-        ? ACTIVITY_TO_GRPC[pagination.currentActivity]
-        : undefined,
+      currentActivity: pagination.currentActivity ? ACTIVITY_TO_GRPC[pagination.currentActivity] : undefined,
     };
   }
 
-  mapActivityPaginationInput(
-    pagination: ActivityPaginationSharedInput,
-  ): ActivityPaginationInput {
+  mapActivityPaginationInput(pagination: ActivityPaginationSharedInput): ActivityPaginationInput {
     return {
       ...pagination,
-      activityType: pagination.activityType
-        ? ACTIVITY_TO_GRPC[pagination.activityType]
-        : undefined,
+      activityType: pagination.activityType ? ACTIVITY_TO_GRPC[pagination.activityType] : undefined,
     };
   }
 
-  mapActivityPaginationOutput(
-    paginaton: ActivityPaginationOutput,
-  ): ActivityPaginationSharedOutput {
+  mapActivityPaginationOutput(paginaton: ActivityPaginationOutput): ActivityPaginationSharedOutput {
     return {
       ...paginaton,
-      activityType: paginaton.activityType
-        ? GRPC_TO_ACTIVITY[paginaton.activityType]
-        : undefined,
+      activityType: paginaton.activityType ? GRPC_TO_ACTIVITY[paginaton.activityType] : undefined,
     };
   }
 
@@ -118,25 +95,17 @@ export class ProfileGatewayMapService {
     });
   }
 
-  mapReputationPaginationInput(
-    pagination: ReputationPaginationSharedInput,
-  ): ReputationPaginationInput {
+  mapReputationPaginationInput(pagination: ReputationPaginationSharedInput): ReputationPaginationInput {
     return {
       ...pagination,
-      action: pagination.action
-        ? ACTIONS_TO_GRPC[pagination.action]
-        : undefined,
+      action: pagination.action ? ACTIONS_TO_GRPC[pagination.action] : undefined,
     };
   }
 
-  mapReputationPaginationOutput(
-    pagination: ReputationPaginationOutput,
-  ): ReputationPaginationSharedOutput {
+  mapReputationPaginationOutput(pagination: ReputationPaginationOutput): ReputationPaginationSharedOutput {
     return {
       ...pagination,
-      action: pagination.action
-        ? GRPC_TO_ACTIONS[pagination.action]
-        : undefined,
+      action: pagination.action ? GRPC_TO_ACTIONS[pagination.action] : undefined,
     };
   }
 

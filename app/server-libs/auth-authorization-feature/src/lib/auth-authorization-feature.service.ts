@@ -7,13 +7,7 @@ import {
   AuthCoreJWTUtil,
   AuthCoreValidateUtil,
 } from '@org/auth-authorization-utils';
-import {
-  AuthDatabaseUtil,
-  AuthMessagesUtil,
-  AuthPasswordUtil,
-  AuthTokenUtil,
-  AuthValidateUtil,
-} from '@org/auth-utils';
+import { AuthDatabaseUtil, AuthMessagesUtil, AuthPasswordUtil, AuthTokenUtil, AuthValidateUtil } from '@org/auth-utils';
 import { ROLE_TO_GRPC } from '@org/enums';
 import {
   type AuthOutput,
@@ -48,16 +42,10 @@ export class AuthAuthorizationFeatureService implements AuthServiceContract {
 
   async Register(data: RegisterInput): Promise<AuthOutput> {
     await this.validationUtil.validateRegisterEmailExists(data.email);
-    this.passwordUtil.validatePasswordInput(
-      data.password,
-      data.passwordConfirmation,
-    );
+    this.passwordUtil.validatePasswordInput(data.password, data.passwordConfirmation);
     const hashedPassword = await this.passwordUtil.hashPassword(data.password);
     const newUser = await this.dbUtil.registerUser(data.email, hashedPassword);
-    const { accessToken, refreshToken } = await this.authUtil.authorizeNew(
-      newUser,
-      data.session,
-    );
+    const { accessToken, refreshToken } = await this.authUtil.authorizeNew(newUser, data.session);
     this.messagesUtil.sendUserRegisterMessage({
       id: newUser.id,
       email: data.email,
@@ -70,9 +58,7 @@ export class AuthAuthorizationFeatureService implements AuthServiceContract {
   }
 
   async Login(data: LoginInput): Promise<AuthOutput> {
-    const existingUser = await this.validationUtil.validateEmailFound(
-      data.email,
-    );
+    const existingUser = await this.validationUtil.validateEmailFound(data.email);
     await this.validateCoreUtil.validateUserBlock(
       existingUser.id,
       existingUser.isBlocked,
@@ -82,18 +68,9 @@ export class AuthAuthorizationFeatureService implements AuthServiceContract {
     if (existingUser.isBlocked) {
       this.messagesUtil.sendUserUnblockedMessage({ userId: existingUser.id });
     }
-    await this.validateCoreUtil.validateUserActive(
-      existingUser.id,
-      existingUser.isActive,
-    );
-    await this.passwordUtil.validatePassword(
-      existingUser.passwordHash,
-      data.password,
-    );
-    const { accessToken, refreshToken } = await this.authUtil.authorizeNew(
-      existingUser,
-      data.session,
-    );
+    await this.validateCoreUtil.validateUserActive(existingUser.id, existingUser.isActive);
+    await this.passwordUtil.validatePassword(existingUser.passwordHash, data.password);
+    const { accessToken, refreshToken } = await this.authUtil.authorizeNew(existingUser, data.session);
     this.messagesUtil.sendUserLoginMessage({
       id: existingUser.id,
       email: existingUser.email,
@@ -112,13 +89,7 @@ export class AuthAuthorizationFeatureService implements AuthServiceContract {
   async Logout(data: RefreshInput): Promise<Empty> {
     const token = this.jwtUtil.verifyToken(data.refreshToken);
     await this.cacheUtil.delPayload(token.id, token.sessionId);
-    await this.authUtil.validateSession(
-      token.id,
-      token.sessionId,
-      data.refreshToken,
-      'refresh',
-      data.session,
-    );
+    await this.authUtil.validateSession(token.id, token.sessionId, data.refreshToken, 'refresh', data.session);
     await this.dbUtil.removeSession(token.sessionId);
     this.messagesUtil.sendUserLogoutMessage({
       userId: token.id,
@@ -150,15 +121,9 @@ export class AuthAuthorizationFeatureService implements AuthServiceContract {
   }
 
   async ResetPassword(data: ResetPasswordInput): Promise<Empty> {
-    const token = await this.validationUtil.validateTokenFound(
-      data.email,
-      'email',
-    );
+    const token = await this.validationUtil.validateTokenFound(data.email, 'email');
     const user = await this.validationUtil.validateEmailFound(data.email);
-    this.passwordUtil.validatePasswordInput(
-      data.newPassword,
-      data.newPasswordConfirmation,
-    );
+    this.passwordUtil.validatePasswordInput(data.newPassword, data.newPasswordConfirmation);
     await this.tokenUtil.validateTokenHash(data.token, token.tokenHash);
     await this.dbUtil.updateUserPassword(data.email, data.newPassword);
     await this.dbUtil.updateTokenState(token.id, 'USED');
@@ -173,17 +138,8 @@ export class AuthAuthorizationFeatureService implements AuthServiceContract {
 
   async GetMe(data: ValidateInput): Promise<UserEntity> {
     const payload = this.jwtUtil.validateAccessToken(data.accessToken);
-    const { user, session } =
-      await this.validateCoreUtil.validateUserWithSessionExists(
-        payload.id,
-        payload.sessionId,
-      );
-    await this.validateCoreUtil.validateUserBlock(
-      user.id,
-      user.isBlocked,
-      user.blockedUntil,
-      user.blockReason,
-    );
+    const { user, session } = await this.validateCoreUtil.validateUserWithSessionExists(payload.id, payload.sessionId);
+    await this.validateCoreUtil.validateUserBlock(user.id, user.isBlocked, user.blockedUntil, user.blockReason);
     await this.validateCoreUtil.validateUserActive(user.id, user.isActive);
     const entity = {
       id: user.id,

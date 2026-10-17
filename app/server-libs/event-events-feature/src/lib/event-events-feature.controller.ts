@@ -30,37 +30,27 @@ export class EventEventsFeatureController implements EventEventsServiceContract 
   constructor(private readonly service: EventEventsFeatureService) {}
 
   @GrpcMethod('EventService', 'GetPublicEvents')
-  async GetPublicEvents(
-    data: PaginatedPublicEventsInput,
-  ): Promise<PaginatedPublicEventsOutput> {
+  async GetPublicEvents(data: PaginatedPublicEventsInput): Promise<PaginatedPublicEventsOutput> {
     return await this.service.GetPublicEvents(data);
   }
 
   @GrpcMethod('EventService', 'GetPrivateEvents')
-  async GetPrivateEvents(
-    data: PaginatedPrivateEventsInput,
-  ): Promise<PaginatedPrivateEventsOutput> {
+  async GetPrivateEvents(data: PaginatedPrivateEventsInput): Promise<PaginatedPrivateEventsOutput> {
     return await this.service.GetPrivateEvents(data);
   }
 
   @GrpcMethod('EventService', 'GetMyEvents')
-  async GetMyEvents(
-    data: PaginatedPrivateEventsInput,
-  ): Promise<PaginatedPrivateEventsOutput> {
+  async GetMyEvents(data: PaginatedPrivateEventsInput): Promise<PaginatedPrivateEventsOutput> {
     return await this.service.GetMyEvents(data);
   }
 
   @GrpcMethod('EventService', 'GetPublicUserEvents')
-  async GetPublicUserEvents(
-    data: GetPublicUserEventsInput,
-  ): Promise<PaginatedPublicEventsOutput> {
+  async GetPublicUserEvents(data: GetPublicUserEventsInput): Promise<PaginatedPublicEventsOutput> {
     return await this.service.GetPublicUserEvents(data);
   }
 
   @GrpcMethod('EventService', 'GetPrivateUserEvents')
-  async GetPrivateUserEvents(
-    data: GetPrivateUserEventsInput,
-  ): Promise<PaginatedPrivateEventsOutput> {
+  async GetPrivateUserEvents(data: GetPrivateUserEventsInput): Promise<PaginatedPrivateEventsOutput> {
     return await this.service.GetPrivateUserEvents(data);
   }
 
@@ -70,9 +60,7 @@ export class EventEventsFeatureController implements EventEventsServiceContract 
   }
 
   @GrpcMethod('EventService', 'GetPrivateEventBySlug')
-  async GetPrivateEventBySlug(
-    data: GetPrivateEventBySlug,
-  ): Promise<EventOutput> {
+  async GetPrivateEventBySlug(data: GetPrivateEventBySlug): Promise<EventOutput> {
     return await this.service.GetPrivateEventBySlug(data);
   }
 
@@ -102,16 +90,12 @@ export class EventEventsFeatureController implements EventEventsServiceContract 
   }
 
   @GrpcMethod('EventService', 'SwitchOrganizer')
-  async SwitchOrganizer(
-    data: SwitchOrganizerInput,
-  ): Promise<EventMethodsOutput> {
+  async SwitchOrganizer(data: SwitchOrganizerInput): Promise<EventMethodsOutput> {
     return await this.service.SwitchOrganizer(data);
   }
 
   @GrpcMethod('EventService', 'SwitchOtherEventOrganizer')
-  async SwitchOtherEventOrganizer(
-    data: SwitchOrganizerInput,
-  ): Promise<EventMethodsOutput> {
+  async SwitchOtherEventOrganizer(data: SwitchOrganizerInput): Promise<EventMethodsOutput> {
     return await this.service.SwitchOtherEventOrganizer(data);
   }
 
@@ -126,9 +110,7 @@ export class EventEventsFeatureController implements EventEventsServiceContract 
   }
 
   @GrpcMethod('EventService', 'DeleteOtherEvent')
-  async DeleteOtherEvent(
-    data: DeleteOtherEventInput,
-  ): Promise<EventMethodsOutput> {
+  async DeleteOtherEvent(data: DeleteOtherEventInput): Promise<EventMethodsOutput> {
     return await this.service.DeleteOtherEvent(data);
   }
 }

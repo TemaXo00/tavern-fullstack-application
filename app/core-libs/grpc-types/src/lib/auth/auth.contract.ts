@@ -15,10 +15,7 @@ import {
   DeleteSessionByIdInput,
   SessionLocalNameInput,
 } from './session/session-input.data.js';
-import {
-  AllSessionsOutput,
-  SessionOutput,
-} from './session/session-output.data.js';
+import { AllSessionsOutput, SessionOutput } from './session/session-output.data.js';
 import {
   DeleteAllNotActiveTokensInput,
   DeleteTokenInput,
@@ -86,7 +83,6 @@ export interface UserServiceContract {
 }
 
 export type AuthServiceObservableContract = ToObservable<AuthServiceContract>;
-export type SessionServiceObservableContract =
-  ToObservable<SessionServiceContract>;
+export type SessionServiceObservableContract = ToObservable<SessionServiceContract>;
 export type TokenServiceObservableContract = ToObservable<TokenServiceContract>;
 export type UserServiceObservableContract = ToObservable<UserServiceContract>;

@@ -6,10 +6,7 @@ import { BasePaginationDto } from '../../shared/pagination-base.dto.js';
 import type { Roles } from '@org/enums';
 import type { UserPaginationSharedInput } from '@org/shared-types';
 
-export class UserPaginationDto
-  extends BasePaginationDto
-  implements UserPaginationSharedInput
-{
+export class UserPaginationDto extends BasePaginationDto implements UserPaginationSharedInput {
   @IsActive({ required: false })
   isActive?: boolean;
 

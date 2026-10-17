@@ -23,33 +23,23 @@ import {
 
 @Injectable()
 export class EventEventsFeatureService implements EventEventsServiceContract {
-  async GetPublicEvents(
-    data: PaginatedPublicEventsInput,
-  ): Promise<PaginatedPublicEventsOutput> {
+  async GetPublicEvents(data: PaginatedPublicEventsInput): Promise<PaginatedPublicEventsOutput> {
     throw new Error('Method not implemented.');
   }
 
-  async GetPrivateEvents(
-    data: PaginatedPrivateEventsInput,
-  ): Promise<PaginatedPrivateEventsOutput> {
+  async GetPrivateEvents(data: PaginatedPrivateEventsInput): Promise<PaginatedPrivateEventsOutput> {
     throw new Error('Method not implemented.');
   }
 
-  async GetMyEvents(
-    data: PaginatedPrivateEventsInput,
-  ): Promise<PaginatedPrivateEventsOutput> {
+  async GetMyEvents(data: PaginatedPrivateEventsInput): Promise<PaginatedPrivateEventsOutput> {
     throw new Error('Method not implemented.');
   }
 
-  async GetPublicUserEvents(
-    data: GetPublicUserEventsInput,
-  ): Promise<PaginatedPublicEventsOutput> {
+  async GetPublicUserEvents(data: GetPublicUserEventsInput): Promise<PaginatedPublicEventsOutput> {
     throw new Error('Method not implemented.');
   }
 
-  async GetPrivateUserEvents(
-    data: GetPrivateUserEventsInput,
-  ): Promise<PaginatedPrivateEventsOutput> {
+  async GetPrivateUserEvents(data: GetPrivateUserEventsInput): Promise<PaginatedPrivateEventsOutput> {
     throw new Error('Method not implemented.');
   }
 
@@ -57,9 +47,7 @@ export class EventEventsFeatureService implements EventEventsServiceContract {
     throw new Error('Method not implemented.');
   }
 
-  async GetPrivateEventBySlug(
-    data: GetPrivateEventBySlug,
-  ): Promise<EventOutput> {
+  async GetPrivateEventBySlug(data: GetPrivateEventBySlug): Promise<EventOutput> {
     throw new Error('Method not implemented.');
   }
 
@@ -83,15 +71,11 @@ export class EventEventsFeatureService implements EventEventsServiceContract {
     throw new Error('Method not implemented.');
   }
 
-  async SwitchOrganizer(
-    data: SwitchOrganizerInput,
-  ): Promise<EventMethodsOutput> {
+  async SwitchOrganizer(data: SwitchOrganizerInput): Promise<EventMethodsOutput> {
     throw new Error('Method not implemented.');
   }
 
-  async SwitchOtherEventOrganizer(
-    data: SwitchOrganizerInput,
-  ): Promise<EventMethodsOutput> {
+  async SwitchOtherEventOrganizer(data: SwitchOrganizerInput): Promise<EventMethodsOutput> {
     throw new Error('Method not implemented.');
   }
 
@@ -103,9 +87,7 @@ export class EventEventsFeatureService implements EventEventsServiceContract {
     throw new Error('Method not implemented.');
   }
 
-  async DeleteOtherEvent(
-    data: DeleteOtherEventInput,
-  ): Promise<EventMethodsOutput> {
+  async DeleteOtherEvent(data: DeleteOtherEventInput): Promise<EventMethodsOutput> {
     throw new Error('Method not implemented.');
   }
 }

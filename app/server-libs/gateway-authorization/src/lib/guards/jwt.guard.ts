@@ -1,10 +1,4 @@
-import {
-  ExecutionContext,
-  Inject,
-  Injectable,
-  OnModuleInit,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { ExecutionContext, Inject, Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ValidateInput, AuthServiceObservableContract } from '@org/grpc-types';
 import { AUTH_MESSAGES } from '@org/validation-messages';

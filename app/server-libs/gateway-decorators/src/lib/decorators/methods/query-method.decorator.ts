@@ -41,9 +41,7 @@ export const QUERYMethod = (options: IQUERYMethodOptions): MethodDecorator => {
   );
 };
 
-export const QUERYProtectedMethod = (
-  options: IQUERYProtectedMethodOptions,
-): MethodDecorator => {
+export const QUERYProtectedMethod = (options: IQUERYProtectedMethodOptions): MethodDecorator => {
   return applyDecorators(
     ApiOperation({
       summary: options.summary,

@@ -21,9 +21,7 @@ export class TagFeatureController implements EventTagServiceContract {
   constructor(private readonly service: TagFeatureService) {}
 
   @GrpcMethod('TagService', 'GetPaginatedTags')
-  async GetPaginatedTags(
-    data: GetPaginatedEventTagsInput,
-  ): Promise<PaginatedEventTagsOutput> {
+  async GetPaginatedTags(data: GetPaginatedEventTagsInput): Promise<PaginatedEventTagsOutput> {
     return await this.service.GetPaginatedTags(data);
   }
 

@@ -9,12 +9,7 @@ export default [
   ...nx.configs['flat/javascript'],
 
   {
-    ignores: [
-      '**/dist',
-      '**/build',
-      '**/coverage',
-      '**/vite.config.*.timestamp*',
-    ],
+    ignores: ['**/dist', '**/build', '**/coverage', '**/vite.config.*.timestamp*'],
   },
 
   {
@@ -41,13 +36,7 @@ export default [
       'import/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling', 'index'],
-            'type',
-          ],
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index'], 'type'],
           'newlines-between': 'always',
           alphabetize: {
             order: 'asc',

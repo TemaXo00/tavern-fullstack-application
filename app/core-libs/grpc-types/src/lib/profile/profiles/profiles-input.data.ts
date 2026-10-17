@@ -16,7 +16,6 @@ export type GetMeInput = Protected<null>;
 export type GetProfilesInput = GetProfilesBaseInput;
 export type GetProfilesAdvancedInput = Protected<GetProfilesAdvancedBaseInput>;
 export type GetProfileByNicknameInput = GetProfileByNicknameBaseInput;
-export type GetProfileByNicknameAdvancedInput =
-  Protected<GetProfileByNicknameBaseInput>;
+export type GetProfileByNicknameAdvancedInput = Protected<GetProfileByNicknameBaseInput>;
 export type UpdateProfileInput = Protected<UpdateProfileBaseInput>;
 export type UpdateProfileRequestInput = UpdateProfileBaseRequestInput;

@@ -51,9 +51,7 @@ export class AuthUserFeatureController implements UserServiceContract {
   }
 
   @GrpcMethod('UserService', 'DemoteFromModerator')
-  async DemoteFromModerator(
-    data: DemoteFromModeratorInput,
-  ): Promise<UserOutput> {
+  async DemoteFromModerator(data: DemoteFromModeratorInput): Promise<UserOutput> {
     return await this.service.DemoteFromModerator(data);
   }
 

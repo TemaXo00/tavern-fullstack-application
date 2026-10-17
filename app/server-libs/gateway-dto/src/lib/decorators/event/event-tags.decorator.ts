@@ -2,20 +2,10 @@ import { applyDecorators } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { EVENT_CONFIG } from '@org/validation-config';
 import { EVENT_MESSAGES } from '@org/validation-messages';
-import {
-  ArrayMaxSize,
-  ArrayMinSize,
-  ArrayUnique,
-  IsArray,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { ArrayMaxSize, ArrayMinSize, ArrayUnique, IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export function EventTags(required = true): PropertyDecorator {
-  const requiredDecorator = required
-    ? IsNotEmpty({ message: EVENT_MESSAGES.TAGS_VALIDATION.NOT_EMPTY })
-    : IsOptional();
+  const requiredDecorator = required ? IsNotEmpty({ message: EVENT_MESSAGES.TAGS_VALIDATION.NOT_EMPTY }) : IsOptional();
 
   return applyDecorators(
     ApiProperty({

@@ -41,9 +41,7 @@ export const GETMethod = (options: IGETMethodOptions): MethodDecorator => {
   );
 };
 
-export const GETProtectedMethod = (
-  options: IGETProtectedMethodOptions,
-): MethodDecorator => {
+export const GETProtectedMethod = (options: IGETProtectedMethodOptions): MethodDecorator => {
   return applyDecorators(
     ApiOperation({
       summary: options.summary,

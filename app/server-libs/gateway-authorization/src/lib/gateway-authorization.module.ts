@@ -21,10 +21,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         useFactory: (config: ConfigService): GrpcOptions => ({
           transport: Transport.GRPC,
           options: {
-            url: config.get<string>(
-              'TAVERN_AUTH_GRPC_URL',
-              'auth-service:5000',
-            ),
+            url: config.get<string>('TAVERN_AUTH_GRPC_URL', 'auth-service:5000'),
             package: 'auth',
             protoPath: join(workspaceRoot, 'proto/auth.proto'),
           },

@@ -1,10 +1,4 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLE_TO_GRPC, Roles } from '@org/enums';
 import { AUTH_MESSAGES } from '@org/validation-messages';
@@ -14,10 +8,7 @@ export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const allowedRoles = this.reflector.get<Roles[]>(
-      'allowedRoles',
-      context.getHandler(),
-    );
+    const allowedRoles = this.reflector.get<Roles[]>('allowedRoles', context.getHandler());
 
     if (!allowedRoles || allowedRoles.length === 0) {
       return true;

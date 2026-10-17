@@ -1,7 +1,4 @@
-import {
-  ActivityBaseOutput,
-  ActivityPaginationBaseOutput,
-} from '@org/base-types';
+import { ActivityBaseOutput, ActivityPaginationBaseOutput } from '@org/base-types';
 import { ActivityType } from '@org/enums';
 
 import { Replace } from '../../utils/replace.js';

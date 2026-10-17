@@ -35,45 +35,29 @@ export class ProfileProfilesFeatureService implements ProfileServiceContract {
 
   async GetMe(data: GetMeInput): Promise<ProfileAdvancedOutput> {
     const payload = await this.validate.Validate(data.validation);
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-id',
-      payload.id,
-    );
+    const profile = await this.validationUtil.checkUserExisting('by-id', payload.id);
     const mappedProfile = this.mapUtil.mapAdvanced(profile);
     return mappedProfile;
   }
 
-  async GetProfileByNicknameBase(
-    data: GetProfileByNicknameInput,
-  ): Promise<ProfileBaseOutput> {
+  async GetProfileByNicknameBase(data: GetProfileByNicknameInput): Promise<ProfileBaseOutput> {
     const redisProfile = await this.cacheUtil.getBase(data.nickname);
     if (redisProfile) {
       return redisProfile;
     }
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-nickname',
-      data.nickname,
-    );
+    const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname);
     const mappedProfile = this.mapUtil.mapBase(profile);
     await this.cacheUtil.cacheBase(mappedProfile);
     return mappedProfile;
   }
 
-  async GetProfileByNicknameAdvanced(
-    data: GetProfileByNicknameAdvancedInput,
-  ): Promise<ProfileAdvancedOutput> {
-    const payload = await this.validate.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-      Roles.MODERATOR,
-    ]);
+  async GetProfileByNicknameAdvanced(data: GetProfileByNicknameAdvancedInput): Promise<ProfileAdvancedOutput> {
+    const payload = await this.validate.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR]);
     const redisProfile = await this.cacheUtil.getAdvanced(data.nickname);
     if (redisProfile) {
       return redisProfile;
     }
-    const profile = await this.validationUtil.checkUserExisting(
-      'by-nickname',
-      data.nickname,
-    );
+    const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname);
     const mappedProfile = this.mapUtil.mapAdvanced(profile);
     await this.cacheUtil.cacheAdvanced(mappedProfile);
     this.messagesUtil.sendAdminCheckProfile({
@@ -83,34 +67,21 @@ export class ProfileProfilesFeatureService implements ProfileServiceContract {
     return mappedProfile;
   }
 
-  async GetProfilesBase(
-    data: GetProfilesInput,
-  ): Promise<PaginatedProfilesBaseOutput> {
+  async GetProfilesBase(data: GetProfilesInput): Promise<PaginatedProfilesBaseOutput> {
     return await this.dbUtil.getProfilesWithBasePagination(data.pagination);
   }
 
-  async GetProfilesAdvanced(
-    data: GetProfilesAdvancedInput,
-  ): Promise<PaginatedProfilesAdvancedOutput> {
-    const payload = await this.validate.validateWithRoles(data.validation, [
-      Roles.ADMIN,
-      Roles.MODERATOR,
-    ]);
+  async GetProfilesAdvanced(data: GetProfilesAdvancedInput): Promise<PaginatedProfilesAdvancedOutput> {
+    const payload = await this.validate.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR]);
     if (
       data.pagination.birthDateFrom ||
       data.pagination.birthDateTo ||
       (data.pagination.birthDateFrom && data.pagination.birthDateTo)
     ) {
-      this.validationUtil.checkBirthDateQuery(
-        data.pagination.birthDateFrom,
-        data.pagination.birthDateTo,
-      );
+      this.validationUtil.checkBirthDateQuery(data.pagination.birthDateFrom, data.pagination.birthDateTo);
     }
     if (data.pagination.reputationFrom && data.pagination.reputationTo) {
-      this.validationUtil.validateReputationInQuery(
-        data.pagination.reputationFrom,
-        data.pagination.reputationTo,
-      );
+      this.validationUtil.validateReputationInQuery(data.pagination.reputationFrom, data.pagination.reputationTo);
     }
     this.messagesUtil.sendAdminGetPaginatedProfiles({
       adminId: payload.id,
@@ -119,15 +90,10 @@ export class ProfileProfilesFeatureService implements ProfileServiceContract {
     return await this.dbUtil.getProfilesWithAdvancedPagination(data.pagination);
   }
 
-  async UpdateProfile(
-    data: UpdateProfileInput,
-  ): Promise<ProfileAdvancedOutput> {
+  async UpdateProfile(data: UpdateProfileInput): Promise<ProfileAdvancedOutput> {
     this.validationUtil.validateUpdateInput(data.data);
     const payload = await this.validate.Validate(data.validation);
-    const current = await this.validationUtil.checkUserExisting(
-      'by-id',
-      payload.id,
-    );
+    const current = await this.validationUtil.checkUserExisting('by-id', payload.id);
     if (data.data.nickname && current.nickname !== data.data.nickname) {
       await this.validationUtil.checkUniqueNickname(data.data.nickname);
     }

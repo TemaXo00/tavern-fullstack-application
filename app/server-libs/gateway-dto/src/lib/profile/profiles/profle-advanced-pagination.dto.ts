@@ -7,10 +7,7 @@ import { BasePaginationDto } from '../../shared/pagination-base.dto.js';
 import type { ActivityType } from '@org/enums';
 import type { ProfilePaginationAdvancedSharedInput } from '@org/shared-types';
 
-export class ProfileAdvancedPaginationDto
-  extends BasePaginationDto
-  implements ProfilePaginationAdvancedSharedInput
-{
+export class ProfileAdvancedPaginationDto extends BasePaginationDto implements ProfilePaginationAdvancedSharedInput {
   @Email(false)
   email?: string;
 

@@ -15,16 +15,12 @@ export class ProfileReputationFeatureController implements ReputationServiceCont
   constructor(private readonly service: ProfileReputationFeatureService) {}
 
   @GrpcMethod('ReputationService', 'GetMyLogs')
-  async GetMyLogs(
-    data: GetMyReputationInput,
-  ): Promise<PaginatedReputationOutput> {
+  async GetMyLogs(data: GetMyReputationInput): Promise<PaginatedReputationOutput> {
     return await this.service.GetMyLogs(data);
   }
 
   @GrpcMethod('ReputationService', 'GetReputationByNickname')
-  async GetReputationByNickname(
-    data: GetReputationByNicknameInput,
-  ): Promise<PaginatedReputationOutput> {
+  async GetReputationByNickname(data: GetReputationByNicknameInput): Promise<PaginatedReputationOutput> {
     return await this.service.GetReputationByNickname(data);
   }
 }

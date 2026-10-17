@@ -41,9 +41,7 @@ export const PATCHMethod = (options: IPATCHMethodOptions): MethodDecorator => {
   );
 };
 
-export const PATCHProtectedMethod = (
-  options: IPATCHProtectedMethodOptions,
-): MethodDecorator => {
+export const PATCHProtectedMethod = (options: IPATCHProtectedMethodOptions): MethodDecorator => {
   return applyDecorators(
     ApiOperation({
       summary: options.summary,

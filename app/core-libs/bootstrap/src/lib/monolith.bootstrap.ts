@@ -8,10 +8,7 @@ import rateLimit from 'express-rate-limit';
 
 import { corsConfig } from './configurations/cors.config.js';
 import { SWAGGER_PATH } from './configurations/info.config.js';
-import {
-  swaggerConfig,
-  swaggerUIConfig,
-} from './configurations/swagger.config.js';
+import { swaggerConfig, swaggerUIConfig } from './configurations/swagger.config.js';
 import { validationPipeConfig } from './configurations/validation-pipe.config.js';
 import { MonolithBootstrapOptions } from './types/monolith.type.js';
 import { AllExceptionsFilter } from './utils/filters/exception.filter.js';
@@ -19,9 +16,7 @@ import { GrpcExceptionInterceptor } from './utils/interceptors/grpc-exception.in
 import { ResponseInterceptor } from './utils/interceptors/response.interceptor.js';
 import { loggingMiddleware } from './utils/middlewares/logging.middleware.js';
 
-export async function monolithLaunch<T>(
-  options: MonolithBootstrapOptions<T>,
-): Promise<void> {
+export async function monolithLaunch<T>(options: MonolithBootstrapOptions<T>): Promise<void> {
   const APP_NAME = `${options.name} API`;
 
   const app = await NestFactory.create(options.module, {
@@ -43,28 +38,18 @@ export async function monolithLaunch<T>(
   const config = app.get(ConfigService);
 
   const GLOBAL_SCOPE = config.get<string>('APPS_GLOBAL_SCOPE', 'EXAMPLE');
-  const IS_DEV =
-    config.get<string>(`${GLOBAL_SCOPE}_DEV_MODE`, 'false') === 'true';
+  const IS_DEV = config.get<string>(`${GLOBAL_SCOPE}_DEV_MODE`, 'false') === 'true';
   const PORT = config.get<number>(`${GLOBAL_SCOPE}_GATEWAY_PORT`, 3000);
   const WINDOW_MS = config.get<number>(`${GLOBAL_SCOPE}_WINDOW_MS_MINUTES`, 15);
-  const REQUEST_LIMIT = config.get<number>(
-    `${GLOBAL_SCOPE}_REQUEST_LIMIT`,
-    1000,
-  );
-  const ALLOWED_ORIGIN = config.get<string>(
-    `${GLOBAL_SCOPE}_ALLOWED_ORIGIN`,
-    'example.com',
-  );
+  const REQUEST_LIMIT = config.get<number>(`${GLOBAL_SCOPE}_REQUEST_LIMIT`, 1000);
+  const ALLOWED_ORIGIN = config.get<string>(`${GLOBAL_SCOPE}_ALLOWED_ORIGIN`, 'example.com');
 
   if (options.logs) {
     app.use(loggingMiddleware);
   }
 
   if (options.interceptors) {
-    app.useGlobalInterceptors(
-      new ResponseInterceptor(),
-      new GrpcExceptionInterceptor(),
-    );
+    app.useGlobalInterceptors(new ResponseInterceptor(), new GrpcExceptionInterceptor());
   }
 
   if (options.filters) {
@@ -87,10 +72,7 @@ export async function monolithLaunch<T>(
   }
 
   if (options.swagger) {
-    const swaggerDocument: OpenAPIObject = SwaggerModule.createDocument(
-      app,
-      swaggerConfig,
-    );
+    const swaggerDocument: OpenAPIObject = SwaggerModule.createDocument(app, swaggerConfig);
     SwaggerModule.setup(SWAGGER_PATH, app, swaggerDocument, swaggerUIConfig);
   }
 
@@ -110,12 +92,8 @@ export async function monolithLaunch<T>(
 
   if (IS_DEV) {
     logger.log(`${APP_NAME} started in DEV Mode`);
-    logger.log(
-      `Global scope of applications: ${GLOBAL_SCOPE}. Using for configure ENV variables`,
-    );
-    logger.log(
-      `To disable DEV mode, remove or set 'false' variable ${GLOBAL_SCOPE}_DEV_MODE`,
-    );
+    logger.log(`Global scope of applications: ${GLOBAL_SCOPE}. Using for configure ENV variables`);
+    logger.log(`To disable DEV mode, remove or set 'false' variable ${GLOBAL_SCOPE}_DEV_MODE`);
     logger.log('');
 
     logger.log(`Application URL: http://localhost:${PORT}`);
@@ -127,24 +105,14 @@ export async function monolithLaunch<T>(
     logger.log('');
 
     logger.log(`Logging status: ${options.logs ? 'enabled' : 'disabled'}`);
-    logger.log(
-      `Validation status: ${options.validation ? 'enabled' : 'disabled'}`,
-    );
-    logger.log(
-      `Interceptors status: ${options.interceptors ? 'enabled' : 'disabled'}`,
-    );
+    logger.log(`Validation status: ${options.validation ? 'enabled' : 'disabled'}`);
+    logger.log(`Interceptors status: ${options.interceptors ? 'enabled' : 'disabled'}`);
     logger.log(`Filters status: ${options.filters ? 'enabled' : 'disabled'}`);
     logger.log('');
 
-    logger.log(
-      `Compression status: ${options.compression ? 'enabled' : 'disabled'}`,
-    );
-    logger.log(
-      `Cookie parser status: ${options.cookie ? 'enabled' : 'disabled'}`,
-    );
-    logger.log(
-      `Rate limit status: ${options.rateLimit ? 'enabled' : 'disabled'}`,
-    );
+    logger.log(`Compression status: ${options.compression ? 'enabled' : 'disabled'}`);
+    logger.log(`Cookie parser status: ${options.cookie ? 'enabled' : 'disabled'}`);
+    logger.log(`Rate limit status: ${options.rateLimit ? 'enabled' : 'disabled'}`);
     if (options.rateLimit) {
       logger.log(`Window: ${WINDOW_MS} minutes`);
       logger.log(`Limit: ${REQUEST_LIMIT}`);
@@ -153,19 +121,11 @@ export async function monolithLaunch<T>(
 
     logger.log('To configure Bootstrap, use next variables:');
     logger.log('APPS_GLOBAL_SCOPE - Global name. Used for ENV variables');
-    logger.log(
-      `${GLOBAL_SCOPE}_DEV_MODE - DEV mode. Accepts "true" or "false"`,
-    );
+    logger.log(`${GLOBAL_SCOPE}_DEV_MODE - DEV mode. Accepts "true" or "false"`);
     logger.log(`${GLOBAL_SCOPE}_GATEWAY_PORT - HTTP Port. Default: 3000`);
-    logger.log(
-      `${GLOBAL_SCOPE}_WINDOW_MS_MINUTES - Rate limit window in minutes. Default: 15`,
-    );
-    logger.log(
-      `${GLOBAL_SCOPE}_REQUEST_LIMIT - Rate limit requests per window. Default: 1000`,
-    );
-    logger.log(
-      `${GLOBAL_SCOPE}_ALLOWED_ORIGIN - CORS allowed origin. Default: example.com`,
-    );
+    logger.log(`${GLOBAL_SCOPE}_WINDOW_MS_MINUTES - Rate limit window in minutes. Default: 15`);
+    logger.log(`${GLOBAL_SCOPE}_REQUEST_LIMIT - Rate limit requests per window. Default: 1000`);
+    logger.log(`${GLOBAL_SCOPE}_ALLOWED_ORIGIN - CORS allowed origin. Default: example.com`);
     logger.log('');
   }
 

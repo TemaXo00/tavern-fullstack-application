@@ -20,25 +20,15 @@ const SERVICES: string[] = ['AUTH', 'PROFILE', 'EVENT'];
         useFactory: (configService: ConfigService): GrpcOptions => ({
           transport: Transport.GRPC,
           options: {
-            url: configService.get<string>(
-              `TAVERN_${service}_GRPC_URL`,
-              `${service.toLowerCase()}-service:5000`,
-            ),
+            url: configService.get<string>(`TAVERN_${service}_GRPC_URL`, `${service.toLowerCase()}-service:5000`),
             package: service.toLowerCase(),
-            protoPath: join(
-              workspaceRoot,
-              `proto/${service.toLowerCase()}.proto`,
-            ),
+            protoPath: join(workspaceRoot, `proto/${service.toLowerCase()}.proto`),
           },
         }),
         inject: [ConfigService],
       })),
     ),
   ],
-  controllers: [
-    ...AUTH_CONTROLLERS,
-    ...PROFILE_CONTROLLERS,
-    ...EVENT_CONTROLLERS,
-  ],
+  controllers: [...AUTH_CONTROLLERS, ...PROFILE_CONTROLLERS, ...EVENT_CONTROLLERS],
 })
 export class GatewayControllersModule {}

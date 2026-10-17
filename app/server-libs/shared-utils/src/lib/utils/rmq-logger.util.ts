@@ -12,10 +12,7 @@ export class RmqLoggerUtil {
   logError(context: string, method: string, error: unknown): void {
     const message = error instanceof Error ? error.message : String(error);
     const stack = error instanceof Error ? error.stack : undefined;
-    this.logger.error(
-      `[${context}] ${method} failed. Reason: ${message}`,
-      stack,
-    );
+    this.logger.error(`[${context}] ${method} failed. Reason: ${message}`, stack);
   }
 
   logWarning(context: string, method: string, reason: string): void {

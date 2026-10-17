@@ -8,8 +8,7 @@ export function Description(): PropertyDecorator {
   return applyDecorators(
     ApiProperty({
       description: 'Description',
-      example:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      example: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
       type: 'string',
       required: false,
       minLength: SHARED_CONFIG.DESCRIPTION.MIN_LENGTH,

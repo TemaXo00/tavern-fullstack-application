@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  AuthDatabaseService,
-  type Session,
-  type User,
-} from '@org/auth-database';
+import { AuthDatabaseService, type Session, type User } from '@org/auth-database';
 import { StringValidationUtil } from '@org/shared-utils';
 import { AUTH_MESSAGES } from '@org/validation-messages';
 
@@ -14,10 +10,7 @@ export class AuthCoreDatabaseUtil {
     private readonly db: AuthDatabaseService,
   ) {}
 
-  async getUserWithSession(
-    userId: string,
-    sessionId: string,
-  ): Promise<{ user: User; session: Session } | undefined> {
+  async getUserWithSession(userId: string, sessionId: string): Promise<{ user: User; session: Session } | undefined> {
     this.stringUtil.validateId(userId);
     this.stringUtil.validateId(sessionId);
     const user = await this.db.user.findUnique({
@@ -51,20 +44,11 @@ export class AuthCoreDatabaseUtil {
   }): Promise<void> {
     this.stringUtil.validateId(dto.userId);
     this.stringUtil.validateId(dto.id);
-    this.stringUtil.validateAnyString(
-      dto.device,
-      AUTH_MESSAGES.INVALID_DEVICE_STRING,
-    );
-    this.stringUtil.validateAnyString(
-      dto.browser,
-      AUTH_MESSAGES.INVALID_BROWSER_STRING,
-    );
+    this.stringUtil.validateAnyString(dto.device, AUTH_MESSAGES.INVALID_DEVICE_STRING);
+    this.stringUtil.validateAnyString(dto.browser, AUTH_MESSAGES.INVALID_BROWSER_STRING);
     this.stringUtil.validateAnyString(dto.ip, AUTH_MESSAGES.INVALID_IP_STRING);
     this.stringUtil.validateAnyString(dto.os, AUTH_MESSAGES.INVALID_OS_STRING);
-    this.stringUtil.validateAnyString(
-      dto.refreshTokenHash,
-      AUTH_MESSAGES.INVALID_REFRESH_STRING,
-    );
+    this.stringUtil.validateAnyString(dto.refreshTokenHash, AUTH_MESSAGES.INVALID_REFRESH_STRING);
     await this.db.session.create({
       data: {
         ...dto,
@@ -72,10 +56,7 @@ export class AuthCoreDatabaseUtil {
     });
   }
 
-  async updateSessionToken(
-    sessionId: string,
-    refreshTokenHash: string,
-  ): Promise<void> {
+  async updateSessionToken(sessionId: string, refreshTokenHash: string): Promise<void> {
     this.stringUtil.validateId(sessionId);
     await this.db.session.update({
       where: {
