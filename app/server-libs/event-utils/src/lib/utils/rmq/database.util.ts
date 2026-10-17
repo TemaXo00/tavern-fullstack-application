@@ -8,10 +8,19 @@ export class EventRmqDatabaseUtil {
 
   // GET
 
-  async getUser(id: string): Promise<boolean> {
+  async getUserById(id: string): Promise<boolean> {
     const user = await this.db.eventUserSnapshot.findUnique({
       where: {
         userId: id,
+      },
+    });
+    return user !== null;
+  }
+
+  async getUserByNickname(nickname: string): Promise<boolean> {
+    const user = await this.db.eventUserSnapshot.findUnique({
+      where: {
+        nickname,
       },
     });
     return user !== null;

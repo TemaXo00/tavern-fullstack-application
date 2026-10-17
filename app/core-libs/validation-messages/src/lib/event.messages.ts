@@ -41,10 +41,17 @@ export const EVENT_MESSAGES = {
       `Invalid status. Available options: ${Object.values(EventStatuses).join(', ')}`,
   },
   USER_SNAPSHOT_EXISTING_ERROR: {
-    CONTEXT: 'CreateUserSnaphost',
-    METHOD: 'FindUser',
+    CONTEXT: 'ManipulateUserSnapshot',
+    METHOD: 'FindUserByID',
     MESSAGE: (id: string): string => {
       return `User with id ${id} does not exists`;
+    },
+  },
+  USER_SNAPSHOT_NICKNAME_EXISTING_ERROR: {
+    CONTEXT: 'ManipulateUserSnapshot',
+    METHOD: 'FindUserByNickname',
+    MESSAGE: (nickname: string): string => {
+      return `User with ${nickname} existsing`;
     },
   },
   USER_SHAPSHOT_CREATE_SUCCESS: {
@@ -82,5 +89,18 @@ export const EVENT_MESSAGES = {
     METHOD: (userId: string) => {
       return `SoftDelete of ${userId}}`;
     },
+  },
+  USER_CHANGE_NICKNAME_SUCCESS: {
+    CONTEXT: 'ChangeNickname',
+    METHOD: (userId: string) => {
+      return `Change nickname of ${userId}}`;
+    },
+  },
+  USER_CHANGE_NICKNAME_WARNING: {
+    CONTEXT: 'ChangeNickname',
+    METHOD: (userId: string) => {
+      return `Change nickname of ${userId}}`;
+    },
+    MESSAGE: 'Nickname does not found in payload',
   },
 } as const;
