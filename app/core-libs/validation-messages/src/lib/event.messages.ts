@@ -59,4 +59,28 @@ export const EVENT_MESSAGES = {
       return `UnblockUser ${id}`;
     },
   },
+  USER_SNAPHSOT_BLOCK_SUCCESS: {
+    CONTEXT: 'BlockUserSnapshot',
+    METHOD: (userId: string, adminId: string) => {
+      return `BlockUser ${userId} by ${adminId}`;
+    },
+  },
+  USER_SNAPHSOT_CHANGE_STATE_SUCCESS: {
+    CONTEXT: 'ChangeUserSnapshotState',
+    METHOD: (userId: string, state: boolean) => {
+      return `ChangeState of ${userId}. Current state: ${state ? 'active' : 'inactive'}`;
+    },
+  },
+  USER_SNAPHSOT_CHANGE_EMAIL_SUCCESS: {
+    CONTEXT: 'ChangeUserSnapshotEmail',
+    METHOD: (userId: string) => {
+      return `ChangeEmail of ${userId}}`;
+    },
+  },
+  USER_SOFT_DELETE_SUCCESS: {
+    CONTEXT: 'SoftDeleteUser',
+    METHOD: (userId: string) => {
+      return `SoftDelete of ${userId}}`;
+    },
+  },
 } as const;

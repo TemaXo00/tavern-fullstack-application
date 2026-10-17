@@ -57,18 +57,13 @@ export class EventRmqDatabaseUtil {
     });
   }
 
-  async updateUserActivityState(
-    id: string,
-    state: boolean,
-    deleted?: boolean,
-  ): Promise<void> {
+  async updateUserActivityState(id: string, state: boolean): Promise<void> {
     await this.db.eventUserSnapshot.update({
       where: {
         userId: id,
       },
       data: {
         isActive: state,
-        deletedAt: deleted ? new Date() : null,
       },
     });
   }
@@ -91,6 +86,17 @@ export class EventRmqDatabaseUtil {
       },
       data: {
         nickname,
+      },
+    });
+  }
+
+  async softDeleteUser(id: string): Promise<void> {
+    await this.db.eventUserSnapshot.update({
+      where: { userId: id },
+      data: {
+        isActive: false,
+        deletedAt: new Date(),
+        nickname: `deleted_${Date.now()}_${id}`,
       },
     });
   }
