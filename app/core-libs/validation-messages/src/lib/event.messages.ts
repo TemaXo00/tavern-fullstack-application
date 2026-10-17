@@ -40,4 +40,11 @@ export const EVENT_MESSAGES = {
     ENUM: (): string =>
       `Invalid status. Available options: ${Object.values(EventStatuses).join(', ')}`,
   },
+  USER_SNAPSHOT_EXISTING_ERROR: {
+    CONTEXT: 'CreateUserSnaphost',
+    METHOD: 'FindUser',
+    MESSAGE: (id: string): string => {
+      return `User with id ${id} does not exists`;
+    },
+  },
 } as const;

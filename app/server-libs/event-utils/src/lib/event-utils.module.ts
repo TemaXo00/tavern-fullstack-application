@@ -6,6 +6,7 @@ import { EventDatabaseModule } from '@org/event-database';
 import { RmqModule, RmqService } from '@org/rmq-config';
 import { SharedUtilsModule } from '@org/shared-utils';
 
+import { RMQ_UTILS } from './utils/rmq/main';
 import { TAG_UTILS } from './utils/tag/main';
 
 const queues = ['log'];
@@ -37,7 +38,7 @@ const queues = ['log'];
       })),
     ),
   ],
-  providers: [...TAG_UTILS],
-  exports: [...TAG_UTILS],
+  providers: [...TAG_UTILS, ...RMQ_UTILS],
+  exports: [...TAG_UTILS, ...RMQ_UTILS],
 })
 export class EventUtilsModule {}
