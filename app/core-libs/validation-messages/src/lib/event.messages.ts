@@ -47,4 +47,16 @@ export const EVENT_MESSAGES = {
       return `User with id ${id} does not exists`;
     },
   },
+  USER_SHAPSHOT_CREATE_SUCCESS: {
+    CONTEXT: 'CreateUserSnapshot',
+    METHOD: (id: string): string => {
+      return `CreateUser ${id}`;
+    },
+  },
+  USER_SHAPSHOT_UNBLOCK_SUCCESS: {
+    CONTEXT: 'UnblockUserSnapshot',
+    METHOD: (id: string): string => {
+      return `UnblockUser ${id}`;
+    },
+  },
 } as const;

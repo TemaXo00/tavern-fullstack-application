@@ -16,5 +16,18 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../../core-libs/validation-messages/tsconfig.lib.json"
+    },
+    {
+      "path": "../shared-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../event-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/rmq-messages/tsconfig.lib.json"
+    }
+  ]
 }
