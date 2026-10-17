@@ -27,7 +27,7 @@ const eventUserPageRedisTag = (userId: string, page: number): string => {
 
 @Injectable()
 export class EventEventsDatabaseUtil {
-  private GET_EVENT_TTL: number
+  // private GET_EVENT_TTL: number
   private GET_USER_PAGE_TTL: number
 
   constructor(
@@ -36,7 +36,7 @@ export class EventEventsDatabaseUtil {
     private readonly db: EventDatabaseService,
     private readonly paginationUtil: PaginationUtil,
   ) {
-    this.GET_EVENT_TTL = config.get<number>('TAVERN_EVENT_CACHE_TTL', 300)
+    // this.GET_EVENT_TTL = config.get<number>('TAVERN_EVENT_CACHE_TTL', 300)
     this.GET_USER_PAGE_TTL = config.get<number>('TAVERN_EVENT_USERPAGE_TTL', 90)
   }
 
