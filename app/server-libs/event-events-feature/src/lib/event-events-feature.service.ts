@@ -89,6 +89,12 @@ export class EventEventsFeatureService implements EventEventsServiceContract {
     throw new Error('Method not implemented.');
   }
 
+  async SwitchOtherEventOrganizer(
+    data: SwitchOrganizerInput,
+  ): Promise<EventMethodsOutput> {
+    throw new Error('Method not implemented.');
+  }
+
   async UpdateEvent(data: UpdateEventDataInput): Promise<EventMethodsOutput> {
     throw new Error('Method not implemented.');
   }

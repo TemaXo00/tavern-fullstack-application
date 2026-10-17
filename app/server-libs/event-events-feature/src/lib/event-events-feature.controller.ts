@@ -108,6 +108,13 @@ export class EventEventsFeatureController implements EventEventsServiceContract 
     return await this.service.SwitchOrganizer(data);
   }
 
+  @GrpcMethod('EventService', 'SwitchOtherEventOrganizer')
+  async SwitchOtherEventOrganizer(
+    data: SwitchOrganizerInput,
+  ): Promise<EventMethodsOutput> {
+    return await this.service.SwitchOtherEventOrganizer(data);
+  }
+
   @GrpcMethod('EventService', 'UpdateEvent')
   async UpdateEvent(data: UpdateEventDataInput): Promise<EventMethodsOutput> {
     return await this.service.UpdateEvent(data);

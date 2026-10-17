@@ -277,10 +277,9 @@ export class EventController implements OnModuleInit {
 
   @PATCHProtectedMethod({
     path: EVENT_EVENTS_ROUTES.SWITCH_ORGANIZER.PATH,
-    summary: 'Switch the event organizer',
+    summary: 'Switch my event organizer',
     operationDesc:
-      'Transfers ownership of the event to another user. Available only to administrators.',
-    roles: [Roles.ADMIN],
+      'Transfers ownership of the event to another user. Using by current user',
   })
   async switchOrganizer(
     @ValidateInputParam() validation: ValidateInput,
@@ -289,6 +288,28 @@ export class EventController implements OnModuleInit {
   ): Promise<EventMethodsSharedOutput> {
     const response = await firstValueFrom(
       this.eventContract.SwitchOrganizer({ validation, slug, ...dto }),
+    );
+    return this.map.mapEventMethodsOutput(response);
+  }
+
+  @PATCHProtectedMethod({
+    path: EVENT_EVENTS_ROUTES.SWITCH_OTHER_EVENT_ORGANIZER.PATH,
+    summary: 'Switch other event organizer',
+    operationDesc:
+      'Transfers ownership of the event to another user. Available only to administrators and their can switch organization to other user',
+    roles: [Roles.ADMIN],
+  })
+  async switchOtherEventOrganizer(
+    @ValidateInputParam() validation: ValidateInput,
+    @Param(EVENT_EVENTS_ROUTES.SWITCH_OTHER_EVENT_ORGANIZER.PARAM) slug: string,
+    @Body() dto: SwitchEventOrganizerDto,
+  ): Promise<EventMethodsSharedOutput> {
+    const response = await firstValueFrom(
+      this.eventContract.SwitchOtherEventOrganizer({
+        validation,
+        slug,
+        ...dto,
+      }),
     );
     return this.map.mapEventMethodsOutput(response);
   }
