@@ -28,6 +28,7 @@
     "ioredis": "^6.0.0",
     "@org/validation-messages": "0.0.1",
     "@org/rmq-messages": "0.0.1",
-    "@grpc/grpc-js": "^1.14.4"
+    "@grpc/grpc-js": "^1.14.4",
+    "@org/enums": "0.0.1"
   }
 }
