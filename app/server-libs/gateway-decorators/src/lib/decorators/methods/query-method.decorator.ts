@@ -1,4 +1,4 @@
-import { applyDecorators, QueryMethod } from '@nestjs/common';
+import { applyDecorators, QueryMethod } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -7,20 +7,20 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+} from '@nestjs/swagger'
 
-import { Validate } from '../validate.decorator.js';
+import { Validate } from '../validate.decorator.js'
 
-import type { Roles } from '@org/enums';
+import type { Roles } from '@org/enums'
 
 interface IQUERYProtectedMethodOptions {
-  path: string;
-  summary: string;
-  operationDesc: string;
-  roles?: Roles[];
+  path: string
+  summary: string
+  operationDesc: string
+  roles?: Roles[]
 }
 
-type IQUERYMethodOptions = Omit<IQUERYProtectedMethodOptions, 'roles'>;
+type IQUERYMethodOptions = Omit<IQUERYProtectedMethodOptions, 'roles'>
 
 export const QUERYMethod = (options: IQUERYMethodOptions): MethodDecorator => {
   return applyDecorators(
@@ -38,8 +38,8 @@ export const QUERYMethod = (options: IQUERYMethodOptions): MethodDecorator => {
       description: 'Internal server error',
     }),
     QueryMethod(options.path),
-  );
-};
+  )
+}
 
 export const QUERYProtectedMethod = (options: IQUERYProtectedMethodOptions): MethodDecorator => {
   return applyDecorators(
@@ -65,5 +65,5 @@ export const QUERYProtectedMethod = (options: IQUERYProtectedMethodOptions): Met
     }),
     QueryMethod(options.path),
     Validate(...(options.roles || [])),
-  );
-};
+  )
+}

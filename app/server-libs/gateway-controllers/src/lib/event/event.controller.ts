@@ -1,5 +1,5 @@
-import { Body, Inject, OnModuleInit, Param } from '@nestjs/common';
-import { Roles } from '@org/enums';
+import { Body, Inject, OnModuleInit, Param } from '@nestjs/common'
+import { Roles } from '@org/enums'
 import {
   DELETEProtectedMethod,
   GETMethod,
@@ -11,7 +11,7 @@ import {
   QUERYMethod,
   QUERYProtectedMethod,
   ValidateInputParam,
-} from '@org/gateway-decorators';
+} from '@org/gateway-decorators'
 import {
   CreateEventDto,
   DeleteOtherEventDto,
@@ -19,26 +19,26 @@ import {
   EventPublicPaginationDto,
   SwitchEventOrganizerDto,
   UpdateEventDto,
-} from '@org/gateway-dto';
-import { EventGatewayMapService } from '@org/gateway-map';
-import { EVENT_EVENTS_ROUTES } from '@org/routes-config';
+} from '@org/gateway-dto'
+import { EventGatewayMapService } from '@org/gateway-map'
+import { EVENT_EVENTS_ROUTES } from '@org/routes-config'
 import {
   EventMethodsSharedOutput,
   EventSharedOutput,
   PaginatedPrivateEventsSharedOutput,
   PaginatedPublicEventsSharedOutput,
-} from '@org/shared-types';
-import { firstValueFrom } from 'rxjs';
+} from '@org/shared-types'
+import { firstValueFrom } from 'rxjs'
 
-import type { ClientGrpc } from '@nestjs/microservices';
-import type { EventEventsServiceObservableContract, ValidateInput } from '@org/grpc-types';
+import type { ClientGrpc } from '@nestjs/microservices'
+import type { EventEventsServiceObservableContract, ValidateInput } from '@org/grpc-types'
 
 @HTTPController({
   microserviceName: 'Event',
   serviceName: 'Event',
 })
 export class EventController implements OnModuleInit {
-  private eventContract!: EventEventsServiceObservableContract;
+  private eventContract!: EventEventsServiceObservableContract
 
   constructor(
     @Inject('EVENT_CLIENT') private readonly client: ClientGrpc,
@@ -46,7 +46,7 @@ export class EventController implements OnModuleInit {
   ) {}
 
   onModuleInit(): void {
-    this.eventContract = this.client.getService<EventEventsServiceObservableContract>('EventService');
+    this.eventContract = this.client.getService<EventEventsServiceObservableContract>('EventService')
   }
 
   @QUERYMethod({
@@ -56,11 +56,11 @@ export class EventController implements OnModuleInit {
       'Returns a paginated list of all public events. Only events with the PUBLISHED status are included. Supports filtering by date, available places, tags, and search query.',
   })
   async getPublicPaginated(@Body() pagination: EventPublicPaginationDto): Promise<PaginatedPublicEventsSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.GetPublicEvents({ pagination }));
+    const response = await firstValueFrom(this.eventContract.GetPublicEvents({ pagination }))
     return {
       pagination: response.pagination,
       events: this.map.mapEventsListOutput(response.events),
-    };
+    }
   }
 
   @QUERYProtectedMethod({
@@ -79,11 +79,11 @@ export class EventController implements OnModuleInit {
         validation,
         pagination: this.map.mapPaginationPrivateInput(pagination),
       }),
-    );
+    )
     return {
       pagination: this.map.mapPaginationPrivateOutput(response.pagination),
       events: this.map.mapEventsListOutput(response.events),
-    };
+    }
   }
 
   @QUERYMethod({
@@ -96,11 +96,11 @@ export class EventController implements OnModuleInit {
     @Body() pagination: EventPublicPaginationDto,
     @Param(EVENT_EVENTS_ROUTES.GET_PUBLIC_BY_USER.PARAM) nickname: string,
   ): Promise<PaginatedPublicEventsSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.GetPublicUserEvents({ pagination, nickname }));
+    const response = await firstValueFrom(this.eventContract.GetPublicUserEvents({ pagination, nickname }))
     return {
       pagination: response.pagination,
       events: this.map.mapEventsListOutput(response.events),
-    };
+    }
   }
 
   @QUERYProtectedMethod({
@@ -121,11 +121,11 @@ export class EventController implements OnModuleInit {
         pagination: this.map.mapPaginationPrivateInput(pagination),
         nickname,
       }),
-    );
+    )
     return {
       pagination: this.map.mapPaginationPrivateOutput(response.pagination),
       events: this.map.mapEventsListOutput(response.events),
-    };
+    }
   }
 
   @QUERYProtectedMethod({
@@ -143,11 +143,11 @@ export class EventController implements OnModuleInit {
         validation,
         pagination: this.map.mapPaginationPrivateInput(pagination),
       }),
-    );
+    )
     return {
       pagination: this.map.mapPaginationPrivateOutput(response.pagination),
       events: this.map.mapEventsListOutput(response.events),
-    };
+    }
   }
 
   @GETMethod({
@@ -157,8 +157,8 @@ export class EventController implements OnModuleInit {
       'Returns detailed information about a public event by its slug. Only events with PUBLISHED or FINISHED status are available.',
   })
   async getPublicBySlug(@Param(EVENT_EVENTS_ROUTES.GET_PUBLIC_BY_SLUG.PARAM) slug: string): Promise<EventSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.GetPublicEventBySlug({ slug }));
-    return this.map.mapEventOutput(response);
+    const response = await firstValueFrom(this.eventContract.GetPublicEventBySlug({ slug }))
+    return this.map.mapEventOutput(response)
   }
 
   @GETProtectedMethod({
@@ -172,8 +172,8 @@ export class EventController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Param(EVENT_EVENTS_ROUTES.GET_PRIVATE_BY_SLUG.PARAM) slug: string,
   ): Promise<EventSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.GetPrivateEventBySlug({ validation, slug }));
-    return this.map.mapEventOutput(response);
+    const response = await firstValueFrom(this.eventContract.GetPrivateEventBySlug({ validation, slug }))
+    return this.map.mapEventOutput(response)
   }
 
   @GETProtectedMethod({
@@ -186,8 +186,8 @@ export class EventController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Param(EVENT_EVENTS_ROUTES.GET_MY_BY_SLUG.PARAM) slug: string,
   ): Promise<EventSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.GetMyEventBySlug({ validation, slug }));
-    return this.map.mapEventOutput(response);
+    const response = await firstValueFrom(this.eventContract.GetMyEventBySlug({ validation, slug }))
+    return this.map.mapEventOutput(response)
   }
 
   @POSTProtected({
@@ -201,8 +201,8 @@ export class EventController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Body() dto: CreateEventDto,
   ): Promise<EventMethodsSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.CreateEvent({ validation, ...dto }));
-    return this.map.mapEventMethodsOutput(response);
+    const response = await firstValueFrom(this.eventContract.CreateEvent({ validation, ...dto }))
+    return this.map.mapEventMethodsOutput(response)
   }
 
   @PATCHProtectedMethod({
@@ -215,8 +215,8 @@ export class EventController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Param(EVENT_EVENTS_ROUTES.PUBLISH.PARAM) slug: string,
   ): Promise<EventMethodsSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.PublishEvent({ slug, validation }));
-    return this.map.mapEventMethodsOutput(response);
+    const response = await firstValueFrom(this.eventContract.PublishEvent({ slug, validation }))
+    return this.map.mapEventMethodsOutput(response)
   }
 
   @PATCHProtectedMethod({
@@ -229,8 +229,8 @@ export class EventController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Param(EVENT_EVENTS_ROUTES.CANCEL.PARAM) slug: string,
   ): Promise<EventMethodsSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.CancelEvent({ slug, validation }));
-    return this.map.mapEventMethodsOutput(response);
+    const response = await firstValueFrom(this.eventContract.CancelEvent({ slug, validation }))
+    return this.map.mapEventMethodsOutput(response)
   }
 
   @PATCHProtectedMethod({
@@ -242,8 +242,8 @@ export class EventController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Param(EVENT_EVENTS_ROUTES.FINISH.PARAM) slug: string,
   ): Promise<EventMethodsSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.FinishEvent({ slug, validation }));
-    return this.map.mapEventMethodsOutput(response);
+    const response = await firstValueFrom(this.eventContract.FinishEvent({ slug, validation }))
+    return this.map.mapEventMethodsOutput(response)
   }
 
   @PATCHProtectedMethod({
@@ -256,8 +256,8 @@ export class EventController implements OnModuleInit {
     @Param(EVENT_EVENTS_ROUTES.SWITCH_ORGANIZER.PARAM) slug: string,
     @Body() dto: SwitchEventOrganizerDto,
   ): Promise<EventMethodsSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.SwitchOrganizer({ validation, slug, ...dto }));
-    return this.map.mapEventMethodsOutput(response);
+    const response = await firstValueFrom(this.eventContract.SwitchOrganizer({ validation, slug, ...dto }))
+    return this.map.mapEventMethodsOutput(response)
   }
 
   @PATCHProtectedMethod({
@@ -278,8 +278,8 @@ export class EventController implements OnModuleInit {
         slug,
         ...dto,
       }),
-    );
-    return this.map.mapEventMethodsOutput(response);
+    )
+    return this.map.mapEventMethodsOutput(response)
   }
 
   @PUTProtectedMethod({
@@ -293,8 +293,8 @@ export class EventController implements OnModuleInit {
     @Param(EVENT_EVENTS_ROUTES.UPDATE.PARAM) slug: string,
     @Body() dto: UpdateEventDto,
   ): Promise<EventMethodsSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.UpdateEvent({ validation, slug, ...dto }));
-    return this.map.mapEventMethodsOutput(response);
+    const response = await firstValueFrom(this.eventContract.UpdateEvent({ validation, slug, ...dto }))
+    return this.map.mapEventMethodsOutput(response)
   }
 
   @DELETEProtectedMethod({
@@ -307,8 +307,8 @@ export class EventController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Param(EVENT_EVENTS_ROUTES.DELETE.PARAM) slug: string,
   ): Promise<EventMethodsSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.DeleteEvent({ validation, slug }));
-    return this.map.mapEventMethodsOutput(response);
+    const response = await firstValueFrom(this.eventContract.DeleteEvent({ validation, slug }))
+    return this.map.mapEventMethodsOutput(response)
   }
 
   @DELETEProtectedMethod({
@@ -323,7 +323,7 @@ export class EventController implements OnModuleInit {
     @Param(EVENT_EVENTS_ROUTES.DELETE_OTHER.PARAM) slug: string,
     @Body() dto: DeleteOtherEventDto,
   ): Promise<EventMethodsSharedOutput> {
-    const response = await firstValueFrom(this.eventContract.DeleteOtherEvent({ validation, slug, ...dto }));
-    return this.map.mapEventMethodsOutput(response);
+    const response = await firstValueFrom(this.eventContract.DeleteOtherEvent({ validation, slug, ...dto }))
+    return this.map.mapEventMethodsOutput(response)
   }
 }

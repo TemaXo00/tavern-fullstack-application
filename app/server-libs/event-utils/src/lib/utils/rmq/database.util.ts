@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { EventDatabaseService } from '@org/event-database';
-import { AdminBlockUserEvent, AuthRegisteredMessage } from '@org/rmq-messages';
+import { Injectable } from '@nestjs/common'
+import { EventDatabaseService } from '@org/event-database'
+import { AdminBlockUserEvent, AuthRegisteredMessage } from '@org/rmq-messages'
 
 @Injectable()
 export class EventRmqDatabaseUtil {
@@ -13,8 +13,8 @@ export class EventRmqDatabaseUtil {
       where: {
         userId: id,
       },
-    });
-    return user !== null;
+    })
+    return user !== null
   }
 
   async getUserByNickname(nickname: string): Promise<boolean> {
@@ -22,8 +22,8 @@ export class EventRmqDatabaseUtil {
       where: {
         nickname,
       },
-    });
-    return user !== null;
+    })
+    return user !== null
   }
 
   // CREATE
@@ -39,7 +39,7 @@ export class EventRmqDatabaseUtil {
       update: {
         email: message.email,
       },
-    });
+    })
   }
 
   // UPDATE
@@ -54,7 +54,7 @@ export class EventRmqDatabaseUtil {
         data: {
           organizerId: message.adminId,
         },
-      });
+      })
       await tx.eventUserSnapshot.update({
         where: {
           userId: message.userId,
@@ -62,8 +62,8 @@ export class EventRmqDatabaseUtil {
         data: {
           isActive: false,
         },
-      });
-    });
+      })
+    })
   }
 
   async updateUserActivityState(id: string, state: boolean): Promise<void> {
@@ -74,7 +74,7 @@ export class EventRmqDatabaseUtil {
       data: {
         isActive: state,
       },
-    });
+    })
   }
 
   async updateUserEmail(id: string, email: string): Promise<void> {
@@ -85,7 +85,7 @@ export class EventRmqDatabaseUtil {
       data: {
         email,
       },
-    });
+    })
   }
 
   async updateUserNickname(id: string, nickname: string): Promise<void> {
@@ -96,7 +96,7 @@ export class EventRmqDatabaseUtil {
       data: {
         nickname,
       },
-    });
+    })
   }
 
   async softDeleteUser(id: string): Promise<void> {
@@ -107,6 +107,6 @@ export class EventRmqDatabaseUtil {
         deletedAt: new Date(),
         nickname: `deleted_${Date.now()}_${id}`,
       },
-    });
+    })
   }
 }

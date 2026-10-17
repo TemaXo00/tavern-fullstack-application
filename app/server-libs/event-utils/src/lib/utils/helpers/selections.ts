@@ -1,11 +1,11 @@
-import { EventSelect, EventTagSelect } from '@org/event-database';
-import { EVENT_CONFIG } from '@org/validation-config';
+import { EventSelect, EventTagSelect } from '@org/event-database'
+import { EVENT_CONFIG } from '@org/validation-config'
 
 export const TAG_LIST_OUTPUT_SELECTION: EventTagSelect = {
   slug: true,
   name: true,
   color: true,
-};
+}
 
 export const TAG_BASE_OUTPUT_SELECTIONS: EventTagSelect = {
   slug: true,
@@ -14,7 +14,7 @@ export const TAG_BASE_OUTPUT_SELECTIONS: EventTagSelect = {
   description: true,
   createdAt: true,
   updatedAt: true,
-};
+}
 
 export const TAG_ADVANCED_OUTPUT_SELECTIONS: EventTagSelect = {
   ...TAG_BASE_OUTPUT_SELECTIONS,
@@ -34,7 +34,7 @@ export const TAG_ADVANCED_OUTPUT_SELECTIONS: EventTagSelect = {
       leftPlaces: true,
     },
   },
-};
+}
 
 export const EVENT_LIST_SELECTIONS: EventSelect = {
   slug: true,
@@ -56,4 +56,4 @@ export const EVENT_LIST_SELECTIONS: EventSelect = {
       color: true,
     },
   },
-};
+}

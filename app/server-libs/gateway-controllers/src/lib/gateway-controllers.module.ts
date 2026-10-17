@@ -1,15 +1,15 @@
-import { join } from 'path';
+import { join } from 'path'
 
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ClientsModule, Transport, GrpcOptions } from '@nestjs/microservices';
-import { workspaceRoot } from 'nx/src/utils/workspace-root';
+import { Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ClientsModule, Transport, GrpcOptions } from '@nestjs/microservices'
+import { workspaceRoot } from 'nx/src/utils/workspace-root'
 
-import { AUTH_CONTROLLERS } from './auth/main';
-import { EVENT_CONTROLLERS } from './event/main';
-import { PROFILE_CONTROLLERS } from './profile/main';
+import { AUTH_CONTROLLERS } from './auth/main'
+import { EVENT_CONTROLLERS } from './event/main'
+import { PROFILE_CONTROLLERS } from './profile/main'
 
-const SERVICES: string[] = ['AUTH', 'PROFILE', 'EVENT'];
+const SERVICES: string[] = ['AUTH', 'PROFILE', 'EVENT']
 
 @Module({
   imports: [

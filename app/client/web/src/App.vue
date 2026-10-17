@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { useAuthStore } from '@org/api-client';
-import { onMounted } from 'vue';
-import { RouterView } from 'vue-router';
+import { useAuthStore } from '@org/api-client'
+import { onMounted } from 'vue'
+import { RouterView } from 'vue-router'
 
-const auth = useAuthStore();
+const auth = useAuthStore()
 
 onMounted(async () => {
-  await auth.init();
-});
+  await auth.init()
+})
 </script>
 
 <template>

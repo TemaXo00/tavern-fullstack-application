@@ -1,26 +1,26 @@
-import { TokenPaginationInput } from '@org/grpc-types';
+import { TokenPaginationInput } from '@org/grpc-types'
 
 export interface AdminCheckTokensMessage {
-  id: string;
-  pagination: TokenPaginationInput;
+  id: string
+  pagination: TokenPaginationInput
 }
 
 export interface AdminGetTokenByIdMessage {
-  adminId: string;
-  tokenId: string;
+  adminId: string
+  tokenId: string
 }
 
 export interface AdminSetTokenRevokedMessage {
-  adminId: string;
-  tokenId: string;
+  adminId: string
+  tokenId: string
 }
 
 export interface AdminDeleteTokenMessage {
-  adminId: string;
-  tokenId: string;
+  adminId: string
+  tokenId: string
 }
 
 export interface AdminDeleteInactiveTokensMessage {
-  adminId: string;
-  tokensAmount: number;
+  adminId: string
+  tokensAmount: number
 }

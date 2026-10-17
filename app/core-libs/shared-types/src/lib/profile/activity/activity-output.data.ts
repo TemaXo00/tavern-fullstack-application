@@ -1,23 +1,23 @@
-import { ActivityBaseOutput, ActivityPaginationBaseOutput } from '@org/base-types';
-import { ActivityType } from '@org/enums';
+import { ActivityBaseOutput, ActivityPaginationBaseOutput } from '@org/base-types'
+import { ActivityType } from '@org/enums'
 
-import { Replace } from '../../utils/replace.js';
+import { Replace } from '../../utils/replace.js'
 
 export type ActivityPaginationSharedOutput = Replace<
   ActivityPaginationBaseOutput,
   {
-    activityType?: ActivityType;
+    activityType?: ActivityType
   }
->;
+>
 
 export type ActivitySharedOutput = Replace<
   ActivityBaseOutput,
   {
-    status: ActivityType;
+    status: ActivityType
   }
->;
+>
 
 export interface PaginatedActivitySharedOutput {
-  pagination: ActivityPaginationSharedOutput;
-  activityLogs: ActivitySharedOutput[];
+  pagination: ActivityPaginationSharedOutput
+  activityLogs: ActivitySharedOutput[]
 }

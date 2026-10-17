@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { PassportStrategy } from '@nestjs/passport';
-import { UserPayload } from '@org/grpc-types';
-import { ExtractJwt, Strategy } from 'passport-jwt';
+import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { PassportStrategy } from '@nestjs/passport'
+import { UserPayload } from '@org/grpc-types'
+import { ExtractJwt, Strategy } from 'passport-jwt'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -11,7 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
       secretOrKey: config.getOrThrow<string>('TAVERN_JWT_SECRET'),
-    });
+    })
   }
 
   validate(payload: UserPayload): UserPayload {
@@ -19,6 +19,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       id: payload.id,
       sessionId: payload.sessionId,
       role: payload.role,
-    };
+    }
   }
 }

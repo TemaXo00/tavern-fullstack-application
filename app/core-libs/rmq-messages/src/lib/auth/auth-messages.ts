@@ -1,37 +1,37 @@
-import { SessionInput } from '@org/grpc-types';
+import { SessionInput } from '@org/grpc-types'
 
 export interface AuthRegisteredMessage {
-  id: string;
-  email: string;
-  session: SessionInput;
+  id: string
+  email: string
+  session: SessionInput
 }
 
 export interface AuthLoginMessage {
-  id: string;
-  email: string;
-  session: SessionInput;
+  id: string
+  email: string
+  session: SessionInput
 }
 
 export interface AuthLogoutMessage {
-  userId: string;
-  sessionId: string;
+  userId: string
+  sessionId: string
 }
 
 export interface AuthForgotPasswordMessage {
-  email: string;
-  token: string;
-  tokenHash: string;
+  email: string
+  token: string
+  tokenHash: string
 }
 
-export type AuthMailForgotPassword = Omit<AuthForgotPasswordMessage, 'tokenHash'>;
+export type AuthMailForgotPassword = Omit<AuthForgotPasswordMessage, 'tokenHash'>
 
-export type AuthLogForgotPassword = Omit<AuthForgotPasswordMessage, 'token'>;
+export type AuthLogForgotPassword = Omit<AuthForgotPasswordMessage, 'token'>
 
 export interface AuthRestorePasswordMessage {
-  email: string;
-  session: SessionInput;
+  email: string
+  session: SessionInput
 }
 
 export interface AuthUserUnblockedMessage {
-  userId: string;
+  userId: string
 }

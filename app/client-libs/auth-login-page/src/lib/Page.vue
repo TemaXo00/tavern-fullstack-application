@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useAuthStore } from '@org/api-client';
+import { useAuthStore } from '@org/api-client'
 
-const auth = useAuthStore();
+const auth = useAuthStore()
 </script>
 
 <template>

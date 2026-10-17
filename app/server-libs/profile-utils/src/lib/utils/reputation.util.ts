@@ -1,13 +1,13 @@
-import { status } from '@grpc/grpc-js';
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { RpcException } from '@nestjs/microservices';
-import { Actions } from '@org/profile-database';
-import { PROFILE_MESSAGES } from '@org/validation-messages';
+import { status } from '@grpc/grpc-js'
+import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { RpcException } from '@nestjs/microservices'
+import { Actions } from '@org/profile-database'
+import { PROFILE_MESSAGES } from '@org/validation-messages'
 
 @Injectable()
 export class ProfileReputationUtil {
-  private readonly scores: Record<Actions, number>;
+  private readonly scores: Record<Actions, number>
 
   constructor(private readonly config: ConfigService) {
     this.scores = {
@@ -15,17 +15,17 @@ export class ProfileReputationUtil {
       BLOCK: this.config.get<number>('TAVERN_REPUTATION_SCORE_BLOCK', -50),
       EARLY_UNBLOCK: this.config.get<number>('TAVERN_REPUTATION_SCORE_EARLY_UNBLOCK', 50),
       REPORT: this.config.get<number>('TAVERN_REPUTATION_SCORE_REPORT', -10),
-    };
+    }
   }
 
   getScore(type: Actions): number {
-    const score = this.scores[type];
+    const score = this.scores[type]
     if (score === undefined) {
       throw new RpcException({
         message: PROFILE_MESSAGES.REPUTATION_UNKNOWN_TYPE,
         code: status.INVALID_ARGUMENT,
-      });
+      })
     }
-    return score;
+    return score
   }
 }

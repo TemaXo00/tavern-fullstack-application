@@ -14,7 +14,7 @@ export const EVENT_TAG_ROUTES = {
     PATH: ':slug',
     PARAM: 'slug',
   },
-} as const;
+} as const
 
 export const EVENT_EVENTS_ROUTES = {
   BASE_URL: 'event/event',
@@ -74,4 +74,4 @@ export const EVENT_EVENTS_ROUTES = {
     PATH: 'other/:slug',
     PARAM: 'slug',
   },
-} as const;
+} as const

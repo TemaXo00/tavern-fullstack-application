@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { EventRmqDatabaseUtil, EventRmqValidateUtil } from '@org/event-utils';
-import { UpdateProfile } from '@org/rmq-messages';
-import { RmqLoggerUtil } from '@org/shared-utils';
-import { EVENT_MESSAGES } from '@org/validation-messages';
+import { Injectable } from '@nestjs/common'
+import { EventRmqDatabaseUtil, EventRmqValidateUtil } from '@org/event-utils'
+import { UpdateProfile } from '@org/rmq-messages'
+import { RmqLoggerUtil } from '@org/shared-utils'
+import { EVENT_MESSAGES } from '@org/validation-messages'
 
 @Injectable()
 export class ProfilesRmqService {
@@ -18,20 +18,20 @@ export class ProfilesRmqService {
         !(await this.validation.isNicknameFree(data.data.nickname)) ||
         !(await this.validation.isUserExisting(data.userId))
       ) {
-        return;
+        return
       }
 
-      await this.dbUtil.updateUserNickname(data.userId, data.data.nickname);
+      await this.dbUtil.updateUserNickname(data.userId, data.data.nickname)
       this.logger.logSuccess(
         EVENT_MESSAGES.USER_CHANGE_NICKNAME_SUCCESS.CONTEXT,
         EVENT_MESSAGES.USER_CHANGE_NICKNAME_SUCCESS.METHOD(data.userId),
-      );
+      )
     } else {
       this.logger.logWarning(
         EVENT_MESSAGES.USER_CHANGE_NICKNAME_WARNING.CONTEXT,
         EVENT_MESSAGES.USER_CHANGE_NICKNAME_WARNING.METHOD(data.userId),
         EVENT_MESSAGES.USER_CHANGE_NICKNAME_WARNING.MESSAGE,
-      );
+      )
     }
   }
 }

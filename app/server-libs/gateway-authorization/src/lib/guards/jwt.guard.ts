@@ -1,48 +1,48 @@
-import { ExecutionContext, Inject, Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { ValidateInput, AuthServiceObservableContract } from '@org/grpc-types';
-import { AUTH_MESSAGES } from '@org/validation-messages';
-import { firstValueFrom } from 'rxjs';
+import { ExecutionContext, Inject, Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
+import { ValidateInput, AuthServiceObservableContract } from '@org/grpc-types'
+import { AUTH_MESSAGES } from '@org/validation-messages'
+import { firstValueFrom } from 'rxjs'
 
-import { getSessionUtil } from '../utils/get-session.util.js';
+import { getSessionUtil } from '../utils/get-session.util.js'
 
-import type { ClientGrpc } from '@nestjs/microservices';
+import type { ClientGrpc } from '@nestjs/microservices'
 
 @Injectable()
 export class AuthJWTGuard extends AuthGuard('jwt') implements OnModuleInit {
-  private authService!: AuthServiceObservableContract;
+  private authService!: AuthServiceObservableContract
 
   constructor(@Inject('AUTH_CLIENT') private readonly client: ClientGrpc) {
-    super();
+    super()
   }
 
   onModuleInit(): void {
-    this.authService = this.client.getService('AuthService');
+    this.authService = this.client.getService('AuthService')
   }
 
   override async canActivate(context: ExecutionContext): Promise<boolean> {
-    await super.canActivate(context);
+    await super.canActivate(context)
 
-    const request = context.switchToHttp().getRequest();
-    const authHeader = request.headers.authorization;
+    const request = context.switchToHttp().getRequest()
+    const authHeader = request.headers.authorization
 
     if (typeof authHeader !== 'string') {
-      throw new UnauthorizedException(AUTH_MESSAGES.TOKEN_INVALID);
+      throw new UnauthorizedException(AUTH_MESSAGES.TOKEN_INVALID)
     }
 
     if (!authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException(AUTH_MESSAGES.TOKEN_INVALID);
+      throw new UnauthorizedException(AUTH_MESSAGES.TOKEN_INVALID)
     }
 
-    const accessToken = authHeader.replace('Bearer ', '');
+    const accessToken = authHeader.replace('Bearer ', '')
 
     const validation: ValidateInput = {
       accessToken,
       session: getSessionUtil(context),
-    };
+    }
 
-    const payload = await firstValueFrom(this.authService.Validate(validation));
-    request.user = payload;
-    return true;
+    const payload = await firstValueFrom(this.authService.Validate(validation))
+    request.user = payload
+    return true
   }
 }

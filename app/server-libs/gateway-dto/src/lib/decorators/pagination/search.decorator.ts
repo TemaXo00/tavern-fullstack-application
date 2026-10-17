@@ -1,8 +1,8 @@
-import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-import { SHARED_CONFIG } from '@org/validation-config';
-import { SHARED_MESSAGES } from '@org/validation-messages';
-import { IsOptional, IsString, Length } from 'class-validator';
+import { applyDecorators } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
+import { SHARED_CONFIG } from '@org/validation-config'
+import { SHARED_MESSAGES } from '@org/validation-messages'
+import { IsOptional, IsString, Length } from 'class-validator'
 
 export function Search(): PropertyDecorator {
   return applyDecorators(
@@ -19,5 +19,5 @@ export function Search(): PropertyDecorator {
     Length(SHARED_CONFIG.SEARCH.MIN_LENGTH, SHARED_CONFIG.SEARCH.MAX_LENGTH, {
       message: SHARED_MESSAGES.PAGINATION_SEARCH_VALIDATION.LENGTH,
     }),
-  );
+  )
 }

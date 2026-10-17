@@ -1,1 +1,1 @@
-export * from './lib/auth-token-feature.module';
+export * from './lib/auth-token-feature.module'

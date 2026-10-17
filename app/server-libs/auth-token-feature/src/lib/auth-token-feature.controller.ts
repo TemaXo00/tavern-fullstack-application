@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
-import { GrpcMethod } from '@nestjs/microservices';
+import { Controller } from '@nestjs/common'
+import { GrpcMethod } from '@nestjs/microservices'
 
-import { AuthTokenFeatureService } from './auth-token-feature.service';
+import { AuthTokenFeatureService } from './auth-token-feature.service'
 
 import type {
   AllTokensOutput,
@@ -13,7 +13,7 @@ import type {
   TokenByIdInput,
   TokenOutput,
   TokenServiceContract,
-} from '@org/grpc-types';
+} from '@org/grpc-types'
 
 @Controller()
 export class AuthTokenFeatureController implements TokenServiceContract {
@@ -21,26 +21,26 @@ export class AuthTokenFeatureController implements TokenServiceContract {
 
   @GrpcMethod('TokenService', 'GetTokensWithPagination')
   async GetTokensWithPagination(data: GetTokensInput): Promise<AllTokensOutput> {
-    return await this.service.GetTokensWithPagination(data);
+    return await this.service.GetTokensWithPagination(data)
   }
 
   @GrpcMethod('TokenService', 'GetTokenById')
   async GetTokenById(data: TokenByIdInput): Promise<TokenOutput> {
-    return await this.service.GetTokenById(data);
+    return await this.service.GetTokenById(data)
   }
 
   @GrpcMethod('TokenService', 'SetTokenRevoked')
   async SetTokenRevoked(data: RevokeTokenInput): Promise<TokenOutput> {
-    return await this.service.SetTokenRevoked(data);
+    return await this.service.SetTokenRevoked(data)
   }
 
   @GrpcMethod('TokenService', 'DeleteTokenById')
   async DeleteTokenById(data: DeleteTokenInput): Promise<TokenOutput> {
-    return await this.service.DeleteTokenById(data);
+    return await this.service.DeleteTokenById(data)
   }
 
   @GrpcMethod('TokenService', 'DeleteAllNotActiveTokens')
   async DeleteAllNotActiveTokens(data: DeleteAllNotActiveTokensInput): Promise<Empty> {
-    return await this.service.DeleteAllNotActiveTokens(data);
+    return await this.service.DeleteAllNotActiveTokens(data)
   }
 }

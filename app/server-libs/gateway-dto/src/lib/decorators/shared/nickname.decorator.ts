@@ -1,8 +1,8 @@
-import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-import { PROFILE_CONFIG } from '@org/validation-config';
-import { PROFILE_MESSAGES } from '@org/validation-messages';
-import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { applyDecorators } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
+import { PROFILE_CONFIG } from '@org/validation-config'
+import { PROFILE_MESSAGES } from '@org/validation-messages'
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
 
 export function Nickname(): PropertyDecorator {
   return applyDecorators(
@@ -22,5 +22,5 @@ export function Nickname(): PropertyDecorator {
     MaxLength(PROFILE_CONFIG.NICKNAME.MAX_LENGTH, {
       message: PROFILE_MESSAGES.NICKNAME_VALIDATION.MAX_LENGTH,
     }),
-  );
+  )
 }

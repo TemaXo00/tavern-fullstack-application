@@ -1,13 +1,13 @@
-import { status } from '@grpc/grpc-js';
-import { Injectable } from '@nestjs/common';
-import { RpcException } from '@nestjs/microservices';
-import { Session, Token, User } from '@org/auth-database';
-import { Roles } from '@org/enums';
-import { StringValidationUtil } from '@org/shared-utils';
-import { AUTH_CONFIG } from '@org/validation-config';
-import { AUTH_MESSAGES } from '@org/validation-messages';
+import { status } from '@grpc/grpc-js'
+import { Injectable } from '@nestjs/common'
+import { RpcException } from '@nestjs/microservices'
+import { Session, Token, User } from '@org/auth-database'
+import { Roles } from '@org/enums'
+import { StringValidationUtil } from '@org/shared-utils'
+import { AUTH_CONFIG } from '@org/validation-config'
+import { AUTH_MESSAGES } from '@org/validation-messages'
 
-import { AuthDatabaseUtil } from './database.util';
+import { AuthDatabaseUtil } from './database.util'
 
 @Injectable()
 export class AuthValidateUtil {
@@ -19,73 +19,73 @@ export class AuthValidateUtil {
   // EMAIL Validation
 
   async validateRegisterEmailExists(email: string): Promise<void> {
-    const isExists = await this.dbUtil.searchUserByEmail(email);
+    const isExists = await this.dbUtil.searchUserByEmail(email)
 
     if (isExists) {
       throw new RpcException({
         message: AUTH_MESSAGES.USER_WITH_EMAIL_EXISTS,
         code: status.ALREADY_EXISTS,
-      });
+      })
     }
   }
 
   async validateEmailFound(email: string): Promise<User> {
-    const isExists = await this.dbUtil.searchUserByEmail(email);
+    const isExists = await this.dbUtil.searchUserByEmail(email)
 
     if (!isExists) {
       throw new RpcException({
         message: AUTH_MESSAGES.USER_NOT_FOUND,
         code: status.NOT_FOUND,
-      });
+      })
     }
 
-    return isExists;
+    return isExists
   }
 
   async validateEmailNotExists(email: string): Promise<void> {
-    const exists = await this.dbUtil.searchUserByEmail(email);
+    const exists = await this.dbUtil.searchUserByEmail(email)
     if (exists) {
       throw new RpcException({
         message: AUTH_MESSAGES.USER_WITH_EMAIL_EXISTS,
         code: status.ALREADY_EXISTS,
-      });
+      })
     }
   }
 
   // USER Validation
 
   async validateUserExists(id: string): Promise<User> {
-    const user = await this.dbUtil.searchUserById(id);
+    const user = await this.dbUtil.searchUserById(id)
 
     if (!user) {
       throw new RpcException({
         message: AUTH_MESSAGES.USER_NOT_FOUND,
         code: status.NOT_FOUND,
-      });
+      })
     }
 
-    return user;
+    return user
   }
 
   async validateUserCanBePromoted(id: string): Promise<void> {
-    const user = await this.validateUserExists(id);
+    const user = await this.validateUserExists(id)
 
     if (user.role === 'ADMIN') {
       throw new RpcException({
         message: AUTH_MESSAGES.CANNOT_PROMOTE_ADMIN,
         code: status.INVALID_ARGUMENT,
-      });
+      })
     }
 
-    const now = new Date();
-    const oneYear = new Date(user.createdAt);
-    oneYear.setFullYear(oneYear.getFullYear() + 1);
+    const now = new Date()
+    const oneYear = new Date(user.createdAt)
+    oneYear.setFullYear(oneYear.getFullYear() + 1)
 
     if (now <= oneYear) {
       throw new RpcException({
         message: AUTH_MESSAGES.CANNOT_PROMOTE_USER,
         code: status.ABORTED,
-      });
+      })
     }
   }
 
@@ -94,7 +94,7 @@ export class AuthValidateUtil {
       throw new RpcException({
         message: AUTH_MESSAGES.USER_NOT_MODERATOR,
         code: status.CANCELLED,
-      });
+      })
     }
   }
 
@@ -103,14 +103,14 @@ export class AuthValidateUtil {
       throw new RpcException({
         message: AUTH_MESSAGES.CANNOT_CNANGE_ADMIN,
         code: status.PERMISSION_DENIED,
-      });
+      })
     }
 
     if (payloadRole === userRole) {
       throw new RpcException({
         message: AUTH_MESSAGES.CANNOT_CHANGE_SIMILAR,
         code: status.PERMISSION_DENIED,
-      });
+      })
     }
   }
 
@@ -119,7 +119,7 @@ export class AuthValidateUtil {
       throw new RpcException({
         message: AUTH_MESSAGES.USER_NOT_BLOCKED,
         code: status.FAILED_PRECONDITION,
-      });
+      })
     }
   }
 
@@ -128,37 +128,37 @@ export class AuthValidateUtil {
       throw new RpcException({
         message: AUTH_MESSAGES.INVALID_BLOCK_DATE,
         code: status.INVALID_ARGUMENT,
-      });
+      })
     }
     if (blockedUntil <= new Date()) {
       throw new RpcException({
         message: AUTH_MESSAGES.BLOCK_PREVIOUS_DATE,
         code: status.INVALID_ARGUMENT,
-      });
+      })
     }
-    const maxBlock = new Date();
-    maxBlock.setFullYear(maxBlock.getFullYear() + AUTH_CONFIG.BLOCK.MAX_DATE_YEAR);
+    const maxBlock = new Date()
+    maxBlock.setFullYear(maxBlock.getFullYear() + AUTH_CONFIG.BLOCK.MAX_DATE_YEAR)
     if (blockedUntil > maxBlock) {
       throw new RpcException({
         message: AUTH_MESSAGES.BLOCK_TOO_FAR,
         code: status.INVALID_ARGUMENT,
-      });
+      })
     }
   }
 
   // SESSION Validation
 
   async validateSessionExists(sessionId: string): Promise<Session> {
-    const session = await this.dbUtil.getSessionById(sessionId);
+    const session = await this.dbUtil.getSessionById(sessionId)
 
     if (!session) {
       throw new RpcException({
         message: AUTH_MESSAGES.SESSION_NOT_FOUND,
         code: status.UNAUTHENTICATED,
-      });
+      })
     }
 
-    return session;
+    return session
   }
 
   validateNotCurrentSession(payloadSession: string, neededSession: string): void {
@@ -166,7 +166,7 @@ export class AuthValidateUtil {
       throw new RpcException({
         message: AUTH_MESSAGES.CURRENT_SESSION_DELETE,
         code: status.INVALID_ARGUMENT,
-      });
+      })
     }
   }
 
@@ -175,63 +175,63 @@ export class AuthValidateUtil {
       throw new RpcException({
         message: AUTH_MESSAGES.SESSION_DELETE_FAILED,
         code: status.INVALID_ARGUMENT,
-      });
+      })
     }
   }
 
   async validatePermissionToDeleteSession(sessionId: string): Promise<void> {
-    const userSession = await this.validateSessionExists(sessionId);
-    const deletePermited = new Date();
-    deletePermited.setDate(deletePermited.getDate() - AUTH_CONFIG.SESSION.DELETE_PERMISSION_DAYS);
+    const userSession = await this.validateSessionExists(sessionId)
+    const deletePermited = new Date()
+    deletePermited.setDate(deletePermited.getDate() - AUTH_CONFIG.SESSION.DELETE_PERMISSION_DAYS)
     if (userSession.createdAt > deletePermited) {
       throw new RpcException({
         message: AUTH_MESSAGES.SESSION_DELETE_FAILED,
         code: status.PERMISSION_DENIED,
-      });
+      })
     }
   }
 
   // TOKEN Validation
 
   async validateTokenExisting(email: string): Promise<boolean> {
-    return !!(await this.dbUtil.searchTokenByEmail(email));
+    return !!(await this.dbUtil.searchTokenByEmail(email))
   }
 
   async validateTokenFound(value: string, format: 'email' | 'id'): Promise<Token> {
-    const date = new Date();
+    const date = new Date()
 
-    let token: Token | null;
+    let token: Token | null
 
     if (format === 'id') {
-      this.stringUtil.validateId(value);
-      token = await this.dbUtil.searchTokenById(value);
+      this.stringUtil.validateId(value)
+      token = await this.dbUtil.searchTokenById(value)
     } else {
-      this.stringUtil.validateEmail(value);
-      token = await this.dbUtil.searchTokenByEmail(value);
+      this.stringUtil.validateEmail(value)
+      token = await this.dbUtil.searchTokenByEmail(value)
     }
 
     if (!token) {
       throw new RpcException({
         message: AUTH_MESSAGES.TOKEN_NOT_FOUND,
         code: status.NOT_FOUND,
-      });
+      })
     }
 
     if (token.state === 'USED') {
       throw new RpcException({
         message: AUTH_MESSAGES.TOKEN_USED,
         code: status.ALREADY_EXISTS,
-      });
+      })
     }
 
     if (token.expiresAt <= date) {
-      await this.dbUtil.updateTokenState(token.id, 'EXPIRED');
+      await this.dbUtil.updateTokenState(token.id, 'EXPIRED')
       throw new RpcException({
         message: AUTH_MESSAGES.TOKEN_EXPIRED,
         code: status.ALREADY_EXISTS,
-      });
+      })
     }
 
-    return token;
+    return token
   }
 }

@@ -1,16 +1,16 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
-import { RedisModule } from '@nestjs-modules/ioredis';
-import { AuthDatabaseModule } from '@org/auth-database';
+import { Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { JwtModule } from '@nestjs/jwt'
+import { RedisModule } from '@nestjs-modules/ioredis'
+import { AuthDatabaseModule } from '@org/auth-database'
 
-import { AuthCoreAuthorizeUtil } from './utils/auth.util';
-import { AuthCoreCacheUtil } from './utils/cache.util';
-import { AuthCoreDatabaseUtil } from './utils/database.util';
-import { AuthCoreJWTUtil } from './utils/jwt.util';
-import { AuthCoreValidateUtil } from './utils/validate.util';
+import { AuthCoreAuthorizeUtil } from './utils/auth.util'
+import { AuthCoreCacheUtil } from './utils/cache.util'
+import { AuthCoreDatabaseUtil } from './utils/database.util'
+import { AuthCoreJWTUtil } from './utils/jwt.util'
+import { AuthCoreValidateUtil } from './utils/validate.util'
 
-const UTILS = [AuthCoreAuthorizeUtil, AuthCoreCacheUtil, AuthCoreJWTUtil, AuthCoreDatabaseUtil, AuthCoreValidateUtil];
+const UTILS = [AuthCoreAuthorizeUtil, AuthCoreCacheUtil, AuthCoreJWTUtil, AuthCoreDatabaseUtil, AuthCoreValidateUtil]
 
 @Module({
   imports: [

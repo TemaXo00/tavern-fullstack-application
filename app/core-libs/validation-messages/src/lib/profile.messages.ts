@@ -1,5 +1,5 @@
-import { Actions, ActivityType } from '@org/enums';
-import { PROFILE_CONFIG } from '@org/validation-config';
+import { Actions, ActivityType } from '@org/enums'
+import { PROFILE_CONFIG } from '@org/validation-config'
 
 export const PROFILE_MESSAGES = {
   UPDATE_ACITIVITY_WARNING: {
@@ -14,43 +14,43 @@ export const PROFILE_MESSAGES = {
   CREATE: {
     CONTEXT: 'Create Profile',
     MESSAGE: (userId: string): string => {
-      return `userId: ${userId}`;
+      return `userId: ${userId}`
     },
   },
   UNBLOCK: {
     CONTEXT: 'Update Status',
     MESSAGE: (userId: string): string => {
-      return `User: ${userId}`;
+      return `User: ${userId}`
     },
   },
   INACTIVE: {
     CONTEXT: 'Update activity',
     MESSAGE: (userId: string): string => {
-      return `User with ID ${userId} deactivated`;
+      return `User with ID ${userId} deactivated`
     },
   },
   BLOCK_USER: {
     LOG_METHOD: 'Block',
     MESSAGE: (dateFrom: Date, dateTo: Date, reason: string): string => {
-      return `The user blocked from ${dateFrom.toISOString()} to ${dateTo.toISOString()}. Reason: ${reason}`;
+      return `The user blocked from ${dateFrom.toISOString()} to ${dateTo.toISOString()}. Reason: ${reason}`
     },
   },
   ACTIVATE_BY_ADMIN: {
     CONTEXT: 'Update activity',
     MESSAGE: (userId: string, adminId: string): string => {
-      return `User with ID ${userId} activated by admin with ID ${adminId}`;
+      return `User with ID ${userId} activated by admin with ID ${adminId}`
     },
   },
   UPDATE_EMAIL: {
     CONTEXT: 'Update email',
     MESSAGE: (userId: string, newEmail: string): string => {
-      return `User with id ${userId} changed email to ${newEmail}`;
+      return `User with id ${userId} changed email to ${newEmail}`
     },
   },
   DELETE_USER: {
     CONTEXT: 'Delete User',
     MESSAGE: (userId: string): string => {
-      return `User with id ${userId} deleted successfully`;
+      return `User with id ${userId} deleted successfully`
     },
   },
   EARLY_UNBLOCK: {
@@ -92,4 +92,4 @@ export const PROFILE_MESSAGES = {
     NOT_EMPTY: 'Reputation should not be empty',
     TYPE: 'Reputation should be a number',
   },
-} as const;
+} as const

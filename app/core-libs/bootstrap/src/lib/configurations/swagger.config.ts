@@ -1,13 +1,13 @@
-import { DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger'
 
-import { AUTHOR_GITHUB, AUTHOR_MAIL, AUTHOR_NAME, SWAGGER_PATH } from './info.config.js';
+import { AUTHOR_GITHUB, AUTHOR_MAIL, AUTHOR_NAME, SWAGGER_PATH } from './info.config.js'
 
 export const swaggerConfig = new DocumentBuilder()
   .setTitle('API')
   .setContact(AUTHOR_NAME, AUTHOR_GITHUB, AUTHOR_MAIL)
   .addBearerAuth()
   .setOpenAPIVersion('3.2.0')
-  .build();
+  .build()
 
 export const swaggerUIConfig: SwaggerCustomOptions = {
   swaggerOptions: {
@@ -26,11 +26,11 @@ export const swaggerUIConfig: SwaggerCustomOptions = {
         head: 7,
         options: 8,
         trace: 9,
-      };
-      const methodA = a.get('method').toLowerCase();
-      const methodB = b.get('method').toLowerCase();
+      }
+      const methodA = a.get('method').toLowerCase()
+      const methodB = b.get('method').toLowerCase()
 
-      return (methodOrder[methodA] || 99) - (methodOrder[methodB] || 99);
+      return (methodOrder[methodA] || 99) - (methodOrder[methodB] || 99)
     },
     tagsSorter: 'alpha',
     tryItOutEnabled: true,
@@ -54,4 +54,4 @@ export const swaggerUIConfig: SwaggerCustomOptions = {
     `,
   jsonDocumentUrl: `${SWAGGER_PATH}/swagger.json`,
   yamlDocumentUrl: `${SWAGGER_PATH}/swagger.yaml`,
-};
+}

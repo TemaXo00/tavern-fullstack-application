@@ -1,11 +1,11 @@
 export interface SessionLocalNameBaseInput {
-  localName: string;
+  localName: string
 }
 
 export interface AllSessionByUserBaseInput {
-  userId: string;
+  userId: string
 }
 
 export interface DeleteSessionByIdBaseInput {
-  sessionId: string;
+  sessionId: string
 }

@@ -1,4 +1,4 @@
-import { SHARED_CONFIG } from '@org/validation-config';
+import { SHARED_CONFIG } from '@org/validation-config'
 
 export const SHARED_MESSAGES = {
   INVALID_DATE: 'Invalid date',
@@ -7,7 +7,7 @@ export const SHARED_MESSAGES = {
   INVALID_DATA: 'Data',
   INVALID_SLUG: 'Slug',
   RPC_ERROR: (arg: string): string => {
-    return `Invalid ${arg}`;
+    return `Invalid ${arg}`
   },
   PAGINATION_LIMIT_VALIDATION: {
     TYPE: 'Limit should be a number',
@@ -36,4 +36,4 @@ export const SHARED_MESSAGES = {
     MIN_LENGTH: `Minimal length of name is ${SHARED_CONFIG.NAME.MIN_LENGTH}`,
     MAX_LENGTH: `Maximum length of name is ${SHARED_CONFIG.NAME.MAX_LENGTH}`,
   },
-} as const;
+} as const

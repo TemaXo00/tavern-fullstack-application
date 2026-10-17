@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { AuthValidateService } from '@org/auth-authorization-core';
-import { Roles } from '@org/enums';
+import { Injectable } from '@nestjs/common'
+import { AuthValidateService } from '@org/auth-authorization-core'
+import { Roles } from '@org/enums'
 import {
   type ActivityServiceContract,
   type GetActivityByNicknameInput,
   type GetMyActivityInput,
   type PaginatedActivityOutput,
-} from '@org/grpc-types';
-import { ProfileDatabaseUtil, ProfileValidationUtil } from '@org/profile-utils';
+} from '@org/grpc-types'
+import { ProfileDatabaseUtil, ProfileValidationUtil } from '@org/profile-utils'
 
 @Injectable()
 export class ProfileActivityFeatureService implements ActivityServiceContract {
@@ -18,14 +18,14 @@ export class ProfileActivityFeatureService implements ActivityServiceContract {
   ) {}
 
   async GetMyLogs(data: GetMyActivityInput): Promise<PaginatedActivityOutput> {
-    const payload = await this.validate.Validate(data.validation);
-    const profile = await this.validationUtil.checkUserExisting('by-id', payload.id);
-    return await this.dbUtil.getActivityPaginatedLogs(profile.id, data.pagination);
+    const payload = await this.validate.Validate(data.validation)
+    const profile = await this.validationUtil.checkUserExisting('by-id', payload.id)
+    return await this.dbUtil.getActivityPaginatedLogs(profile.id, data.pagination)
   }
 
   async GetActivityByNickname(data: GetActivityByNicknameInput): Promise<PaginatedActivityOutput> {
-    await this.validate.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR]);
-    const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname);
-    return await this.dbUtil.getActivityPaginatedLogs(profile.id, data.pagination);
+    await this.validate.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR])
+    const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname)
+    return await this.dbUtil.getActivityPaginatedLogs(profile.id, data.pagination)
   }
 }

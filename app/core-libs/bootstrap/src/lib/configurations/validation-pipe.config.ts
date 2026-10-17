@@ -5,4 +5,4 @@ export const validationPipeConfig = {
   transformOptions: {
     enableImplicitConversion: true,
   },
-};
+}

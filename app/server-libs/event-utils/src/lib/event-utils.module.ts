@@ -1,16 +1,16 @@
-import { Global, Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ClientProviderOptions, ClientsModule } from '@nestjs/microservices';
-import { RedisModule } from '@nestjs-modules/ioredis';
-import { EventDatabaseModule } from '@org/event-database';
-import { RmqModule, RmqService } from '@org/rmq-config';
-import { SharedUtilsModule } from '@org/shared-utils';
+import { Global, Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ClientProviderOptions, ClientsModule } from '@nestjs/microservices'
+import { RedisModule } from '@nestjs-modules/ioredis'
+import { EventDatabaseModule } from '@org/event-database'
+import { RmqModule, RmqService } from '@org/rmq-config'
+import { SharedUtilsModule } from '@org/shared-utils'
 
-import { EVENTS_UTILS } from './utils/events/main';
-import { RMQ_UTILS } from './utils/rmq/main';
-import { TAG_UTILS } from './utils/tag/main';
+import { EVENTS_UTILS } from './utils/events/main'
+import { RMQ_UTILS } from './utils/rmq/main'
+import { TAG_UTILS } from './utils/tag/main'
 
-const queues = ['log'];
+const queues = ['log']
 
 @Global()
 @Module({
@@ -33,7 +33,7 @@ const queues = ['log'];
         name: `${queue.toUpperCase()}_CLIENT`,
         imports: [RmqModule],
         useFactory: (rmq: RmqService): ClientProviderOptions => {
-          return rmq.getRmqConfig(queue);
+          return rmq.getRmqConfig(queue)
         },
         inject: [RmqService],
       })),

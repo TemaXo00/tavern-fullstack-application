@@ -1,14 +1,14 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 
-import type { ResponseType } from '@org/response-types';
+import type { ResponseType } from '@org/response-types'
 
 @Injectable()
 export class ResponseInterceptor<T> implements NestInterceptor<T, ResponseType<T>> {
   intercept(context: ExecutionContext, next: CallHandler): Observable<ResponseType<T>> {
-    const request = context.switchToHttp().getRequest();
-    const startedAt = Date.now();
+    const request = context.switchToHttp().getRequest()
+    const startedAt = Date.now()
 
     return next.handle().pipe(
       map((data) => ({
@@ -19,6 +19,6 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, ResponseType<T
         data,
         duration: `${Date.now() - startedAt}ms`,
       })),
-    );
+    )
   }
 }

@@ -1,15 +1,15 @@
-import { ofetch } from 'ofetch';
+import { ofetch } from 'ofetch'
 
-import { getApiHooks } from './api-hooks.js';
-import { isFetchError } from './utils/is-fetch-error.js';
+import { getApiHooks } from './api-hooks.js'
+import { isFetchError } from './utils/is-fetch-error.js'
 
-import type { ResponseType } from '@org/response-types';
-import type { FetchOptions } from 'ofetch';
+import type { ResponseType } from '@org/response-types'
+import type { FetchOptions } from 'ofetch'
 
-export const API_URL = '/api';
+export const API_URL = '/api'
 
 export interface RequestOptions extends FetchOptions<'json'> {
-  skipAuthRefresh?: boolean;
+  skipAuthRefresh?: boolean
 }
 
 export const apiConfig = ofetch.create({
@@ -22,43 +22,39 @@ export const apiConfig = ofetch.create({
   retryDelay: 2000,
 
   onRequest({ options }) {
-    const accessToken = getApiHooks().getAccessToken?.();
+    const accessToken = getApiHooks().getAccessToken?.()
 
     if (accessToken) {
-      options.headers.set('Authorization', `Bearer ${accessToken}`);
+      options.headers.set('Authorization', `Bearer ${accessToken}`)
     }
   },
 
   onResponse({ response }) {
     if (response.status >= 200 && response.status < 300) {
-      const body = response._data as ResponseType<unknown>;
-      response._data = body.data;
+      const body = response._data as ResponseType<unknown>
+      response._data = body.data
     }
   },
-});
+})
 
-const isUnauthorized = (error: unknown): boolean =>
-  isFetchError(error) && error.response?.status === 401;
+const isUnauthorized = (error: unknown): boolean => isFetchError(error) && error.response?.status === 401
 
-export async function request<T>(
-  path: string,
-  options: RequestOptions = {},
-): Promise<T> {
-  const { skipAuthRefresh, ...fetchOptions } = options;
+export async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  const { skipAuthRefresh, ...fetchOptions } = options
 
   try {
-    return await apiConfig<T>(path, fetchOptions);
+    return await apiConfig<T>(path, fetchOptions)
   } catch (error) {
     if (skipAuthRefresh || !isUnauthorized(error)) {
-      throw error;
+      throw error
     }
 
-    const { onUnauthorized } = getApiHooks();
+    const { onUnauthorized } = getApiHooks()
 
     if (!onUnauthorized || !(await onUnauthorized(error))) {
-      throw error;
+      throw error
     }
 
-    return await apiConfig<T>(path, fetchOptions);
+    return await apiConfig<T>(path, fetchOptions)
   }
 }

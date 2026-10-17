@@ -12,7 +12,7 @@ export const PROFILE_PROFILE_ROUTES = {
   },
   GET_PROFILES_BASE: 'base',
   GET_PROFILES_ADVANCED: 'advanced',
-} as const;
+} as const
 
 export const PROFILE_ACTIVITY_ROUTES = {
   BASE_URL: 'profile/activity',
@@ -21,7 +21,7 @@ export const PROFILE_ACTIVITY_ROUTES = {
     PATH: ':nickname/logs',
     PARAM: 'nickname',
   },
-} as const;
+} as const
 
 export const PROFILE_REPUTATION_ROUTES = {
   BASE_URL: 'profile/reputation',
@@ -30,4 +30,4 @@ export const PROFILE_REPUTATION_ROUTES = {
     PATH: ':nickname/logs',
     PARAM: 'nickname',
   },
-} as const;
+} as const

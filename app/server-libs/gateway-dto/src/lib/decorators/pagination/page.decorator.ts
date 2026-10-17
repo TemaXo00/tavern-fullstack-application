@@ -1,7 +1,7 @@
-import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-import { SHARED_MESSAGES } from '@org/validation-messages';
-import { IsNumber, IsOptional, Min } from 'class-validator';
+import { applyDecorators } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
+import { SHARED_MESSAGES } from '@org/validation-messages'
+import { IsNumber, IsOptional, Min } from 'class-validator'
 
 export function Page(): PropertyDecorator {
   return applyDecorators(
@@ -16,5 +16,5 @@ export function Page(): PropertyDecorator {
     IsOptional(),
     IsNumber({}, { message: SHARED_MESSAGES.PAGINATION_PAGE_VALIDATION.TYPE }),
     Min(1, { message: SHARED_MESSAGES.PAGINATION_PAGE_VALIDATION.MIN }),
-  );
+  )
 }

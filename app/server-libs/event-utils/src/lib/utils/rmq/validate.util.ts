@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { RmqLoggerUtil } from '@org/shared-utils';
-import { EVENT_MESSAGES } from '@org/validation-messages';
+import { Injectable } from '@nestjs/common'
+import { RmqLoggerUtil } from '@org/shared-utils'
+import { EVENT_MESSAGES } from '@org/validation-messages'
 
-import { EventRmqDatabaseUtil } from './database.util';
+import { EventRmqDatabaseUtil } from './database.util'
 
 @Injectable()
 export class EventRmqValidateUtil {
@@ -17,10 +17,10 @@ export class EventRmqValidateUtil {
         EVENT_MESSAGES.USER_SNAPSHOT_EXISTING_ERROR.CONTEXT,
         EVENT_MESSAGES.USER_SNAPSHOT_EXISTING_ERROR.METHOD,
         EVENT_MESSAGES.USER_SNAPSHOT_EXISTING_ERROR.MESSAGE(id),
-      );
-      return false;
+      )
+      return false
     }
-    return true;
+    return true
   }
 
   async isNicknameFree(nickname: string): Promise<boolean> {
@@ -29,9 +29,9 @@ export class EventRmqValidateUtil {
         EVENT_MESSAGES.USER_SNAPSHOT_NICKNAME_EXISTING_ERROR.CONTEXT,
         EVENT_MESSAGES.USER_SNAPSHOT_NICKNAME_EXISTING_ERROR.METHOD,
         EVENT_MESSAGES.USER_SNAPSHOT_NICKNAME_EXISTING_ERROR.MESSAGE(nickname),
-      );
-      return false;
+      )
+      return false
     }
-    return true;
+    return true
   }
 }

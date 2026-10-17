@@ -1,3 +1,3 @@
-import { EventEventsDatabaseUtil } from './database.util';
+import { EventEventsDatabaseUtil } from './database.util'
 
-export const EVENTS_UTILS = [EventEventsDatabaseUtil];
+export const EVENTS_UTILS = [EventEventsDatabaseUtil]

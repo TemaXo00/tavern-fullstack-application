@@ -1,28 +1,28 @@
-import { status } from '@grpc/grpc-js';
-import { Injectable } from '@nestjs/common';
-import { RpcException } from '@nestjs/microservices';
-import { AUTH_MESSAGES } from '@org/validation-messages';
+import { status } from '@grpc/grpc-js'
+import { Injectable } from '@nestjs/common'
+import { RpcException } from '@nestjs/microservices'
+import { AUTH_MESSAGES } from '@org/validation-messages'
 
-import { AuthCoreDatabaseUtil } from './database.util';
+import { AuthCoreDatabaseUtil } from './database.util'
 
-import type { Session, User } from '@org/auth-database';
-import type { SessionInput } from '@org/grpc-types';
+import type { Session, User } from '@org/auth-database'
+import type { SessionInput } from '@org/grpc-types'
 
 @Injectable()
 export class AuthCoreValidateUtil {
   constructor(private readonly dbUtil: AuthCoreDatabaseUtil) {}
 
   async validateUserWithSessionExists(id: string, sessionId: string): Promise<{ user: User; session: Session }> {
-    const user = await this.dbUtil.getUserWithSession(id, sessionId);
+    const user = await this.dbUtil.getUserWithSession(id, sessionId)
 
     if (!user) {
       throw new RpcException({
         message: AUTH_MESSAGES.USER_NOT_FOUND,
         code: status.NOT_FOUND,
-      });
+      })
     }
 
-    return user;
+    return user
   }
 
   validateSessionsSimilar(currSession: SessionInput, newSession: SessionInput): void {
@@ -34,7 +34,7 @@ export class AuthCoreValidateUtil {
       throw new RpcException({
         message: AUTH_MESSAGES.INVALID_SESSION,
         code: status.UNAUTHENTICATED,
-      });
+      })
     }
   }
 
@@ -44,28 +44,28 @@ export class AuthCoreValidateUtil {
     blockedUntil: Date | null,
     blockReason: string | null,
   ): Promise<void> {
-    const date = new Date();
+    const date = new Date()
 
     if (isBlocked && blockedUntil && blockReason) {
       if (blockedUntil >= date) {
-        await this.dbUtil.removeAllSessions(id);
+        await this.dbUtil.removeAllSessions(id)
         throw new RpcException({
           message: AUTH_MESSAGES.USER_BLOCKED(blockedUntil, blockReason),
           code: status.UNAUTHENTICATED,
-        });
+        })
       } else {
-        await this.dbUtil.unblockUser(id);
+        await this.dbUtil.unblockUser(id)
       }
     }
   }
 
   async validateUserActive(userId: string, isActive: boolean): Promise<void> {
     if (!isActive) {
-      await this.dbUtil.removeAllSessions(userId);
+      await this.dbUtil.removeAllSessions(userId)
       throw new RpcException({
         message: AUTH_MESSAGES.USER_INACTIVE,
         code: status.UNAUTHENTICATED,
-      });
+      })
     }
   }
 }

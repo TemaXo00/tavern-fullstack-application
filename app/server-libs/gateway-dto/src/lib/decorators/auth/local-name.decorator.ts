@@ -1,8 +1,8 @@
-import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-import { AUTH_CONFIG } from '@org/validation-config';
-import { AUTH_MESSAGES } from '@org/validation-messages';
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { applyDecorators } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
+import { AUTH_CONFIG } from '@org/validation-config'
+import { AUTH_MESSAGES } from '@org/validation-messages'
+import { IsNotEmpty, IsString, Length } from 'class-validator'
 
 export function LocalName(): PropertyDecorator {
   return applyDecorators(
@@ -18,5 +18,5 @@ export function LocalName(): PropertyDecorator {
     Length(AUTH_CONFIG.LOCAL_NAME.MIN_LENGTH, AUTH_CONFIG.LOCAL_NAME.MAX_LENGTH, {
       message: AUTH_MESSAGES.LOCAL_NAME_VALIDATION.LENGTH,
     }),
-  );
+  )
 }

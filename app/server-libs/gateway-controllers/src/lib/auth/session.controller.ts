@@ -1,28 +1,28 @@
-import { Body, Inject, OnModuleInit, Param } from '@nestjs/common';
-import { Roles } from '@org/enums';
+import { Body, Inject, OnModuleInit, Param } from '@nestjs/common'
+import { Roles } from '@org/enums'
 import {
   DELETEProtectedMethod,
   GETProtectedMethod,
   HTTPController,
   PATCHProtectedMethod,
   ValidateInputParam,
-} from '@org/gateway-decorators';
-import { LocalNameDto } from '@org/gateway-dto';
-import { AUTH_SESSION_ROUTES } from '@org/routes-config';
-import { firstValueFrom } from 'rxjs';
+} from '@org/gateway-decorators'
+import { LocalNameDto } from '@org/gateway-dto'
+import { AUTH_SESSION_ROUTES } from '@org/routes-config'
+import { firstValueFrom } from 'rxjs'
 
-import type { ClientGrpc } from '@nestjs/microservices';
-import type { SessionServiceObservableContract, ValidateInput } from '@org/grpc-types';
-import type { AllSessionsOutput, SessionOutput } from '@org/shared-types';
+import type { ClientGrpc } from '@nestjs/microservices'
+import type { SessionServiceObservableContract, ValidateInput } from '@org/grpc-types'
+import type { AllSessionsOutput, SessionOutput } from '@org/shared-types'
 
 @HTTPController({ serviceName: 'Session', microserviceName: 'Auth' })
 export class SessionController implements OnModuleInit {
-  private sessionContract!: SessionServiceObservableContract;
+  private sessionContract!: SessionServiceObservableContract
 
   constructor(@Inject('AUTH_CLIENT') private readonly client: ClientGrpc) {}
 
   onModuleInit(): void {
-    this.sessionContract = this.client.getService<SessionServiceObservableContract>('SessionService');
+    this.sessionContract = this.client.getService<SessionServiceObservableContract>('SessionService')
   }
 
   @GETProtectedMethod({
@@ -35,7 +35,7 @@ export class SessionController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Param(AUTH_SESSION_ROUTES.GET_BY_USER.PARAM) userId: string,
   ): Promise<AllSessionsOutput> {
-    return await firstValueFrom(this.sessionContract.GetSessionsByUser({ validation, userId }));
+    return await firstValueFrom(this.sessionContract.GetSessionsByUser({ validation, userId }))
   }
 
   @GETProtectedMethod({
@@ -44,7 +44,7 @@ export class SessionController implements OnModuleInit {
     operationDesc: 'Returns all active sessions of the currently authenticated user.',
   })
   async getMySessions(@ValidateInputParam() validation: ValidateInput): Promise<AllSessionsOutput> {
-    return await firstValueFrom(this.sessionContract.GetMySessions({ validation }));
+    return await firstValueFrom(this.sessionContract.GetMySessions({ validation }))
   }
 
   @PATCHProtectedMethod({
@@ -62,7 +62,7 @@ export class SessionController implements OnModuleInit {
         validation,
         localName: dto.localName,
       }),
-    );
+    )
   }
 
   @DELETEProtectedMethod({
@@ -75,7 +75,7 @@ export class SessionController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Param(AUTH_SESSION_ROUTES.DELETE_SESSION_BY_ID.PARAM) sessionId: string,
   ): Promise<SessionOutput> {
-    return await firstValueFrom(this.sessionContract.DeleteSessionById({ validation, sessionId }));
+    return await firstValueFrom(this.sessionContract.DeleteSessionById({ validation, sessionId }))
   }
 
   @DELETEProtectedMethod({
@@ -84,6 +84,6 @@ export class SessionController implements OnModuleInit {
     operationDesc: 'Terminates all sessions of the current user except the one used to make this request.',
   })
   async deleteAllSessions(@ValidateInputParam() validation: ValidateInput): Promise<void> {
-    await firstValueFrom(this.sessionContract.DeleteAllSessions({ validation }));
+    await firstValueFrom(this.sessionContract.DeleteAllSessions({ validation }))
   }
 }

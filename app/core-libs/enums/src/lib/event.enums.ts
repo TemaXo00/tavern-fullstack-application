@@ -10,11 +10,11 @@ export const EVENT_STATUSES_TO_GRPC: Record<EventStatuses, number> = {
   PUBLISHED: 1,
   CANCELLED: 2,
   FINISHED: 3,
-} as const;
+} as const
 
 export const GRPC_TO_EVENT_STATUSES: Record<number, EventStatuses> = {
   0: EventStatuses.DRAFT,
   1: EventStatuses.PUBLISHED,
   2: EventStatuses.CANCELLED,
   3: EventStatuses.FINISHED,
-} as const;
+} as const

@@ -1,5 +1,5 @@
-import { Roles, TokenStates } from '@org/enums';
-import { AUTH_CONFIG } from '@org/validation-config';
+import { Roles, TokenStates } from '@org/enums'
+import { AUTH_CONFIG } from '@org/validation-config'
 
 export const AUTH_MESSAGES = {
   USER_NOT_FOUND: 'User not found',
@@ -10,7 +10,7 @@ export const AUTH_MESSAGES = {
   CANNOT_PROMOTE_USER: 'You cannot promote user, cause he registered less than 1 year ago',
   USER_NOT_MODERATOR: 'User not moderator',
   USER_BLOCKED: (blockedUntil: Date, reason: string): string => {
-    return `User blocked until ${blockedUntil.toDateString()}. Reason: ${reason}`;
+    return `User blocked until ${blockedUntil.toDateString()}. Reason: ${reason}`
   },
   USER_INACTIVE: 'User inactive',
   ACCESS_DENIED: 'Access denied',
@@ -81,4 +81,4 @@ export const AUTH_MESSAGES = {
     MIN_LENGTH: `Min length of email: ${AUTH_CONFIG.EMAIL.MIN_LENGTH} characters`,
     EMAIL: 'The email address must be in the correct format',
   },
-} as const;
+} as const

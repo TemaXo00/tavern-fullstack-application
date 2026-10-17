@@ -1,34 +1,34 @@
-import { PaginationBaseInput } from '../../shared/pagination.type.js';
+import { PaginationBaseInput } from '../../shared/pagination.type.js'
 
 export interface UserPaginationBaseInput extends PaginationBaseInput {
-  isBlocked?: boolean;
-  isActive?: boolean;
-  role?: number;
+  isBlocked?: boolean
+  isActive?: boolean
+  role?: number
 }
 
 export interface GetAllUsersBaseInput {
-  pagination: UserPaginationBaseInput;
+  pagination: UserPaginationBaseInput
 }
 
 export interface BlockUserBaseInput {
-  blockedUntil: Date;
-  blockReason: string;
+  blockedUntil: Date
+  blockReason: string
 }
 
 export interface ChangeEmailBaseInput {
-  newEmail: string;
+  newEmail: string
 }
 
 export interface ChangePasswordBaseInput {
-  oldPassword: string;
-  newPassword: string;
-  newPasswordConfirmation: string;
+  oldPassword: string
+  newPassword: string
+  newPasswordConfirmation: string
 }
 
 export interface UserDeleteBaseInput {
-  password: string;
+  password: string
 }
 
 export interface UserByIdBaseInput {
-  id: string;
+  id: string
 }

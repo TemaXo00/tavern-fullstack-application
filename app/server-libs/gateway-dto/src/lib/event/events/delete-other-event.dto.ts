@@ -1,8 +1,8 @@
-import { DeleteOtherEventSharedInput } from '@org/shared-types';
+import { DeleteOtherEventSharedInput } from '@org/shared-types'
 
-import { EventMessage } from '../../decorators/event/event-message.decorator.js';
+import { EventMessage } from '../../decorators/event/event-message.decorator.js'
 
 export class DeleteOtherEventDto implements DeleteOtherEventSharedInput {
   @EventMessage()
-  message: string;
+  message: string
 }

@@ -1,1 +1,1 @@
-export { default as AuthRegisterPage } from './lib/Page.vue';
+export { default as AuthRegisterPage } from './lib/Page.vue'

@@ -1,13 +1,13 @@
-import { PaginationBaseInput } from '../../shared/pagination.type.js';
+import { PaginationBaseInput } from '../../shared/pagination.type.js'
 
 export interface TokenPaginationBaseInput extends PaginationBaseInput {
-  state?: number;
+  state?: number
 }
 
 export interface GetTokensBaseInput {
-  pagination: TokenPaginationBaseInput;
+  pagination: TokenPaginationBaseInput
 }
 
 export interface TokenByIdBaseInput {
-  id: string;
+  id: string
 }

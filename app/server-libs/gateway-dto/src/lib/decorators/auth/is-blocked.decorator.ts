@@ -1,12 +1,12 @@
-import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-import { AUTH_MESSAGES } from '@org/validation-messages';
-import { isBoolean, IsNotEmpty, IsOptional } from 'class-validator';
+import { applyDecorators } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
+import { AUTH_MESSAGES } from '@org/validation-messages'
+import { isBoolean, IsNotEmpty, IsOptional } from 'class-validator'
 
 export function IsBlocked(options: { required: boolean }): PropertyDecorator {
   const requiredDecorator = options.required
     ? IsNotEmpty({ message: AUTH_MESSAGES.IS_BLOCKED_VALIDATION.NOT_EMPTY })
-    : IsOptional();
+    : IsOptional()
 
   return applyDecorators(
     ApiProperty({
@@ -17,5 +17,5 @@ export function IsBlocked(options: { required: boolean }): PropertyDecorator {
     }),
     requiredDecorator,
     isBoolean,
-  );
+  )
 }

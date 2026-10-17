@@ -1,7 +1,7 @@
-import { useAuthStore } from '@org/api-client';
-import { Roles } from '@org/enums';
-import { Component } from 'vue';
-import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '@org/api-client'
+import { Roles } from '@org/enums'
+import { Component } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -64,40 +64,40 @@ const router = createRouter({
       ],
     },
   ],
-});
+})
 
 router.beforeEach(async (to, from, next) => {
-  const auth = useAuthStore();
+  const auth = useAuthStore()
 
   if (!auth.initialized) {
-    await auth.init();
+    await auth.init()
   }
 
   if (to.meta.guestOnly && auth.isAuthenticated) {
-    return next('/');
+    return next('/')
   }
 
   if (to.meta.requiredAuth && !auth.isAuthenticated) {
     if (!auth.me) {
-      return next('/auth/login');
+      return next('/auth/login')
     }
   }
 
-  const requiredRoles = to.meta.requiredRoles as Roles[] | undefined;
+  const requiredRoles = to.meta.requiredRoles as Roles[] | undefined
   if (requiredRoles && requiredRoles.length > 0) {
-    const userRole = auth.me?.user.role;
+    const userRole = auth.me?.user.role
 
     if (userRole === undefined || !requiredRoles.includes(userRole)) {
-      return next('/');
+      return next('/')
     }
   }
 
-  next();
-});
+  next()
+})
 
 router.afterEach((to) => {
-  document.title = to.meta.title ? `TAVERN - ${to.meta.title}` : 'TAVERN';
-  window.scrollTo(0, 0);
-});
+  document.title = to.meta.title ? `TAVERN - ${to.meta.title}` : 'TAVERN'
+  window.scrollTo(0, 0)
+})
 
-export default router;
+export default router

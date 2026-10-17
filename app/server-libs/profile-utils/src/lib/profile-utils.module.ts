@@ -1,17 +1,17 @@
-import { Global, Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ClientProviderOptions, ClientsModule } from '@nestjs/microservices';
-import { RedisModule } from '@nestjs-modules/ioredis';
-import { ProfileDatabaseModule } from '@org/profile-database';
-import { RmqModule, RmqService } from '@org/rmq-config';
+import { Global, Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ClientProviderOptions, ClientsModule } from '@nestjs/microservices'
+import { RedisModule } from '@nestjs-modules/ioredis'
+import { ProfileDatabaseModule } from '@org/profile-database'
+import { RmqModule, RmqService } from '@org/rmq-config'
 
-import { ProfileCacheUtil } from './utils/cache-util';
-import { ProfileDatabaseUtil } from './utils/database.util';
-import { ProfileUpdateStatusHelper } from './utils/helpers/update-status.helpers';
-import { ProfileMapUtil } from './utils/map.util';
-import { ProfileMessagesUtil } from './utils/messsages.util';
-import { ProfileReputationUtil } from './utils/reputation.util';
-import { ProfileValidationUtil } from './utils/validation.util';
+import { ProfileCacheUtil } from './utils/cache-util'
+import { ProfileDatabaseUtil } from './utils/database.util'
+import { ProfileUpdateStatusHelper } from './utils/helpers/update-status.helpers'
+import { ProfileMapUtil } from './utils/map.util'
+import { ProfileMessagesUtil } from './utils/messsages.util'
+import { ProfileReputationUtil } from './utils/reputation.util'
+import { ProfileValidationUtil } from './utils/validation.util'
 
 const UTILS = [
   ProfileDatabaseUtil,
@@ -21,9 +21,9 @@ const UTILS = [
   ProfileMapUtil,
   ProfileCacheUtil,
   ProfileMessagesUtil,
-];
+]
 
-const queues: string[] = ['log', 'event'];
+const queues: string[] = ['log', 'event']
 
 @Global()
 @Module({
@@ -45,7 +45,7 @@ const queues: string[] = ['log', 'event'];
         name: `${queue.toUpperCase()}_CLIENT`,
         imports: [RmqModule],
         useFactory: (rmq: RmqService): ClientProviderOptions => {
-          return rmq.getRmqConfig(queue);
+          return rmq.getRmqConfig(queue)
         },
         inject: [RmqService],
       })),

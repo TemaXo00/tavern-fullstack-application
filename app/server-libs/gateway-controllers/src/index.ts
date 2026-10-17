@@ -1,1 +1,1 @@
-export * from './lib/gateway-controllers.module';
+export * from './lib/gateway-controllers.module'

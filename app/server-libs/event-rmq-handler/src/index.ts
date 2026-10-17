@@ -1,1 +1,1 @@
-export * from './lib/event-rmq-handler.module';
+export * from './lib/event-rmq-handler.module'

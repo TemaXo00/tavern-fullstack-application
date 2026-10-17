@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
-import { GrpcMethod } from '@nestjs/microservices';
+import { Controller } from '@nestjs/common'
+import { GrpcMethod } from '@nestjs/microservices'
 
-import { EventEventsFeatureService } from './event-events-feature.service';
+import { EventEventsFeatureService } from './event-events-feature.service'
 
 import type {
   CancelEventInput,
@@ -23,7 +23,7 @@ import type {
   PublishEventInput,
   SwitchOrganizerInput,
   UpdateEventDataInput,
-} from '@org/grpc-types';
+} from '@org/grpc-types'
 
 @Controller()
 export class EventEventsFeatureController implements EventEventsServiceContract {
@@ -31,86 +31,86 @@ export class EventEventsFeatureController implements EventEventsServiceContract 
 
   @GrpcMethod('EventService', 'GetPublicEvents')
   async GetPublicEvents(data: PaginatedPublicEventsInput): Promise<PaginatedPublicEventsOutput> {
-    return await this.service.GetPublicEvents(data);
+    return await this.service.GetPublicEvents(data)
   }
 
   @GrpcMethod('EventService', 'GetPrivateEvents')
   async GetPrivateEvents(data: PaginatedPrivateEventsInput): Promise<PaginatedPrivateEventsOutput> {
-    return await this.service.GetPrivateEvents(data);
+    return await this.service.GetPrivateEvents(data)
   }
 
   @GrpcMethod('EventService', 'GetMyEvents')
   async GetMyEvents(data: PaginatedPrivateEventsInput): Promise<PaginatedPrivateEventsOutput> {
-    return await this.service.GetMyEvents(data);
+    return await this.service.GetMyEvents(data)
   }
 
   @GrpcMethod('EventService', 'GetPublicUserEvents')
   async GetPublicUserEvents(data: GetPublicUserEventsInput): Promise<PaginatedPublicEventsOutput> {
-    return await this.service.GetPublicUserEvents(data);
+    return await this.service.GetPublicUserEvents(data)
   }
 
   @GrpcMethod('EventService', 'GetPrivateUserEvents')
   async GetPrivateUserEvents(data: GetPrivateUserEventsInput): Promise<PaginatedPrivateEventsOutput> {
-    return await this.service.GetPrivateUserEvents(data);
+    return await this.service.GetPrivateUserEvents(data)
   }
 
   @GrpcMethod('EventService', 'GetPublicEventBySlug')
   async GetPublicEventBySlug(data: GetPublicEventBySlug): Promise<EventOutput> {
-    return await this.service.GetPublicEventBySlug(data);
+    return await this.service.GetPublicEventBySlug(data)
   }
 
   @GrpcMethod('EventService', 'GetPrivateEventBySlug')
   async GetPrivateEventBySlug(data: GetPrivateEventBySlug): Promise<EventOutput> {
-    return await this.service.GetPrivateEventBySlug(data);
+    return await this.service.GetPrivateEventBySlug(data)
   }
 
   @GrpcMethod('EventService', 'GetMyEventBySlug')
   async GetMyEventBySlug(data: GetPrivateEventBySlug): Promise<EventOutput> {
-    return await this.service.GetMyEventBySlug(data);
+    return await this.service.GetMyEventBySlug(data)
   }
 
   @GrpcMethod('EventService', 'CreateEvent')
   async CreateEvent(data: CreateEventInput): Promise<EventMethodsOutput> {
-    return await this.service.CreateEvent(data);
+    return await this.service.CreateEvent(data)
   }
 
   @GrpcMethod('EventService', 'PublishEvent')
   async PublishEvent(data: PublishEventInput): Promise<EventMethodsOutput> {
-    return await this.service.PublishEvent(data);
+    return await this.service.PublishEvent(data)
   }
 
   @GrpcMethod('EventService', 'CancelEvent')
   async CancelEvent(data: CancelEventInput): Promise<EventMethodsOutput> {
-    return await this.service.CancelEvent(data);
+    return await this.service.CancelEvent(data)
   }
 
   @GrpcMethod('EventService', 'FinishEvent')
   async FinishEvent(data: FinishEventInput): Promise<EventMethodsOutput> {
-    return await this.service.FinishEvent(data);
+    return await this.service.FinishEvent(data)
   }
 
   @GrpcMethod('EventService', 'SwitchOrganizer')
   async SwitchOrganizer(data: SwitchOrganizerInput): Promise<EventMethodsOutput> {
-    return await this.service.SwitchOrganizer(data);
+    return await this.service.SwitchOrganizer(data)
   }
 
   @GrpcMethod('EventService', 'SwitchOtherEventOrganizer')
   async SwitchOtherEventOrganizer(data: SwitchOrganizerInput): Promise<EventMethodsOutput> {
-    return await this.service.SwitchOtherEventOrganizer(data);
+    return await this.service.SwitchOtherEventOrganizer(data)
   }
 
   @GrpcMethod('EventService', 'UpdateEvent')
   async UpdateEvent(data: UpdateEventDataInput): Promise<EventMethodsOutput> {
-    return await this.service.UpdateEvent(data);
+    return await this.service.UpdateEvent(data)
   }
 
   @GrpcMethod('EventService', 'DeleteEvent')
   async DeleteEvent(data: DeleteEventInput): Promise<EventMethodsOutput> {
-    return await this.service.DeleteEvent(data);
+    return await this.service.DeleteEvent(data)
   }
 
   @GrpcMethod('EventService', 'DeleteOtherEvent')
   async DeleteOtherEvent(data: DeleteOtherEventInput): Promise<EventMethodsOutput> {
-    return await this.service.DeleteOtherEvent(data);
+    return await this.service.DeleteOtherEvent(data)
   }
 }

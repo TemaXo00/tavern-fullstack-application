@@ -1,8 +1,8 @@
-import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-import { AUTH_MESSAGES } from '@org/validation-messages';
-import { Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, MinDate } from 'class-validator';
+import { applyDecorators } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
+import { AUTH_MESSAGES } from '@org/validation-messages'
+import { Type } from 'class-transformer'
+import { IsDate, IsNotEmpty, MinDate } from 'class-validator'
 
 export function BlockedUntil(): PropertyDecorator {
   return applyDecorators(
@@ -18,5 +18,5 @@ export function BlockedUntil(): PropertyDecorator {
     MinDate(() => new Date(), {
       message: AUTH_MESSAGES.BLOCKED_UNTIL_VALIDATION.DATE,
     }),
-  );
+  )
 }

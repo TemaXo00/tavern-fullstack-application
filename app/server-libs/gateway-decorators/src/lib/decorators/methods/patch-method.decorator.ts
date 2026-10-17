@@ -1,4 +1,4 @@
-import { applyDecorators, Patch } from '@nestjs/common';
+import { applyDecorators, Patch } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -7,20 +7,20 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+} from '@nestjs/swagger'
 
-import { Validate } from '../validate.decorator.js';
+import { Validate } from '../validate.decorator.js'
 
-import type { Roles } from '@org/enums';
+import type { Roles } from '@org/enums'
 
 interface IPATCHProtectedMethodOptions {
-  path: string;
-  summary: string;
-  operationDesc: string;
-  roles?: Roles[];
+  path: string
+  summary: string
+  operationDesc: string
+  roles?: Roles[]
 }
 
-type IPATCHMethodOptions = Omit<IPATCHProtectedMethodOptions, 'roles'>;
+type IPATCHMethodOptions = Omit<IPATCHProtectedMethodOptions, 'roles'>
 
 export const PATCHMethod = (options: IPATCHMethodOptions): MethodDecorator => {
   return applyDecorators(
@@ -38,8 +38,8 @@ export const PATCHMethod = (options: IPATCHMethodOptions): MethodDecorator => {
       description: 'Internal server error',
     }),
     Patch(options.path),
-  );
-};
+  )
+}
 
 export const PATCHProtectedMethod = (options: IPATCHProtectedMethodOptions): MethodDecorator => {
   return applyDecorators(
@@ -65,5 +65,5 @@ export const PATCHProtectedMethod = (options: IPATCHProtectedMethodOptions): Met
     }),
     Patch(options.path),
     Validate(...(options.roles || [])),
-  );
-};
+  )
+}

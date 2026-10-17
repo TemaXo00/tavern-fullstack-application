@@ -1,15 +1,15 @@
-import { PaginationBaseOutput } from '../../shared/pagination.type.js';
+import { PaginationBaseOutput } from '../../shared/pagination.type.js'
 
 export interface ActivityPaginationBaseOutput extends PaginationBaseOutput {
-  activityType?: number;
+  activityType?: number
 }
 
 export interface ActivityBaseOutput {
-  status: number;
-  createdAt: Date;
+  status: number
+  createdAt: Date
 }
 
 export interface PaginatedActivityBaseOutput {
-  pagination: ActivityPaginationBaseOutput;
-  activityLogs: ActivityBaseOutput[];
+  pagination: ActivityPaginationBaseOutput
+  activityLogs: ActivityBaseOutput[]
 }

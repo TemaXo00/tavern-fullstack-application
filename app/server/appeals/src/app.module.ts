@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { SharedUtilsModule } from '@org/shared-utils';
+import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+import { SharedUtilsModule } from '@org/shared-utils'
 
 @Module({
   imports: [

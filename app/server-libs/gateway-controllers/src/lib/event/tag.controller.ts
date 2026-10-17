@@ -1,5 +1,5 @@
-import { Body, Inject, OnModuleInit, Param } from '@nestjs/common';
-import { Roles } from '@org/enums';
+import { Body, Inject, OnModuleInit, Param } from '@nestjs/common'
+import { Roles } from '@org/enums'
 import {
   DELETEProtectedMethod,
   GETMethod,
@@ -8,26 +8,26 @@ import {
   PUTProtectedMethod,
   QUERYMethod,
   ValidateInputParam,
-} from '@org/gateway-decorators';
-import { CreateEventTagDto, EventTagPaginationDto, UpdateEventTagDto } from '@org/gateway-dto';
-import { EventTagServiceObservableContract, type ValidateInput } from '@org/grpc-types';
-import { EVENT_TAG_ROUTES } from '@org/routes-config';
-import { EventTagDetailedSharedOutput, EventTagSharedOutput, PaginatedEventTagsSharedOutput } from '@org/shared-types';
-import { firstValueFrom } from 'rxjs';
+} from '@org/gateway-decorators'
+import { CreateEventTagDto, EventTagPaginationDto, UpdateEventTagDto } from '@org/gateway-dto'
+import { EventTagServiceObservableContract, type ValidateInput } from '@org/grpc-types'
+import { EVENT_TAG_ROUTES } from '@org/routes-config'
+import { EventTagDetailedSharedOutput, EventTagSharedOutput, PaginatedEventTagsSharedOutput } from '@org/shared-types'
+import { firstValueFrom } from 'rxjs'
 
-import type { ClientGrpc } from '@nestjs/microservices';
+import type { ClientGrpc } from '@nestjs/microservices'
 
 @HTTPController({
   microserviceName: 'Event',
   serviceName: 'Tag',
 })
 export class TagController implements OnModuleInit {
-  private tagContract!: EventTagServiceObservableContract;
+  private tagContract!: EventTagServiceObservableContract
 
   constructor(@Inject('EVENT_CLIENT') private readonly client: ClientGrpc) {}
 
   onModuleInit(): void {
-    this.tagContract = this.client.getService<EventTagServiceObservableContract>('TagService');
+    this.tagContract = this.client.getService<EventTagServiceObservableContract>('TagService')
   }
 
   @QUERYMethod({
@@ -36,7 +36,7 @@ export class TagController implements OnModuleInit {
     operationDesc: 'Returns a paginated list of all event tags. Supports search by name or slug.',
   })
   async getPaginatedTags(@Body() pagination: EventTagPaginationDto): Promise<PaginatedEventTagsSharedOutput> {
-    return await firstValueFrom(this.tagContract.GetPaginatedTags({ pagination }));
+    return await firstValueFrom(this.tagContract.GetPaginatedTags({ pagination }))
   }
 
   @GETMethod({
@@ -45,7 +45,7 @@ export class TagController implements OnModuleInit {
     operationDesc: 'Returns detailed information about a specific tag by its slug.',
   })
   async getTagBySlug(@Param(EVENT_TAG_ROUTES.GET_BY_SLUG.PARAM) slug: string): Promise<EventTagDetailedSharedOutput> {
-    return await firstValueFrom(this.tagContract.GetTagBySlug({ slug }));
+    return await firstValueFrom(this.tagContract.GetTagBySlug({ slug }))
   }
 
   @POSTProtected({
@@ -58,7 +58,7 @@ export class TagController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Body() dto: CreateEventTagDto,
   ): Promise<EventTagSharedOutput> {
-    return await firstValueFrom(this.tagContract.CreateTag({ validation, ...dto }));
+    return await firstValueFrom(this.tagContract.CreateTag({ validation, ...dto }))
   }
 
   @PUTProtectedMethod({
@@ -78,7 +78,7 @@ export class TagController implements OnModuleInit {
         slug,
         ...dto,
       }),
-    );
+    )
   }
 
   @DELETEProtectedMethod({
@@ -92,6 +92,6 @@ export class TagController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Param(EVENT_TAG_ROUTES.DELETE.PARAM) slug: string,
   ): Promise<void> {
-    await firstValueFrom(this.tagContract.DeleteTag({ validation, slug }));
+    await firstValueFrom(this.tagContract.DeleteTag({ validation, slug }))
   }
 }

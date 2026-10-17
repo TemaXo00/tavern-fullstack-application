@@ -1,4 +1,4 @@
-import { applyDecorators, Delete } from '@nestjs/common';
+import { applyDecorators, Delete } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -7,20 +7,20 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+} from '@nestjs/swagger'
 
-import { Validate } from '../validate.decorator.js';
+import { Validate } from '../validate.decorator.js'
 
-import type { Roles } from '@org/enums';
+import type { Roles } from '@org/enums'
 
 interface IDELETEProtectedMethodOptions {
-  path: string;
-  summary: string;
-  operationDesc: string;
-  roles?: Roles[];
+  path: string
+  summary: string
+  operationDesc: string
+  roles?: Roles[]
 }
 
-type IDELETEMethodOptions = Omit<IDELETEProtectedMethodOptions, 'roles'>;
+type IDELETEMethodOptions = Omit<IDELETEProtectedMethodOptions, 'roles'>
 
 export const DELETEMethod = (options: IDELETEMethodOptions): MethodDecorator => {
   return applyDecorators(
@@ -38,8 +38,8 @@ export const DELETEMethod = (options: IDELETEMethodOptions): MethodDecorator => 
       description: 'Internal server error',
     }),
     Delete(options.path),
-  );
-};
+  )
+}
 
 export const DELETEProtectedMethod = (options: IDELETEProtectedMethodOptions): MethodDecorator => {
   return applyDecorators(
@@ -65,5 +65,5 @@ export const DELETEProtectedMethod = (options: IDELETEProtectedMethodOptions): M
     }),
     Delete(options.path),
     Validate(...(options.roles || [])),
-  );
-};
+  )
+}

@@ -8,4 +8,4 @@ export const helmetConfig = {
       scriptSrc: ["'self'", "https: 'unsafe-inline'"],
     },
   },
-};
+}

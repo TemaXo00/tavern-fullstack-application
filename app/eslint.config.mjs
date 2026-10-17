@@ -1,7 +1,7 @@
-import nx from '@nx/eslint-plugin';
-import importPlugin from 'eslint-plugin-import';
-import unusedImports from 'eslint-plugin-unused-imports';
-import tseslint from 'typescript-eslint';
+import nx from '@nx/eslint-plugin'
+import importPlugin from 'eslint-plugin-import'
+import unusedImports from 'eslint-plugin-unused-imports'
+import tseslint from 'typescript-eslint'
 
 export default [
   ...nx.configs['flat/base'],
@@ -97,4 +97,4 @@ export default [
       '@typescript-eslint/no-shadow': 'error',
     },
   },
-];
+]

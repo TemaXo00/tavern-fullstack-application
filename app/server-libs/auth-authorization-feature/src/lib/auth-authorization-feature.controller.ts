@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
-import { GrpcMethod } from '@nestjs/microservices';
+import { Controller } from '@nestjs/common'
+import { GrpcMethod } from '@nestjs/microservices'
 
-import { AuthAuthorizationFeatureService } from './auth-authorization-feature.service';
+import { AuthAuthorizationFeatureService } from './auth-authorization-feature.service'
 
 import type {
   AuthOutput,
@@ -15,7 +15,7 @@ import type {
   UserEntity,
   UserPayload,
   ValidateInput,
-} from '@org/grpc-types';
+} from '@org/grpc-types'
 
 @Controller()
 export class AuthAuthorizationFeatureController implements AuthServiceContract {
@@ -23,41 +23,41 @@ export class AuthAuthorizationFeatureController implements AuthServiceContract {
 
   @GrpcMethod('AuthService', 'Register')
   async Register(data: RegisterInput): Promise<AuthOutput> {
-    return await this.service.Register(data);
+    return await this.service.Register(data)
   }
 
   @GrpcMethod('AuthService', 'Login')
   async Login(data: LoginInput): Promise<AuthOutput> {
-    return await this.service.Login(data);
+    return await this.service.Login(data)
   }
 
   @GrpcMethod('AuthService', 'Refresh')
   async Refresh(data: RefreshInput): Promise<AuthOutput> {
-    return await this.service.Refresh(data);
+    return await this.service.Refresh(data)
   }
 
   @GrpcMethod('AuthService', 'Logout')
   async Logout(data: RefreshInput): Promise<Empty> {
-    return await this.service.Logout(data);
+    return await this.service.Logout(data)
   }
 
   @GrpcMethod('AuthService', 'Validate')
   async Validate(data: ValidateInput): Promise<UserPayload> {
-    return await this.service.Validate(data);
+    return await this.service.Validate(data)
   }
 
   @GrpcMethod('AuthService', 'ForgotPassword')
   async ForgotPassword(data: ForgotPasswordInput): Promise<Empty> {
-    return await this.service.ForgotPassword(data);
+    return await this.service.ForgotPassword(data)
   }
 
   @GrpcMethod('AuthService', 'ResetPassword')
   async ResetPassword(data: ResetPasswordInput): Promise<Empty> {
-    return await this.service.ResetPassword(data);
+    return await this.service.ResetPassword(data)
   }
 
   @GrpcMethod('AuthService', 'GetMe')
   async GetMe(data: ValidateInput): Promise<UserEntity> {
-    return await this.service.GetMe(data);
+    return await this.service.GetMe(data)
   }
 }

@@ -1,10 +1,10 @@
-import { PaginationBaseInput } from '../../shared/pagination.type.js';
+import { PaginationBaseInput } from '../../shared/pagination.type.js'
 
 export interface ActivityPaginationBaseInput extends PaginationBaseInput {
-  activityType?: number;
+  activityType?: number
 }
 
 export interface GetActivityByNicknameBaseInput {
-  nickname: string;
-  pagination: ActivityPaginationBaseInput;
+  nickname: string
+  pagination: ActivityPaginationBaseInput
 }

@@ -1,5 +1,5 @@
-import { EventStatuses } from '@org/enums';
-import { EVENT_CONFIG } from '@org/validation-config';
+import { EventStatuses } from '@org/enums'
+import { EVENT_CONFIG } from '@org/validation-config'
 
 export const EVENT_MESSAGES = {
   TAG_NOT_FOUND: 'Tag not found',
@@ -42,63 +42,63 @@ export const EVENT_MESSAGES = {
     CONTEXT: 'ManipulateUserSnapshot',
     METHOD: 'FindUserByID',
     MESSAGE: (id: string): string => {
-      return `User with id ${id} does not exists`;
+      return `User with id ${id} does not exists`
     },
   },
   USER_SNAPSHOT_NICKNAME_EXISTING_ERROR: {
     CONTEXT: 'ManipulateUserSnapshot',
     METHOD: 'FindUserByNickname',
     MESSAGE: (nickname: string): string => {
-      return `User with ${nickname} existsing`;
+      return `User with ${nickname} existsing`
     },
   },
   USER_SHAPSHOT_CREATE_SUCCESS: {
     CONTEXT: 'CreateUserSnapshot',
     METHOD: (id: string): string => {
-      return `CreateUser ${id}`;
+      return `CreateUser ${id}`
     },
   },
   USER_SHAPSHOT_UNBLOCK_SUCCESS: {
     CONTEXT: 'UnblockUserSnapshot',
     METHOD: (id: string): string => {
-      return `UnblockUser ${id}`;
+      return `UnblockUser ${id}`
     },
   },
   USER_SNAPHSOT_BLOCK_SUCCESS: {
     CONTEXT: 'BlockUserSnapshot',
     METHOD: (userId: string, adminId: string) => {
-      return `BlockUser ${userId} by ${adminId}`;
+      return `BlockUser ${userId} by ${adminId}`
     },
   },
   USER_SNAPHSOT_CHANGE_STATE_SUCCESS: {
     CONTEXT: 'ChangeUserSnapshotState',
     METHOD: (userId: string, state: boolean) => {
-      return `ChangeState of ${userId}. Current state: ${state ? 'active' : 'inactive'}`;
+      return `ChangeState of ${userId}. Current state: ${state ? 'active' : 'inactive'}`
     },
   },
   USER_SNAPHSOT_CHANGE_EMAIL_SUCCESS: {
     CONTEXT: 'ChangeUserSnapshotEmail',
     METHOD: (userId: string) => {
-      return `ChangeEmail of ${userId}}`;
+      return `ChangeEmail of ${userId}}`
     },
   },
   USER_SOFT_DELETE_SUCCESS: {
     CONTEXT: 'SoftDeleteUser',
     METHOD: (userId: string) => {
-      return `SoftDelete of ${userId}}`;
+      return `SoftDelete of ${userId}}`
     },
   },
   USER_CHANGE_NICKNAME_SUCCESS: {
     CONTEXT: 'ChangeNickname',
     METHOD: (userId: string) => {
-      return `Change nickname of ${userId}}`;
+      return `Change nickname of ${userId}}`
     },
   },
   USER_CHANGE_NICKNAME_WARNING: {
     CONTEXT: 'ChangeNickname',
     METHOD: (userId: string) => {
-      return `Change nickname of ${userId}}`;
+      return `Change nickname of ${userId}}`
     },
     MESSAGE: 'Nickname does not found in payload',
   },
-} as const;
+} as const

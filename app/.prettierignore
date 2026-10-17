@@ -6,3 +6,4 @@
 .nx/self-healing
 server-libs/*-database/
 client-libs/
+client/

@@ -1,1 +1,1 @@
-export * from './lib/profile-rmq-handler.module';
+export * from './lib/profile-rmq-handler.module'

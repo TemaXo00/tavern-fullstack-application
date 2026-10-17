@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { User } from '@org/auth-database';
-import { ROLE_TO_GRPC } from '@org/enums';
-import { v7 as uuidv7 } from 'uuid';
+import { Injectable } from '@nestjs/common'
+import { User } from '@org/auth-database'
+import { ROLE_TO_GRPC } from '@org/enums'
+import { v7 as uuidv7 } from 'uuid'
 
-import { AuthCoreCacheUtil } from './cache.util';
-import { AuthCoreDatabaseUtil } from './database.util';
-import { AuthCoreJWTUtil } from './jwt.util';
-import { AuthCoreValidateUtil } from './validate.util';
+import { AuthCoreCacheUtil } from './cache.util'
+import { AuthCoreDatabaseUtil } from './database.util'
+import { AuthCoreJWTUtil } from './jwt.util'
+import { AuthCoreValidateUtil } from './validate.util'
 
-import type { AuthOutput, RefreshInput, SessionInput } from '@org/grpc-types';
+import type { AuthOutput, RefreshInput, SessionInput } from '@org/grpc-types'
 
 @Injectable()
 export class AuthCoreAuthorizeUtil {
@@ -20,41 +20,34 @@ export class AuthCoreAuthorizeUtil {
   ) {}
 
   async authorizeNew(user: User, session: SessionInput): Promise<AuthOutput> {
-    const sessionId = uuidv7();
+    const sessionId = uuidv7()
     const { accessToken, refreshToken } = this.jwtUtil.generateTokens({
       id: user.id,
       sessionId: sessionId,
       role: ROLE_TO_GRPC[user.role],
-    });
-    const refreshTokenHash = await this.jwtUtil.hashToken(refreshToken);
+    })
+    const refreshTokenHash = await this.jwtUtil.hashToken(refreshToken)
     await this.dbUtil.createSession({
       id: sessionId,
       userId: user.id,
       refreshTokenHash,
       ...session,
-    });
-    return { accessToken, refreshToken };
+    })
+    return { accessToken, refreshToken }
   }
 
   async authRefresh(data: RefreshInput): Promise<AuthOutput> {
-    const token = this.jwtUtil.verifyToken(data.refreshToken);
-    const user = await this.validateSession(
-      token.id,
-      token.sessionId,
-      data.refreshToken,
-      'refresh',
-      data.session,
-      true,
-    );
+    const token = this.jwtUtil.verifyToken(data.refreshToken)
+    const user = await this.validateSession(token.id, token.sessionId, data.refreshToken, 'refresh', data.session, true)
     const { accessToken, refreshToken } = this.jwtUtil.generateTokens({
       id: token.id,
       sessionId: token.sessionId,
       role: ROLE_TO_GRPC[user.role],
-    });
-    const refreshTokenHash = await this.jwtUtil.hashToken(refreshToken);
-    await this.dbUtil.updateSessionToken(token.sessionId, refreshTokenHash);
-    await this.cacheUtil.delPayload(token.id, token.sessionId);
-    return { accessToken, refreshToken };
+    })
+    const refreshTokenHash = await this.jwtUtil.hashToken(refreshToken)
+    await this.dbUtil.updateSessionToken(token.sessionId, refreshTokenHash)
+    await this.cacheUtil.delPayload(token.id, token.sessionId)
+    return { accessToken, refreshToken }
   }
 
   async validateSession(
@@ -65,23 +58,23 @@ export class AuthCoreAuthorizeUtil {
     userSession: SessionInput,
     checkActive?: boolean,
   ): Promise<User> {
-    const { user, session } = await this.validationUtil.validateUserWithSessionExists(userId, sessionId);
+    const { user, session } = await this.validationUtil.validateUserWithSessionExists(userId, sessionId)
     const validateSession: SessionInput = {
       ip: session.ip,
       device: session.device,
       os: session.os,
       browser: session.browser,
-    };
+    }
     if (tokenType === 'access') {
-      this.jwtUtil.validateAccessToken(token);
+      this.jwtUtil.validateAccessToken(token)
     } else {
-      await this.jwtUtil.validateRefreshToken(session.refreshTokenHash, token);
+      await this.jwtUtil.validateRefreshToken(session.refreshTokenHash, token)
     }
-    this.validationUtil.validateSessionsSimilar(userSession, validateSession);
-    await this.validationUtil.validateUserBlock(user.id, user.isBlocked, user.blockedUntil, user.blockReason);
+    this.validationUtil.validateSessionsSimilar(userSession, validateSession)
+    await this.validationUtil.validateUserBlock(user.id, user.isBlocked, user.blockedUntil, user.blockReason)
     if (checkActive) {
-      await this.validationUtil.validateUserActive(user.id, user.isActive);
+      await this.validationUtil.validateUserActive(user.id, user.isActive)
     }
-    return user;
+    return user
   }
 }

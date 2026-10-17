@@ -13,4 +13,4 @@ export const API_MESSAGES = {
     504: 'Gateway Timeout',
     DEFAULT: 'Something went wrong',
   },
-} as const;
+} as const

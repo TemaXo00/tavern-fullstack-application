@@ -1,58 +1,58 @@
-import { status } from '@grpc/grpc-js';
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JsonWebTokenError, JwtService, TokenExpiredError } from '@nestjs/jwt';
-import { RpcException } from '@nestjs/microservices';
-import { AuthOutput, UserPayload } from '@org/grpc-types';
-import { StringValidationUtil } from '@org/shared-utils';
-import { AUTH_MESSAGES } from '@org/validation-messages';
-import * as argon2 from 'argon2';
+import { status } from '@grpc/grpc-js'
+import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { JsonWebTokenError, JwtService, TokenExpiredError } from '@nestjs/jwt'
+import { RpcException } from '@nestjs/microservices'
+import { AuthOutput, UserPayload } from '@org/grpc-types'
+import { StringValidationUtil } from '@org/shared-utils'
+import { AUTH_MESSAGES } from '@org/validation-messages'
+import * as argon2 from 'argon2'
 
 @Injectable()
 export class AuthCoreJWTUtil {
-  private readonly accessTTL: number;
-  private readonly refreshTTL: number;
+  private readonly accessTTL: number
+  private readonly refreshTTL: number
 
   constructor(
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
     private readonly stringUtil: StringValidationUtil,
   ) {
-    const accessMinutes = this.config.get<number>('TAVERN_JWT_ACCESS_TOKEN_TTL', 15);
-    const refreshDays = this.config.get<number>('TAVERN_JWT_REFRESH_TOKEN_TTL', 30);
+    const accessMinutes = this.config.get<number>('TAVERN_JWT_ACCESS_TOKEN_TTL', 15)
+    const refreshDays = this.config.get<number>('TAVERN_JWT_REFRESH_TOKEN_TTL', 30)
 
-    this.accessTTL = accessMinutes * 60;
-    this.refreshTTL = refreshDays * 24 * 60 * 60;
+    this.accessTTL = accessMinutes * 60
+    this.refreshTTL = refreshDays * 24 * 60 * 60
   }
 
   generateTokens(payload: UserPayload): AuthOutput {
-    const accessToken = this.jwt.sign(payload, { expiresIn: this.accessTTL });
-    const refreshToken = this.jwt.sign(payload, { expiresIn: this.refreshTTL });
+    const accessToken = this.jwt.sign(payload, { expiresIn: this.accessTTL })
+    const refreshToken = this.jwt.sign(payload, { expiresIn: this.refreshTTL })
 
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken }
   }
 
   getExpireDate(): string {
-    const date = new Date();
-    date.setDate(date.getDate() + this.refreshTTL);
-    return date.toISOString();
+    const date = new Date()
+    date.setDate(date.getDate() + this.refreshTTL)
+    return date.toISOString()
   }
 
   verifyToken(token: string): UserPayload & { iat: number; exp: number } {
-    this.stringUtil.validateAnyString(token, 'Token');
+    this.stringUtil.validateAnyString(token, 'Token')
     try {
-      return this.jwt.verify(token);
+      return this.jwt.verify(token)
     } catch (error) {
-      let message = `${AUTH_MESSAGES.TOKEN_BASE_ERROR}`;
+      let message = `${AUTH_MESSAGES.TOKEN_BASE_ERROR}`
       if (error instanceof TokenExpiredError) {
-        message = AUTH_MESSAGES.TOKEN_EXPIRED;
+        message = AUTH_MESSAGES.TOKEN_EXPIRED
       } else if (error instanceof JsonWebTokenError) {
-        message = AUTH_MESSAGES.INVALID_TOKEN;
+        message = AUTH_MESSAGES.INVALID_TOKEN
       }
       throw new RpcException({
         message,
         code: status.UNAUTHENTICATED,
-      });
+      })
     }
   }
 
@@ -62,28 +62,28 @@ export class AuthCoreJWTUtil {
       memoryCost: 65536,
       parallelism: 4,
       type: argon2.argon2id,
-    });
+    })
   }
 
   async validateRefreshToken(tokenHash: string, token: string): Promise<void> {
-    this.verifyToken(token);
+    this.verifyToken(token)
 
-    const isValid = await argon2.verify(tokenHash, token);
+    const isValid = await argon2.verify(tokenHash, token)
 
     if (!isValid) {
       throw new RpcException({
         message: AUTH_MESSAGES.TOKEN_INVALID,
         code: status.UNAUTHENTICATED,
-      });
+      })
     }
   }
 
   validateAccessToken(token: string): UserPayload {
-    const payload = this.verifyToken(token);
+    const payload = this.verifyToken(token)
     return {
       id: payload.id,
       sessionId: payload.sessionId,
       role: payload.role,
-    };
+    }
   }
 }

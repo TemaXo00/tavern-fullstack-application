@@ -1,4 +1,4 @@
-import { applyDecorators, Get } from '@nestjs/common';
+import { applyDecorators, Get } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -7,20 +7,20 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+} from '@nestjs/swagger'
 
-import { Validate } from '../validate.decorator.js';
+import { Validate } from '../validate.decorator.js'
 
-import type { Roles } from '@org/enums';
+import type { Roles } from '@org/enums'
 
 interface IGETProtectedMethodOptions {
-  path: string;
-  summary: string;
-  operationDesc: string;
-  roles?: Roles[];
+  path: string
+  summary: string
+  operationDesc: string
+  roles?: Roles[]
 }
 
-type IGETMethodOptions = Omit<IGETProtectedMethodOptions, 'roles'>;
+type IGETMethodOptions = Omit<IGETProtectedMethodOptions, 'roles'>
 
 export const GETMethod = (options: IGETMethodOptions): MethodDecorator => {
   return applyDecorators(
@@ -38,8 +38,8 @@ export const GETMethod = (options: IGETMethodOptions): MethodDecorator => {
       description: 'Internal server error',
     }),
     Get(options.path),
-  );
-};
+  )
+}
 
 export const GETProtectedMethod = (options: IGETProtectedMethodOptions): MethodDecorator => {
   return applyDecorators(
@@ -65,5 +65,5 @@ export const GETProtectedMethod = (options: IGETProtectedMethodOptions): MethodD
     }),
     Get(options.path),
     Validate(...(options.roles || [])),
-  );
-};
+  )
+}

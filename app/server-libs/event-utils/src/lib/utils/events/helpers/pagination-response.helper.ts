@@ -3,16 +3,16 @@ import type {
   EventPrivatePaginationGrpcOutput,
   EventPublicPaginationGrpcInput,
   EventPublicPaginationGrpcOutput,
-} from '@org/grpc-types';
+} from '@org/grpc-types'
 
 interface PaginationParams {
-  total: number;
-  page: number;
-  totalPages: number;
-  skip: number;
-  limit: number;
-  hasNext: boolean;
-  hasPrev: boolean;
+  total: number
+  page: number
+  totalPages: number
+  skip: number
+  limit: number
+  hasNext: boolean
+  hasPrev: boolean
 }
 
 export function buildPublicPaginationOutput(
@@ -27,7 +27,7 @@ export function buildPublicPaginationOutput(
     leftPlacesFrom: pagination.leftPlacesFrom,
     leftPlacesTo: pagination.leftPlacesTo,
     tags: pagination.tags,
-  };
+  }
 }
 
 export function buildPrivatePaginationOutput(
@@ -45,5 +45,5 @@ export function buildPrivatePaginationOutput(
     totalPlacesTo: pagination.totalPlacesTo,
     status: pagination.status,
     tags: pagination.tags,
-  };
+  }
 }

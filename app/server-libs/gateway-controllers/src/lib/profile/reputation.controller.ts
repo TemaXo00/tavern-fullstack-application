@@ -1,20 +1,20 @@
-import { Body, Inject, OnModuleInit, Param } from '@nestjs/common';
-import { HTTPController, QUERYMethod, QUERYProtectedMethod, ValidateInputParam } from '@org/gateway-decorators';
-import { ReputationPaginationDto } from '@org/gateway-dto';
-import { ProfileGatewayMapService } from '@org/gateway-map';
-import { PROFILE_REPUTATION_ROUTES } from '@org/routes-config';
-import { firstValueFrom } from 'rxjs';
+import { Body, Inject, OnModuleInit, Param } from '@nestjs/common'
+import { HTTPController, QUERYMethod, QUERYProtectedMethod, ValidateInputParam } from '@org/gateway-decorators'
+import { ReputationPaginationDto } from '@org/gateway-dto'
+import { ProfileGatewayMapService } from '@org/gateway-map'
+import { PROFILE_REPUTATION_ROUTES } from '@org/routes-config'
+import { firstValueFrom } from 'rxjs'
 
-import type { ClientGrpc } from '@nestjs/microservices';
-import type { ReputationServiceObservableContract, ValidateInput } from '@org/grpc-types';
-import type { PaginatedReputationSharedOutput } from '@org/shared-types';
+import type { ClientGrpc } from '@nestjs/microservices'
+import type { ReputationServiceObservableContract, ValidateInput } from '@org/grpc-types'
+import type { PaginatedReputationSharedOutput } from '@org/shared-types'
 
 @HTTPController({
   microserviceName: 'Profile',
   serviceName: 'Reputation',
 })
 export class ReputationController implements OnModuleInit {
-  private reputationContract!: ReputationServiceObservableContract;
+  private reputationContract!: ReputationServiceObservableContract
 
   constructor(
     @Inject('PROFILE_CLIENT') private readonly client: ClientGrpc,
@@ -22,7 +22,7 @@ export class ReputationController implements OnModuleInit {
   ) {}
 
   onModuleInit(): void {
-    this.reputationContract = this.client.getService<ReputationServiceObservableContract>('ReputationService');
+    this.reputationContract = this.client.getService<ReputationServiceObservableContract>('ReputationService')
   }
 
   @QUERYProtectedMethod({
@@ -40,11 +40,11 @@ export class ReputationController implements OnModuleInit {
         validation,
         pagination: this.map.mapReputationPaginationInput(pagination),
       }),
-    );
+    )
     return {
       pagination: this.map.mapReputationPaginationOutput(response.pagination),
       reputationLogs: this.map.mapReputationListOutput(response.reputationLogs),
-    };
+    }
   }
 
   @QUERYMethod({
@@ -61,10 +61,10 @@ export class ReputationController implements OnModuleInit {
         nickname,
         pagination: this.map.mapReputationPaginationInput(pagination),
       }),
-    );
+    )
     return {
       pagination: this.map.mapReputationPaginationOutput(response.pagination),
       reputationLogs: this.map.mapReputationListOutput(response.reputationLogs),
-    };
+    }
   }
 }

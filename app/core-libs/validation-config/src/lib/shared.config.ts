@@ -11,4 +11,4 @@ export const SHARED_CONFIG = {
     MIN_LENGTH: 2,
     MAX_LENGTH: 90,
   },
-} as const;
+} as const

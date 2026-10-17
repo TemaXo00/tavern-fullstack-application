@@ -1,13 +1,13 @@
-import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-import { PROFILE_MESSAGES } from '@org/validation-messages';
-import { Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsOptional, MaxDate } from 'class-validator';
+import { applyDecorators } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
+import { PROFILE_MESSAGES } from '@org/validation-messages'
+import { Type } from 'class-transformer'
+import { IsDate, IsNotEmpty, IsOptional, MaxDate } from 'class-validator'
 
 export function BirthDate(requirable: boolean): PropertyDecorator {
   const requirableDecorator = requirable
     ? IsNotEmpty({ message: PROFILE_MESSAGES.BIRTH_DATE_VALIDATION.NOT_EMPTY })
-    : IsOptional();
+    : IsOptional()
   return applyDecorators(
     ApiProperty({
       description: 'User birth date',
@@ -22,5 +22,5 @@ export function BirthDate(requirable: boolean): PropertyDecorator {
     MaxDate(() => new Date(), {
       message: PROFILE_MESSAGES.BIRTH_DATE_VALIDATION.MAX,
     }),
-  );
+  )
 }

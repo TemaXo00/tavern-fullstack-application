@@ -1,6 +1,6 @@
-import { monolithLaunch } from '@org/bootstrap';
+import { monolithLaunch } from '@org/bootstrap'
 
-import { AppModule } from './app.module';
+import { AppModule } from './app.module'
 
 void monolithLaunch<AppModule>({
   name: 'Gateway',
@@ -15,4 +15,4 @@ void monolithLaunch<AppModule>({
   cors: false,
   swagger: true,
   compression: true,
-});
+})

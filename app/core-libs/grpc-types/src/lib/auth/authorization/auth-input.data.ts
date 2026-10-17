@@ -4,12 +4,12 @@ import {
   RefreshBaseInput,
   RegisterBaseInput,
   ResetPasswordBaseInput,
-} from '@org/base-types';
+} from '@org/base-types'
 
-import { WithSession } from '../../utils/with-session.js';
+import { WithSession } from '../../utils/with-session.js'
 
-export type RegisterInput = WithSession<RegisterBaseInput>;
-export type LoginInput = WithSession<LoginBaseInput>;
-export type RefreshInput = WithSession<RefreshBaseInput>;
-export type ResetPasswordInput = WithSession<ResetPasswordBaseInput & { token: string }>;
-export type ForgotPasswordInput = ForgotPasswordBaseInput;
+export type RegisterInput = WithSession<RegisterBaseInput>
+export type LoginInput = WithSession<LoginBaseInput>
+export type RefreshInput = WithSession<RefreshBaseInput>
+export type ResetPasswordInput = WithSession<ResetPasswordBaseInput & { token: string }>
+export type ForgotPasswordInput = ForgotPasswordBaseInput

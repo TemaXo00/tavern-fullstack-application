@@ -1,1 +1,1 @@
-export * from './lib/event-participant-feature.module';
+export * from './lib/event-participant-feature.module'

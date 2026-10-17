@@ -1,21 +1,21 @@
-import { Body, Inject, OnModuleInit, Param } from '@nestjs/common';
-import { Roles } from '@org/enums';
-import { HTTPController, QUERYProtectedMethod, ValidateInputParam } from '@org/gateway-decorators';
-import { ActivityPaginationDto } from '@org/gateway-dto';
-import { ProfileGatewayMapService } from '@org/gateway-map';
-import { PROFILE_ACTIVITY_ROUTES } from '@org/routes-config';
-import { firstValueFrom } from 'rxjs';
+import { Body, Inject, OnModuleInit, Param } from '@nestjs/common'
+import { Roles } from '@org/enums'
+import { HTTPController, QUERYProtectedMethod, ValidateInputParam } from '@org/gateway-decorators'
+import { ActivityPaginationDto } from '@org/gateway-dto'
+import { ProfileGatewayMapService } from '@org/gateway-map'
+import { PROFILE_ACTIVITY_ROUTES } from '@org/routes-config'
+import { firstValueFrom } from 'rxjs'
 
-import type { ClientGrpc } from '@nestjs/microservices';
-import type { ActivityServiceObservableContract, ValidateInput } from '@org/grpc-types';
-import type { PaginatedActivitySharedOutput } from '@org/shared-types';
+import type { ClientGrpc } from '@nestjs/microservices'
+import type { ActivityServiceObservableContract, ValidateInput } from '@org/grpc-types'
+import type { PaginatedActivitySharedOutput } from '@org/shared-types'
 
 @HTTPController({
   microserviceName: 'Profile',
   serviceName: 'Activity',
 })
 export class ActivityController implements OnModuleInit {
-  private activityContract!: ActivityServiceObservableContract;
+  private activityContract!: ActivityServiceObservableContract
 
   constructor(
     @Inject('PROFILE_CLIENT') private readonly client: ClientGrpc,
@@ -23,7 +23,7 @@ export class ActivityController implements OnModuleInit {
   ) {}
 
   onModuleInit(): void {
-    this.activityContract = this.client.getService<ActivityServiceObservableContract>('ActivityService');
+    this.activityContract = this.client.getService<ActivityServiceObservableContract>('ActivityService')
   }
 
   @QUERYProtectedMethod({
@@ -41,11 +41,11 @@ export class ActivityController implements OnModuleInit {
         validation,
         pagination: this.map.mapActivityPaginationInput(pagination),
       }),
-    );
+    )
     return {
       pagination: this.map.mapActivityPaginationOutput(response.pagination),
       activityLogs: this.map.mapActivityListOutput(response.activityLogs),
-    };
+    }
   }
 
   @QUERYProtectedMethod({
@@ -66,10 +66,10 @@ export class ActivityController implements OnModuleInit {
         nickname,
         pagination: this.map.mapActivityPaginationInput(pagination),
       }),
-    );
+    )
     return {
       pagination: this.map.mapActivityPaginationOutput(response.pagination),
       activityLogs: this.map.mapActivityListOutput(response.activityLogs),
-    };
+    }
   }
 }

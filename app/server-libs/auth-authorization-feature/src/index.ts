@@ -1,1 +1,1 @@
-export * from './lib/auth-authorization-feature.module';
+export * from './lib/auth-authorization-feature.module'

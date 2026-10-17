@@ -1,14 +1,14 @@
 interface PaginationInput {
-  page: number;
-  limit: number;
-  search?: string;
+  page: number
+  limit: number
+  search?: string
 }
 
 export interface PaginationBaseOutput extends PaginationInput {
-  total: number;
-  totalPages: number;
-  hasNext: boolean;
-  hasPrev: boolean;
+  total: number
+  totalPages: number
+  hasNext: boolean
+  hasPrev: boolean
 }
 
-export type PaginationBaseInput = Partial<PaginationInput>;
+export type PaginationBaseInput = Partial<PaginationInput>

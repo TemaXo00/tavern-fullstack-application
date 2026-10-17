@@ -1,5 +1,5 @@
-import { Body, Inject, OnModuleInit, Param } from '@nestjs/common';
-import { Roles } from '@org/enums';
+import { Body, Inject, OnModuleInit, Param } from '@nestjs/common'
+import { Roles } from '@org/enums'
 import {
   DELETEProtectedMethod,
   GETProtectedMethod,
@@ -7,22 +7,22 @@ import {
   PATCHProtectedMethod,
   QUERYProtectedMethod,
   ValidateInputParam,
-} from '@org/gateway-decorators';
-import { BlockUserDto, ChangeEmailDto, ChangePasswordDto, DeleteUserDto, UserPaginationDto } from '@org/gateway-dto';
-import { AuthGatewayMapService } from '@org/gateway-map';
-import { AUTH_USER_ROUTES } from '@org/routes-config';
-import { firstValueFrom } from 'rxjs';
+} from '@org/gateway-decorators'
+import { BlockUserDto, ChangeEmailDto, ChangePasswordDto, DeleteUserDto, UserPaginationDto } from '@org/gateway-dto'
+import { AuthGatewayMapService } from '@org/gateway-map'
+import { AUTH_USER_ROUTES } from '@org/routes-config'
+import { firstValueFrom } from 'rxjs'
 
-import type { ClientGrpc } from '@nestjs/microservices';
-import type { UserServiceObservableContract, ValidateInput } from '@org/grpc-types';
-import type { PaginatedUserSharedOutput, UserSharedOutput } from '@org/shared-types';
+import type { ClientGrpc } from '@nestjs/microservices'
+import type { UserServiceObservableContract, ValidateInput } from '@org/grpc-types'
+import type { PaginatedUserSharedOutput, UserSharedOutput } from '@org/shared-types'
 
 @HTTPController({
   microserviceName: 'Auth',
   serviceName: 'User',
 })
 export class UserController implements OnModuleInit {
-  private userContract!: UserServiceObservableContract;
+  private userContract!: UserServiceObservableContract
 
   constructor(
     @Inject('AUTH_CLIENT') private readonly client: ClientGrpc,
@@ -30,7 +30,7 @@ export class UserController implements OnModuleInit {
   ) {}
 
   onModuleInit(): void {
-    this.userContract = this.client.getService<UserServiceObservableContract>('UserService');
+    this.userContract = this.client.getService<UserServiceObservableContract>('UserService')
   }
 
   @QUERYProtectedMethod({
@@ -49,11 +49,11 @@ export class UserController implements OnModuleInit {
         validation,
         pagination: this.map.mapUserPaginationRequest(pagination),
       }),
-    );
+    )
     return {
       pagination: this.map.mapUserPaginationResponse(response.pagination),
       users: this.map.mapAllUsersResponse(response.users),
-    };
+    }
   }
 
   @GETProtectedMethod({
@@ -67,8 +67,8 @@ export class UserController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Param(AUTH_USER_ROUTES.GET_BY_ID.PARAM) id: string,
   ): Promise<UserSharedOutput> {
-    const response = await firstValueFrom(this.userContract.GetUserById({ validation, id }));
-    return this.map.mapUserResponse(response);
+    const response = await firstValueFrom(this.userContract.GetUserById({ validation, id }))
+    return this.map.mapUserResponse(response)
   }
 
   @PATCHProtectedMethod({
@@ -81,8 +81,8 @@ export class UserController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Body() dto: ChangeEmailDto,
   ): Promise<UserSharedOutput> {
-    const response = await firstValueFrom(this.userContract.ChangeEmail({ validation, ...dto }));
-    return this.map.mapUserResponse(response);
+    const response = await firstValueFrom(this.userContract.ChangeEmail({ validation, ...dto }))
+    return this.map.mapUserResponse(response)
   }
 
   @PATCHProtectedMethod({
@@ -95,8 +95,8 @@ export class UserController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Body() dto: ChangePasswordDto,
   ): Promise<UserSharedOutput> {
-    const response = await firstValueFrom(this.userContract.ChangePassword({ validation, ...dto }));
-    return this.map.mapUserResponse(response);
+    const response = await firstValueFrom(this.userContract.ChangePassword({ validation, ...dto }))
+    return this.map.mapUserResponse(response)
   }
 
   @PATCHProtectedMethod({
@@ -106,7 +106,7 @@ export class UserController implements OnModuleInit {
       'Marks the current user account as inactive. The user will not be able to log in until reactivated by an administrator.',
   })
   async setInactive(@ValidateInputParam() validation: ValidateInput): Promise<void> {
-    await firstValueFrom(this.userContract.SetUserInactive({ validation }));
+    await firstValueFrom(this.userContract.SetUserInactive({ validation }))
   }
 
   @PATCHProtectedMethod({
@@ -127,8 +127,8 @@ export class UserController implements OnModuleInit {
         validation,
         ...dto,
       }),
-    );
-    return this.map.mapUserResponse(response);
+    )
+    return this.map.mapUserResponse(response)
   }
 
   @PATCHProtectedMethod({
@@ -141,8 +141,8 @@ export class UserController implements OnModuleInit {
     @Param(AUTH_USER_ROUTES.UNBLOCK.PARAM) id: string,
     @ValidateInputParam() validation: ValidateInput,
   ): Promise<UserSharedOutput> {
-    const response = await firstValueFrom(this.userContract.UnblockUser({ id, validation }));
-    return this.map.mapUserResponse(response);
+    const response = await firstValueFrom(this.userContract.UnblockUser({ id, validation }))
+    return this.map.mapUserResponse(response)
   }
 
   @PATCHProtectedMethod({
@@ -155,8 +155,8 @@ export class UserController implements OnModuleInit {
     @Param(AUTH_USER_ROUTES.PROMOTE.PARAM) id: string,
     @ValidateInputParam() validation: ValidateInput,
   ): Promise<UserSharedOutput> {
-    const response = await firstValueFrom(this.userContract.PromoteToModerator({ id, validation }));
-    return this.map.mapUserResponse(response);
+    const response = await firstValueFrom(this.userContract.PromoteToModerator({ id, validation }))
+    return this.map.mapUserResponse(response)
   }
 
   @PATCHProtectedMethod({
@@ -169,8 +169,8 @@ export class UserController implements OnModuleInit {
     @Param(AUTH_USER_ROUTES.DEMOTE.PARAM) id: string,
     @ValidateInputParam() validation: ValidateInput,
   ): Promise<UserSharedOutput> {
-    const response = await firstValueFrom(this.userContract.DemoteFromModerator({ id, validation }));
-    return this.map.mapUserResponse(response);
+    const response = await firstValueFrom(this.userContract.DemoteFromModerator({ id, validation }))
+    return this.map.mapUserResponse(response)
   }
 
   @PATCHProtectedMethod({
@@ -183,8 +183,8 @@ export class UserController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Param(AUTH_USER_ROUTES.ACTIVE.PARAM) id: string,
   ): Promise<UserSharedOutput> {
-    const response = await firstValueFrom(this.userContract.ChangeUserToActive({ validation, id }));
-    return this.map.mapUserResponse(response);
+    const response = await firstValueFrom(this.userContract.ChangeUserToActive({ validation, id }))
+    return this.map.mapUserResponse(response)
   }
 
   @DELETEProtectedMethod({
@@ -194,6 +194,6 @@ export class UserController implements OnModuleInit {
       'Permanently deletes the current user account along with all related data. Requires password confirmation.',
   })
   async deleteUser(@ValidateInputParam() validation: ValidateInput, @Body() dto: DeleteUserDto): Promise<void> {
-    await firstValueFrom(this.userContract.DeleteUser({ validation, password: dto.password }));
+    await firstValueFrom(this.userContract.DeleteUser({ validation, password: dto.password }))
   }
 }

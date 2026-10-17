@@ -1,15 +1,15 @@
-import { ResponseType } from '@org/response-types';
+import { ResponseType } from '@org/response-types'
 
-import { isFetchError } from './utils/is-fetch-error.js';
-import { getMessageByStatus } from './utils/message-by-status.js';
+import { isFetchError } from './utils/is-fetch-error.js'
+import { getMessageByStatus } from './utils/message-by-status.js'
 
 export const extractApiError = (error: unknown): ResponseType<string> => {
   if (isFetchError(error)) {
-    const statusCode = error.response?.status ?? 0;
+    const statusCode = error.response?.status ?? 0
     const body = error.response?._data as Partial<ResponseType<string>> & {
-      message?: string;
-      timestamp?: string;
-    };
+      message?: string
+      timestamp?: string
+    }
 
     return {
       status: 'error',
@@ -17,7 +17,7 @@ export const extractApiError = (error: unknown): ResponseType<string> => {
       time: body?.time ?? new Date().toLocaleTimeString(),
       path: body?.path,
       data: body?.message ?? body?.data ?? getMessageByStatus(statusCode),
-    };
+    }
   }
 
   if (error instanceof Error) {
@@ -26,7 +26,7 @@ export const extractApiError = (error: unknown): ResponseType<string> => {
       date: new Date().toLocaleDateString(),
       time: new Date().toLocaleTimeString(),
       data: error.message || getMessageByStatus(500),
-    };
+    }
   }
 
   return {
@@ -34,5 +34,5 @@ export const extractApiError = (error: unknown): ResponseType<string> => {
     date: new Date().toLocaleDateString(),
     time: new Date().toLocaleTimeString(),
     data: getMessageByStatus(500),
-  };
-};
+  }
+}

@@ -10,7 +10,7 @@ export const AUTH_AUTHORIZATION_ROUTES = {
     PARAM: 'token',
   },
   GET_ME: 'me',
-} as const;
+} as const
 
 export const AUTH_SESSION_ROUTES = {
   BASE_URL: 'auth/session',
@@ -25,7 +25,7 @@ export const AUTH_SESSION_ROUTES = {
     PARAM: 'id',
   },
   DELETE_ALL_SESSIONS: 'me/session',
-};
+}
 
 export const AUTH_TOKEN_ROUTES = {
   BASE_URL: 'auth/token',
@@ -43,7 +43,7 @@ export const AUTH_TOKEN_ROUTES = {
     PARAM: 'id',
   },
   REMOVE_INACTIVE: 'inactive',
-};
+}
 
 export const AUTH_USER_ROUTES = {
   BASE_URL: 'auth/user',
@@ -76,4 +76,4 @@ export const AUTH_USER_ROUTES = {
     PARAM: 'id',
   },
   DELETE: 'me/delete',
-};
+}

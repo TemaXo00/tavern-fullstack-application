@@ -1,4 +1,4 @@
-import { status } from '@grpc/grpc-js';
+import { status } from '@grpc/grpc-js'
 import {
   BadRequestException,
   CallHandler,
@@ -15,12 +15,12 @@ import {
   NotImplementedException,
   ServiceUnavailableException,
   UnauthorizedException,
-} from '@nestjs/common';
-import { Observable, catchError, throwError } from 'rxjs';
+} from '@nestjs/common'
+import { Observable, catchError, throwError } from 'rxjs'
 
-import type { ServiceError } from '@grpc/grpc-js';
+import type { ServiceError } from '@grpc/grpc-js'
 
-type GrpcExceptionFactory = (message: string) => HttpException;
+type GrpcExceptionFactory = (message: string) => HttpException
 
 const GRPC_TO_HTTP_EXCEPTION: Record<number, GrpcExceptionFactory> = {
   [status.CANCELLED]: (message) => new HttpException(message, 499),
@@ -39,38 +39,38 @@ const GRPC_TO_HTTP_EXCEPTION: Record<number, GrpcExceptionFactory> = {
   [status.UNAVAILABLE]: (message) => new ServiceUnavailableException(message),
   [status.DATA_LOSS]: (message) => new InternalServerErrorException(message),
   [status.UNAUTHENTICATED]: (message) => new UnauthorizedException(message),
-};
+}
 
-const DEFAULT_GRPC_EXCEPTION: GrpcExceptionFactory = (message) => new InternalServerErrorException(message);
+const DEFAULT_GRPC_EXCEPTION: GrpcExceptionFactory = (message) => new InternalServerErrorException(message)
 
 @Injectable()
 export class GrpcExceptionInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    return next.handle().pipe(catchError((error: unknown) => throwError(() => this.mapError(error))));
+    return next.handle().pipe(catchError((error: unknown) => throwError(() => this.mapError(error))))
   }
 
   private mapError(error: unknown): unknown {
     if (error instanceof HttpException || !this.isGrpcError(error)) {
-      return error;
+      return error
     }
 
-    return this.createHttpException(error);
+    return this.createHttpException(error)
   }
 
   private createHttpException(error: ServiceError): HttpException {
-    const message = error.details || error.message;
-    const factory = GRPC_TO_HTTP_EXCEPTION[error.code] ?? DEFAULT_GRPC_EXCEPTION;
+    const message = error.details || error.message
+    const factory = GRPC_TO_HTTP_EXCEPTION[error.code] ?? DEFAULT_GRPC_EXCEPTION
 
-    return factory(message);
+    return factory(message)
   }
 
   private isGrpcError(error: unknown): error is ServiceError {
     if (typeof error !== 'object' || error === null) {
-      return false;
+      return false
     }
 
-    const candidate = error as ServiceError;
+    const candidate = error as ServiceError
 
-    return typeof candidate.code === 'number' && typeof candidate.details === 'string';
+    return typeof candidate.code === 'number' && typeof candidate.details === 'string'
   }
 }

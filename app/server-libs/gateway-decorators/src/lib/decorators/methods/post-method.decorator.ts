@@ -1,4 +1,4 @@
-import { applyDecorators, Post } from '@nestjs/common';
+import { applyDecorators, Post } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -7,20 +7,20 @@ import {
   ApiInternalServerErrorResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+} from '@nestjs/swagger'
 
-import { Validate } from '../validate.decorator.js';
+import { Validate } from '../validate.decorator.js'
 
-import type { Roles } from '@org/enums';
+import type { Roles } from '@org/enums'
 
 interface IPOSTProtectedMethodOptions {
-  path: string;
-  summary: string;
-  operationDesc: string;
-  roles?: Roles[];
+  path: string
+  summary: string
+  operationDesc: string
+  roles?: Roles[]
 }
 
-type IPOSTMethodOptions = Omit<IPOSTProtectedMethodOptions, 'roles'>;
+type IPOSTMethodOptions = Omit<IPOSTProtectedMethodOptions, 'roles'>
 
 export const POSTMethod = (options: IPOSTMethodOptions): MethodDecorator => {
   return applyDecorators(
@@ -38,8 +38,8 @@ export const POSTMethod = (options: IPOSTMethodOptions): MethodDecorator => {
       description: 'Internal server error',
     }),
     Post(options.path),
-  );
-};
+  )
+}
 
 export const POSTProtected = (options: IPOSTProtectedMethodOptions): MethodDecorator => {
   return applyDecorators(
@@ -65,5 +65,5 @@ export const POSTProtected = (options: IPOSTProtectedMethodOptions): MethodDecor
     }),
     Post(options.path),
     Validate(...(options.roles || [])),
-  );
-};
+  )
+}

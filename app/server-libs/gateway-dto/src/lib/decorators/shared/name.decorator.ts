@@ -1,8 +1,8 @@
-import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-import { SHARED_CONFIG } from '@org/validation-config';
-import { SHARED_MESSAGES } from '@org/validation-messages';
-import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { applyDecorators } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
+import { SHARED_CONFIG } from '@org/validation-config'
+import { SHARED_MESSAGES } from '@org/validation-messages'
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
 
 export function Name(): PropertyDecorator {
   return applyDecorators(
@@ -22,5 +22,5 @@ export function Name(): PropertyDecorator {
     MaxLength(SHARED_CONFIG.NAME.MAX_LENGTH, {
       message: SHARED_MESSAGES.NAME_VALIDATION.MAX_LENGTH,
     }),
-  );
+  )
 }

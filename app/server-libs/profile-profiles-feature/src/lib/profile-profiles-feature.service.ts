@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { AuthValidateService } from '@org/auth-authorization-core';
-import { Roles } from '@org/enums';
+import { Injectable } from '@nestjs/common'
+import { AuthValidateService } from '@org/auth-authorization-core'
+import { Roles } from '@org/enums'
 import {
   type GetMeInput,
   type GetProfileByNicknameAdvancedInput,
@@ -13,14 +13,14 @@ import {
   type ProfileBaseOutput,
   type ProfileServiceContract,
   type UpdateProfileInput,
-} from '@org/grpc-types';
+} from '@org/grpc-types'
 import {
   ProfileCacheUtil,
   ProfileDatabaseUtil,
   ProfileMapUtil,
   ProfileMessagesUtil,
   ProfileValidationUtil,
-} from '@org/profile-utils';
+} from '@org/profile-utils'
 
 @Injectable()
 export class ProfileProfilesFeatureService implements ProfileServiceContract {
@@ -34,77 +34,77 @@ export class ProfileProfilesFeatureService implements ProfileServiceContract {
   ) {}
 
   async GetMe(data: GetMeInput): Promise<ProfileAdvancedOutput> {
-    const payload = await this.validate.Validate(data.validation);
-    const profile = await this.validationUtil.checkUserExisting('by-id', payload.id);
-    const mappedProfile = this.mapUtil.mapAdvanced(profile);
-    return mappedProfile;
+    const payload = await this.validate.Validate(data.validation)
+    const profile = await this.validationUtil.checkUserExisting('by-id', payload.id)
+    const mappedProfile = this.mapUtil.mapAdvanced(profile)
+    return mappedProfile
   }
 
   async GetProfileByNicknameBase(data: GetProfileByNicknameInput): Promise<ProfileBaseOutput> {
-    const redisProfile = await this.cacheUtil.getBase(data.nickname);
+    const redisProfile = await this.cacheUtil.getBase(data.nickname)
     if (redisProfile) {
-      return redisProfile;
+      return redisProfile
     }
-    const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname);
-    const mappedProfile = this.mapUtil.mapBase(profile);
-    await this.cacheUtil.cacheBase(mappedProfile);
-    return mappedProfile;
+    const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname)
+    const mappedProfile = this.mapUtil.mapBase(profile)
+    await this.cacheUtil.cacheBase(mappedProfile)
+    return mappedProfile
   }
 
   async GetProfileByNicknameAdvanced(data: GetProfileByNicknameAdvancedInput): Promise<ProfileAdvancedOutput> {
-    const payload = await this.validate.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR]);
-    const redisProfile = await this.cacheUtil.getAdvanced(data.nickname);
+    const payload = await this.validate.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR])
+    const redisProfile = await this.cacheUtil.getAdvanced(data.nickname)
     if (redisProfile) {
-      return redisProfile;
+      return redisProfile
     }
-    const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname);
-    const mappedProfile = this.mapUtil.mapAdvanced(profile);
-    await this.cacheUtil.cacheAdvanced(mappedProfile);
+    const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname)
+    const mappedProfile = this.mapUtil.mapAdvanced(profile)
+    await this.cacheUtil.cacheAdvanced(mappedProfile)
     this.messagesUtil.sendAdminCheckProfile({
       adminId: payload.id,
       userId: profile.userId,
-    });
-    return mappedProfile;
+    })
+    return mappedProfile
   }
 
   async GetProfilesBase(data: GetProfilesInput): Promise<PaginatedProfilesBaseOutput> {
-    return await this.dbUtil.getProfilesWithBasePagination(data.pagination);
+    return await this.dbUtil.getProfilesWithBasePagination(data.pagination)
   }
 
   async GetProfilesAdvanced(data: GetProfilesAdvancedInput): Promise<PaginatedProfilesAdvancedOutput> {
-    const payload = await this.validate.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR]);
+    const payload = await this.validate.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR])
     if (
       data.pagination.birthDateFrom ||
       data.pagination.birthDateTo ||
       (data.pagination.birthDateFrom && data.pagination.birthDateTo)
     ) {
-      this.validationUtil.checkBirthDateQuery(data.pagination.birthDateFrom, data.pagination.birthDateTo);
+      this.validationUtil.checkBirthDateQuery(data.pagination.birthDateFrom, data.pagination.birthDateTo)
     }
     if (data.pagination.reputationFrom && data.pagination.reputationTo) {
-      this.validationUtil.validateReputationInQuery(data.pagination.reputationFrom, data.pagination.reputationTo);
+      this.validationUtil.validateReputationInQuery(data.pagination.reputationFrom, data.pagination.reputationTo)
     }
     this.messagesUtil.sendAdminGetPaginatedProfiles({
       adminId: payload.id,
       query: data.pagination,
-    });
-    return await this.dbUtil.getProfilesWithAdvancedPagination(data.pagination);
+    })
+    return await this.dbUtil.getProfilesWithAdvancedPagination(data.pagination)
   }
 
   async UpdateProfile(data: UpdateProfileInput): Promise<ProfileAdvancedOutput> {
-    this.validationUtil.validateUpdateInput(data.data);
-    const payload = await this.validate.Validate(data.validation);
-    const current = await this.validationUtil.checkUserExisting('by-id', payload.id);
+    this.validationUtil.validateUpdateInput(data.data)
+    const payload = await this.validate.Validate(data.validation)
+    const current = await this.validationUtil.checkUserExisting('by-id', payload.id)
     if (data.data.nickname && current.nickname !== data.data.nickname) {
-      await this.validationUtil.checkUniqueNickname(data.data.nickname);
+      await this.validationUtil.checkUniqueNickname(data.data.nickname)
     }
     if (data.data.birthDate) {
-      this.validationUtil.checkUpdatedBirthDate(data.data.birthDate);
+      this.validationUtil.checkUpdatedBirthDate(data.data.birthDate)
     }
-    await this.cacheUtil.deleteCache(current.nickname);
+    await this.cacheUtil.deleteCache(current.nickname)
     this.messagesUtil.sendUserUpdateProfile({
       userId: payload.id,
       data: data.data,
-    });
-    return this.dbUtil.updateProfile(payload.id, data.data);
+    })
+    return this.dbUtil.updateProfile(payload.id, data.data)
   }
 }

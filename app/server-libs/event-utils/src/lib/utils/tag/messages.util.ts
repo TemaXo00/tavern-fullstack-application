@@ -1,26 +1,26 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common'
 import {
   EVENT_MESSAGES,
   type EventTagCreatedMessage,
   type EventTagUpdatedMessage,
   type EventTagDeletedMessage,
-} from '@org/rmq-messages';
+} from '@org/rmq-messages'
 
-import type { ClientProxy } from '@nestjs/microservices';
+import type { ClientProxy } from '@nestjs/microservices'
 
 @Injectable()
 export class EventTagMessagesUtil {
   constructor(@Inject('LOG_CLIENT') private readonly log: ClientProxy) {}
 
   create(data: EventTagCreatedMessage): void {
-    this.log.emit(EVENT_MESSAGES.TAG_CREATE, data);
+    this.log.emit(EVENT_MESSAGES.TAG_CREATE, data)
   }
 
   update(data: EventTagUpdatedMessage): void {
-    this.log.emit(EVENT_MESSAGES.TAG_UPDATE, data);
+    this.log.emit(EVENT_MESSAGES.TAG_UPDATE, data)
   }
 
   delete(data: EventTagDeletedMessage): void {
-    this.log.emit(EVENT_MESSAGES.TAG_DELETE, data);
+    this.log.emit(EVENT_MESSAGES.TAG_DELETE, data)
   }
 }

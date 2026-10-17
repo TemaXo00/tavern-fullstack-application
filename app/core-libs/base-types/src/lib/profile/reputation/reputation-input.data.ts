@@ -1,14 +1,14 @@
-import { PaginationBaseInput } from '../../shared/pagination.type.js';
+import { PaginationBaseInput } from '../../shared/pagination.type.js'
 
 export interface ReputationPaginationBaseInput extends PaginationBaseInput {
-  action?: number;
+  action?: number
 }
 
 export interface GetMyReputationBaseInput {
-  pagination: ReputationPaginationBaseInput;
+  pagination: ReputationPaginationBaseInput
 }
 
 export interface GetReputationByNicknameBaseInput {
-  nickname: string;
-  pagination: ReputationPaginationBaseInput;
+  nickname: string
+  pagination: ReputationPaginationBaseInput
 }

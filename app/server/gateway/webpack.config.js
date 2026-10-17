@@ -1,7 +1,7 @@
-const { join } = require('path');
+const { join } = require('path')
 
-const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 module.exports = {
   output: {
@@ -28,4 +28,4 @@ module.exports = {
       sourceMap: true,
     }),
   ],
-};
+}

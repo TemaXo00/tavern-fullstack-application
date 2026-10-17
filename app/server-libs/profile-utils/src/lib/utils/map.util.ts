@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { ACTIVITY_TO_GRPC } from '@org/enums';
-import { ProfileAdvancedOutput, ProfileBaseOutput } from '@org/grpc-types';
-import { Profile } from '@org/profile-database';
+import { Injectable } from '@nestjs/common'
+import { ACTIVITY_TO_GRPC } from '@org/enums'
+import { ProfileAdvancedOutput, ProfileBaseOutput } from '@org/grpc-types'
+import { Profile } from '@org/profile-database'
 
 @Injectable()
 export class ProfileMapUtil {
@@ -14,7 +14,7 @@ export class ProfileMapUtil {
       avatarId: profile.avatarId,
       reputationScore: profile.reputationScore,
       currentActivity: ACTIVITY_TO_GRPC[profile.currentActivity],
-    };
+    }
   }
 
   mapAdvanced(profile: Profile): ProfileAdvancedOutput {
@@ -25,6 +25,6 @@ export class ProfileMapUtil {
       birthDate: profile.birthDate,
       createdAt: profile.createdAt,
       updatedAt: profile.updatedAt,
-    };
+    }
   }
 }

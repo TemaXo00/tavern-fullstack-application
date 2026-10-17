@@ -1,66 +1,66 @@
-import { PaginationBaseInput } from '../../shared/pagination.type.js';
+import { PaginationBaseInput } from '../../shared/pagination.type.js'
 
 export interface EventPublicPaginationBaseInput extends PaginationBaseInput {
-  dateFrom?: Date;
-  dateTo?: Date;
-  leftPlacesFrom?: number;
-  leftPlacesTo?: number;
-  tags?: string[];
+  dateFrom?: Date
+  dateTo?: Date
+  leftPlacesFrom?: number
+  leftPlacesTo?: number
+  tags?: string[]
 }
 
 export interface EventPrivatePaginationBaseInput extends EventPublicPaginationBaseInput {
-  totalPlacesFrom?: number;
-  totalPlacesTo?: number;
-  status?: number;
+  totalPlacesFrom?: number
+  totalPlacesTo?: number
+  status?: number
 }
 
 export interface PaginatedPublicEventsBaseInput {
-  pagination: EventPublicPaginationBaseInput;
+  pagination: EventPublicPaginationBaseInput
 }
 
 export interface PaginatedPrivateEventsBaseInput {
-  pagination: EventPrivatePaginationBaseInput;
+  pagination: EventPrivatePaginationBaseInput
 }
 
 export interface GetPublicUserEventsBaseInput {
-  pagination: EventPublicPaginationBaseInput;
-  nickname: string;
+  pagination: EventPublicPaginationBaseInput
+  nickname: string
 }
 
 export interface GetPrivateUserEventsBaseInput {
-  pagination: EventPrivatePaginationBaseInput;
-  nickname: string;
+  pagination: EventPrivatePaginationBaseInput
+  nickname: string
 }
 
 export interface GetEventBySlugBaseInput {
-  slug: string;
+  slug: string
 }
 
 export interface CreateEventBaseInput {
-  name: string;
-  description?: string;
-  dateAndTime: Date;
-  totalPlaces: number;
-  tags: string[];
+  name: string
+  description?: string
+  dateAndTime: Date
+  totalPlaces: number
+  tags: string[]
 }
 
 export interface EventActionBaseInput {
-  slug: string;
+  slug: string
 }
 
 export interface SwitchEventOrganizerBaseInput {
-  slug: string;
-  organizerNickname: string;
+  slug: string
+  organizerNickname: string
 }
 
 export interface UpdateEventDataBaseInput {
-  slug: string;
-  description?: string;
-  dateAndTime?: Date;
-  totalPlaces?: number;
-  tags: string[];
+  slug: string
+  description?: string
+  dateAndTime?: Date
+  totalPlaces?: number
+  tags: string[]
 }
 
 export interface DeleteOtherEventBaseInput extends EventActionBaseInput {
-  message: string;
+  message: string
 }

@@ -1,3 +1,3 @@
-import { AuthBaseOutput } from '@org/base-types';
+import { AuthBaseOutput } from '@org/base-types'
 
-export type AuthOutput = AuthBaseOutput;
+export type AuthOutput = AuthBaseOutput

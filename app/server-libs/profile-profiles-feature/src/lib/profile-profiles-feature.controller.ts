@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
-import { GrpcMethod } from '@nestjs/microservices';
+import { Controller } from '@nestjs/common'
+import { GrpcMethod } from '@nestjs/microservices'
 
-import { ProfileProfilesFeatureService } from './profile-profiles-feature.service';
+import { ProfileProfilesFeatureService } from './profile-profiles-feature.service'
 
 import type {
   GetMeInput,
@@ -15,7 +15,7 @@ import type {
   ProfileBaseOutput,
   ProfileServiceContract,
   UpdateProfileInput,
-} from '@org/grpc-types';
+} from '@org/grpc-types'
 
 @Controller()
 export class ProfileProfilesFeatureController implements ProfileServiceContract {
@@ -23,31 +23,31 @@ export class ProfileProfilesFeatureController implements ProfileServiceContract 
 
   @GrpcMethod('ProfileService', 'GetMe')
   async GetMe(data: GetMeInput): Promise<ProfileAdvancedOutput> {
-    return this.service.GetMe(data);
+    return this.service.GetMe(data)
   }
 
   @GrpcMethod('ProfileService', 'GetProfileByNicknameBase')
   async GetProfileByNicknameBase(data: GetProfileByNicknameInput): Promise<ProfileBaseOutput> {
-    return this.service.GetProfileByNicknameBase(data);
+    return this.service.GetProfileByNicknameBase(data)
   }
 
   @GrpcMethod('ProfileService', 'GetProfileByNicknameAdvanced')
   async GetProfileByNicknameAdvanced(data: GetProfileByNicknameAdvancedInput): Promise<ProfileAdvancedOutput> {
-    return this.service.GetProfileByNicknameAdvanced(data);
+    return this.service.GetProfileByNicknameAdvanced(data)
   }
 
   @GrpcMethod('ProfileService', 'GetProfilesBase')
   async GetProfilesBase(data: GetProfilesInput): Promise<PaginatedProfilesBaseOutput> {
-    return this.service.GetProfilesBase(data);
+    return this.service.GetProfilesBase(data)
   }
 
   @GrpcMethod('ProfileService', 'GetProfilesAdvanced')
   async GetProfilesAdvanced(data: GetProfilesAdvancedInput): Promise<PaginatedProfilesAdvancedOutput> {
-    return this.service.GetProfilesAdvanced(data);
+    return this.service.GetProfilesAdvanced(data)
   }
 
   @GrpcMethod('ProfileService', 'UpdateProfile')
   async UpdateProfile(data: UpdateProfileInput): Promise<ProfileAdvancedOutput> {
-    return this.service.UpdateProfile(data);
+    return this.service.UpdateProfile(data)
   }
 }

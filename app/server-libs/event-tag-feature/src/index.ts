@@ -1,1 +1,1 @@
-export * from './lib/event-tag-feature.module';
+export * from './lib/event-tag-feature.module'

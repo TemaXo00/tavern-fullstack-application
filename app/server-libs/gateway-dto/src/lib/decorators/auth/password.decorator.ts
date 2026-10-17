@@ -1,8 +1,8 @@
-import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-import { AUTH_CONFIG } from '@org/validation-config';
-import { AUTH_MESSAGES } from '@org/validation-messages';
-import { IsNotEmpty, IsString, IsStrongPassword } from 'class-validator';
+import { applyDecorators } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
+import { AUTH_CONFIG } from '@org/validation-config'
+import { AUTH_MESSAGES } from '@org/validation-messages'
+import { IsNotEmpty, IsString, IsStrongPassword } from 'class-validator'
 
 export function Password(): PropertyDecorator {
   return applyDecorators(
@@ -25,5 +25,5 @@ export function Password(): PropertyDecorator {
         message: AUTH_MESSAGES.PASSWORD_VALIDATION.STRONG,
       },
     ),
-  );
+  )
 }

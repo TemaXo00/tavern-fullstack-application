@@ -1,8 +1,8 @@
-import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-import { EVENT_CONFIG } from '@org/validation-config';
-import { EVENT_MESSAGES } from '@org/validation-messages';
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import { applyDecorators } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
+import { EVENT_CONFIG } from '@org/validation-config'
+import { EVENT_MESSAGES } from '@org/validation-messages'
+import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator'
 
 export function EventMessage(): PropertyDecorator {
   return applyDecorators(
@@ -22,5 +22,5 @@ export function EventMessage(): PropertyDecorator {
     MaxLength(EVENT_CONFIG.MESSAGE.MAX_LENGTH, {
       message: EVENT_MESSAGES.MESSAGE_VALIDATION.MAX_LENGTH,
     }),
-  );
+  )
 }

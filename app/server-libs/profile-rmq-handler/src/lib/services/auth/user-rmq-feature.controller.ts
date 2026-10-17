@@ -1,5 +1,5 @@
-import { Controller } from '@nestjs/common';
-import { EventPattern, Payload } from '@nestjs/microservices';
+import { Controller } from '@nestjs/common'
+import { EventPattern, Payload } from '@nestjs/microservices'
 import {
   type AdminBlockUserProfile,
   type AdminSetUserActiveMessage,
@@ -8,9 +8,9 @@ import {
   USER_MESSAGES,
   type UserChangeEmailMessage,
   type UserSetInactiveMessage,
-} from '@org/rmq-messages';
+} from '@org/rmq-messages'
 
-import { UserRmqFeatureService } from './user-rmq-feature.service';
+import { UserRmqFeatureService } from './user-rmq-feature.service'
 
 @Controller()
 export class UserRmqFeatureController {
@@ -18,31 +18,31 @@ export class UserRmqFeatureController {
 
   @EventPattern(USER_MESSAGES.BLOCK)
   async onUserBlock(@Payload() data: AdminBlockUserProfile): Promise<void> {
-    await this.service.handleUserBlock(data);
+    await this.service.handleUserBlock(data)
   }
 
   @EventPattern(USER_MESSAGES.EARLY_UNBLOCK)
   async onUserUnblock(@Payload() data: AdminUnblockUserMessage): Promise<void> {
-    await this.service.handleUserEarlyUnblock(data);
+    await this.service.handleUserEarlyUnblock(data)
   }
 
   @EventPattern(USER_MESSAGES.SET_INACTIVE)
   async onUserInactive(@Payload() data: UserSetInactiveMessage): Promise<void> {
-    await this.service.handleUserInactive(data);
+    await this.service.handleUserInactive(data)
   }
 
   @EventPattern(USER_MESSAGES.SET_ACTIVE)
   async onUserActive(@Payload() data: AdminSetUserActiveMessage): Promise<void> {
-    await this.service.handleUserActive(data);
+    await this.service.handleUserActive(data)
   }
 
   @EventPattern(USER_MESSAGES.EMAIL_CHANGE)
   async onUserChangeEmail(@Payload() data: UserChangeEmailMessage): Promise<void> {
-    await this.service.handleUserChangeEmail(data);
+    await this.service.handleUserChangeEmail(data)
   }
 
   @EventPattern(USER_MESSAGES.DELETE)
   async onUserDeleted(@Payload() data: DeleteUserMessage): Promise<void> {
-    await this.service.handleUserDeleted(data);
+    await this.service.handleUserDeleted(data)
   }
 }
