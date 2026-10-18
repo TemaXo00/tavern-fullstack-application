@@ -17,3 +17,4 @@ export * from './lib/profile/profile-messages.js'
 export * from './lib/enums/event.messages.js'
 
 export * from './lib/events/tag-messages.js'
+export * from './lib/events/event-messages.js'
