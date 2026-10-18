@@ -17,6 +17,7 @@ import { Protected } from '../../utils/protected.js'
 
 export type EventPublicPaginationGrpcInput = EventPublicPaginationBaseInput
 export type EventPrivatePaginationGrpcInput = EventPrivatePaginationBaseInput
+export type CreateEventGrpcInput = CreateEventBaseInput
 
 export type PaginatedPublicEventsInput = PaginatedPublicEventsBaseInput
 export type PaginatedPrivateEventsInput = Protected<PaginatedPrivateEventsBaseInput>

@@ -4,10 +4,12 @@ import {
   EventMethodsBaseOutput,
   EventPrivatePaginationBaseOutput,
   EventPublicPaginationBaseOutput,
+  EventUserShortBaseOutput,
   PaginatedPrivateEventsBaseOutput,
   PaginatedPublicEventsBaseOutput,
 } from '@org/base-types'
 
+export type EventUserShortGrpcOutput = EventUserShortBaseOutput
 export type EventPublicPaginationGrpcOutput = EventPublicPaginationBaseOutput
 export type EventPrivatePaginationGrpcOutput = EventPrivatePaginationBaseOutput
 export type EventListGrpcOutput = EventListBaseOutput

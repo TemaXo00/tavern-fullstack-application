@@ -39,7 +39,7 @@ export interface EventListBaseOutput {
 export interface EventBaseOutput {
   slug: string
   name: string
-  description?: string
+  description: string | null
   dateAndTime: Date
   totalPlaces: number
   leftPlaces: number
@@ -54,7 +54,7 @@ export interface EventBaseOutput {
 export interface EventMethodsBaseOutput {
   slug: string
   name: string
-  description?: string
+  description: string | null
   dateAndTime: Date
   totalPlaces: number
   leftPlaces: number

@@ -8,6 +8,7 @@ import { SharedUtilsModule } from '@org/shared-utils'
 
 import { EVENTS_UTILS } from './utils/events/main'
 import { RMQ_UTILS } from './utils/rmq/main'
+import { SHARED_UTILS } from './utils/shared/main'
 import { TAG_UTILS } from './utils/tag/main'
 
 const queues = ['log']
@@ -39,7 +40,7 @@ const queues = ['log']
       })),
     ),
   ],
-  providers: [...TAG_UTILS, ...RMQ_UTILS, ...EVENTS_UTILS],
-  exports: [...TAG_UTILS, ...RMQ_UTILS, ...EVENTS_UTILS],
+  providers: [...TAG_UTILS, ...RMQ_UTILS, ...EVENTS_UTILS, ...SHARED_UTILS],
+  exports: [...TAG_UTILS, ...RMQ_UTILS, ...EVENTS_UTILS, ...SHARED_UTILS],
 })
 export class EventUtilsModule {}

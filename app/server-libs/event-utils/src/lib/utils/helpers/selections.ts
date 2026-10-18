@@ -57,3 +57,50 @@ export const EVENT_LIST_SELECTIONS: EventSelect = {
     },
   },
 }
+
+export const EVENT_OUTPUT_SELECTIONS = {
+  slug: true,
+  name: true,
+  description: true,
+  dateAndTime: true,
+  totalPlaces: true,
+  leftPlaces: true,
+  waitingUsers: true,
+  status: true,
+  tags: {
+    select: {
+      slug: true,
+      name: true,
+      color: true,
+    },
+  },
+  organizer: {
+    select: {
+      nickname: true,
+      avatarId: true,
+    },
+  },
+  participants: {
+    select: {
+      user: {
+        select: {
+          nickname: true,
+          avatarId: true,
+        },
+      },
+    },
+  },
+  createdAt: true,
+} as const satisfies EventSelect
+
+export const EVENT_METHODS_SELECTIONS = {
+  slug: true,
+  name: true,
+  description: true,
+  dateAndTime: true,
+  totalPlaces: true,
+  leftPlaces: true,
+  waitingUsers: true,
+  status: true,
+  organizerId: true,
+} as const satisfies EventSelect
