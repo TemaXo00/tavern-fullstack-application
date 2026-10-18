@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { EVENT_STATUSES_TO_GRPC } from '@org/enums'
 import { EventDatabaseService, EventStatuses, EventWhereInput } from '@org/event-database'
-import { PaginationUtil, SlugUtil } from '@org/shared-utils'
+import { PaginationUtil } from '@org/shared-utils'
 
 import { EVENT_LIST_SELECTIONS, EVENT_METHODS_SELECTIONS, EVENT_OUTPUT_SELECTIONS } from '../helpers/selections'
 import { mapEventMethodsResponse, mapEventOutputResponse } from './helpers/map-responses'
@@ -26,7 +26,6 @@ export class EventEventsDatabaseUtil {
   constructor(
     private readonly db: EventDatabaseService,
     private readonly paginationUtil: PaginationUtil,
-    private readonly slugUtil: SlugUtil,
     private readonly cache: EventsCacheSharedUtil,
   ) {}
 
@@ -128,6 +127,17 @@ export class EventEventsDatabaseUtil {
     return user.userId
   }
 
+  async getUser(id: string): Promise<string | null> {
+    const user = await this.db.eventUserSnapshot.findUnique({
+      where: { userId: id },
+      select: { userId: true },
+    })
+    if (!user) {
+      return null
+    }
+    return user.userId
+  }
+
   async getEventMethodsOutput(slug: string): Promise<EventMethodsOutput | null> {
     const event = await this.db.event.findUnique({
       where: { slug },
@@ -139,11 +149,11 @@ export class EventEventsDatabaseUtil {
     return mapEventMethodsResponse(event)
   }
 
-  async createEvent(input: CreateEventGrpcInput, userId: string): Promise<EventMethodsOutput> {
+  async createEvent(input: CreateEventGrpcInput, eventSlug: string, userId: string): Promise<EventMethodsOutput> {
     const event = await this.db.event.create({
       data: {
         ...input,
-        slug: this.slugUtil.createSlug(input.name),
+        slug: eventSlug,
         organizerId: userId,
         leftPlaces: input.totalPlaces,
         waitingUsers: 0,

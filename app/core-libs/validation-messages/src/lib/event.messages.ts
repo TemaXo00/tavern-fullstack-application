@@ -101,4 +101,14 @@ export const EVENT_MESSAGES = {
     },
     MESSAGE: 'Nickname does not found in payload',
   },
+  USER_NOT_FOUND: 'User not found',
+  EVENT_NOT_FOUND: 'Event not found',
+  DRAFT_NOT_ORGANIZER: 'Only organizer can see detailed info about this event',
+  EVENT_FINISHED: 'This event currently finished',
+  EVENT_CANCELLED: 'This event cancelled',
+  ONE_OR_MANY_TAGS_NOT_FOUND: 'One or many tags for this event not found. Please, check tags',
+  ORGANIZER_PERMISSIONS: 'You does not have permission to manipulate with this event',
+  EVENT_NOT_DRAFT: 'You cannot publish this event, cause it doesnt draft',
+  EVENT_NOT_PUBLISH: 'You cannot cancel of finish this event cause it does not published',
+  EVENT_SLUG_FOUND: 'Event with same slug already exists. Please, rename your event'
 } as const
