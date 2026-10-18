@@ -34,11 +34,11 @@ const register = async () => {
   {{ loading }}
   <form @submit.prevent="register">
     <label>Email</label>
-    <input v-model="form.email" />
+    <input v-model="form.email">
     <label>Password</label>
-    <input v-model="form.password" />
+    <input v-model="form.password">
     <label>Password Confirmation</label>
-    <input v-model="form.passwordConfirmation" />
+    <input v-model="form.passwordConfirmation">
     <button>Register</button>
   </form>
 </template>

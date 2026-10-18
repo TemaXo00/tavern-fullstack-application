@@ -7,7 +7,9 @@ const store = useAuthStore()
 <template>
   <p>Welcome to Main Home Page!</p>
   <p>{{ store.isAuthenticated }}</p>
-  <RouterLink to="/admin"> В админ панель </RouterLink>
+  <RouterLink to="/admin">
+    В админ панель
+  </RouterLink>
 </template>
 
 <style scoped></style>

@@ -112,5 +112,5 @@ export const EVENT_MESSAGES = {
   EVENT_NOT_PUBLISH: 'You cannot cancel of finish this event cause it does not published',
   EVENT_DRAFT: 'This event is draft. You cant see details of it',
   EVENT_SLUG_FOUND: 'Event with same slug already exists. Please, rename your event',
-  INVALID_NICKNAME_STRING: 'Nickname'
+  INVALID_NICKNAME_STRING: 'Nickname',
 } as const
