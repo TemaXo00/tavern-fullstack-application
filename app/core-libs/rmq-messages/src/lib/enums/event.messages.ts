@@ -11,6 +11,7 @@ export enum EVENT_EVENTS_MESSAGES {
   AUTHOR_CANCELLED = 'event.events.author.cancelled',
   AUTHOR_FINISHED = 'event.events.author.finished',
   AUTHOR_DELETED = 'event.events.author.deleted',
+  AUTHOR_ORGANIZER = 'event.events.author.change-organizer',
   ADMIN_CHANGE_ORGANIZER = 'event.events.admin.change-organizer',
   ADMIN_DELETE = 'event.events.admin.delete',
   ADMIN_CHECK_PRIVATE_PAGINATED = 'event.events.admin.check-private-paginated',

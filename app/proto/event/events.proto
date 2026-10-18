@@ -193,9 +193,10 @@ message EventOutput {
     int32 waitingUsers = 7;
     EventStatuses status = 8;
     repeated EventTagShortOutput tags = 9;
-    EventUserShortOutput organizer = 10;
-    repeated EventUserShortOutput participants = 11;
-    string createdAt = 12;
+    string organizerId = 10;
+    EventUserShortOutput organizer = 11;
+    repeated EventUserShortOutput participants = 12;
+    string createdAt = 13;
 }
 
 message EventMethodsOutput {

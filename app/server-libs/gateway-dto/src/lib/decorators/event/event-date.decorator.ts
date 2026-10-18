@@ -2,7 +2,7 @@ import { applyDecorators } from '@nestjs/common'
 import { ApiProperty } from '@nestjs/swagger'
 import { EVENT_MESSAGES } from '@org/validation-messages'
 import { Type } from 'class-transformer'
-import { IsDate, IsNotEmpty, IsOptional, MaxDate } from 'class-validator'
+import { IsDate, IsNotEmpty, IsOptional, MinDate } from 'class-validator'
 
 export function EventDate(requirable: boolean): PropertyDecorator {
   const requirableDecorator = requirable
@@ -19,8 +19,8 @@ export function EventDate(requirable: boolean): PropertyDecorator {
     requirableDecorator,
     Type(() => Date),
     IsDate({ message: EVENT_MESSAGES.DATE_VALIDATION.TYPE }),
-    MaxDate(() => new Date(), {
-      message: EVENT_MESSAGES.DATE_VALIDATION.MAX,
+    MinDate(() => new Date(), {
+      message: EVENT_MESSAGES.DATE_VALIDATION.MIN,
     }),
   )
 }

@@ -1,8 +1,8 @@
-import { PaginatedPrivateEventsInput } from '@org/grpc-types'
+import { EventPrivatePaginationGrpcInput } from '@org/grpc-types'
 
 export interface AdminCheckPrivatePaginatedMessage {
   adminId: string
-  query: PaginatedPrivateEventsInput
+  query: EventPrivatePaginationGrpcInput
 }
 
 export interface AdminCheckBySlugMessage {
@@ -12,6 +12,12 @@ export interface AdminCheckBySlugMessage {
 
 export interface EventEventsAuthorManipulateMessages {
   organizerId: string
+  eventSlug: string
+}
+
+export interface EventEventsAuthorChangeOrganizer {
+  previousId: string
+  newId: string
   eventSlug: string
 }
 

@@ -74,6 +74,7 @@ export const EVENT_OUTPUT_SELECTIONS = {
       color: true,
     },
   },
+  organizerId: true,
   organizer: {
     select: {
       nickname: true,
@@ -81,6 +82,13 @@ export const EVENT_OUTPUT_SELECTIONS = {
     },
   },
   participants: {
+    take: 5,
+    where: {
+      status: 'CONFIRMED',
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
     select: {
       user: {
         select: {

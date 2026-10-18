@@ -3,8 +3,11 @@ import { ClientProxy } from '@nestjs/microservices'
 import { EVENT_EVENTS_MESSAGES } from '@org/rmq-messages'
 
 import type {
+  AdminCheckBySlugMessage,
+  AdminCheckPrivatePaginatedMessage,
   EventEventsAdminChangeOrganizerMessage,
   EventEventsAdminDeleteMessage,
+  EventEventsAuthorChangeOrganizer,
   EventEventsAuthorManipulateMessages,
 } from '@org/rmq-messages'
 
@@ -32,6 +35,10 @@ export class EventEventsMessagesUtil {
     this.log.emit(EVENT_EVENTS_MESSAGES.AUTHOR_FINISHED, data)
   }
 
+  authorChangeOrganizer(data: EventEventsAuthorChangeOrganizer): void {
+    this.log.emit(EVENT_EVENTS_MESSAGES.AUTHOR_ORGANIZER, data)
+  }
+
   authorDeleted(data: EventEventsAuthorManipulateMessages): void {
     this.log.emit(EVENT_EVENTS_MESSAGES.AUTHOR_DELETED, data)
   }
@@ -42,5 +49,13 @@ export class EventEventsMessagesUtil {
 
   adminDelete(data: EventEventsAdminDeleteMessage): void {
     this.log.emit(EVENT_EVENTS_MESSAGES.ADMIN_DELETE, data)
+  }
+
+  adminCheckPrivatePaginated(data: AdminCheckPrivatePaginatedMessage): void {
+    this.log.emit(EVENT_EVENTS_MESSAGES.ADMIN_CHECK_PRIVATE_PAGINATED, data)
+  }
+
+  adminCheckBySlug(data: AdminCheckBySlugMessage): void {
+    this.log.emit(EVENT_EVENTS_MESSAGES.ADMIN_CHECK_BY_SLUG, data)
   }
 }

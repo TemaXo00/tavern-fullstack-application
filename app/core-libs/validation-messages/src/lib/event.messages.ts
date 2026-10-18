@@ -14,7 +14,7 @@ export const EVENT_MESSAGES = {
   DATE_VALIDATION: {
     NOT_EMPTY: 'Date should not be empty',
     TYPE: 'Date should be in correct format. Example: 2026-06-15T00:00:00.000Z',
-    MAX: 'Date cannot be in future',
+    MIN: 'Date cannot be less than now',
   },
   PLACES_VALIDATION: {
     NOT_EMPTY: 'Places should not be empty',
@@ -108,7 +108,9 @@ export const EVENT_MESSAGES = {
   EVENT_CANCELLED: 'This event cancelled',
   ONE_OR_MANY_TAGS_NOT_FOUND: 'One or many tags for this event not found. Please, check tags',
   ORGANIZER_PERMISSIONS: 'You does not have permission to manipulate with this event',
-  EVENT_NOT_DRAFT: 'You cannot publish this event, cause it doesnt draft',
+  EVENT_NOT_DRAFT: 'This event currently not DRAFT. You cant do this action',
   EVENT_NOT_PUBLISH: 'You cannot cancel of finish this event cause it does not published',
-  EVENT_SLUG_FOUND: 'Event with same slug already exists. Please, rename your event'
+  EVENT_DRAFT: 'This event is draft. You cant see details of it',
+  EVENT_SLUG_FOUND: 'Event with same slug already exists. Please, rename your event',
+  INVALID_NICKNAME_STRING: 'Nickname'
 } as const

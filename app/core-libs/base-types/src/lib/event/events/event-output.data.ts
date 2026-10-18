@@ -46,6 +46,7 @@ export interface EventBaseOutput {
   waitingUsers: number
   status: number
   tags: EventTagShortBaseOutput[]
+  organizerId: string
   organizer: EventUserShortBaseOutput
   participants: EventUserShortBaseOutput[]
   createdAt: Date

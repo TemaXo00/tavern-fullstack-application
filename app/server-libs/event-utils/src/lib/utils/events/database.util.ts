@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { EVENT_STATUSES_TO_GRPC } from '@org/enums'
 import { EventDatabaseService, EventStatuses, EventWhereInput } from '@org/event-database'
-import { PaginationUtil } from '@org/shared-utils'
+import { DateMapUtil, PaginationUtil, StringValidationUtil } from '@org/shared-utils'
+import { EVENT_MESSAGES } from '@org/validation-messages'
 
 import { EVENT_LIST_SELECTIONS, EVENT_METHODS_SELECTIONS, EVENT_OUTPUT_SELECTIONS } from '../helpers/selections'
 import { mapEventMethodsResponse, mapEventOutputResponse } from './helpers/map-responses'
@@ -26,8 +27,12 @@ export class EventEventsDatabaseUtil {
   constructor(
     private readonly db: EventDatabaseService,
     private readonly paginationUtil: PaginationUtil,
+    private readonly mapDateUtil: DateMapUtil,
+    private readonly stringUtil: StringValidationUtil,
     private readonly cache: EventsCacheSharedUtil,
   ) {}
+
+  // GET Methods
 
   private async getPaginatedEventsList(
     where: EventWhereInput,
@@ -90,14 +95,15 @@ export class EventEventsDatabaseUtil {
     }
   }
 
-  async getEventBySlug(slug: string): Promise<EventOutput | null> {
-    const cached = await this.cache.getCachedEvent(slug)
-    if (cached !== null) {
-      return cached
+  async getEventBySlug(slug: string, onlyPublic?: boolean): Promise<EventOutput | null> {
+    if (onlyPublic) {
+      const cached = await this.cache.getCachedEvent(slug)
+      if (cached !== null) {
+        return cached
+      }
     }
-
     const response = await this.db.event.findUnique({
-      where: { slug },
+      where: { slug, status: onlyPublic ? 'PUBLISHED' : undefined },
       select: EVENT_OUTPUT_SELECTIONS,
     })
 
@@ -106,7 +112,9 @@ export class EventEventsDatabaseUtil {
     }
 
     const mapped = mapEventOutputResponse(response)
-    await this.cache.setCachedEvent(slug, mapped)
+    if (onlyPublic) {
+      await this.cache.setCachedEvent(slug, mapped)
+    }
     return mapped
   }
 
@@ -117,6 +125,7 @@ export class EventEventsDatabaseUtil {
   }
 
   async getUserId(nickname: string): Promise<string | null> {
+    this.stringUtil.validateAnyString(nickname, EVENT_MESSAGES.INVALID_NICKNAME_STRING)
     const user = await this.db.eventUserSnapshot.findUnique({
       where: { nickname },
       select: { userId: true },
@@ -128,6 +137,7 @@ export class EventEventsDatabaseUtil {
   }
 
   async getUser(id: string): Promise<string | null> {
+    this.stringUtil.validateId(id)
     const user = await this.db.eventUserSnapshot.findUnique({
       where: { userId: id },
       select: { userId: true },
@@ -149,12 +159,15 @@ export class EventEventsDatabaseUtil {
     return mapEventMethodsResponse(event)
   }
 
+  // CREATE Methods
+
   async createEvent(input: CreateEventGrpcInput, eventSlug: string, userId: string): Promise<EventMethodsOutput> {
     const event = await this.db.event.create({
       data: {
         ...input,
         slug: eventSlug,
         organizerId: userId,
+        dateAndTime: this.mapDateUtil.mapDateAndValidate(input.dateAndTime),
         leftPlaces: input.totalPlaces,
         waitingUsers: 0,
         tags: {
@@ -168,6 +181,8 @@ export class EventEventsDatabaseUtil {
 
     return mapEventMethodsResponse(event)
   }
+
+  // UPDATE Methods
 
   async updateEventStatus(status: EventStatuses, eventSlug: string, userId: string): Promise<EventMethodsOutput> {
     const event = await this.db.event.update({
@@ -209,7 +224,9 @@ export class EventEventsDatabaseUtil {
       where: { slug: data.slug },
       data: {
         ...(data.description !== undefined && { description: data.description }),
-        ...(data.dateAndTime !== undefined && { dateAndTime: data.dateAndTime }),
+        ...(data.dateAndTime !== undefined && {
+          dateAndTime: this.mapDateUtil.mapDateAndValidate(data.dateAndTime),
+        }),
         ...(data.totalPlaces !== undefined && { totalPlaces: data.totalPlaces }),
         ...(data.tags &&
           data.tags.length > 0 && {
@@ -226,6 +243,8 @@ export class EventEventsDatabaseUtil {
 
     return mapEventMethodsResponse(event)
   }
+
+  // DELETE Methods
 
   async deleteEvent(slug: string): Promise<EventMethodsOutput> {
     const event = await this.db.event.delete({

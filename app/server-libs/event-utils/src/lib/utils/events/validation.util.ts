@@ -44,8 +44,8 @@ export class EventEventsValidationUtil {
     return event
   }
 
-  async checkEventExists(slug: string): Promise<EventOutput> {
-    const event = await this.db.getEventBySlug(slug)
+  async checkEventExists(slug: string, onlyPublic?: boolean): Promise<EventOutput> {
+    const event = await this.db.getEventBySlug(slug, onlyPublic)
     if (!event) {
       throw new RpcException({
         message: EVENT_MESSAGES.EVENT_NOT_FOUND,
@@ -65,6 +65,12 @@ export class EventEventsValidationUtil {
   }
 
   async checkEventStatus(slug: string, eventStatus: EventStatuses, dateAndTime: Date, userId: string): Promise<void> {
+    if (eventStatus === 'DRAFT') {
+      throw new RpcException({
+        message: EVENT_MESSAGES.EVENT_DRAFT,
+        code: status.PERMISSION_DENIED,
+      })
+    }
     if (eventStatus === 'CANCELLED') {
       throw new RpcException({
         message: EVENT_MESSAGES.EVENT_CANCELLED,
@@ -106,8 +112,8 @@ export class EventEventsValidationUtil {
     }
   }
 
-  checkOrganizer(userId: string, event: EventMethodsOutput): void {
-    if (userId !== event.organizerId) {
+  checkOrganizer(userId: string, organizerId: string): void {
+    if (userId !== organizerId) {
       throw new RpcException({
         message: EVENT_MESSAGES.ORGANIZER_PERMISSIONS,
         code: status.PERMISSION_DENIED,

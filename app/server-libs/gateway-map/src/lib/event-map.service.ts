@@ -31,7 +31,10 @@ export class EventGatewayMapService {
     }
   }
 
-  mapEventsListOutput(output: EventListGrpcOutput[]): EventListSharedOutput[] {
+  mapEventsListOutput(output?: EventListGrpcOutput[]): EventListSharedOutput[] {
+    if (!output || !Array.isArray(output)) {
+      return []
+    }
     return output.map((entry) => {
       return {
         ...entry,
