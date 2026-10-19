@@ -2,7 +2,7 @@ import { status } from '@grpc/grpc-js'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { RpcException } from '@nestjs/microservices'
-import { Actions } from '@org/profile-database'
+import { Actions } from '@org/enums'
 import { PROFILE_MESSAGES } from '@org/validation-messages'
 
 @Injectable()
@@ -15,6 +15,7 @@ export class ProfileReputationUtil {
       BLOCK: this.config.get<number>('TAVERN_REPUTATION_SCORE_BLOCK', -50),
       EARLY_UNBLOCK: this.config.get<number>('TAVERN_REPUTATION_SCORE_EARLY_UNBLOCK', 50),
       REPORT: this.config.get<number>('TAVERN_REPUTATION_SCORE_REPORT', -10),
+      CUSTOM: 0
     }
   }
 

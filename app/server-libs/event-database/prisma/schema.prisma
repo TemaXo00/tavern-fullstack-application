@@ -84,6 +84,7 @@ model EventParticipant {
   eventId String @map("event_id")
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
+  isFixed Boolean @default(false)
   note String? @db.VarChar(500)
   status ParticipantStatus @default(WAITLIST)
 
@@ -96,9 +97,11 @@ model EventParticipant {
 }
 
 enum ParticipantStatus {
-  CONFIRMED
+  RECORDED
   WAITLIST
   CANCELLED
+  FINISHED
+  NOT_COME
 }
 
 enum EventStatuses {

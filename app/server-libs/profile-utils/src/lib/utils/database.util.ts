@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { ACTIONS_TO_GRPC, ACTIVITY_TO_GRPC, GRPC_TO_ACTIONS, GRPC_TO_ACTIVITY } from '@org/enums'
+import { ACTIONS_TO_GRPC, ACTIVITY_TO_GRPC, GRPC_TO_ACTIONS, GRPC_TO_ACTIVITY, Actions, ActivityType } from '@org/enums'
 import {
   ActivityOutput,
   ActivityPaginationInput,
@@ -16,8 +16,6 @@ import {
   UpdateProfileRequestInput,
 } from '@org/grpc-types'
 import {
-  Actions,
-  ActivityType,
   type Profile,
   ProfileActivityWhereInput,
   ProfileDatabaseService,

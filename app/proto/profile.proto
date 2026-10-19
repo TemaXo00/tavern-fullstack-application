@@ -18,6 +18,7 @@ service ProfileService {
 service ReputationService {
     rpc GetMyLogs(reputation.GetMyReputationInput) returns (reputation.PaginatedReputationOutput);
     rpc GetReputationByNickname(reputation.GetReputationByNicknameInput) returns (reputation.PaginatedReputationOutput);
+    rpc AddReputation(reputation.AddReputationInput) returns (reputation.ReputationOutput);
 }
 
 service ActivityService {

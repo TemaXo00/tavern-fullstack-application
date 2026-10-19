@@ -7,6 +7,7 @@ enum Actions {
     REPORT = 1;
     BLOCK = 2;
     EARLY_UNBLOCK = 3;
+    CUSTOM = 4;
 }
 
 // Input Messages
@@ -38,6 +39,12 @@ message GetMyReputationInput {
 message GetReputationByNicknameInput {
     string nickname = 1;
     PaginationInput pagination = 2;
+}
+
+message AddReputationInput {
+    string nickname = 1;
+    int32 score = 2;
+    string message = 3;
 }
 
 // Output Messages

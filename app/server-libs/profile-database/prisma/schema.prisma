@@ -86,6 +86,7 @@ enum Actions {
   REPORT
   BLOCK
   EARLY_UNBLOCK
+  CUSTOM
 }
 
 enum ActivityType {

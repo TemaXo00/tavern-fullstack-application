@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Actions } from '@org/profile-database'
+import { Actions } from '@org/enums'
 import { ProfileCacheUtil, ProfileDatabaseUtil, ProfileReputationUtil, ProfileValidationUtil } from '@org/profile-utils'
 import {
   AdminBlockUserProfile,

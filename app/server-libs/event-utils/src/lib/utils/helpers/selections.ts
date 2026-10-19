@@ -84,7 +84,7 @@ export const EVENT_OUTPUT_SELECTIONS = {
   participants: {
     take: 5,
     where: {
-      status: 'CONFIRMED',
+      status: 'RECORDED',
     },
     orderBy: {
       createdAt: 'desc',
