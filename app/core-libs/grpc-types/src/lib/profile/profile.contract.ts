@@ -15,8 +15,12 @@ import type {
   ProfileAdvancedOutput,
   ProfileBaseOutput,
 } from './profiles/profiles-output.data.js'
-import type { GetMyReputationInput, GetReputationByNicknameInput } from './reputation/reputation-input.data.js'
-import type { PaginatedReputationOutput } from './reputation/reputation-output.data.js'
+import type {
+  AddReputationInput,
+  GetMyReputationInput,
+  GetReputationByNicknameInput,
+} from './reputation/reputation-input.data.js'
+import type { PaginatedReputationOutput, ReputationOutput } from './reputation/reputation-output.data.js'
 
 export interface ProfileServiceContract {
   GetMe(data: GetMeInput): Promise<ProfileAdvancedOutput>
@@ -35,6 +39,7 @@ export interface ActivityServiceContract {
 export interface ReputationServiceContract {
   GetMyLogs(data: GetMyReputationInput): Promise<PaginatedReputationOutput>
   GetReputationByNickname(data: GetReputationByNicknameInput): Promise<PaginatedReputationOutput>
+  AddReputation(data: AddReputationInput): Promise<ReputationOutput>
 }
 
 export type ProfileServiceObservableContract = ToObservable<ProfileServiceContract>

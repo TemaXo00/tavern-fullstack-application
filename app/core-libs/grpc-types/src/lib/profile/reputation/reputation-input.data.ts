@@ -1,4 +1,5 @@
 import {
+  AddReputationBaseInput,
   GetMyReputationBaseInput,
   GetReputationByNicknameBaseInput,
   ReputationPaginationBaseInput,
@@ -9,3 +10,4 @@ import { Protected } from '../../utils/protected.js'
 export type ReputationPaginationInput = ReputationPaginationBaseInput
 export type GetMyReputationInput = Protected<GetMyReputationBaseInput>
 export type GetReputationByNicknameInput = GetReputationByNicknameBaseInput
+export type AddReputationInput = Protected<AddReputationBaseInput>

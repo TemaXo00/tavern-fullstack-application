@@ -12,3 +12,9 @@ export interface GetReputationByNicknameBaseInput {
   nickname: string
   pagination: ReputationPaginationBaseInput
 }
+
+export interface AddReputationBaseInput {
+  nickname: string
+  score: number
+  message: string
+}

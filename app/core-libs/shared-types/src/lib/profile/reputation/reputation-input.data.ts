@@ -1,4 +1,4 @@
-import { ReputationPaginationBaseInput } from '@org/base-types'
+import { AddReputationBaseInput, ReputationPaginationBaseInput } from '@org/base-types'
 import { Actions } from '@org/enums'
 
 import { Replace } from '../../utils/replace.js'
@@ -9,3 +9,5 @@ export type ReputationPaginationSharedInput = Replace<
     action?: Actions
   }
 >
+
+export type AddReputationSharedInput = Omit<AddReputationBaseInput, 'nickname'>
