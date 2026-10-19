@@ -23,10 +23,9 @@ COPY server-libs/profile-activity-feature ./server-libs/profile-activity-feature
 COPY server-libs/profile-reputation-feature ./server-libs/profile-reputation-feature
 COPY server-libs/profile-rmq-handler ./server-libs/profile-rmq-handler
 
-COPY core-libs/bootstrap ./core-libs/bootstrap
+COPY core-libs/nest-launcher ./core-libs/nest-launcher
 COPY core-libs/base-types ./core-libs/base-types
 COPY core-libs/grpc-types ./core-libs/grpc-types
-COPY core-libs/response-types ./core-libs/response-types
 COPY core-libs/enums ./core-libs/enums
 COPY core-libs/rmq-config ./core-libs/rmq-config
 COPY core-libs/rmq-messages ./core-libs/rmq-messages
@@ -68,10 +67,9 @@ COPY --from=builder /app/server-libs/profile-activity-feature/dist ./node_module
 COPY --from=builder /app/server-libs/profile-reputation-feature/dist ./node_modules/@org/profile-reputation-feature
 COPY --from=builder /app/server-libs/profile-rmq-handler/dist ./node_modules/@org/profile-rmq-handler
 
-COPY --from=builder /app/core-libs/bootstrap/dist ./node_modules/@org/bootstrap
+COPY --from=builder /app/core-libs/nest-launcher/dist ./node_modules/@org/nest-launcher
 COPY --from=builder /app/core-libs/base-types/dist ./node_modules/@org/base-types
 COPY --from=builder /app/core-libs/grpc-types/dist ./node_modules/@org/grpc-types
-COPY --from=builder /app/core-libs/response-types/dist ./node_modules/@org/response-types
 COPY --from=builder /app/core-libs/enums/dist ./node_modules/@org/enums
 COPY --from=builder /app/core-libs/rmq-config/dist ./node_modules/@org/rmq-config
 COPY --from=builder /app/core-libs/rmq-messages/dist ./node_modules/@org/rmq-messages
