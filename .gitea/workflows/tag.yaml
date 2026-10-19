@@ -15,4 +15,4 @@ jobs:
 
       - name: Build and Push Docker Images
         run: |
-          ./scripts/docker.build-and-push.sh ${{ secrets.DOCKER_REGISTRY }} ${{ github.ref_name }}
+          ./scripts/docker.build-and-push.sh ${{ secrets.DOCKER_REGISTRY }} latest ${{ github.ref_name }}

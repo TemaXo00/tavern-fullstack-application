@@ -15,10 +15,6 @@ jobs:
       - name: Set short SHA
         run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
 
-      - name: Build and Push Docker Images (dev tag)
+      - name: Build and Push Docker Images
         run: |
-          ./scripts/docker.build-and-push.sh ${{ secrets.DOCKER_REGISTRY }} dev
-
-      - name: Build and Push Docker Images (sha tag)
-        run: |
-            ./scripts/docker.build-and-push.sh ${{ secrets.DOCKER_REGISTRY }} ${{ env.SHORT_SHA }}
+          ./scripts/docker.build-and-push.sh ${{ secrets.DOCKER_REGISTRY }} dev ${{ env.SHORT_SHA }}
