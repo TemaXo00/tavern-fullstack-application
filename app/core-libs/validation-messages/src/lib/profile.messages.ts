@@ -101,5 +101,5 @@ export const PROFILE_MESSAGES = {
     MAX_LENGTH: `Maximum length of message is ${PROFILE_CONFIG.REPUTATION_SCORE.MAX}`,
   },
   USER_BLOCKED_OR_INACTIVE: 'This user is blocked or inactive. You cant do this action',
-  ADD_YOURSELF: 'You cannot add reputation to yourself'
+  ADD_YOURSELF: 'You cannot add reputation to yourself',
 } as const
