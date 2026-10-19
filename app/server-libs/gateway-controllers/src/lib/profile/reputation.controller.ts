@@ -1,13 +1,20 @@
 import { Body, Inject, OnModuleInit, Param } from '@nestjs/common'
-import { HTTPController, QUERYMethod, QUERYProtectedMethod, ValidateInputParam } from '@org/gateway-decorators'
-import { ReputationPaginationDto } from '@org/gateway-dto'
+import { Roles } from '@org/enums'
+import {
+  HTTPController,
+  POSTProtected,
+  QUERYMethod,
+  QUERYProtectedMethod,
+  ValidateInputParam,
+} from '@org/gateway-decorators'
+import { AddReputationDto, ReputationPaginationDto } from '@org/gateway-dto'
 import { ProfileGatewayMapService } from '@org/gateway-map'
 import { PROFILE_REPUTATION_ROUTES } from '@org/routes-config'
 import { firstValueFrom } from 'rxjs'
 
 import type { ClientGrpc } from '@nestjs/microservices'
 import type { ReputationServiceObservableContract, ValidateInput } from '@org/grpc-types'
-import type { PaginatedReputationSharedOutput } from '@org/shared-types'
+import type { PaginatedReputationSharedOutput, ReputationSharedOutput } from '@org/shared-types'
 
 @HTTPController({
   microserviceName: 'Profile',
@@ -66,5 +73,21 @@ export class ReputationController implements OnModuleInit {
       pagination: this.map.mapReputationPaginationOutput(response.pagination),
       reputationLogs: this.map.mapReputationListOutput(response.reputationLogs),
     }
+  }
+
+  @POSTProtected({
+    path: PROFILE_REPUTATION_ROUTES.ADD_REPUTATION_SCORE.PATH,
+    summary: 'Updating reputation of user by his nickname',
+    operationDesc:
+      'Returns reputation output with info about change reputation action for user (with CUSTOM action type). Available only to admin',
+    roles: [Roles.ADMIN],
+  })
+  async changeReputation(
+    @Param(PROFILE_REPUTATION_ROUTES.ADD_REPUTATION_SCORE.PARAM) nickname: string,
+    @ValidateInputParam() validation: ValidateInput,
+    @Body() dto: AddReputationDto,
+  ): Promise<ReputationSharedOutput> {
+    const response = await firstValueFrom(this.reputationContract.AddReputation({ nickname, validation, ...dto }))
+    return this.map.mapReputationOutput(response)
   }
 }

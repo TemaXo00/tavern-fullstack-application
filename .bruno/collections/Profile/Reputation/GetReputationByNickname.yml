@@ -12,7 +12,7 @@ grpc:
     - title: message 1
       message: |-
         {
-          "nickname": "temaxo00",
+          "nickname": "01a154f8-0b00-7148-a294-a99b21e1ccef",
           "pagination": {
             "page": 1,
             "limit": 10

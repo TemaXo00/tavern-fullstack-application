@@ -1,5 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common'
-import { AdminCheckPaginatedProfiles, AdminCheckProfile, PROFILES_MESSAGES, UpdateProfile } from '@org/rmq-messages'
+import {
+  AdminCheckPaginatedProfiles,
+  AdminCheckProfile,
+  ChangeReputation,
+  PROFILES_MESSAGES,
+  UpdateProfile,
+} from '@org/rmq-messages'
 
 import type { ClientProxy } from '@nestjs/microservices'
 
@@ -21,5 +27,9 @@ export class ProfileMessagesUtil {
   sendUserUpdateProfile(data: UpdateProfile): void {
     this.log.emit(PROFILES_MESSAGES.UPDATE, data)
     this.event.emit(PROFILES_MESSAGES.UPDATE, data)
+  }
+
+  sendChangeReputation(data: ChangeReputation): void {
+    this.log.emit(PROFILES_MESSAGES.REPUTATION_CHANGE, data)
   }
 }

@@ -1,0 +1,28 @@
+info:
+  name: AddReputation
+  type: grpc
+  seq: 3
+
+grpc:
+  url: "{{PROFILE_GRPC_URL}}"
+  method: /profile.ReputationService/AddReputation
+  methodType: unary
+  protoFilePath: ../../../app/proto/profile.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "nickname": "01a154f8-0b00-7148-a294-a99b21e1ccef",
+          "score": 10,
+          "message": "Hello world"
+        }
+  auth: inherit

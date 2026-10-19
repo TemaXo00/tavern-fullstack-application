@@ -12,6 +12,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Build and Push Docker Images
+      - name: Set short SHA
+        run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+
+      - name: Build and Push Docker Images (dev tag)
         run: |
           ./scripts/docker.build-and-push.sh ${{ secrets.DOCKER_REGISTRY }} dev
+
+      - name: Build and Push Docker Images (sha tag)
+        run: |
+            ./scripts/docker.build-and-push.sh ${{ secrets.DOCKER_REGISTRY }} ${{ env.SHORT_SHA }}

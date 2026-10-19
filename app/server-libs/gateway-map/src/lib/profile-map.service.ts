@@ -120,4 +120,11 @@ export class ProfileGatewayMapService {
       }
     })
   }
+
+  mapReputationOutput(output: ReputationOutput): ReputationSharedOutput {
+    return {
+      ...output,
+      action: GRPC_TO_ACTIONS[output.action],
+    }
+  }
 }

@@ -91,5 +91,15 @@ export const PROFILE_MESSAGES = {
   REPUTATION_VALIDATION: {
     NOT_EMPTY: 'Reputation should not be empty',
     TYPE: 'Reputation should be a number',
+    MIN: `Minimum amount of given reputation is ${PROFILE_CONFIG.REPUTATION_SCORE.MIN}`,
+    MAX: `Maximum amount of given reputation is ${PROFILE_CONFIG.REPUTATION_SCORE.MAX}`,
   },
+  REPUTATION_MESSAGE_VALIDATION: {
+    NOT_EMPTY: 'Reputation message should not be empty',
+    TYPE: 'Reputation message should be a string',
+    MIN_LENGTH: `Minimum length of message is ${PROFILE_CONFIG.REPUTATION_SCORE.MIN}`,
+    MAX_LENGTH: `Maximum length of message is ${PROFILE_CONFIG.REPUTATION_SCORE.MAX}`,
+  },
+  USER_BLOCKED_OR_INACTIVE: 'This user is blocked or inactive. You cant do this action',
+  ADD_YOURSELF: 'You cannot add reputation to yourself'
 } as const

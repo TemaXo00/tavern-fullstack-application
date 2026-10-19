@@ -24,9 +24,6 @@
       "path": "../../core-libs/validation-messages/tsconfig.lib.json"
     },
     {
-      "path": "../profile-database/tsconfig.lib.json"
-    },
-    {
       "path": "../profile-utils/tsconfig.lib.json"
     },
     {

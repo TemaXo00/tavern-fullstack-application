@@ -4,9 +4,11 @@ import { GrpcMethod } from '@nestjs/microservices'
 import { ProfileReputationFeatureService } from './profile-reputation-feature.service'
 
 import type {
+  AddReputationInput,
   GetMyReputationInput,
   GetReputationByNicknameInput,
   PaginatedReputationOutput,
+  ReputationOutput,
   ReputationServiceContract,
 } from '@org/grpc-types'
 
@@ -22,5 +24,10 @@ export class ProfileReputationFeatureController implements ReputationServiceCont
   @GrpcMethod('ReputationService', 'GetReputationByNickname')
   async GetReputationByNickname(data: GetReputationByNicknameInput): Promise<PaginatedReputationOutput> {
     return await this.service.GetReputationByNickname(data)
+  }
+
+  @GrpcMethod('ReputationService', 'AddReputation')
+  async AddReputation(data: AddReputationInput): Promise<ReputationOutput> {
+    return await this.service.AddReputation(data)
   }
 }

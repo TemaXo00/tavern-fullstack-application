@@ -2,7 +2,7 @@ import { status } from '@grpc/grpc-js'
 import { Injectable } from '@nestjs/common'
 import { RpcException } from '@nestjs/microservices'
 import { UpdateProfileRequestInput } from '@org/grpc-types'
-import { Profile } from '@org/profile-database'
+import { ActivityType, Profile } from '@org/profile-database'
 import { PROFILE_MESSAGES } from '@org/validation-messages'
 
 import { ProfileDatabaseUtil } from './database.util'
@@ -77,6 +77,24 @@ export class ProfileValidationUtil {
     if (from > to) {
       throw new RpcException({
         message: PROFILE_MESSAGES.REPUTATION_FROM_BIGGER,
+        code: status.INVALID_ARGUMENT,
+      })
+    }
+  }
+
+  checkProfileStatus(activity: ActivityType): void {
+    if (activity === 'BLOCKED' || activity === 'INACTIVE') {
+      throw new RpcException({
+        message: PROFILE_MESSAGES.USER_BLOCKED_OR_INACTIVE,
+        code: status.UNAVAILABLE,
+      })
+    }
+  }
+
+  checkAddReputationNotCurrent(userId: string, profileId: string): void {
+    if (userId === profileId) {
+      throw new RpcException({
+        message: PROFILE_MESSAGES.ADD_YOURSELF,
         code: status.INVALID_ARGUMENT,
       })
     }

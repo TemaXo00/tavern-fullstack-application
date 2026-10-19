@@ -30,4 +30,8 @@ export const PROFILE_REPUTATION_ROUTES = {
     PATH: ':nickname/logs',
     PARAM: 'nickname',
   },
+  ADD_REPUTATION_SCORE: {
+    PATH: ':nickname/change',
+    PARAM: 'nickname',
+  },
 } as const

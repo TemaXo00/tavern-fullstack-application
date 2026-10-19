@@ -14,3 +14,10 @@ export interface UpdateProfile {
   userId: string
   data: UpdateProfileRequestInput
 }
+
+export interface ChangeReputation {
+  adminId: string
+  userId: string
+  message: string
+  score: number
+}

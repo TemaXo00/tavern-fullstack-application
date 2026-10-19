@@ -272,6 +272,37 @@ export class ProfileDatabaseUtil {
     })
   }
 
+  async createReputationEntry(nickname: string, message: string, score: number): Promise<ReputationOutput> {
+    const action = await this.db.$transaction(async (tx) => {
+      const profile = await tx.profile.update({
+        where: {
+          nickname,
+        },
+        data: {
+          reputationScore: { increment: score },
+        },
+      })
+      return await tx.reputation.create({
+        data: {
+          profileId: profile.id,
+          action: 'CUSTOM',
+          score: score,
+          message: message,
+        },
+        select: {
+          action: true,
+          message: true,
+          score: true,
+          createdAt: true,
+        },
+      })
+    })
+    return {
+      ...action,
+      action: ACTIONS_TO_GRPC[action.action],
+    }
+  }
+
   // UPDATE Methods
 
   async blockUser(data: AdminBlockUserProfile, reputationScore: number): Promise<void> {

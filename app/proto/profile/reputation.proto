@@ -42,9 +42,10 @@ message GetReputationByNicknameInput {
 }
 
 message AddReputationInput {
-    string nickname = 1;
-    int32 score = 2;
-    string message = 3;
+    ValidateInput validation = 1;
+    string nickname = 2;
+    int32 score = 3;
+    string message = 4;
 }
 
 // Output Messages
