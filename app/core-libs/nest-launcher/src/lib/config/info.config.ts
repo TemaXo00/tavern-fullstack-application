@@ -1,0 +1,5 @@
+export const SWAGGER_PATH = 'api/docs'
+export const APP_NAME = 'BANK CRM API'
+export const AUTHOR_GITHUB = 'https://github.com/czapkee'
+export const AUTHOR_MAIL = 'alina.stavs@gmail.com'
+export const AUTHOR_NAME = 'Czapke'

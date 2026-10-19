@@ -1,15 +1,15 @@
 import { DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger'
 
-import { AUTHOR_GITHUB, AUTHOR_MAIL, AUTHOR_NAME, SWAGGER_PATH } from './info.config.js'
+import { APP_NAME, AUTHOR_GITHUB, AUTHOR_MAIL, AUTHOR_NAME, SWAGGER_PATH } from './info.config.js'
 
-export const swaggerConfig = new DocumentBuilder()
-  .setTitle('API')
+export const SWAGGER_CONFIG = new DocumentBuilder()
+  .setTitle(APP_NAME)
   .setContact(AUTHOR_NAME, AUTHOR_GITHUB, AUTHOR_MAIL)
   .addBearerAuth()
   .setOpenAPIVersion('3.2.0')
   .build()
 
-export const swaggerUIConfig: SwaggerCustomOptions = {
+export const SWAGGER_UI_CONFIG: SwaggerCustomOptions = {
   swaggerOptions: {
     persistAuthorization: true,
     docExpansion: 'list',

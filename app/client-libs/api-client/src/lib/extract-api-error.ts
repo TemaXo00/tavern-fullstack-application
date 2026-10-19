@@ -1,5 +1,4 @@
-import { ResponseType } from '@org/response-types'
-
+import { ResponseType } from './types/response.type.js'
 import { isFetchError } from './utils/is-fetch-error.js'
 import { getMessageByStatus } from './utils/message-by-status.js'
 

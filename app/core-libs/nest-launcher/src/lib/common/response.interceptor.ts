@@ -2,7 +2,7 @@ import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nes
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-import type { ResponseType } from '@org/response-types'
+import type { ResponseType } from '../types/shared.types.js'
 
 @Injectable()
 export class ResponseInterceptor<T> implements NestInterceptor<T, ResponseType<T>> {

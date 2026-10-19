@@ -194,12 +194,14 @@ services:
     image: ${DOCKER_REGISTRY}/temaxo00/tavern-gateway:${DOCKER_APPS_VERSION}
     container_name: tavern-dev-gateway-api
     ports:
-      - "${TAVERN_API_PORT}:3000"
+      - "${TAVERN_API_PORT}:${TAVERN_API_PORT}"
     networks:
       - tavern-dev
     environment:
       APPS_GLOBAL_SCOPE: "TAVERN"
       TAVERN_DEV_MODE: true
+      TAVERN_GATEWAY_HTTP_PORT: ${TAVERN_API_PORT}
+      TAVERN_GATEWAY_CORS_ORIGINS: ${TAVERN_ALLOWED_ORIGINS}
       TAVERN_JWT_SECRET: ${TAVERN_JWT_SECRET}
       TAVERN_JWT_ACCESS_TOKEN_TTL: ${TAVERN_JWT_ACCESS_TOKEN_TTL}
       TAVERN_JWT_REFRESH_TOKEN_TTL: ${TAVERN_JWT_REFRESH_TOKEN_TTL}

@@ -1,16 +1,17 @@
-import { monolithLaunch } from '@org/bootstrap'
+import { monolith } from '@org/nest-launcher'
 
 import { AppModule } from './app.module'
 
-void monolithLaunch<AppModule>({
+void monolith<AppModule>({
+  scope: 'TAVERN',
   name: 'Gateway',
   module: AppModule,
   logs: true,
-  globalPrefix: 'api',
+  prefix: true,
   validation: true,
-  interceptors: true,
+  responseMap: true,
   rateLimit: true,
-  filters: true,
+  errorMap: true,
   cookie: true,
   cors: false,
   swagger: true,

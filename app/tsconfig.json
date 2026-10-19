@@ -46,9 +46,6 @@
       "path": "./server/event"
     },
     {
-      "path": "./core-libs/bootstrap"
-    },
-    {
       "path": "./core-libs/rmq-config"
     },
     {
@@ -157,9 +154,6 @@
       "path": "./client-libs/api-client"
     },
     {
-      "path": "./core-libs/response-types"
-    },
-    {
       "path": "./core-libs/client-messages"
     },
     {
@@ -194,6 +188,9 @@
     },
     {
       "path": "./client-libs/client-validation"
+    },
+    {
+      "path": "./core-libs/nest-launcher"
     }
   ],
   "compilerOptions": {}

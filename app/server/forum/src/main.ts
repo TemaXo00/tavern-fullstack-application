@@ -1,10 +1,11 @@
-import { microserviceLaunch } from '@org/bootstrap'
+import { microservice } from '@org/nest-launcher'
 
 import { AppModule } from './app.module'
 
-void microserviceLaunch<AppModule>({
+microservice<AppModule>({
+  scope: 'TAVERN',
   name: 'Forum',
   module: AppModule,
   logs: true,
-  rmq: true,
+  rabbitMQ: true,
 })

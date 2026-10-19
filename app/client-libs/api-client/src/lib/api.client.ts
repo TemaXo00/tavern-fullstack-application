@@ -1,9 +1,9 @@
 import { ofetch } from 'ofetch'
 
 import { getApiHooks } from './api-hooks.js'
+import { ResponseType } from './types/response.type.js'
 import { isFetchError } from './utils/is-fetch-error.js'
 
-import type { ResponseType } from '@org/response-types'
 import type { FetchOptions } from 'ofetch'
 
 export const API_URL = '/api'

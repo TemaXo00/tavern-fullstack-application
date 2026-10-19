@@ -18,7 +18,6 @@
   "dependencies": {
     "tslib": "^2.3.0",
     "@org/client-messages": "0.0.1",
-    "@org/response-types": "0.0.1",
     "@org/routes-config": "0.0.1",
     "@org/shared-types": "0.0.1",
     "ofetch": "^1.5.1",

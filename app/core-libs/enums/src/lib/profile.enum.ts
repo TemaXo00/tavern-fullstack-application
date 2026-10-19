@@ -25,7 +25,7 @@ export enum Actions {
   REPORT = 'REPORT',
   BLOCK = 'BLOCK',
   EARLY_UNBLOCK = 'EARLY_UNBLOCK',
-  CUSTOM = 'CUSTOM'
+  CUSTOM = 'CUSTOM',
 }
 
 export const ACTIONS_TO_GRPC: Record<Actions, number> = {
@@ -33,7 +33,7 @@ export const ACTIONS_TO_GRPC: Record<Actions, number> = {
   [Actions.REPORT]: 1,
   [Actions.BLOCK]: 2,
   [Actions.EARLY_UNBLOCK]: 3,
-  [Actions.CUSTOM]: 4
+  [Actions.CUSTOM]: 4,
 }
 
 export const GRPC_TO_ACTIONS: Record<number, Actions> = {
@@ -41,5 +41,5 @@ export const GRPC_TO_ACTIONS: Record<number, Actions> = {
   1: Actions.REPORT,
   2: Actions.BLOCK,
   3: Actions.EARLY_UNBLOCK,
-  4: Actions.CUSTOM
+  4: Actions.CUSTOM,
 }

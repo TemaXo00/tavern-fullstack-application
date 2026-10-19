@@ -1,5 +1,5 @@
 {
-  "name": "@org/bootstrap",
+  "name": "@org/nest-launcher",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -17,18 +17,18 @@
   },
   "dependencies": {
     "tslib": "^2.3.0",
-    "@nestjs/swagger": "^11.4.7",
     "@nestjs/common": "^11.0.0",
+    "express": "^5.2.1",
+    "@grpc/grpc-js": "^1.14.4",
+    "rxjs": "^7.8.0",
+    "helmet": "^8.3.0",
+    "express-rate-limit": "^8.6.2",
+    "@nestjs/swagger": "^11.4.7",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.0",
     "@nestjs/microservices": "^11.2.1",
     "nx": "^23.1.1",
     "compression": "^1.8.1",
-    "cookie-parser": "^1.4.7",
-    "express-rate-limit": "^8.6.2",
-    "express": "^5.2.1",
-    "rxjs": "^7.8.0",
-    "@grpc/grpc-js": "^1.14.4",
-    "@org/response-types": "0.0.1"
+    "cookie-parser": "^1.4.7"
   }
 }

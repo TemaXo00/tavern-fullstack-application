@@ -13,7 +13,7 @@
   "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
   "references": [
     {
-      "path": "../../core-libs/bootstrap/tsconfig.lib.json"
+      "path": "../../core-libs/nest-launcher/tsconfig.lib.json"
     }
   ]
 }

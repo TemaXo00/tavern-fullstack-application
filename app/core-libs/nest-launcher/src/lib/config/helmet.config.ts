@@ -1,4 +1,6 @@
-export const helmetConfig = {
+import { HelmetOptions } from 'helmet'
+
+export const HELMET_CONFIG: HelmetOptions = {
   crossOriginEmbedderPolicy: false,
   contentSecurityPolicy: {
     directives: {

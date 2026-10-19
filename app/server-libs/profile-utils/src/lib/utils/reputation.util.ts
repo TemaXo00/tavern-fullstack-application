@@ -15,7 +15,7 @@ export class ProfileReputationUtil {
       BLOCK: this.config.get<number>('TAVERN_REPUTATION_SCORE_BLOCK', -50),
       EARLY_UNBLOCK: this.config.get<number>('TAVERN_REPUTATION_SCORE_EARLY_UNBLOCK', 50),
       REPORT: this.config.get<number>('TAVERN_REPUTATION_SCORE_REPORT', -10),
-      CUSTOM: 0
+      CUSTOM: 0,
     }
   }
 
