@@ -199,6 +199,21 @@ export class EventEventsDatabaseUtil {
     return mapEventMethodsResponse(event)
   }
 
+  async updateEventLock(eventSlug: string, currentLock: boolean, userId: string): Promise<EventMethodsOutput> {
+    const event = await this.db.event.update({
+      where: {
+        slug: eventSlug,
+      },
+      data: {
+        isJoinBlocked: !currentLock,
+      },
+      select: EVENT_METHODS_SELECTIONS,
+    })
+    await this.cache.invalidateEventBySlug(eventSlug)
+    await this.cache.invalidateUserEventPages(userId)
+    return mapEventMethodsResponse(event)
+  }
+
   async updateEventOrganizer(
     eventSlug: string,
     newOrganizerId: string,

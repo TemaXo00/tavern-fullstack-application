@@ -31,6 +31,7 @@ export interface EventListBaseOutput {
   dateAndTime: Date
   leftPlaces: number
   waitingUsers: number
+  isJoinBlocked: boolean
   status: number
   organizer: EventUserShortBaseOutput
   tags: EventTagShortBaseOutput[]
@@ -44,6 +45,7 @@ export interface EventBaseOutput {
   totalPlaces: number
   leftPlaces: number
   waitingUsers: number
+  isJoinBlocked: boolean
   status: number
   tags: EventTagShortBaseOutput[]
   organizerId: string
@@ -60,6 +62,7 @@ export interface EventMethodsBaseOutput {
   totalPlaces: number
   leftPlaces: number
   waitingUsers: number
+  isJoinBlocked: boolean
   status: number
   organizerId: string
 }

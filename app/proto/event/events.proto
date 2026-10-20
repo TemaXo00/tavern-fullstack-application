@@ -96,6 +96,11 @@ message CancelEventInput {
     string slug = 2;
 }
 
+message ChangeLockInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
 message FinishEventInput {
     ValidateInput validation = 1;
     string slug = 2;
@@ -136,11 +141,12 @@ message PublicPaginationOutput {
     bool hasNext = 5;
     bool hasPrev = 6;
     optional string search = 7;
-    optional string dateFrom = 8;
-    optional string dateTo = 9;
-    optional int32 leftPlacesFrom = 10;
-    optional int32 leftPlacesTo = 11;
-    repeated string tags = 12;
+    optional bool isJoinBlocked = 8;
+    optional string dateFrom = 9;
+    optional string dateTo = 10;
+    optional int32 leftPlacesFrom = 11;
+    optional int32 leftPlacesTo = 12;
+    repeated string tags = 13;
 }
 
 message PrivatePaginationOutput {
@@ -151,14 +157,15 @@ message PrivatePaginationOutput {
     bool hasNext = 5;
     bool hasPrev = 6;
     optional string search = 7;
-    optional string dateFrom = 8;
-    optional string dateTo = 9;
-    optional int32 totalPlacesFrom = 10;
-    optional int32 totalPlacesTo = 11;
-    optional int32 leftPlacesFrom = 12;
-    optional int32 leftPlacesTo = 13;
-    optional EventStatuses status = 14;
-    repeated string tags = 15;
+    optional bool isJoinBlocked = 8;
+    optional string dateFrom = 9;
+    optional string dateTo = 10;
+    optional int32 totalPlacesFrom = 11;
+    optional int32 totalPlacesTo = 12;
+    optional int32 leftPlacesFrom = 13;
+    optional int32 leftPlacesTo = 14;
+    optional EventStatuses status = 15;
+    repeated string tags = 16;
 }
 
 message EventUserShortOutput {
@@ -178,9 +185,10 @@ message EventListOutput {
     string dateAndTime = 3;
     int32 leftPlaces = 4;
     int32 waitingUsers = 5;
-    EventStatuses status = 6;
-    EventUserShortOutput organizer = 7;
-    repeated EventTagShortOutput tags = 8;
+    bool isJoinBlocked = 6;
+    EventStatuses status = 7;
+    EventUserShortOutput organizer = 8;
+    repeated EventTagShortOutput tags = 9;
 }
 
 message EventOutput {
@@ -191,12 +199,13 @@ message EventOutput {
     int32 totalPlaces = 5;
     int32 leftPlaces = 6;
     int32 waitingUsers = 7;
-    EventStatuses status = 8;
-    repeated EventTagShortOutput tags = 9;
-    string organizerId = 10;
-    EventUserShortOutput organizer = 11;
-    repeated EventUserShortOutput participants = 12;
-    string createdAt = 13;
+    bool isJoinBlocked = 8;
+    EventStatuses status = 9;
+    repeated EventTagShortOutput tags = 10;
+    string organizerId = 11;
+    EventUserShortOutput organizer = 12;
+    repeated EventUserShortOutput participants = 13;
+    string createdAt = 14;
 }
 
 message EventMethodsOutput {
@@ -207,8 +216,9 @@ message EventMethodsOutput {
     int32 totalPlaces = 5;
     int32 leftPlaces = 6;
     int32 waitingUsers = 7;
-    EventStatuses status = 8;
-    string organizerId = 9;
+    bool isJoinBlocked = 8;
+    EventStatuses status = 9;
+    string organizerId = 10;
 }
 
 message PaginatedPublicEventsOutput {

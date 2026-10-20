@@ -54,6 +54,10 @@ export const EVENT_EVENTS_ROUTES = {
     PATH: ':slug/finish',
     PARAM: 'slug',
   },
+  CHANGE_LOCK: {
+    PATH: ':slug/lock',
+    PARAM: 'slug',
+  },
   SWITCH_ORGANIZER: {
     PATH: 'me/:slug/organizer',
     PARAM: 'slug',

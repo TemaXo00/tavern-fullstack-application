@@ -6,6 +6,7 @@ import { SlugUtil } from '@org/shared-utils'
 
 import type {
   CancelEventInput,
+  ChangeLockInput,
   CreateEventInput,
   DeleteEventInput,
   DeleteOtherEventInput,
@@ -139,6 +140,20 @@ export class EventEventsFeatureService implements EventEventsServiceContract {
     this.validationUtil.checkEventPublished(GRPC_TO_EVENT_STATUSES[event.status])
     const response = await this.dbUtil.updateEventStatus('FINISHED', data.slug, payload.id)
     this.messagesUtil.authorFinished({ organizerId: payload.id, eventSlug: data.slug })
+    return response
+  }
+
+  async ChangeLock(data: ChangeLockInput): Promise<EventMethodsOutput> {
+    const payload = await this.validate.Validate(data.validation)
+    const event = await this.validationUtil.checkMethodsEventsExists(data.slug)
+    this.validationUtil.checkOrganizer(payload.id, event.organizerId)
+    this.validationUtil.checkEventPublished(GRPC_TO_EVENT_STATUSES[event.status])
+    const response = await this.dbUtil.updateEventLock(data.slug, event.isJoinBlocked, payload.id)
+    this.messagesUtil.authorChangeJoin({
+      organizerId: payload.id,
+      eventSlug: data.slug,
+      currentState: response.isJoinBlocked,
+    })
     return response
   }
 

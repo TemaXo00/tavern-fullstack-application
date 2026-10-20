@@ -27,6 +27,7 @@ service EventService {
     rpc PublishEvent(events.PublishEventInput) returns (events.EventMethodsOutput);
     rpc CancelEvent(events.CancelEventInput) returns (events.EventMethodsOutput);
     rpc FinishEvent(events.FinishEventInput) returns (events.EventMethodsOutput);
+    rpc ChangeLock(events.ChangeLockInput) returns (events.EventMethodsOutput);
     rpc SwitchOrganizer(events.SwitchOrganizerInput) returns (events.EventMethodsOutput);
     rpc SwitchOtherEventOrganizer(events.SwitchOrganizerInput) returns (events.EventMethodsOutput);
     rpc UpdateEvent(events.UpdateEventDataInput) returns (events.EventMethodsOutput);

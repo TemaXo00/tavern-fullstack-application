@@ -56,6 +56,7 @@ model Event {
   totalPlaces Int @map("total_places")
   leftPlaces Int @map("left_places")
   waitingUsers Int @map("waiting_users")
+  isJoinBlocked Boolean @default(false) @map("is_join_blocked")
   status EventStatuses @default(DRAFT)
 
   tags EventTag[]

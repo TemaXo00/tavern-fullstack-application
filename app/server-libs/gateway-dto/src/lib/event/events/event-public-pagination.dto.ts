@@ -3,9 +3,13 @@ import { EventPublicPaginationSharedInput } from '@org/shared-types'
 import { EventDate } from '../../decorators/event/event-date.decorator.js'
 import { EventPlaces } from '../../decorators/event/event-places.decorator.js'
 import { EventTags } from '../../decorators/event/event-tags.decorator.js'
+import { IsJoinBlocked } from '../../decorators/event/is-join-blocked.decorator.js'
 import { BasePaginationDto } from '../../shared/pagination-base.dto.js'
 
 export class EventPublicPaginationDto extends BasePaginationDto implements EventPublicPaginationSharedInput {
+  @IsJoinBlocked({ required: false })
+  isJoinBlocked?: boolean
+
   @EventDate(false)
   dateFrom?: Date
 

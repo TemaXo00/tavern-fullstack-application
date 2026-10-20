@@ -29,6 +29,7 @@ export type CreateEventInput = Protected<CreateEventBaseInput>
 export type PublishEventInput = Protected<EventActionBaseInput>
 export type CancelEventInput = Protected<EventActionBaseInput>
 export type FinishEventInput = Protected<EventActionBaseInput>
+export type ChangeLockInput = Protected<EventActionBaseInput>
 export type SwitchOrganizerInput = Protected<SwitchEventOrganizerBaseInput>
 export type UpdateEventDataInput = Protected<UpdateEventDataBaseInput>
 export type DeleteEventInput = Protected<EventActionBaseInput>

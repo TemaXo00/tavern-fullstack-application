@@ -1,6 +1,7 @@
 import { PaginationBaseInput } from '../../shared/pagination.type.js'
 
 export interface EventPublicPaginationBaseInput extends PaginationBaseInput {
+  isJoinBlocked?: boolean
   dateFrom?: Date
   dateTo?: Date
   leftPlacesFrom?: number

@@ -5,6 +5,7 @@ import { EventEventsFeatureService } from './event-events-feature.service'
 
 import type {
   CancelEventInput,
+  ChangeLockInput,
   CreateEventInput,
   DeleteEventInput,
   DeleteOtherEventInput,
@@ -87,6 +88,11 @@ export class EventEventsFeatureController implements EventEventsServiceContract 
   @GrpcMethod('EventService', 'FinishEvent')
   async FinishEvent(data: FinishEventInput): Promise<EventMethodsOutput> {
     return await this.service.FinishEvent(data)
+  }
+
+  @GrpcMethod('EventService', 'ChangeLock')
+  async ChangeLock(data: ChangeLockInput): Promise<EventMethodsOutput> {
+    return await this.service.ChangeLock(data)
   }
 
   @GrpcMethod('EventService', 'SwitchOrganizer')

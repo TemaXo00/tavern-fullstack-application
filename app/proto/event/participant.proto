@@ -1,0 +1,85 @@
+syntax = 'proto3';
+
+package participant;
+
+enum EventStatuses {
+    DRAFT = 0;
+    PUBLISHED = 1;
+    CANCELLED = 2;
+    FINISHED = 3;
+}
+
+enum ParticipantStatus {
+    WAITLIST = 0;
+    RECORDED = 1;
+    FIXED = 2;
+    NOT_COME = 4;
+}
+
+// Input Messages
+
+message ValidateInput {
+  string accessToken = 1;
+  SessionInput session = 2;
+}
+
+message SessionInput {
+    string os = 1;
+    string device = 2;
+    string browser = 3;
+    string ip = 4;
+}
+
+message EventPaginationInput {
+    optional int32 page = 1;
+    optional int32 limit = 2;
+    optional string search = 3;
+    optional EventStatuses status = 4;
+}
+
+message ParticipantPaginationInput {
+    optional int32 page = 1;
+    optional int32 limit = 2;
+    optional string search = 3;
+    optional ParticipantStatus status = 4;
+}
+
+message GetUserEventsInput {
+    string nickname = 1;
+    EventPaginationInput pagination = 2;
+}
+
+message GetMyEventsInput {
+    ValidateInput validation = 1;
+    EventPaginationInput pagination = 2;
+}
+
+message GetEventParticipantsInput {
+    string slug = 1;
+    EventPaginationInput pagination = 2;
+}
+
+message JoinEventInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
+message LeaveEventInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
+message RemoveUserFromEventInput {
+    ValidateInput validation = 1;
+}
+
+message AddUserToEventInput {
+    ValidateInput validation = 1;
+    string nickname = 2;
+}
+
+message ChangeUserStatusInput {
+    ValidateInput validation = 1;
+    string nickname = 2;
+    ParticipantStatus status = 3;
+}

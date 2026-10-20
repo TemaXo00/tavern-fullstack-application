@@ -15,6 +15,10 @@ export interface EventEventsAuthorManipulateMessages {
   eventSlug: string
 }
 
+export interface EventEventsAuthorChangeJoin extends EventEventsAuthorManipulateMessages {
+  currentState: boolean
+}
+
 export interface EventEventsAuthorChangeOrganizer {
   previousId: string
   newId: string

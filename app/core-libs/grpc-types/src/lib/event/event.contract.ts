@@ -2,6 +2,7 @@ import { Empty } from '../shared/empty.type.js'
 import { ToObservable } from '../utils/to-observable.js'
 import {
   CancelEventInput,
+  ChangeLockInput,
   CreateEventInput,
   DeleteEventInput,
   DeleteOtherEventInput,
@@ -52,6 +53,7 @@ export interface EventEventsServiceContract {
   PublishEvent(data: PublishEventInput): Promise<EventMethodsOutput>
   CancelEvent(data: CancelEventInput): Promise<EventMethodsOutput>
   FinishEvent(data: FinishEventInput): Promise<EventMethodsOutput>
+  ChangeLock(data: ChangeLockInput): Promise<EventMethodsOutput>
   SwitchOrganizer(data: SwitchOrganizerInput): Promise<EventMethodsOutput>
   SwitchOtherEventOrganizer(data: SwitchOrganizerInput): Promise<EventMethodsOutput>
   UpdateEvent(data: UpdateEventDataInput): Promise<EventMethodsOutput>

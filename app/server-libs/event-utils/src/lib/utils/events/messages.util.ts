@@ -7,6 +7,7 @@ import type {
   AdminCheckPrivatePaginatedMessage,
   EventEventsAdminChangeOrganizerMessage,
   EventEventsAdminDeleteMessage,
+  EventEventsAuthorChangeJoin,
   EventEventsAuthorChangeOrganizer,
   EventEventsAuthorManipulateMessages,
 } from '@org/rmq-messages'
@@ -33,6 +34,10 @@ export class EventEventsMessagesUtil {
 
   authorFinished(data: EventEventsAuthorManipulateMessages): void {
     this.log.emit(EVENT_EVENTS_MESSAGES.AUTHOR_FINISHED, data)
+  }
+
+  authorChangeJoin(data: EventEventsAuthorChangeJoin): void {
+    this.log.emit(EVENT_EVENTS_MESSAGES.AUTHOR_CHANGE_JOIN, data)
   }
 
   authorChangeOrganizer(data: EventEventsAuthorChangeOrganizer): void {

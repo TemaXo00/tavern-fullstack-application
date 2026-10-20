@@ -109,8 +109,11 @@ export const EVENT_MESSAGES = {
   ONE_OR_MANY_TAGS_NOT_FOUND: 'One or many tags for this event not found. Please, check tags',
   ORGANIZER_PERMISSIONS: 'You does not have permission to manipulate with this event',
   EVENT_NOT_DRAFT: 'This event currently not DRAFT. You cant do this action',
-  EVENT_NOT_PUBLISH: 'You cannot cancel of finish this event cause it does not published',
+  EVENT_NOT_PUBLISH: 'You cannot change status of this event cause it does not published',
   EVENT_DRAFT: 'This event is draft. You cant see details of it',
   EVENT_SLUG_FOUND: 'Event with same slug already exists. Please, rename your event',
   INVALID_NICKNAME_STRING: 'Nickname',
+  IS_JOIN_BLOCKED_VALIDATION: {
+    NOT_EMPTY: 'Is join blocked should not be empty',
+  }
 } as const

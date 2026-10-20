@@ -42,6 +42,7 @@ export const EVENT_LIST_SELECTIONS: EventSelect = {
   dateAndTime: true,
   leftPlaces: true,
   waitingUsers: true,
+  isJoinBlocked: true,
   status: true,
   organizer: {
     select: {
@@ -66,6 +67,7 @@ export const EVENT_OUTPUT_SELECTIONS = {
   totalPlaces: true,
   leftPlaces: true,
   waitingUsers: true,
+  isJoinBlocked: true,
   status: true,
   tags: {
     select: {
@@ -109,6 +111,7 @@ export const EVENT_METHODS_SELECTIONS = {
   totalPlaces: true,
   leftPlaces: true,
   waitingUsers: true,
+  isJoinBlocked: true,
   status: true,
   organizerId: true,
 } as const satisfies EventSelect

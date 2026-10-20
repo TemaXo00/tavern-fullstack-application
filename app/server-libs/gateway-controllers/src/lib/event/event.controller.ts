@@ -247,6 +247,19 @@ export class EventController implements OnModuleInit {
   }
 
   @PATCHProtectedMethod({
+    path: EVENT_EVENTS_ROUTES.CHANGE_LOCK.PATH,
+    summary: 'Change lock of event',
+    operationDesc: 'Changes the event lock for joining participants. Available only to the organizer.',
+  })
+  async changeLock(
+    @ValidateInputParam() validation: ValidateInput,
+    @Param(EVENT_EVENTS_ROUTES.CHANGE_LOCK.PARAM) slug: string,
+  ): Promise<EventMethodsSharedOutput> {
+    const response = await firstValueFrom(this.eventContract.ChangeLock({ slug, validation }))
+    return this.map.mapEventMethodsOutput(response)
+  }
+
+  @PATCHProtectedMethod({
     path: EVENT_EVENTS_ROUTES.SWITCH_ORGANIZER.PATH,
     summary: 'Switch my event organizer',
     operationDesc: 'Transfers ownership of the event to another user. Using by current user',
