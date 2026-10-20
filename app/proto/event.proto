@@ -2,6 +2,7 @@ syntax = 'proto3';
 
 import 'event/tag.proto';
 import 'event/events.proto';
+import 'event/participant.proto';
 import 'shared/shared.proto';
 
 package event;
@@ -33,4 +34,15 @@ service EventService {
     rpc UpdateEvent(events.UpdateEventDataInput) returns (events.EventMethodsOutput);
     rpc DeleteEvent(events.DeleteEventInput) returns (events.EventMethodsOutput);
     rpc DeleteOtherEvent(events.DeleteOtherEventInput) returns (events.EventMethodsOutput);
+}
+
+service ParticipantService {
+    rpc GetUserParticipatedEvents(participant.GetUserEventsInput) returns (participant.PaginatedParticipatedEventsOutput);
+    rpc GetPaginatedEventParticipants(participant.GetEventParticipantsInput) returns (participant.PaginatedEventParticipantsOutput);
+    rpc GetMyParticipatedEvents(participant.GetMyEventsInput) returns (participant.PaginatedParticipatedEventsOutput);
+    rpc JoinEvent(participant.JoinEventInput) returns (participant.ParticipantOutput);
+    rpc LeaveEvent(participant.LeaveEventInput) returns (participant.ParticipantOutput);
+    rpc AddUserToEvent(participant.AddUserToEventInput) returns (participant.ParticipantOutput);
+    rpc ChangeUserStatus(participant.ChangeUserStatusInput) returns (participant.ParticipantOutput);
+    rpc RemoveUserFromEvent(participant.RemoveUserFromEventInput) returns (participant.ParticipantOutput);
 }

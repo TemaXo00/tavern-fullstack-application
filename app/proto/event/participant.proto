@@ -2,7 +2,7 @@ syntax = 'proto3';
 
 package participant;
 
-enum EventStatuses {
+enum EventStatus {
     DRAFT = 0;
     PUBLISHED = 1;
     CANCELLED = 2;
@@ -13,7 +13,7 @@ enum ParticipantStatus {
     WAITLIST = 0;
     RECORDED = 1;
     FIXED = 2;
-    NOT_COME = 4;
+    NOT_COME = 3;
 }
 
 // Input Messages
@@ -34,7 +34,7 @@ message EventPaginationInput {
     optional int32 page = 1;
     optional int32 limit = 2;
     optional string search = 3;
-    optional EventStatuses status = 4;
+    optional EventStatus status = 4;
 }
 
 message ParticipantPaginationInput {
@@ -56,7 +56,7 @@ message GetMyEventsInput {
 
 message GetEventParticipantsInput {
     string slug = 1;
-    EventPaginationInput pagination = 2;
+    ParticipantPaginationInput pagination = 2;
 }
 
 message JoinEventInput {
@@ -69,10 +69,6 @@ message LeaveEventInput {
     string slug = 2;
 }
 
-message RemoveUserFromEventInput {
-    ValidateInput validation = 1;
-}
-
 message AddUserToEventInput {
     ValidateInput validation = 1;
     string nickname = 2;
@@ -82,4 +78,60 @@ message ChangeUserStatusInput {
     ValidateInput validation = 1;
     string nickname = 2;
     ParticipantStatus status = 3;
+}
+
+message RemoveUserFromEventInput {
+    ValidateInput validation = 1;
+    string nickname = 2;
+}
+
+// Output messages
+
+message EventPaginationOutput {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 total = 3;
+    int32 totalPages = 4;
+    bool hasNext = 5;
+    bool hasPrev = 6;
+    optional string search = 7;
+    optional EventStatus status = 8;
+}
+
+message ParticipantPaginationOutput {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 total = 3;
+    int32 totalPages = 4;
+    bool hasNext = 5;
+    bool hasPrev = 6;
+    optional string search = 7;
+    optional ParticipantStatus status = 8;
+}
+
+message EventOutput {
+    string slug = 1;
+    string name = 2;
+    string dateAndTime = 3;
+    EventStatus status = 4;
+}
+
+message ParticipantOutput {
+    string nickname = 1;
+    optional string avatarId = 2;
+    bool isFixed = 3;
+    optional string note = 4;
+    ParticipantStatus status = 5;
+}
+
+message PaginatedEventParticipantsOutput {
+    EventOutput event = 1;
+    ParticipantPaginationOutput pagination = 2;
+    repeated ParticipantOutput participants = 3;
+}
+
+message PaginatedParticipatedEventsOutput {
+    ParticipantOutput participant = 1;
+    EventPaginationOutput pagination = 2;
+    repeated EventOutput events = 3;
 }
