@@ -97,10 +97,9 @@ model EventParticipant {
 }
 
 enum ParticipantStatus {
-  RECORDED
   WAITLIST
-  CANCELLED
-  FINISHED
+  RECORDED
+  FIXED
   NOT_COME
 }
 
