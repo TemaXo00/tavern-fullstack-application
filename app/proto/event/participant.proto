@@ -124,6 +124,11 @@ message ParticipantOutput {
     ParticipantStatus status = 5;
 }
 
+message ParticipantInPaginatedOutput {
+    string nickname = 1;
+    optional string avatarId = 2;
+}
+
 message PaginatedEventParticipantsOutput {
     EventOutput event = 1;
     ParticipantPaginationOutput pagination = 2;
@@ -131,7 +136,7 @@ message PaginatedEventParticipantsOutput {
 }
 
 message PaginatedParticipatedEventsOutput {
-    ParticipantOutput participant = 1;
+    ParticipantPaginationOutput participant = 1;
     EventPaginationOutput pagination = 2;
     repeated EventOutput events = 3;
 }

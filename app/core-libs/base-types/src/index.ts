@@ -55,6 +55,11 @@ export * from './lib/event/tag/tag-output.data.js'
 export * from './lib/event/events/event-input.data.js'
 export * from './lib/event/events/event-output.data.js'
 
+// PARTICIPANT SERVICE
+
+export * from './lib/event/participant/participant-input.data.js'
+export * from './lib/event/participant/participant-output.data.js'
+
 // EVENT MICROSERVICE END
 
 // ------------------------------
