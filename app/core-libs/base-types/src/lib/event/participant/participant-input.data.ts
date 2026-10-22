@@ -31,14 +31,17 @@ export interface LeaveEventBaseInput {
 }
 
 export interface AddUserToEventBaseInput {
+  slug: string
   nickname: string
 }
 
 export interface ChangeUserParticipantStatusBaseInput {
+  slug: string
   nickname: string
   status: number
 }
 
 export interface RemoveUserFromEventBaseInput {
+  slug: string
   nickname: string
 }

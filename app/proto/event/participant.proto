@@ -71,18 +71,21 @@ message LeaveEventInput {
 
 message AddUserToEventInput {
     ValidateInput validation = 1;
-    string nickname = 2;
+    string slug = 2;
+    string nickname = 3;
 }
 
 message ChangeUserStatusInput {
     ValidateInput validation = 1;
-    string nickname = 2;
-    ParticipantStatus status = 3;
+    string slug = 2;
+    string nickname = 3;
+    ParticipantStatus status = 4;
 }
 
 message RemoveUserFromEventInput {
     ValidateInput validation = 1;
-    string nickname = 2;
+    string slug = 2;
+    string nickname = 3;
 }
 
 // Output messages
