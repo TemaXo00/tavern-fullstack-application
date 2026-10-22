@@ -7,7 +7,7 @@ import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator'
 export function ParticipantStatusesDecorator(required = true): PropertyDecorator {
   const requiredDecorator = required
     ? IsNotEmpty({ message: EVENT_MESSAGES.PARTICIPANT_STATUS_VALIDATION.NOT_EMPTY })
-    : IsOptional
+    : IsOptional()
   return applyDecorators(
     ApiProperty({
       description: 'Participant Statuses',
