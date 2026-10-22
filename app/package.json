@@ -7,6 +7,7 @@
     "nx:clean": "nx reset",
     "nx:sync": "nx sync",
     "all:dev": "nx run-many -t serve",
+    "all:dev:log": "mkdir -p logs && npm run all:dev > logs/all-dev_$(date +%Y-%m-%d_%H-%M-%S).log 2>&1",
     "all:build": "nx run-many -t build",
     "all:lint": "nx run-many -t lint",
     "all:prettier": "prettier --check .",

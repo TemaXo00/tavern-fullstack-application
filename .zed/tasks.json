@@ -18,6 +18,12 @@
     "cwd": "$ZED_WORKTREE_ROOT/app",
   },
   {
+    "label": "DEV: Run with Node.js (Logging)",
+    "command": "docker compose -f ../docker-compose.infra.yml up --build -d && npm run all:dev:log",
+    "use_new_terminal": true,
+    "cwd": "$ZED_WORKTREE_ROOT/app",
+  },
+  {
     "label": "DEV: Run with Docker",
     "command": "docker compose up --build -d",
     "use_new_terminal": true,
