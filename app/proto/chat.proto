@@ -1,9 +1,0 @@
-syntax = 'proto3';
-
-import 'shared/shared.proto';
-
-package chat;
-
-service ChatService {
-    rpc Ping(shared.Empty) returns (shared.Empty);
-}

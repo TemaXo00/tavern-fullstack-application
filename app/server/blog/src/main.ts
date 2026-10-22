@@ -7,5 +7,6 @@ microservice<AppModule>({
   name: 'Blog',
   module: AppModule,
   logs: true,
+  grpc: true,
   rabbitMQ: true,
 })

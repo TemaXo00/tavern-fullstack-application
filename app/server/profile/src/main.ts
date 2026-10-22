@@ -7,5 +7,6 @@ microservice<AppModule>({
   name: 'Profile',
   module: AppModule,
   logs: true,
+  grpc: true,
   rabbitMQ: true,
 })

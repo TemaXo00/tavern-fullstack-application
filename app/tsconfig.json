@@ -19,22 +19,7 @@
       "path": "./server/profile"
     },
     {
-      "path": "./server/appeals"
-    },
-    {
       "path": "./server/blog"
-    },
-    {
-      "path": "./server/chat"
-    },
-    {
-      "path": "./server/content"
-    },
-    {
-      "path": "./server/file"
-    },
-    {
-      "path": "./server/forum"
     },
     {
       "path": "./server/log"

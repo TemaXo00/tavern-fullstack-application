@@ -29,14 +29,16 @@ export async function microservice<T>(options: MicroserviceBootstrapOptions<T>):
 
   const env = setupMicroserviceEnvVariables(APP_SCOPE, APP_ENV_NAME, config)
 
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.GRPC,
-    options: {
-      protoPath: join(workspaceRoot, GRPC_PROTO_PATH),
-      package: GRPC_PROTO_PACKAGE,
-      url: `0.0.0.0:${env.GRPC_PORT}`,
-    },
-  })
+  if (options.grpc) {
+    app.connectMicroservice<MicroserviceOptions>({
+      transport: Transport.GRPC,
+      options: {
+        protoPath: join(workspaceRoot, GRPC_PROTO_PATH),
+        package: GRPC_PROTO_PACKAGE,
+        url: `0.0.0.0:${env.GRPC_PORT}`,
+      },
+    })
+  }
 
   if (options.rabbitMQ) {
     app.connectMicroservice<MicroserviceOptions>({

@@ -7,5 +7,6 @@ microservice<AppModule>({
   name: 'Event',
   module: AppModule,
   logs: true,
+  grpc: true,
   rabbitMQ: true,
 })

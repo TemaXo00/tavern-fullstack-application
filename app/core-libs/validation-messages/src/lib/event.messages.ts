@@ -115,5 +115,5 @@ export const EVENT_MESSAGES = {
   INVALID_NICKNAME_STRING: 'Nickname',
   IS_JOIN_BLOCKED_VALIDATION: {
     NOT_EMPTY: 'Is join blocked should not be empty',
-  }
+  },
 } as const

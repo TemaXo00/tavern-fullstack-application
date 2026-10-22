@@ -131,9 +131,11 @@ export function logMicroserviceMessages<T>(
   logger.log(`To disable DEV mode, remove or set 'false' variable ${APP_SCOPE}_DEV_MODE`)
   logger.log('')
 
-  logger.log(`gRPC URL: 0.0.0.0:${GRPC_PORT}`)
-  logger.log(`gRPC Proto path: ${GRPC_PROTO_PATH}`)
-  logger.log(`gRPC Package: ${GRPC_PROTO_PACKAGE}`)
+  if (options.grpc) {
+    logger.log(`gRPC URL: 0.0.0.0:${GRPC_PORT}`)
+    logger.log(`gRPC Proto path: ${GRPC_PROTO_PATH}`)
+    logger.log(`gRPC Package: ${GRPC_PROTO_PACKAGE}`)
+  }
 
   if (options.rabbitMQ) {
     logger.log(`RabbitMQ URL: amqp://${RMQ_USER}:****@${RMQ_URL}`)
@@ -149,7 +151,9 @@ export function logMicroserviceMessages<T>(
 
   logger.log('To configure Bootstrap, use next variables:')
   logger.log(`  ${APP_SCOPE}_DEV_MODE - DEV mode. Accepts "true" or "false"`)
-  logger.log(`  ${APP_SCOPE}_${APP_ENV_NAME}_GRPC_PORT - gRPC Port. Default: 5000`)
+  if (options.grpc) {
+    logger.log(`  ${APP_SCOPE}_${APP_ENV_NAME}_GRPC_PORT - gRPC Port. Default: 5000`)
+  }
   if (options.rabbitMQ) {
     logger.log(`  ${APP_SCOPE}_RMQ_URL - RabbitMQ URL. Default: rabbitmq:5672`)
     logger.log(`  ${APP_SCOPE}_RMQ_USER - RabbitMQ User. Default: user`)
