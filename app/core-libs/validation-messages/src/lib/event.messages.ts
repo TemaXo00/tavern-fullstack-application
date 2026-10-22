@@ -1,4 +1,4 @@
-import { EventStatuses } from '@org/enums'
+import { EventStatuses, ParticipantStatuses } from '@org/enums'
 import { EVENT_CONFIG } from '@org/validation-config'
 
 export const EVENT_MESSAGES = {
@@ -37,6 +37,10 @@ export const EVENT_MESSAGES = {
   },
   EVENT_STATUS_VALIDATION: {
     ENUM: (): string => `Invalid status. Available options: ${Object.values(EventStatuses).join(', ')}`,
+  },
+  PARTICIPANT_STATUS_VALIDATION: {
+    NOT_EMPTY: 'Participant status should not be empty',
+    ENUM: (): string => `Invalid status. Available options: ${Object.values(ParticipantStatuses).join(', ')}`,
   },
   USER_SNAPSHOT_EXISTING_ERROR: {
     CONTEXT: 'ManipulateUserSnapshot',

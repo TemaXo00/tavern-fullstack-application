@@ -8,7 +8,7 @@ import { Nickname } from '../../decorators/shared/nickname.decorator.js'
 import type { UpdateProfileSharedInput } from '@org/shared-types'
 
 export class UpdateProfileDto implements UpdateProfileSharedInput {
-  @Nickname()
+  @Nickname(false)
   nickname?: string
 
   @Name()

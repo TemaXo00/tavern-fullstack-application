@@ -14,7 +14,7 @@ import type {
   LeaveEventInput,
   PaginatedEventParticipantsOutput,
   PaginatedParticipatedEventsOutput,
-  ParticipantOutput,
+  EventParticipantOutput,
   RemoveUserFromEventInput,
 } from '@org/grpc-types'
 
@@ -38,27 +38,27 @@ export class EventParticipantFeatureController implements EventParticipantsServi
   }
 
   @GrpcMethod('ParticipantService', 'JoinEvent')
-  async JoinEvent(data: JoinEventInput): Promise<ParticipantOutput> {
+  async JoinEvent(data: JoinEventInput): Promise<EventParticipantOutput> {
     return await this.service.JoinEvent(data)
   }
 
   @GrpcMethod('ParticipantService', 'LeaveEvent')
-  async LeaveEvent(data: LeaveEventInput): Promise<ParticipantOutput> {
+  async LeaveEvent(data: LeaveEventInput): Promise<EventParticipantOutput> {
     return await this.service.LeaveEvent(data)
   }
 
   @GrpcMethod('ParticipantService', 'AddUserToEvent')
-  async AddUserToEvent(data: AddUserToEventInput): Promise<ParticipantOutput> {
+  async AddUserToEvent(data: AddUserToEventInput): Promise<EventParticipantOutput> {
     return await this.service.AddUserToEvent(data)
   }
 
   @GrpcMethod('ParticipantService', 'ChangeUserStatus')
-  async ChangeUserStatus(data: ChangeUserParticipantStatusInput): Promise<ParticipantOutput> {
+  async ChangeUserStatus(data: ChangeUserParticipantStatusInput): Promise<EventParticipantOutput> {
     return await this.service.ChangeUserStatus(data)
   }
 
   @GrpcMethod('ParticipantService', 'RemoveUserFromEvent')
-  async RemoveUserFromEvent(data: RemoveUserFromEventInput): Promise<ParticipantOutput> {
+  async RemoveUserFromEvent(data: RemoveUserFromEventInput): Promise<EventParticipantOutput> {
     return await this.service.RemoveUserFromEvent(data)
   }
 }

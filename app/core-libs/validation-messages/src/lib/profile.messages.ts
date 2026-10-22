@@ -84,6 +84,7 @@ export const PROFILE_MESSAGES = {
     MAX_LENGTH: `Maximum length of surname is ${PROFILE_CONFIG.SURNAME.MAX_LENGTH}`,
   },
   NICKNAME_VALIDATION: {
+    NOT_EMPTY: 'Nickname cannot be empty string',
     TYPE: 'Nickname should be a string',
     MIN_LENGTH: `Minimal length of nickname is ${PROFILE_CONFIG.NICKNAME.MIN_LENGHT}`,
     MAX_LENGTH: `Maximum length of nickname is ${PROFILE_CONFIG.NICKNAME.MAX_LENGTH}`,

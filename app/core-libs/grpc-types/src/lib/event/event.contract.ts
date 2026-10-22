@@ -36,7 +36,7 @@ import {
 import {
   PaginatedEventParticipantsOutput,
   PaginatedParticipatedEventsOutput,
-  ParticipantOutput,
+  EventParticipantOutput,
 } from './participant/participant-output.data.js'
 import {
   CreateEventTagInput,
@@ -80,11 +80,11 @@ export interface EventParticipantsServiceContract {
   GetUserParticipatedEvents(data: GetUserParticipatedEventsInput): Promise<PaginatedParticipatedEventsOutput>
   GetPaginatedEventParticipants(data: GetEventParticipantsInput): Promise<PaginatedEventParticipantsOutput>
   GetMyParticipatedEvents(data: GetMyParticipatedEventsInput): Promise<PaginatedParticipatedEventsOutput>
-  JoinEvent(data: JoinEventInput): Promise<ParticipantOutput>
-  LeaveEvent(data: LeaveEventInput): Promise<ParticipantOutput>
-  AddUserToEvent(data: AddUserToEventInput): Promise<ParticipantOutput>
-  ChangeUserStatus(data: ChangeUserParticipantStatusInput): Promise<ParticipantOutput>
-  RemoveUserFromEvent(data: RemoveUserFromEventInput): Promise<ParticipantOutput>
+  JoinEvent(data: JoinEventInput): Promise<EventParticipantOutput>
+  LeaveEvent(data: LeaveEventInput): Promise<EventParticipantOutput>
+  AddUserToEvent(data: AddUserToEventInput): Promise<EventParticipantOutput>
+  ChangeUserStatus(data: ChangeUserParticipantStatusInput): Promise<EventParticipantOutput>
+  RemoveUserFromEvent(data: RemoveUserFromEventInput): Promise<EventParticipantOutput>
 }
 
 export type EventTagServiceObservableContract = ToObservable<EventTagServiceContract>

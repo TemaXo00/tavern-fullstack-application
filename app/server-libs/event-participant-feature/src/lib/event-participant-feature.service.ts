@@ -11,7 +11,7 @@ import type {
   LeaveEventInput,
   PaginatedEventParticipantsOutput,
   PaginatedParticipatedEventsOutput,
-  ParticipantOutput,
+  EventParticipantOutput,
   RemoveUserFromEventInput,
 } from '@org/grpc-types'
 
@@ -29,23 +29,23 @@ export class EventParticipantFeatureService implements EventParticipantsServiceC
     throw new Error('Method not implemented.')
   }
 
-  async JoinEvent(data: JoinEventInput): Promise<ParticipantOutput> {
+  async JoinEvent(data: JoinEventInput): Promise<EventParticipantOutput> {
     throw new Error('Method not implemented.')
   }
 
-  async LeaveEvent(data: LeaveEventInput): Promise<ParticipantOutput> {
+  async LeaveEvent(data: LeaveEventInput): Promise<EventParticipantOutput> {
     throw new Error('Method not implemented.')
   }
 
-  async AddUserToEvent(data: AddUserToEventInput): Promise<ParticipantOutput> {
+  async AddUserToEvent(data: AddUserToEventInput): Promise<EventParticipantOutput> {
     throw new Error('Method not implemented.')
   }
 
-  async ChangeUserStatus(data: ChangeUserParticipantStatusInput): Promise<ParticipantOutput> {
+  async ChangeUserStatus(data: ChangeUserParticipantStatusInput): Promise<EventParticipantOutput> {
     throw new Error('Method not implemented.')
   }
 
-  async RemoveUserFromEvent(data: RemoveUserFromEventInput): Promise<ParticipantOutput> {
+  async RemoveUserFromEvent(data: RemoveUserFromEventInput): Promise<EventParticipantOutput> {
     throw new Error('Method not implemented.')
   }
 }

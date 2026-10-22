@@ -79,3 +79,38 @@ export const EVENT_EVENTS_ROUTES = {
     PARAM: 'slug',
   },
 } as const
+
+export const EVENT_PARTICIPANT_ROUTES = {
+  BASE_URL: 'event/participant',
+  GET_USER_PARTICIPATED: {
+    PATH: ':nickname',
+    PARAM: 'nickname',
+  },
+  GET_EVENT_PARTICIPANTS: {
+    PATH: ':slug/list',
+    PARAM: 'slug',
+  },
+  GET_ME: {
+    PATH: 'user/me',
+  },
+  JOIN_EVENT: {
+    PATH: ':slug/join',
+    PARAM: 'slug',
+  },
+  LEAVE_EVENT: {
+    PATH: ':slug/leave',
+    PARAM: 'slug',
+  },
+  ADD_USER: {
+    PATH: ':slug/add',
+    PARAM: 'slug',
+  },
+  CHANGE_USER_STATUS: {
+    PATH: ':slug/status',
+    PARAM: 'slug',
+  },
+  REMOVE_FROM_EVENT: {
+    PATH: ':slug/remove',
+    PARAM: 'slug',
+  },
+} as const

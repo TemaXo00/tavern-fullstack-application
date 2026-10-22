@@ -15,6 +15,7 @@ import type {
 
 export type ParticipatedEventsPaginationGrpcInput = ParticipatedEventsPaginationBaseInput
 export type EventParticipantPaginationGrpcInput = EventParticipantPaginationBaseInput
+export type ChangeUserParticipantStatusGrpcInput = Omit<ChangeUserParticipantStatusBaseInput, 'slug'>
 
 export type GetUserParticipatedEventsInput = GetUserParticipatedEventsBaseInput
 export type GetMyParticipatedEventsInput = Protected<GetMyParticipatedEventsBaseInput>
