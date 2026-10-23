@@ -103,8 +103,6 @@ services:
       POSTGRES_DB: ${TAVERN_BLOG_DB_NAME}
       POSTGRES_USER: ${TAVERN_BLOG_DB_USER}
       POSTGRES_PASSWORD: ${TAVERN_BLOG_DB_PASSWORD}
-    ports:
-      - "${TAVERN_BLOG_DB_PORT}:5432"
     healthcheck:
       test:
         [
@@ -124,8 +122,6 @@ services:
       POSTGRES_DB: ${TAVERN_LOG_DB_NAME}
       POSTGRES_USER: ${TAVERN_LOG_DB_USER}
       POSTGRES_PASSWORD: ${TAVERN_LOG_DB_PASSWORD}
-    ports:
-      - "${TAVERN_LOG_DB_PORT}:5432"
     healthcheck:
       test:
         [
