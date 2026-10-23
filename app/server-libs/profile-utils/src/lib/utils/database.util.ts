@@ -396,7 +396,7 @@ export class ProfileDatabaseUtil {
     if (query.search) {
       where.OR = [
         { nickname: { contains: query.search, mode: 'insensitive' } },
-        { userId: {contains: query.search, mode: 'insensitive'}}
+        { userId: { contains: query.search, mode: 'insensitive' } },
       ]
     }
 
@@ -409,7 +409,7 @@ export class ProfileDatabaseUtil {
     if (query.search) {
       where.OR = [
         { nickname: { contains: query.search, mode: 'insensitive' } },
-        { userId: {contains: query.search, mode: 'insensitive'}}
+        { userId: { contains: query.search, mode: 'insensitive' } },
       ]
     }
 
