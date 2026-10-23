@@ -15,6 +15,12 @@ COPY app/server-libs/profile-database/prisma.config.ts ./profile-database/prisma
 COPY app/server-libs/event-database/prisma ./event-database/prisma
 COPY app/server-libs/event-database/prisma.config.ts ./event-database/prisma.config.ts
 
+COPY app/server-libs/blog-database/prisma ./blog-database/prisma
+COPY app/server-libs/blog-database/prisma.config.ts ./blog-database/prisma.config.ts
+
+COPY app/server-libs/log-database/prisma ./log-database/prisma
+COPY app/server-libs/log-database/prisma.config.ts ./log-database/prisma.config.ts
+
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001 && \
     chown -R nodejs:nodejs /app && \

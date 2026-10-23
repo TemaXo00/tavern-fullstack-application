@@ -24,11 +24,21 @@
     "profile-db:migrate-deploy": "prisma migrate deploy --config server-libs/profile-database/prisma.config.ts",
     "profile-db:migrate-reset": "prisma migrate reset --config server-libs/profile-database/prisma.config.ts",
     "profile-db:studio": "prisma studio --config server-libs/profile-database/prisma.config.ts",
-    "event-db:studio": "prisma studio --config server-libs/event-database/prisma.config.ts",
     "event-db:generate": "prisma generate --config server-libs/event-database/prisma.config.ts",
     "event-db:migrate-dev": "prisma migrate dev --config server-libs/event-database/prisma.config.ts",
     "event-db:migrate-deploy": "prisma migrate deploy --config server-libs/event-database/prisma.config.ts",
-    "event-db:migrate-reset": "prisma migrate reset --config server-libs/event-database/prisma.config.ts"
+    "event-db:migrate-reset": "prisma migrate reset --config server-libs/event-database/prisma.config.ts",
+    "event-db:studio": "prisma studio --config server-libs/event-database/prisma.config.ts",
+    "log-db:generate": "prisma generate --config server-libs/log-database/prisma.config.ts",
+    "log-db:migrate-dev": "prisma migrate dev --config server-libs/log-database/prisma.config.ts",
+    "log-db:migrate-deploy": "prisma migrate deploy --config server-libs/log-database/prisma.config.ts",
+    "log-db:migrate-reset": "prisma migrate reset --config server-libs/log-database/prisma.config.ts",
+    "log-db:studio": "prisma studio --config server-libs/log-database/prisma.config.ts",
+    "blog-db:generate": "prisma generate --config server-libs/blog-database/prisma.config.ts",
+    "blog-db:migrate-dev": "prisma migrate dev --config server-libs/blog-database/prisma.config.ts",
+    "blog-db:migrate-deploy": "prisma migrate deploy --config server-libs/blog-database/prisma.config.ts",
+    "blog-db:migrate-reset": "prisma migrate reset --config server-libs/blog-database/prisma.config.ts",
+    "blog-db:studio": "prisma studio --config server-libs/blog-database/prisma.config.ts"
   },
   "private": true,
   "dependencies": {

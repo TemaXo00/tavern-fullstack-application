@@ -394,7 +394,10 @@ export class ProfileDatabaseUtil {
     const where: ProfileWhereInput = {}
 
     if (query.search) {
-      where.nickname = { contains: query.search, mode: 'insensitive' }
+      where.OR = [
+        { nickname: { contains: query.search, mode: 'insensitive' } },
+        { userId: {contains: query.search, mode: 'insensitive'}}
+      ]
     }
 
     return where
@@ -404,7 +407,10 @@ export class ProfileDatabaseUtil {
     const where: ProfileWhereInput = {}
 
     if (query.search) {
-      where.nickname = { contains: query.search, mode: 'insensitive' }
+      where.OR = [
+        { nickname: { contains: query.search, mode: 'insensitive' } },
+        { userId: {contains: query.search, mode: 'insensitive'}}
+      ]
     }
 
     if (query.email) {

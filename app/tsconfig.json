@@ -176,6 +176,12 @@
     },
     {
       "path": "./core-libs/nest-launcher"
+    },
+    {
+      "path": "./server-libs/log-database"
+    },
+    {
+      "path": "./server-libs/blog-database"
     }
   ],
   "compilerOptions": {}
