@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { AuthValidateService } from '@org/auth-authorization-core'
 import { Roles } from '@org/enums'
-import { ProfileDatabaseUtil, ProfileMessagesUtil, ProfileValidationUtil } from '@org/profile-utils'
+import { ProfileCacheUtil, ProfileDatabaseUtil, ProfileMessagesUtil, ProfileValidationUtil } from '@org/profile-utils'
 
 import type {
   AddReputationInput,
@@ -19,6 +19,7 @@ export class ProfileReputationFeatureService implements ReputationServiceContrac
     private readonly dbUtil: ProfileDatabaseUtil,
     private readonly validationUtil: ProfileValidationUtil,
     private readonly messagesUtil: ProfileMessagesUtil,
+    private readonly cacheUtil: ProfileCacheUtil
   ) {}
 
   async GetMyLogs(data: GetMyReputationInput): Promise<PaginatedReputationOutput> {
@@ -38,6 +39,7 @@ export class ProfileReputationFeatureService implements ReputationServiceContrac
     this.validationUtil.checkAddReputationNotCurrent(payload.id, profile.userId)
     this.validationUtil.checkProfileStatus(profile.currentActivity)
     const action = await this.dbUtil.createReputationEntry(profile.nickname, data.message, data.score)
+    await this.cacheUtil.deleteCache(data.nickname)
     this.messagesUtil.sendChangeReputation({
       adminId: payload.id,
       userId: profile.userId,

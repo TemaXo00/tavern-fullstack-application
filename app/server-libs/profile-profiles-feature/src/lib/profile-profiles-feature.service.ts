@@ -55,6 +55,10 @@ export class ProfileProfilesFeatureService implements ProfileServiceContract {
     const payload = await this.validate.validateWithRoles(data.validation, [Roles.ADMIN, Roles.MODERATOR])
     const redisProfile = await this.cacheUtil.getAdvanced(data.nickname)
     if (redisProfile) {
+      this.messagesUtil.sendAdminCheckProfile({
+        adminId: payload.id,
+        userId: redisProfile.userId,
+      })
       return redisProfile
     }
     const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname)
