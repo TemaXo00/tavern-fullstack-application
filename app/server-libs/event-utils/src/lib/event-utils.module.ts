@@ -7,6 +7,7 @@ import { RmqModule, RmqService } from '@org/rmq-config'
 import { SharedUtilsModule } from '@org/shared-utils'
 
 import { EVENTS_UTILS } from './utils/events/main'
+import { PARTICIPANT_UTILS } from './utils/participant/main'
 import { RMQ_UTILS } from './utils/rmq/main'
 import { SHARED_UTILS } from './utils/shared/main'
 import { TAG_UTILS } from './utils/tag/main'
@@ -40,7 +41,7 @@ const queues = ['log']
       })),
     ),
   ],
-  providers: [...TAG_UTILS, ...RMQ_UTILS, ...EVENTS_UTILS, ...SHARED_UTILS],
-  exports: [...TAG_UTILS, ...RMQ_UTILS, ...EVENTS_UTILS, ...SHARED_UTILS],
+  providers: [...TAG_UTILS, ...RMQ_UTILS, ...EVENTS_UTILS, ...SHARED_UTILS, ...PARTICIPANT_UTILS],
+  exports: [...TAG_UTILS, ...RMQ_UTILS, ...EVENTS_UTILS, ...SHARED_UTILS, ...PARTICIPANT_UTILS],
 })
 export class EventUtilsModule {}

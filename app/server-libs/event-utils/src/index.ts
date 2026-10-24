@@ -17,3 +17,8 @@ export * from './lib/utils/rmq/validate.util'
 export * from './lib/utils/events/database.util'
 export * from './lib/utils/events/validation.util'
 export * from './lib/utils/events/messages.util'
+
+// PARTICIPANT
+export * from './lib/utils/participant/database.util'
+export * from './lib/utils/participant/validation.util'
+export * from './lib/utils/participant/messages.util'

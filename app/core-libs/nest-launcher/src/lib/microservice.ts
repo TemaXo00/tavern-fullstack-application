@@ -55,17 +55,7 @@ export async function microservice<T>(options: MicroserviceBootstrapOptions<T>):
 
   logMicroserviceMessages(options, env, logger)
 
-  process.on('SIGTERM', async () => {
-    logger.log('Received SIGTERM, shutting down...')
-    await app.close()
-    process.exit(0)
-  })
-
-  process.on('SIGINT', async () => {
-    logger.log('Received SIGINT, shutting down...')
-    await app.close()
-    process.exit(0)
-  })
+  app.enableShutdownHooks()
 
   try {
     await app.startAllMicroservices()

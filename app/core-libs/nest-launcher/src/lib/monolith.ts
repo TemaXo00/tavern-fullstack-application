@@ -82,17 +82,7 @@ export async function monolith<T>(options: MonolithOptions<T>): Promise<void> {
 
   logMonolithMessages(options, { APP_PORT, REQUEST_LIMIT, IS_DEV, CORS_ORIGINS, WINDOW_MS }, logger)
 
-  process.on('SIGTERM', async () => {
-    logger.log('Received SIGTERM, shutting down...')
-    await app.close()
-    process.exit(0)
-  })
-
-  process.on('SIGINT', async () => {
-    logger.log('Received SIGINT, shutting down...')
-    await app.close()
-    process.exit(0)
-  })
+  app.enableShutdownHooks()
 
   try {
     await app.listen(APP_PORT)
