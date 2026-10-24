@@ -99,6 +99,8 @@ services:
   blog-db-dev:
     image: postgres:18.6-alpine
     container_name: tavern-dev-blog-db
+    networks:
+      - tavern-dev
     environment:
       POSTGRES_DB: ${TAVERN_BLOG_DB_NAME}
       POSTGRES_USER: ${TAVERN_BLOG_DB_USER}
@@ -113,11 +115,13 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - blog_db_dev_data:/var/lib/postrgesql
+      - blog_db_dev_data:/var/lib/postgresql
 
   log-db-dev:
     image: postgres:18.6-alpine
     container_name: tavern-dev-log-db
+    networks:
+      - tavern-dev
     environment:
       POSTGRES_DB: ${TAVERN_LOG_DB_NAME}
       POSTGRES_USER: ${TAVERN_LOG_DB_USER}
@@ -132,7 +136,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - log_db_dev_data:/var/lib/postrgesql
+      - log_db_dev_data:/var/lib/postgresql
 
   auth-service-dev:
     image: ${DOCKER_REGISTRY}/temaxo00/tavern-auth:${DOCKER_APPS_VERSION}
@@ -281,6 +285,10 @@ services:
       profile-db-dev:
         condition: service_healthy
       event-db-dev:
+        condition: service_healthy
+      blog-db-dev:
+        condition: service_healthy
+      log-db-dev:
         condition: service_healthy
     restart: "no"
 
