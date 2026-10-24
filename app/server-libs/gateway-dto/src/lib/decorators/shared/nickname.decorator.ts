@@ -13,7 +13,7 @@ export function Nickname(required = true): PropertyDecorator {
       description: 'User Nickname',
       example: 'joe_doe',
       type: 'string',
-      required: false,
+      required: required,
       minLength: PROFILE_CONFIG.NICKNAME.MIN_LENGHT,
       maxLength: PROFILE_CONFIG.NICKNAME.MAX_LENGTH,
     }),

@@ -11,7 +11,7 @@ export class UpdateProfileDto implements UpdateProfileSharedInput {
   @Nickname(false)
   nickname?: string
 
-  @Name()
+  @Name(false)
   name?: string
 
   @Surname()

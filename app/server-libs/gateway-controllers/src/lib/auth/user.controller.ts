@@ -113,7 +113,7 @@ export class UserController implements OnModuleInit {
     path: AUTH_USER_ROUTES.BLOCK.PATH,
     summary: 'Block a user',
     operationDesc:
-      'Blocks the specified user. Requires a reason and an optional block expiration date. Available to administrators and moderators.',
+      'Blocks the specified user. Requires a reason and block expiration date. Available to administrators and moderators.',
     roles: [Roles.ADMIN, Roles.MODERATOR],
   })
   async blockUser(

@@ -5,6 +5,7 @@ import {
   PATCHProtectedMethod,
   POSTProtected,
   QUERYMethod,
+  QUERYProtectedMethod,
   ValidateInputParam,
 } from '@org/gateway-decorators'
 import {
@@ -42,7 +43,7 @@ export class ParticipantController implements OnModuleInit {
     this.participantContract = this.client.getService<EventParticipantsServiceObservableContract>('ParticipantService')
   }
 
-  @QUERYMethod({
+  @QUERYProtectedMethod({
     path: EVENT_PARTICIPANT_ROUTES.GET_ME.PATH,
     summary: 'Get my participated events',
     operationDesc: 'Returns paginated participated events. Only current user route',

@@ -11,7 +11,7 @@ export function Page(): PropertyDecorator {
       example: 1,
       minimum: 1,
       required: false,
-      type: 'number',
+      type: 'integer',
     }),
     IsOptional(),
     IsNumber({}, { message: SHARED_MESSAGES.PAGINATION_PAGE_VALIDATION.TYPE }),

@@ -10,6 +10,7 @@ export function LocalName(): PropertyDecorator {
       description: 'Local session name',
       example: 'My ASUS Session',
       type: 'string',
+      required: true,
       minLength: AUTH_CONFIG.LOCAL_NAME.MIN_LENGTH,
       maxLength: AUTH_CONFIG.LOCAL_NAME.MAX_LENGTH,
     }),

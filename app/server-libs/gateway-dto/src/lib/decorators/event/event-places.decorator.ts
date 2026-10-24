@@ -1,7 +1,7 @@
 import { applyDecorators } from '@nestjs/common'
 import { ApiProperty } from '@nestjs/swagger'
 import { EVENT_MESSAGES } from '@org/validation-messages'
-import { IsNotEmpty, IsNumber, IsOptional, Min } from 'class-validator'
+import { IsInt, IsNotEmpty, IsOptional, Min } from 'class-validator'
 
 export function EventPlaces(required = true): PropertyDecorator {
   const requiredDecorator = required
@@ -11,12 +11,12 @@ export function EventPlaces(required = true): PropertyDecorator {
   return applyDecorators(
     ApiProperty({
       description: 'Event places',
-      type: 'number',
+      type: 'integer',
       example: 15,
       required,
     }),
     requiredDecorator,
-    IsNumber({}, { message: EVENT_MESSAGES.PLACES_VALIDATION.TYPE }),
+    IsInt({ message: EVENT_MESSAGES.PLACES_VALIDATION.TYPE }),
     Min(0, { message: EVENT_MESSAGES.PLACES_VALIDATION.MIN }),
   )
 }

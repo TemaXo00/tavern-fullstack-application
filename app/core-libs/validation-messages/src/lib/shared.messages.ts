@@ -32,6 +32,7 @@ export const SHARED_MESSAGES = {
     MAX_LENGTH: `Maximum length of description is ${SHARED_CONFIG.DESCRIPTION.MAX_LENGTH}`,
   },
   NAME_VALIDATION: {
+    NOT_EMPTY: 'Name cannot be empty',
     TYPE: 'Name should be a string',
     MIN_LENGTH: `Minimal length of name is ${SHARED_CONFIG.NAME.MIN_LENGTH}`,
     MAX_LENGTH: `Maximum length of name is ${SHARED_CONFIG.NAME.MAX_LENGTH}`,

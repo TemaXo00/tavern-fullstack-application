@@ -10,7 +10,7 @@ export function ReputationMessage(): PropertyDecorator {
       description: 'Reputation message',
       example: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
       type: 'string',
-      required: false,
+      required: true,
       minLength: PROFILE_CONFIG.REPUTATION_MESSAGE.MIN_LENGTH,
       maxLength: PROFILE_CONFIG.REPUTATION_MESSAGE.MAX_LENGTH,
     }),

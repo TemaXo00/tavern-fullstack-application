@@ -11,7 +11,7 @@ export function ParticipantStatusesDecorator(required = true): PropertyDecorator
   return applyDecorators(
     ApiProperty({
       description: 'Participant Statuses',
-      required: false,
+      required,
       enum: ParticipantStatuses,
     }),
     requiredDecorator,

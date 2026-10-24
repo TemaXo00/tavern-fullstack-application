@@ -10,6 +10,7 @@ export function Password(): PropertyDecorator {
       description: `Password. Should have min ${AUTH_CONFIG.PASSWORD.MIN_LENGHT} length, include ${AUTH_CONFIG.PASSWORD.MIN_LOWERCASE} lowercase, ${AUTH_CONFIG.PASSWORD.MIN_UPPERCASE} uppercase, ${AUTH_CONFIG.PASSWORD.MIN_NUMBERS} number, ${AUTH_CONFIG.PASSWORD.MIN_SYMBOLS}`,
       example: 'PassW1d1',
       type: 'string',
+      required: true,
     }),
     IsNotEmpty({ message: AUTH_MESSAGES.PASSWORD_VALIDATION.NOT_EMPTY }),
     IsString({ message: AUTH_MESSAGES.PASSWORD_VALIDATION.TYPE }),
