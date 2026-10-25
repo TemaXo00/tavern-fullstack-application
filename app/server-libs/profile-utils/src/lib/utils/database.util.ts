@@ -81,6 +81,7 @@ export class ProfileDatabaseUtil {
         avatarId: true,
         currentActivity: true,
       },
+      orderBy: [{ createdAt: 'asc' }, { nickname: 'asc' }],
     })
     const mappedProfiles = profiles.map((profile) => {
       return {
@@ -153,6 +154,7 @@ export class ProfileDatabaseUtil {
         score: true,
         createdAt: true,
       },
+      orderBy: [{ createdAt: 'asc' }, { score: 'asc' }],
     })
 
     const mappedList = reputationList.map((item) => {
@@ -195,6 +197,7 @@ export class ProfileDatabaseUtil {
         status: true,
         createdAt: true,
       },
+      orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
     })
 
     const mappedList = reputationList.map((item) => {

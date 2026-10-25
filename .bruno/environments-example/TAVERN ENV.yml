@@ -24,15 +24,21 @@ variables:
   - name: USER_OS
     value: linux
     description: ""
-  - name: AUTH_GRPC_URL
-    value: localhost:5000
-    description: ""
   - name: GATEWAY_URL
     value: localhost:3000
     description: ""
-  - name: PROFILE_GRPC_URL
-    value: localhost:5009
+  - name: AUTH_GRPC_URL
+    value: localhost:5000
+    description: ""
+  - name: BLOG_GRPC_URL
+    value: localhost:5001
     description: ""
   - name: EVENT_GRPC_URL
+    value: localhost:5002
+    description: ""
+  - name: LOG_GRPC_URL
+    value: localhost:5003
+    description: ""
+  - name: PROFILE_GRPC_URL
     value: localhost:5004
     description: ""

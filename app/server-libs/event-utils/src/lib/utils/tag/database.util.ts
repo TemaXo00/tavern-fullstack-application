@@ -36,6 +36,7 @@ export class EventTagDatabaseUtil {
       select: {
         ...TAG_LIST_OUTPUT_SELECTION,
       },
+      orderBy: { createdAt: 'asc', slug: 'asc' },
     })
   }
 

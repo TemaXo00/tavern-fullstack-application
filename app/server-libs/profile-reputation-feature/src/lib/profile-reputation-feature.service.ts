@@ -19,7 +19,7 @@ export class ProfileReputationFeatureService implements ReputationServiceContrac
     private readonly dbUtil: ProfileDatabaseUtil,
     private readonly validationUtil: ProfileValidationUtil,
     private readonly messagesUtil: ProfileMessagesUtil,
-    private readonly cacheUtil: ProfileCacheUtil
+    private readonly cacheUtil: ProfileCacheUtil,
   ) {}
 
   async GetMyLogs(data: GetMyReputationInput): Promise<PaginatedReputationOutput> {

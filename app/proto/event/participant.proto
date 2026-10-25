@@ -130,7 +130,8 @@ message ParticipantOutput {
 
 message ParticipantInPaginatedOutput {
     string nickname = 1;
-    optional string avatarId = 2;
+    string userId = 2;
+    optional string avatarId = 3;
 }
 
 message PaginatedEventParticipantsOutput {
@@ -140,7 +141,7 @@ message PaginatedEventParticipantsOutput {
 }
 
 message PaginatedParticipatedEventsOutput {
-    ParticipantPaginationOutput participant = 1;
+    ParticipantInPaginatedOutput participant = 1;
     EventPaginationOutput pagination = 2;
     repeated EventOutput events = 3;
 }

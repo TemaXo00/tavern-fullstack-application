@@ -77,6 +77,7 @@ export class AuthDatabaseUtil {
     this.stringUtil.validateId(userId)
     const sessions = await this.db.session.findMany({
       where: { userId },
+      orderBy: [{ createdAt: 'asc' }, { localName: 'asc' }],
     })
 
     return sessions.map((session) => ({
@@ -95,6 +96,7 @@ export class AuthDatabaseUtil {
       skip: params.skip,
       take: params.limit,
       omit: { tokenHash: true },
+      orderBy: [{ createdAt: 'asc' }, { email: 'asc' }],
     })
     const mappedTokens = tokens.map((token) => {
       return { ...token, state: TOKEN_STATE_TO_GRPC[token.state] }
@@ -119,6 +121,7 @@ export class AuthDatabaseUtil {
       skip: params.skip,
       take: params.limit,
       omit: { passwordHash: true },
+      orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
     })
     const mappedUsers = users.map((user) => {
       return { ...user, role: ROLE_TO_GRPC[user.role] }

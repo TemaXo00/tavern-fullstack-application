@@ -43,7 +43,7 @@ export class EventEventsDatabaseUtil {
       where,
       skip,
       take,
-      orderBy: { dateAndTime: 'asc' },
+      orderBy: { createdAt: 'asc', id: 'asc' },
       select: { ...EVENT_LIST_SELECTIONS },
     })
     return events.map((event) => {

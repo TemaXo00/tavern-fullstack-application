@@ -26,6 +26,7 @@ export interface EventParticipantBaseOutput {
 
 export interface ParticipantInPaginatedBaseOutput {
   nickname: string
+  userId: string
   avatarId: string | null
 }
 

@@ -3,6 +3,7 @@ import type {
   EventParticipantPaginationBaseOutput,
   PaginatedEventParticipantsBaseOutput,
   PaginatedParticipatedEventsBaseOutput,
+  ParticipantInPaginatedBaseOutput,
   ParticipatedEventBaseOutput,
   ParticipatedEventsPaginationBaseOutput,
 } from '@org/base-types'
@@ -10,6 +11,7 @@ import type {
 export type ParticipatedEventsPaginationGrpcOutput = ParticipatedEventsPaginationBaseOutput
 export type EventParticipantPaginationGrpcOutput = EventParticipantPaginationBaseOutput
 export type ParticipatedEventGrpcOutput = ParticipatedEventBaseOutput
+export type ParticipantInPaginatedGrpcOutput = ParticipantInPaginatedBaseOutput
 
 export type PaginatedEventParticipantsOutput = PaginatedEventParticipantsBaseOutput
 export type PaginatedParticipatedEventsOutput = PaginatedParticipatedEventsBaseOutput
