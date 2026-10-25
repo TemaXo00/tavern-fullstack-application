@@ -5,7 +5,7 @@ import { ParticipantInPaginatedGrpcOutput, ParticipatedEventGrpcOutput } from '@
 import { EVENT_MESSAGES } from '@org/validation-messages'
 
 import { EventParticipantDatabaseUtil } from './database.util'
-import { EventSearchType } from './helpers/types.helper'
+import { EventSearchType } from './helpers/search-types.helper'
 
 @Injectable()
 export class EventParticipantValidationUtil {

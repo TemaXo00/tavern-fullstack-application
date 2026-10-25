@@ -24,6 +24,7 @@ export interface GetEventParticipantsBaseInput {
 
 export interface JoinEventBaseInput {
   slug: string
+  note?: string
 }
 
 export interface LeaveEventBaseInput {

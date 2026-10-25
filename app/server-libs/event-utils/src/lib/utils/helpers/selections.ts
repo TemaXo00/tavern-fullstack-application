@@ -1,13 +1,13 @@
 import { EventParticipantSelect, EventSelect, EventTagSelect, EventUserSnapshotSelect } from '@org/event-database'
 import { EVENT_CONFIG } from '@org/validation-config'
 
-export const TAG_LIST_OUTPUT_SELECTION: EventTagSelect = {
+export const TAG_LIST_OUTPUT_SELECTION = {
   slug: true,
   name: true,
   color: true,
 } as const satisfies EventTagSelect
 
-export const TAG_BASE_OUTPUT_SELECTIONS: EventTagSelect = {
+export const TAG_BASE_OUTPUT_SELECTIONS = {
   slug: true,
   name: true,
   color: true,
@@ -16,7 +16,7 @@ export const TAG_BASE_OUTPUT_SELECTIONS: EventTagSelect = {
   updatedAt: true,
 } as const satisfies EventTagSelect
 
-export const TAG_ADVANCED_OUTPUT_SELECTIONS: EventTagSelect = {
+export const TAG_ADVANCED_OUTPUT_SELECTIONS = {
   ...TAG_BASE_OUTPUT_SELECTIONS,
   events: {
     where: {
@@ -36,7 +36,7 @@ export const TAG_ADVANCED_OUTPUT_SELECTIONS: EventTagSelect = {
   },
 } as const satisfies EventTagSelect
 
-export const EVENT_LIST_SELECTIONS: EventSelect = {
+export const EVENT_LIST_SELECTIONS = {
   slug: true,
   name: true,
   dateAndTime: true,
@@ -116,20 +116,20 @@ export const EVENT_METHODS_SELECTIONS = {
   organizerId: true,
 } as const satisfies EventSelect
 
-export const PARTICIPANT_IN_PAGINATION_SELECTIONS: EventUserSnapshotSelect = {
+export const PARTICIPANT_IN_PAGINATION_SELECTIONS = {
   nickname: true,
   userId: true,
   avatarId: true,
 } as const satisfies EventUserSnapshotSelect
 
-export const PARTICIPATED_EVENTS_LIST_SELECTIONS: EventSelect = {
+export const PARTICIPATED_EVENTS_LIST_SELECTIONS = {
   slug: true,
   name: true,
   dateAndTime: true,
   status: true,
 } as const satisfies EventSelect
 
-export const PARTICIPANT_OUTPUT_SELECTIONS: EventParticipantSelect = {
+export const PARTICIPANT_OUTPUT_SELECTIONS = {
   user: {
     select: {
       nickname: true,

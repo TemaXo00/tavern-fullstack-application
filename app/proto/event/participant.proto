@@ -62,6 +62,7 @@ message GetEventParticipantsInput {
 message JoinEventInput {
     ValidateInput validation = 1;
     string slug = 2;
+    optional string note = 3;
 }
 
 message LeaveEventInput {

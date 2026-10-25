@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { EVENT_STATUSES_TO_GRPC } from '@org/enums'
+import { InjectRedis } from '@nestjs-modules/ioredis'
+import { EVENT_STATUSES_TO_GRPC, EventStatuses } from '@org/enums'
 import { EventDatabaseService, EventParticipantWhereInput, EventWhereInput } from '@org/event-database'
 import {
   EventParticipantOutput,
@@ -12,6 +13,7 @@ import {
 } from '@org/grpc-types'
 import { PaginationUtil, StringValidationUtil } from '@org/shared-utils'
 import { EVENT_MESSAGES, SHARED_MESSAGES } from '@org/validation-messages'
+import Redis from 'ioredis'
 
 import {
   PARTICIPANT_IN_PAGINATION_SELECTIONS,
@@ -20,7 +22,10 @@ import {
 } from '../helpers/selections'
 import { mapParticipantOutput } from './helpers/participant-map.helper'
 import { buildEventParticipantsQuery, buildParticipatedEventsQuery } from './helpers/query-builders'
-import { EventSearchType } from './helpers/types.helper'
+import { EventSearchType } from './helpers/search-types.helper'
+import { EVENT_TRANSACTION_SELECTION, USER_TRANSACTION_SELECTION } from './helpers/transactions-selection.helper'
+import { EventParticipantTransactionsValidateUtil } from './transactions-validate.util'
+import { EventsCacheSharedUtil } from '../shared/cache.util'
 
 @Injectable()
 export class EventParticipantDatabaseUtil {
@@ -28,6 +33,9 @@ export class EventParticipantDatabaseUtil {
     private readonly db: EventDatabaseService,
     private readonly paginationUtil: PaginationUtil,
     private readonly stringUtil: StringValidationUtil,
+    private readonly validateUtil: EventParticipantTransactionsValidateUtil,
+    @InjectRedis() private readonly cache: Redis,
+    private readonly eventCache: EventsCacheSharedUtil
   ) {}
 
   // QUERY Methods
@@ -104,6 +112,127 @@ export class EventParticipantDatabaseUtil {
       ...answer,
       status: EVENT_STATUSES_TO_GRPC[answer.status],
     }
+  }
+
+  // JOIN/LEAVE Methods
+
+  async joinToEvent(userId: string, eventSlug: string, note?: string): Promise<EventParticipantOutput> {
+    const response = await this.db.$transaction(async (tx) => {
+      // Check event and its specs
+      const event = await tx.event.findUnique({
+        where: { slug: eventSlug },
+        select: EVENT_TRANSACTION_SELECTION,
+      })
+
+      if (event === null) {
+        this.validateUtil.throwEventInTransactionNotFound()
+      }
+
+      this.validateUtil.checkEventJoinBlocked(event.isJoinBlocked)
+      this.validateUtil.checkEventNotFinished(event.dateAndTime)
+      this.validateUtil.checkEventStatus(event.status as EventStatuses)
+
+      // Check user and its specs
+      const user = await tx.eventUserSnapshot.findUnique({
+        where: { userId },
+        select: USER_TRANSACTION_SELECTION,
+      })
+
+      if (user === null) {
+        this.validateUtil.throwUserInTransactionNotFound()
+      }
+
+      this.validateUtil.checkUserActive(user.isActive)
+
+      // Check existing participation
+      const existingParticipant = await tx.eventParticipant.findUnique({
+        where: {
+          userId_eventId: {
+            userId: user.userId,
+            eventId: event.id,
+          },
+        },
+        select: { id: true },
+      })
+
+      if (existingParticipant) {
+        this.validateUtil.throwUserParticipant()
+      }
+
+      // Check Redis lock when only one place remains
+      let inCache = false
+
+      if (event.leftPlaces === 1) {
+        const result = await this.cache.set(`join-lock:${event.id}`, user.userId, 'EX', 30, 'NX')
+
+        inCache = result !== 'OK'
+      }
+
+      // Add to WAITLIST if no places remain or the lock is occupied
+      if (inCache || event.leftPlaces === 0) {
+        await tx.event.update({
+          where: { id: event.id },
+          data: {
+            waitingUsers: { increment: 1 },
+          },
+        })
+
+        return tx.eventParticipant.create({
+          data: {
+            userId: user.userId,
+            eventId: event.id,
+            status: 'WAITLIST',
+            note,
+          },
+          select: PARTICIPANT_OUTPUT_SELECTIONS,
+        })
+      }
+
+      // Atomically claim a place in PostgreSQL
+      const updated = await tx.event.updateMany({
+        where: {
+          id: event.id,
+          leftPlaces: { gt: 0 },
+        },
+        data: {
+          leftPlaces: { decrement: 1 },
+        },
+      })
+
+      if (updated.count === 0) {
+        await tx.event.update({
+          where: { id: event.id },
+          data: {
+            waitingUsers: { increment: 1 },
+          },
+        })
+
+        return tx.eventParticipant.create({
+          data: {
+            userId: user.userId,
+            eventId: event.id,
+            status: 'WAITLIST',
+            note,
+          },
+          select: PARTICIPANT_OUTPUT_SELECTIONS,
+        })
+      }
+
+      // Add to MAIN list
+      return tx.eventParticipant.create({
+        data: {
+          userId: user.userId,
+          eventId: event.id,
+          status: 'RECORDED',
+          note,
+        },
+        select: PARTICIPANT_OUTPUT_SELECTIONS,
+      })
+    })
+
+    await this.eventCache.invalidateEventBySlug(eventSlug)
+
+    return mapParticipantOutput(response)
   }
 
   // PRIVATE helpers

@@ -120,4 +120,8 @@ export const EVENT_MESSAGES = {
   IS_JOIN_BLOCKED_VALIDATION: {
     NOT_EMPTY: 'Is join blocked should not be empty',
   },
+  JOIN_BLOCKED: 'Joining to this event is blocked',
+  EVENT_JOIN_NOT_PUBLISHED: 'You cannot join to event, cause it not published',
+  USER_NOT_ACTIVE: 'User not active',
+  USER_PARTICIPANT: 'You are already participant of this event'
 } as const

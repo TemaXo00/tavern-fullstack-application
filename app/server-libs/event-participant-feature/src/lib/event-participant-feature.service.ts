@@ -62,7 +62,8 @@ export class EventParticipantFeatureService implements EventParticipantsServiceC
   }
 
   async JoinEvent(data: JoinEventInput): Promise<EventParticipantOutput> {
-    throw new Error('Method not implemented.')
+    const payload = await this.validate.Validate(data.validation)
+    return await this.dbUtil.joinToEvent(payload.id, data.slug, data.note)
   }
 
   async LeaveEvent(data: LeaveEventInput): Promise<EventParticipantOutput> {
