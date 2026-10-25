@@ -6,6 +6,7 @@ export const EVENT_TRANSACTION_SELECTION = {
   dateAndTime: true,
   leftPlaces: true,
   status: true,
+  organizerId: true
 } as const satisfies EventSelect
 
 export const USER_TRANSACTION_SELECTION = {

@@ -63,7 +63,7 @@ export class EventParticipantFeatureService implements EventParticipantsServiceC
 
   async JoinEvent(data: JoinEventInput): Promise<EventParticipantOutput> {
     const payload = await this.validate.Validate(data.validation)
-    const response = await this.dbUtil.joinToEvent(payload.id, data.slug, data.note)
+    const response = await this.dbUtil.joinToEvent('by-id', payload.id, data.slug, data.note)
     this.messagesUtil.join({ userId: payload.id, status: response.status })
     return response
   }
@@ -73,7 +73,10 @@ export class EventParticipantFeatureService implements EventParticipantsServiceC
   }
 
   async AddUserToEvent(data: AddUserToEventInput): Promise<EventParticipantOutput> {
-    throw new Error('Method not implemented.')
+    const payload = await this.validate.Validate(data.validation)
+    const response = await this.dbUtil.joinToEvent('by-nickname', data.nickname, data.slug, data.note, payload.id)
+    this.messagesUtil.addParticipant({ participantNickname: response.nickname, organizerId: payload.id, status: response.status })
+    return response
   }
 
   async ChangeUserStatus(data: ChangeUserParticipantStatusInput): Promise<EventParticipantOutput> {

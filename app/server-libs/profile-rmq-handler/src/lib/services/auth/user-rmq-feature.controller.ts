@@ -6,7 +6,6 @@ import {
   type AdminUnblockUserMessage,
   type DeleteUserMessage,
   USER_MESSAGES,
-  type UserChangeEmailMessage,
   type UserSetInactiveMessage,
 } from '@org/rmq-messages'
 
@@ -34,11 +33,6 @@ export class UserRmqFeatureController {
   @EventPattern(USER_MESSAGES.SET_ACTIVE)
   async onUserActive(@Payload() data: AdminSetUserActiveMessage): Promise<void> {
     await this.service.handleUserActive(data)
-  }
-
-  @EventPattern(USER_MESSAGES.EMAIL_CHANGE)
-  async onUserChangeEmail(@Payload() data: UserChangeEmailMessage): Promise<void> {
-    await this.service.handleUserChangeEmail(data)
   }
 
   @EventPattern(USER_MESSAGES.DELETE)

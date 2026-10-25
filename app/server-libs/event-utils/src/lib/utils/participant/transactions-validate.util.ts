@@ -57,6 +57,15 @@ export class EventParticipantTransactionsValidateUtil {
     }
   }
 
+  checkUserIsOrganizer(organizerId: string, userId: string): void {
+    if (organizerId !== userId) {
+      throw new RpcException({
+        message: EVENT_MESSAGES.ORGANIZER_PERMISSIONS,
+        code: status.PERMISSION_DENIED,
+      })
+    }
+  }
+
   throwUserParticipant(): never {
     throw new RpcException({
       message: EVENT_MESSAGES.USER_PARTICIPANT,

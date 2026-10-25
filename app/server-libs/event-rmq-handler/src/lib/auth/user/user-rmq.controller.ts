@@ -6,7 +6,6 @@ import {
   type AdminUnblockUserMessage,
   type DeleteUserMessage,
   USER_MESSAGES,
-  type UserChangeEmailMessage,
   type UserSetInactiveMessage,
 } from '@org/rmq-messages'
 
@@ -24,11 +23,6 @@ export class UserRmqController {
   @EventPattern(USER_MESSAGES.EARLY_UNBLOCK)
   async handleUserEarlyUnblocked(@Payload() data: AdminUnblockUserMessage): Promise<void> {
     await this.service.handleUserChangeState(data.userId, true)
-  }
-
-  @EventPattern(USER_MESSAGES.EMAIL_CHANGE)
-  async handleEmailChange(@Payload() data: UserChangeEmailMessage): Promise<void> {
-    await this.service.handleUserChangeEmail(data)
   }
 
   @EventPattern(USER_MESSAGES.SET_INACTIVE)

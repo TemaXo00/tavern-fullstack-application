@@ -13,17 +13,14 @@ import {
 export class EventParticipantMessagesUtil {
   constructor(
     @Inject('LOG_CLIENT') private readonly log: ClientProxy,
-    @Inject('MAIL_CLIENT') private readonly mail: ClientProxy,
   ) {}
 
   join(data: JoinEventMessage): void {
     this.log.emit(EVENT_PARTICIPANT_MESSAGES.JOIN_EVENT, data)
-    this.mail.emit(EVENT_PARTICIPANT_MESSAGES.JOIN_EVENT, data)
   }
 
   leave(data: LeaveEventMessage): void {
     this.log.emit(EVENT_PARTICIPANT_MESSAGES.LEAVE_EVENT, data)
-    this.mail.emit(EVENT_PARTICIPANT_MESSAGES.LEAVE_EVENT, data)
   }
 
   addParticipant(data: AddParticipantMessage): void {
@@ -32,11 +29,9 @@ export class EventParticipantMessagesUtil {
 
   deleteParticipant(data: DeleteParticipantMessage): void {
     this.log.emit(EVENT_PARTICIPANT_MESSAGES.EVENT_DELETE, data)
-    this.mail.emit(EVENT_PARTICIPANT_MESSAGES.EVENT_DELETE, data)
   }
 
   changeStatus(data: ChangeParticipantStatusMessage): void {
     this.log.emit(EVENT_PARTICIPANT_MESSAGES.EVENT_CHANGE_STATUS, data)
-    this.mail.emit(EVENT_PARTICIPANT_MESSAGES.EVENT_CHANGE_STATUS, data)
   }
 }

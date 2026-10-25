@@ -9,7 +9,7 @@ export interface LeaveEventMessage {
 
 export interface AddParticipantMessage {
   organizerId: string
-  userId: string
+  participantNickname: string
   status: number
 }
 

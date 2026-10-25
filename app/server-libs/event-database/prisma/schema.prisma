@@ -13,7 +13,6 @@ model EventUserSnapshot {
 
   userId String @unique @map("user_id")
   nickname String @unique
-  email String @unique
   avatarId String? @map("avatar_id")
   isActive Boolean @default(true) @map("is_active")
 

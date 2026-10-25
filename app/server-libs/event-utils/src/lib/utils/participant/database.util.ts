@@ -116,7 +116,13 @@ export class EventParticipantDatabaseUtil {
 
   // JOIN/LEAVE Methods
 
-  async joinToEvent(userId: string, eventSlug: string, note?: string): Promise<EventParticipantOutput> {
+  async joinToEvent(
+    userType: EventSearchType,
+    userInput: string,
+    eventSlug: string,
+    note?: string,
+    organizerId?: string,
+  ): Promise<EventParticipantOutput> {
     const response = await this.db.$transaction(async (tx) => {
       // Check event and its specs
       const event = await tx.event.findUnique({
@@ -128,13 +134,17 @@ export class EventParticipantDatabaseUtil {
         this.validateUtil.throwEventInTransactionNotFound()
       }
 
+      if (organizerId) {
+        this.validateUtil.checkUserIsOrganizer(organizerId, event.organizerId)
+      }
+
       this.validateUtil.checkEventJoinBlocked(event.isJoinBlocked)
       this.validateUtil.checkEventNotFinished(event.dateAndTime)
       this.validateUtil.checkEventStatus(event.status as EventStatuses)
 
       // Check user and its specs
       const user = await tx.eventUserSnapshot.findUnique({
-        where: { userId },
+        where: userType === 'by-id' ? { userId: userInput } : { nickname: userInput },
         select: USER_TRANSACTION_SELECTION,
       })
 

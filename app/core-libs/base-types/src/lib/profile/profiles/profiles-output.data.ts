@@ -26,7 +26,6 @@ export interface ProfileListBaseOutput {
 
 export type ProfilePaginationBaseBaseOutput = PaginationBaseOutput
 export interface ProfilePaginationAdvancedBaseOutput extends ProfilePaginationBaseBaseOutput {
-  email?: string
   birthDateFrom?: Date
   birthDateTo?: Date
   reputationFrom?: number

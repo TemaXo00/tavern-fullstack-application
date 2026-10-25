@@ -165,9 +165,7 @@ export class AuthMessagesUtil {
 
   sendUserChangeEmail(data: UserChangeEmailMessage): void {
     this.log.emit(USER_MESSAGES.EMAIL_CHANGE, data)
-    this.profile.emit(USER_MESSAGES.EMAIL_CHANGE, data)
     this.mail.emit(USER_MESSAGES.EMAIL_CHANGE, data)
-    this.event.emit(USER_MESSAGES.EMAIL_CHANGE, data)
   }
 
   sendUserChangePassword(data: UserChangePasswordMessage): void {

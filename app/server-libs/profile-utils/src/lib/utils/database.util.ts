@@ -128,7 +128,6 @@ export class ProfileDatabaseUtil {
       pagination: {
         ...params,
         search: safePagination.search,
-        email: safePagination.email,
         birthDateFrom,
         birthDateTo,
         reputationFrom: safePagination.reputationFrom,
@@ -267,7 +266,6 @@ export class ProfileDatabaseUtil {
         data: {
           userId: data.id,
           nickname: data.id,
-          email: data.email,
           currentActivity: ActivityType.ACTIVE,
         },
       })
@@ -359,13 +357,6 @@ export class ProfileDatabaseUtil {
     })
   }
 
-  async updateEmail(userId: string, newEmail: string): Promise<void> {
-    await this.db.profile.update({
-      where: { userId },
-      data: { email: newEmail },
-    })
-  }
-
   async updateProfile(userId: string, data: UpdateProfileRequestInput): Promise<ProfileAdvancedOutput> {
     const mappedData = {
       ...data,
@@ -414,10 +405,6 @@ export class ProfileDatabaseUtil {
         { nickname: { contains: query.search, mode: 'insensitive' } },
         { userId: { contains: query.search, mode: 'insensitive' } },
       ]
-    }
-
-    if (query.email) {
-      where.email = { contains: query.email, mode: 'insensitive' }
     }
 
     if (query.currentActivity) {

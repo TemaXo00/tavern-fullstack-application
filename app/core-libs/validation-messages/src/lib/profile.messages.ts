@@ -41,12 +41,6 @@ export const PROFILE_MESSAGES = {
       return `User with ID ${userId} activated by admin with ID ${adminId}`
     },
   },
-  UPDATE_EMAIL: {
-    CONTEXT: 'Update email',
-    MESSAGE: (userId: string, newEmail: string): string => {
-      return `User with id ${userId} changed email to ${newEmail}`
-    },
-  },
   DELETE_USER: {
     CONTEXT: 'Delete User',
     MESSAGE: (userId: string): string => {

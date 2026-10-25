@@ -18,3 +18,5 @@ npm ci
 npm run auth-db:generate
 npm run profile-db:generate
 npm run event-db:generate
+npm run blog-db:generate
+npm run log-db:generate

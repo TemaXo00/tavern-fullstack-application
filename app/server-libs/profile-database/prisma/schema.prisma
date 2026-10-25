@@ -16,7 +16,6 @@ model Profile {
   name String?
   surname String?
 
-  email String
   description String?
   birthDate DateTime? @map("birth_date")
 

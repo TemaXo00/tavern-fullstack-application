@@ -85,12 +85,6 @@ export const EVENT_MESSAGES = {
       return `ChangeState of ${userId}. Current state: ${state ? 'active' : 'inactive'}`
     },
   },
-  USER_SNAPHSOT_CHANGE_EMAIL_SUCCESS: {
-    CONTEXT: 'ChangeUserSnapshotEmail',
-    METHOD: (userId: string) => {
-      return `ChangeEmail of ${userId}}`
-    },
-  },
   USER_SOFT_DELETE_SUCCESS: {
     CONTEXT: 'SoftDeleteUser',
     METHOD: (userId: string) => {

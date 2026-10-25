@@ -29,15 +29,10 @@ export class EventRmqDatabaseUtil {
   // CREATE
 
   async createUserSnapshot(message: AuthRegisteredMessage): Promise<void> {
-    await this.db.eventUserSnapshot.upsert({
-      where: { userId: message.id },
-      create: {
+    await this.db.eventUserSnapshot.create({
+      data: {
         userId: message.id,
         nickname: message.id,
-        email: message.email,
-      },
-      update: {
-        email: message.email,
       },
     })
   }
@@ -73,17 +68,6 @@ export class EventRmqDatabaseUtil {
       },
       data: {
         isActive: state,
-      },
-    })
-  }
-
-  async updateUserEmail(id: string, email: string): Promise<void> {
-    await this.db.eventUserSnapshot.update({
-      where: {
-        userId: id,
-      },
-      data: {
-        email,
       },
     })
   }

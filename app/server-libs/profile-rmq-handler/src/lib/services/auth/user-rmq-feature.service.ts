@@ -7,7 +7,6 @@ import {
   AdminUnblockUserMessage,
   DeleteUserMessage,
   USER_MESSAGES,
-  UserChangeEmailMessage,
   UserSetInactiveMessage,
 } from '@org/rmq-messages'
 import { RmqLoggerUtil } from '@org/shared-utils'
@@ -64,17 +63,6 @@ export class UserRmqFeatureService {
       PROFILE_MESSAGES.ACTIVATE_BY_ADMIN.CONTEXT,
       USER_MESSAGES.SET_ACTIVE,
       PROFILE_MESSAGES.ACTIVATE_BY_ADMIN.MESSAGE(data.userId, data.adminId),
-    )
-  }
-
-  async handleUserChangeEmail(data: UserChangeEmailMessage): Promise<void> {
-    const profile = await this.validationUtil.checkUserExisting('by-id', data.userId)
-    await this.dbUtil.updateEmail(data.userId, data.newEmail)
-    await this.cacheUtil.deleteCache(profile.nickname)
-    this.logUtil.logSuccess(
-      PROFILE_MESSAGES.UPDATE_EMAIL.CONTEXT,
-      USER_MESSAGES.EMAIL_CHANGE,
-      PROFILE_MESSAGES.UPDATE_EMAIL.MESSAGE(data.userId, data.newEmail),
     )
   }
 
