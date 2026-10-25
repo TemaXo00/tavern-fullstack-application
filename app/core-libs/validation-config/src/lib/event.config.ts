@@ -7,4 +7,8 @@ export const EVENT_CONFIG = {
     MIN_LENGTH: 3,
     MAX_LENGTH: 500,
   },
+  NOTE: {
+    MIN_LENGTH: 10,
+    MAX_LENGTH: 100,
+  }
 } as const

@@ -14,6 +14,7 @@ export class ProfileMessagesUtil {
   constructor(
     @Inject('LOG_CLIENT') private readonly log: ClientProxy,
     @Inject('EVENT_CLIENT') private readonly event: ClientProxy,
+    @Inject('MAIL_CLIENT') private readonly mail: ClientProxy
   ) {}
 
   sendAdminGetPaginatedProfiles(data: AdminCheckPaginatedProfiles): void {
@@ -27,9 +28,11 @@ export class ProfileMessagesUtil {
   sendUserUpdateProfile(data: UpdateProfile): void {
     this.log.emit(PROFILES_MESSAGES.UPDATE, data)
     this.event.emit(PROFILES_MESSAGES.UPDATE, data)
+    this.mail.emit(PROFILES_MESSAGES.UPDATE, data)
   }
 
   sendChangeReputation(data: ChangeReputation): void {
     this.log.emit(PROFILES_MESSAGES.REPUTATION_CHANGE, data)
+    this.mail.emit(PROFILES_MESSAGES.UPDATE, data)
   }
 }

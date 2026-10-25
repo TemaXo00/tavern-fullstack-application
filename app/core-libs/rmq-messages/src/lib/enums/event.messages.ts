@@ -5,16 +5,24 @@ export enum EVENT_TAG_MESSAGES {
 }
 
 export enum EVENT_EVENTS_MESSAGES {
-  AUTHOR_CREATED = 'event.events.author.created',
-  AUTHOR_UPDATED = 'event.events.author.updated',
-  AUTHOR_PUBLISHED = 'event.events.author.published',
-  AUTHOR_CANCELLED = 'event.events.author.cancelled',
-  AUTHOR_FINISHED = 'event.events.author.finished',
-  AUTHOR_CHANGE_JOIN = 'event.events.author.join',
-  AUTHOR_DELETED = 'event.events.author.deleted',
-  AUTHOR_ORGANIZER = 'event.events.author.change-organizer',
-  ADMIN_CHANGE_ORGANIZER = 'event.events.admin.change-organizer',
-  ADMIN_DELETE = 'event.events.admin.delete',
-  ADMIN_CHECK_PRIVATE_PAGINATED = 'event.events.admin.check-private-paginated',
-  ADMIN_CHECK_BY_SLUG = 'event.events.admin.check-by-slug',
+  AUTHOR_CREATED = 'event.created',
+  AUTHOR_UPDATED = 'event.updated',
+  AUTHOR_PUBLISHED = 'event.published',
+  AUTHOR_CANCELLED = 'event.cancelled',
+  AUTHOR_FINISHED = 'event.finished',
+  AUTHOR_CHANGE_JOIN = 'event.join',
+  AUTHOR_DELETED = 'event.deleted',
+  AUTHOR_ORGANIZER = 'event.organizer',
+  ADMIN_CHANGE_ORGANIZER = 'event.admin.organizer',
+  ADMIN_DELETE = 'event.admin.delete',
+  ADMIN_CHECK_PRIVATE_PAGINATED = 'event.admin.check',
+  ADMIN_CHECK_BY_SLUG = 'event.admin.check.slug',
+}
+
+export enum EVENT_PARTICIPANT_MESSAGES {
+  JOIN_EVENT = 'participant.join',
+  LEAVE_EVENT = 'participant.leave',
+  EVENT_ADD = 'participant.organizer.add',
+  EVENT_DELETE = 'participant.organizer.delete',
+  EVENT_CHANGE_STATUS = 'participant.organizer.status'
 }

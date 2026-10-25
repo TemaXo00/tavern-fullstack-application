@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { AuthValidateService } from '@org/auth-authorization-core'
 import {
   EventParticipantDatabaseUtil,
-  // EventParticipantMessagesUtil,
+  EventParticipantMessagesUtil,
   EventParticipantValidationUtil,
 } from '@org/event-utils'
 
@@ -27,7 +27,7 @@ export class EventParticipantFeatureService implements EventParticipantsServiceC
     private readonly dbUtil: EventParticipantDatabaseUtil,
     private readonly validate: AuthValidateService,
     private readonly validationUtil: EventParticipantValidationUtil,
-    // private readonly messagesUtil: EventParticipantMessagesUtil,
+    private readonly messagesUtil: EventParticipantMessagesUtil,
   ) {}
 
   async GetUserParticipatedEvents(data: GetUserParticipatedEventsInput): Promise<PaginatedParticipatedEventsOutput> {
@@ -63,7 +63,9 @@ export class EventParticipantFeatureService implements EventParticipantsServiceC
 
   async JoinEvent(data: JoinEventInput): Promise<EventParticipantOutput> {
     const payload = await this.validate.Validate(data.validation)
-    return await this.dbUtil.joinToEvent(payload.id, data.slug, data.note)
+    const response = await this.dbUtil.joinToEvent(payload.id, data.slug, data.note)
+    this.messagesUtil.join({ userId: payload.id, status: response.status })
+    return response
   }
 
   async LeaveEvent(data: LeaveEventInput): Promise<EventParticipantOutput> {

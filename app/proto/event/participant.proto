@@ -74,6 +74,7 @@ message AddUserToEventInput {
     ValidateInput validation = 1;
     string slug = 2;
     string nickname = 3;
+    optional string note = 4;
 }
 
 message ChangeUserStatusInput {

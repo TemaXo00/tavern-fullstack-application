@@ -12,6 +12,7 @@ import {
   AddParticipantDto,
   ChangeParticipantStatusDto,
   DeleteParticipantDto,
+  JoinEventDto,
   PaginatedParticipantsDto,
   ParticipatedEventsDto,
 } from '@org/gateway-dto'
@@ -119,11 +120,13 @@ export class ParticipantController implements OnModuleInit {
   async joinEvent(
     @ValidateInputParam() validation: ValidateInput,
     @Param(EVENT_PARTICIPANT_ROUTES.JOIN_EVENT.PARAM) slug: string,
+    @Body() dto: JoinEventDto
   ): Promise<EventParticipantSharedOutput> {
     const response = await firstValueFrom(
       this.participantContract.JoinEvent({
         validation,
         slug,
+        ...dto
       }),
     )
     return this.map.mapEventParticipantOutput(response)

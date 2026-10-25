@@ -23,7 +23,7 @@ const UTILS = [
   ProfileMessagesUtil,
 ]
 
-const queues: string[] = ['log', 'event']
+const queues: string[] = ['log', 'event', 'mail']
 
 @Global()
 @Module({

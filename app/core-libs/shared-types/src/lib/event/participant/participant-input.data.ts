@@ -6,6 +6,7 @@ import type {
   AddUserToEventBaseInput,
   ChangeUserParticipantStatusBaseInput,
   EventParticipantPaginationBaseInput,
+  JoinEventBaseInput,
   ParticipatedEventsPaginationBaseInput,
   RemoveUserFromEventBaseInput,
 } from '@org/base-types'
@@ -23,6 +24,8 @@ export type EventParticipantPaginationSharedInput = Replace<
     status?: ParticipantStatuses
   }
 >
+
+export type JoinEventSharedInput = Omit<JoinEventBaseInput, 'slug'>
 
 export type AddUserToEventSharedInput = Omit<AddUserToEventBaseInput, 'slug'>
 

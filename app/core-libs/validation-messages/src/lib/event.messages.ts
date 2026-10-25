@@ -35,6 +35,11 @@ export const EVENT_MESSAGES = {
     MIN_LENGTH: `Minimal length of message is ${EVENT_CONFIG.MESSAGE.MIN_LENGTH}`,
     MAX_LENGTH: `Maximum length of message is ${EVENT_CONFIG.MESSAGE.MAX_LENGTH}`,
   },
+  NOTE_VALIDATION: {
+    TYPE: 'Note should be a string',
+    MIN_LENGTH: `Minimal length of note is ${EVENT_CONFIG.NOTE.MIN_LENGTH}`,
+    MAX_LENGTH: `Maximum length of note is ${EVENT_CONFIG.NOTE.MAX_LENGTH}`,
+  },
   EVENT_STATUS_VALIDATION: {
     ENUM: (): string => `Invalid status. Available options: ${Object.values(EventStatuses).join(', ')}`,
   },
