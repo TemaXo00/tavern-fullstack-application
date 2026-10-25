@@ -121,10 +121,11 @@ message EventOutput {
 
 message ParticipantOutput {
     string nickname = 1;
-    optional string avatarId = 2;
-    bool isFixed = 3;
-    optional string note = 4;
-    ParticipantStatus status = 5;
+    string eventId = 2;
+    optional string avatarId = 3;
+    bool isFixed = 4;
+    optional string note = 5;
+    ParticipantStatus status = 6;
 }
 
 message ParticipantInPaginatedOutput {

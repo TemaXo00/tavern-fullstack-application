@@ -17,6 +17,7 @@ export interface ParticipatedEventBaseOutput {
 
 export interface EventParticipantBaseOutput {
   nickname: string
+  eventId: string
   avatarId: string | null
   isFixed: boolean
   note: string | null
