@@ -7,3 +7,56 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model UserSnapshot {
+  id String @id @default(uuid(7))
+
+  userId String @unique @map("user_id")
+  nickname String @unique
+  avatarId String? @map("avatar_id")
+
+  articles Article[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("blog_user_snapshots")
+}
+
+model Tag {
+  id String @id @default(uuid(7))
+
+  name String
+  slug String @unique
+
+  articles Article[] @relation("tags_to_articles")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("tags")
+}
+
+model Article {
+  id String @id @default(uuid(7))
+
+  name String
+  slug String @unique
+
+  shortDesc String @db.VarChar(200) @map("short_description")
+  content String @db.Text
+
+  authorId String? @map("author_id")
+  author UserSnapshot? @relation(fields: [authorId], references: [userId], onDelete: SetNull)
+
+  tags Tag[] @relation("tags_to_articles")
+
+  isPublished Boolean @default(false) @map("is_published")
+  isUpdated Boolean @default(false) @map("is_updated")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @map("updated_at") @updatedAt
+
+  @@index([authorId])
+  @@index([isPublished])
+  @@map("articles")
+}

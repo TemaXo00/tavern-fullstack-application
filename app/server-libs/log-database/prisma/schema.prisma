@@ -7,3 +7,26 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Log {
+  id String @id @default(uuid(7))
+
+  actorId String?
+
+  action String
+  actionDesc String @map("action_description")
+
+  microserviceName String @map("microservice_name")
+  serviceName String @map("service_name")
+
+  isAdminAction Boolean @default(false) @map("is_admin_action")
+
+  logBody Json @map("log_body")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@index([actorId, createdAt])
+  @@index([action, createdAt])
+  @@map("logs")
+}
