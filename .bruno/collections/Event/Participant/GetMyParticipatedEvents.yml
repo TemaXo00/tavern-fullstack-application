@@ -1,0 +1,31 @@
+info:
+  name: GetMyParticipatedEvents
+  type: grpc
+  seq: 3
+
+grpc:
+  url: "{{EVENT_GRPC_URL}}"
+  method: /event.ParticipantService/GetMyParticipatedEvents
+  methodType: unary
+  protoFilePath: ../../../app/proto/event.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "pagination": {
+            "page": 1,
+            "limit": 20,
+            "search": "dnd",
+            "status": "PUBLISHED"
+          }
+        }
+  auth: inherit

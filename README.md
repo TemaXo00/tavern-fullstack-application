@@ -142,6 +142,7 @@ curl localhost:3000/api/docs/swagger.yaml
 - [API Gateway](docs/gateway.md)
 - [Сервис Авторизации](docs/auth.md)
 - [Сервис Профилей](docs/profile.md)
+- [Сервис Мероприятий](docs/event.md)
 
 ## Возможные ошибки
 

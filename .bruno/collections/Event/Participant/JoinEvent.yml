@@ -1,0 +1,27 @@
+info:
+  name: JoinEvent
+  type: grpc
+  seq: 4
+
+grpc:
+  url: "{{EVENT_GRPC_URL}}"
+  method: /event.ParticipantService/JoinEvent
+  methodType: unary
+  protoFilePath: ../../../app/proto/event.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "slug": "dnd-session",
+          "note": "I want to join this event"
+        }
+  auth: inherit

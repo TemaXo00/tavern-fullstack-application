@@ -1,0 +1,17 @@
+info:
+  name: GetPublicEventBySlug
+  type: grpc
+  seq: 6
+
+grpc:
+  url: "{{EVENT_GRPC_URL}}"
+  method: /event.EventService/GetPublicEventBySlug
+  methodType: unary
+  protoFilePath: ../../../app/proto/event.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "slug": "dnd-session"
+        }
+  auth: inherit

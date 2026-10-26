@@ -1,0 +1,27 @@
+info:
+  name: SwitchOtherEventOrganizer
+  type: grpc
+  seq: 15
+
+grpc:
+  url: "{{EVENT_GRPC_URL}}"
+  method: /event.EventService/SwitchOtherEventOrganizer
+  methodType: unary
+  protoFilePath: ../../../app/proto/event.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "slug": "dnd-session",
+          "organizerNickname": "temaxo00"
+        }
+  auth: inherit
