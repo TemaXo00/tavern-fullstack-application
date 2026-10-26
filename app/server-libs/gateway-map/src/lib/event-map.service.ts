@@ -46,7 +46,7 @@ export class EventGatewayMapService {
   mapPaginationPrivateOutput(output: EventPrivatePaginationGrpcOutput): EventPrivatePaginationSharedOutput {
     return {
       ...output,
-      status: output.status ? GRPC_TO_EVENT_STATUSES[output.status] : undefined,
+      status: output.status !== undefined ? GRPC_TO_EVENT_STATUSES[output.status] : undefined,
     }
   }
 
@@ -90,7 +90,7 @@ export class EventGatewayMapService {
   ): ParticipatedEventsPaginationSharedOutput {
     return {
       ...output,
-      status: output.status ? GRPC_TO_EVENT_STATUSES[output.status] : undefined,
+      status: output.status !== undefined ? GRPC_TO_EVENT_STATUSES[output.status] : undefined,
     }
   }
 
@@ -120,7 +120,7 @@ export class EventGatewayMapService {
   ): EventParticipantPaginationSharedOutput {
     return {
       ...output,
-      status: output.status ? GRPC_TO_PARTICIPANT_STATUSES[output.status] : undefined,
+      status: output.status !== undefined ? GRPC_TO_PARTICIPANT_STATUSES[output.status] : undefined,
     }
   }
 

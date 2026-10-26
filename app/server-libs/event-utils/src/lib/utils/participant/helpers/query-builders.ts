@@ -21,7 +21,7 @@ export function buildParticipatedEventsQuery(
     ]
   }
 
-  if (pagination.status) {
+  if (pagination.status !== undefined) {
     where.status = GRPC_TO_EVENT_STATUSES[pagination.status]
   }
 
@@ -40,7 +40,7 @@ export function buildEventParticipantsQuery(
     where.note = { contains: pagination.search, mode: 'insensitive' }
   }
 
-  if (pagination.status) {
+  if (pagination.status !== undefined) {
     where.status = GRPC_TO_PARTICIPANT_STATUSES[pagination.status]
   }
 
