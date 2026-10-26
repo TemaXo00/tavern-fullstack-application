@@ -6,5 +6,6 @@ export type {
   EventParticipant,
   EventTag,
   EventUserSnapshot,
+  Prisma,
 } from './generated/prisma/client';
 export * from './generated/prisma/models';

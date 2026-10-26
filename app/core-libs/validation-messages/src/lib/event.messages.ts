@@ -120,7 +120,10 @@ export const EVENT_MESSAGES = {
     NOT_EMPTY: 'Is join blocked should not be empty',
   },
   JOIN_BLOCKED: 'Joining to this event is blocked',
+  EVENT_LOCK_BUSY: 'Event is busy, please try again later',
   EVENT_JOIN_NOT_PUBLISHED: 'You cannot join to event, cause it not published',
   USER_NOT_ACTIVE: 'User not active',
-  USER_PARTICIPANT: 'You are already participant of this event'
+  USER_PARTICIPANT: 'You are already participant of this event',
+  USER_LEAVE_NOT_PARTICIPANT: 'You cant leave from this event, cause you are not participant',
+  USER_FIXED_STATUS: 'Your status is fixed, and you cant leave from this event',
 } as const

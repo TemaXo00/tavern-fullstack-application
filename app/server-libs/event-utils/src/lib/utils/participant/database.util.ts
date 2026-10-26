@@ -1,7 +1,17 @@
+import { randomUUID } from 'node:crypto'
+
 import { Injectable } from '@nestjs/common'
 import { InjectRedis } from '@nestjs-modules/ioredis'
 import { EVENT_STATUSES_TO_GRPC, EventStatuses } from '@org/enums'
-import { EventDatabaseService, EventParticipantWhereInput, EventWhereInput } from '@org/event-database'
+import {
+  EventDatabaseService,
+  EventGetPayload,
+  EventParticipantGetPayload,
+  EventParticipantWhereInput,
+  EventUserSnapshotGetPayload,
+  EventWhereInput,
+  Prisma,
+} from '@org/event-database'
 import {
   EventParticipantOutput,
   EventParticipantPaginationGrpcInput,
@@ -27,6 +37,12 @@ import { EVENT_TRANSACTION_SELECTION, USER_TRANSACTION_SELECTION } from './helpe
 import { EventParticipantTransactionsValidateUtil } from './transactions-validate.util'
 import { EventsCacheSharedUtil } from '../shared/cache.util'
 
+const EVENT_LOCK_TTL_SECONDS = 30
+const EVENT_LOCK_RETRY_DELAY_MS = 50
+const EVENT_LOCK_ACQUIRE_TIMEOUT_MS = 5_000
+
+const eventLockKey = (slug: string): string => `event-participant-lock:${slug}`
+
 @Injectable()
 export class EventParticipantDatabaseUtil {
   constructor(
@@ -35,7 +51,7 @@ export class EventParticipantDatabaseUtil {
     private readonly stringUtil: StringValidationUtil,
     private readonly validateUtil: EventParticipantTransactionsValidateUtil,
     @InjectRedis() private readonly cache: Redis,
-    private readonly eventCache: EventsCacheSharedUtil
+    private readonly eventCache: EventsCacheSharedUtil,
   ) {}
 
   // QUERY Methods
@@ -123,129 +139,301 @@ export class EventParticipantDatabaseUtil {
     note?: string,
     organizerId?: string,
   ): Promise<EventParticipantOutput> {
-    const response = await this.db.$transaction(async (tx) => {
-      // Check event and its specs
-      const event = await tx.event.findUnique({
-        where: { slug: eventSlug },
-        select: EVENT_TRANSACTION_SELECTION,
-      })
+    const response = await this.withEventLock(eventSlug, async () => {
+      const participant = await this.db.$transaction(async (tx) => {
+        // Check event and its specs
+        const event = await this.findEventForTransaction(tx, eventSlug)
 
-      if (event === null) {
-        this.validateUtil.throwEventInTransactionNotFound()
-      }
+        if (organizerId) {
+          this.validateUtil.checkUserIsOrganizer(organizerId, event.organizerId)
+        }
 
-      if (organizerId) {
-        this.validateUtil.checkUserIsOrganizer(organizerId, event.organizerId)
-      }
+        this.validateUtil.checkEventJoinBlocked(event.isJoinBlocked)
+        this.validateUtil.checkEventNotFinished(event.dateAndTime)
+        this.validateUtil.checkEventStatus(event.status as EventStatuses)
 
-      this.validateUtil.checkEventJoinBlocked(event.isJoinBlocked)
-      this.validateUtil.checkEventNotFinished(event.dateAndTime)
-      this.validateUtil.checkEventStatus(event.status as EventStatuses)
+        // Check user and its specs
+        const user = await this.findUserForTransaction(tx, userType, userInput)
 
-      // Check user and its specs
-      const user = await tx.eventUserSnapshot.findUnique({
-        where: userType === 'by-id' ? { userId: userInput } : { nickname: userInput },
-        select: USER_TRANSACTION_SELECTION,
-      })
+        this.validateUtil.checkUserActive(user.isActive)
 
-      if (user === null) {
-        this.validateUtil.throwUserInTransactionNotFound()
-      }
+        // Check existing participation
+        const existingParticipant = await this.findParticipantForTransaction(tx, user.userId, event.id)
 
-      this.validateUtil.checkUserActive(user.isActive)
+        if (existingParticipant) {
+          this.validateUtil.throwUserParticipant()
+        }
 
-      // Check existing participation
-      const existingParticipant = await tx.eventParticipant.findUnique({
-        where: {
-          userId_eventId: {
-            userId: user.userId,
-            eventId: event.id,
+        // Add to WAITLIST if no places remain
+        if (event.leftPlaces === 0) {
+          return this.addUserToWaitlist(tx, user.userId, event.id, note)
+        }
+
+        // Atomically claim a place in PostgreSQL
+        const updated = await tx.event.updateMany({
+          where: {
+            id: event.id,
+            leftPlaces: { gt: 0 },
           },
-        },
-        select: { id: true },
-      })
-
-      if (existingParticipant) {
-        this.validateUtil.throwUserParticipant()
-      }
-
-      // Check Redis lock when only one place remains
-      let inCache = false
-
-      if (event.leftPlaces === 1) {
-        const result = await this.cache.set(`join-lock:${event.id}`, user.userId, 'EX', 30, 'NX')
-
-        inCache = result !== 'OK'
-      }
-
-      // Add to WAITLIST if no places remain or the lock is occupied
-      if (inCache || event.leftPlaces === 0) {
-        await tx.event.update({
-          where: { id: event.id },
           data: {
-            waitingUsers: { increment: 1 },
+            leftPlaces: { decrement: 1 },
           },
         })
 
+        if (updated.count === 0) {
+          return this.addUserToWaitlist(tx, user.userId, event.id, note)
+        }
+
+        // Add to MAIN list
         return tx.eventParticipant.create({
           data: {
             userId: user.userId,
             eventId: event.id,
-            status: 'WAITLIST',
+            status: 'RECORDED',
             note,
           },
           select: PARTICIPANT_OUTPUT_SELECTIONS,
         })
-      }
-
-      // Atomically claim a place in PostgreSQL
-      const updated = await tx.event.updateMany({
-        where: {
-          id: event.id,
-          leftPlaces: { gt: 0 },
-        },
-        data: {
-          leftPlaces: { decrement: 1 },
-        },
       })
 
-      if (updated.count === 0) {
-        await tx.event.update({
-          where: { id: event.id },
-          data: {
-            waitingUsers: { increment: 1 },
-          },
-        })
+      await this.eventCache.invalidateEventBySlug(eventSlug)
 
-        return tx.eventParticipant.create({
-          data: {
-            userId: user.userId,
-            eventId: event.id,
-            status: 'WAITLIST',
-            note,
-          },
-          select: PARTICIPANT_OUTPUT_SELECTIONS,
-        })
-      }
-
-      // Add to MAIN list
-      return tx.eventParticipant.create({
-        data: {
-          userId: user.userId,
-          eventId: event.id,
-          status: 'RECORDED',
-          note,
-        },
-        select: PARTICIPANT_OUTPUT_SELECTIONS,
-      })
+      return participant
     })
 
-    await this.eventCache.invalidateEventBySlug(eventSlug)
+    return mapParticipantOutput(response)
+  }
+
+  async leaveFromEvent(
+    userType: EventSearchType,
+    userInput: string,
+    eventSlug: string,
+    organizerId?: string,
+  ): Promise<EventParticipantOutput> {
+    const response = await this.withEventLock(eventSlug, async () => {
+      const participant = await this.db.$transaction(async (tx) => {
+        // Check event and its specs
+        const event = await this.findEventForTransaction(tx, eventSlug)
+
+        if (organizerId) {
+          this.validateUtil.checkUserIsOrganizer(organizerId, event.organizerId)
+        }
+
+        this.validateUtil.checkEventNotFinished(event.dateAndTime)
+        this.validateUtil.checkEventStatus(event.status as EventStatuses)
+
+        // Check user and its specs
+        const user = await this.findUserForTransaction(tx, userType, userInput)
+
+        this.validateUtil.checkUserActive(user.isActive)
+
+        // Check existing participation
+        const existingParticipant = await this.findParticipantForTransaction(tx, user.userId, event.id)
+
+        if (!existingParticipant) {
+          this.validateUtil.throwUserNotParticipant()
+        }
+
+        this.validateUtil.checkParticipantStatus(existingParticipant.status)
+
+        // Leave WAITLIST
+        if (existingParticipant.status === 'WAITLIST') {
+          await this.decrementWaitingUsers(tx, event.id)
+
+          return tx.eventParticipant.delete({
+            where: {
+              userId_eventId: {
+                userId: user.userId,
+                eventId: event.id,
+              },
+            },
+            select: PARTICIPANT_OUTPUT_SELECTIONS,
+          })
+        }
+
+        // Find the first participant in WAITLIST
+        const nextParticipant = await tx.eventParticipant.findFirst({
+          where: {
+            eventId: event.id,
+            status: 'WAITLIST',
+          },
+          orderBy: {
+            createdAt: 'asc',
+          },
+          select: {
+            id: true,
+          },
+        })
+
+        // Remove current participant
+        const deletedParticipant = await tx.eventParticipant.delete({
+          where: {
+            userId_eventId: {
+              userId: user.userId,
+              eventId: event.id,
+            },
+          },
+          select: PARTICIPANT_OUTPUT_SELECTIONS,
+        })
+
+        if (nextParticipant) {
+          // Promote next participant
+          await tx.eventParticipant.update({
+            where: {
+              id: nextParticipant.id,
+            },
+            data: {
+              status: 'RECORDED',
+            },
+          })
+
+          // Decrease waitlist counter
+          await this.decrementWaitingUsers(tx, event.id)
+        } else {
+          // Release the place
+          await tx.event.update({
+            where: {
+              id: event.id,
+            },
+            data: {
+              leftPlaces: { increment: 1 },
+            },
+          })
+        }
+
+        return deletedParticipant
+      })
+
+      await this.eventCache.invalidateEventBySlug(eventSlug)
+
+      return participant
+    })
 
     return mapParticipantOutput(response)
   }
 
   // PRIVATE helpers
+
+  private async withEventLock<T>(eventSlug: string, action: () => Promise<T>): Promise<T> {
+    const key = eventLockKey(eventSlug)
+    const token = randomUUID()
+    const deadline = Date.now() + EVENT_LOCK_ACQUIRE_TIMEOUT_MS
+    let acquired = false
+
+    while (!acquired && Date.now() < deadline) {
+      acquired = (await this.cache.set(key, token, 'EX', EVENT_LOCK_TTL_SECONDS, 'NX')) === 'OK'
+
+      if (!acquired) {
+        await new Promise<void>((resolve) => {
+          setTimeout(resolve, EVENT_LOCK_RETRY_DELAY_MS)
+        })
+      }
+    }
+
+    if (!acquired) {
+      this.validateUtil.throwEventLockBusy()
+    }
+
+    try {
+      return await action()
+    } finally {
+      await this.cache.eval(
+        `if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end`,
+        1,
+        key,
+        token,
+      )
+    }
+  }
+
+  private async findEventForTransaction(
+    tx: Prisma.TransactionClient,
+    eventSlug: string,
+  ): Promise<EventGetPayload<{ select: typeof EVENT_TRANSACTION_SELECTION }>> {
+    const event = await tx.event.findUnique({
+      where: { slug: eventSlug },
+      select: EVENT_TRANSACTION_SELECTION,
+    })
+
+    if (event === null) {
+      this.validateUtil.throwEventInTransactionNotFound()
+    }
+
+    return event
+  }
+
+  private async findUserForTransaction(
+    tx: Prisma.TransactionClient,
+    userType: EventSearchType,
+    userInput: string,
+  ): Promise<EventUserSnapshotGetPayload<{ select: typeof USER_TRANSACTION_SELECTION }>> {
+    const user = await tx.eventUserSnapshot.findUnique({
+      where: userType === 'by-id' ? { userId: userInput } : { nickname: userInput },
+      select: USER_TRANSACTION_SELECTION,
+    })
+
+    if (user === null) {
+      this.validateUtil.throwUserInTransactionNotFound()
+    }
+
+    return user
+  }
+
+  private async findParticipantForTransaction(
+    tx: Prisma.TransactionClient,
+    userId: string,
+    eventId: string,
+  ): Promise<EventParticipantGetPayload<{ select: { id: true; status: true } }> | null> {
+    return tx.eventParticipant.findUnique({
+      where: {
+        userId_eventId: {
+          userId,
+          eventId,
+        },
+      },
+      select: { id: true, status: true },
+    })
+  }
+
+  private async addUserToWaitlist(
+    tx: Prisma.TransactionClient,
+    userId: string,
+    eventId: string,
+    note?: string,
+  ): Promise<EventParticipantGetPayload<{ select: typeof PARTICIPANT_OUTPUT_SELECTIONS }>> {
+    await tx.event.update({
+      where: { id: eventId },
+      data: {
+        waitingUsers: { increment: 1 },
+      },
+    })
+
+    return tx.eventParticipant.create({
+      data: {
+        userId,
+        eventId,
+        status: 'WAITLIST',
+        note,
+      },
+      select: PARTICIPANT_OUTPUT_SELECTIONS,
+    })
+  }
+
+  private async decrementWaitingUsers(tx: Prisma.TransactionClient, eventId: string): Promise<void> {
+    const updated = await tx.event.updateMany({
+      where: {
+        id: eventId,
+        waitingUsers: { gt: 0 },
+      },
+      data: {
+        waitingUsers: { decrement: 1 },
+      },
+    })
+
+    if (updated.count === 0) {
+      throw new Error('Waiting users counter is inconsistent')
+    }
+  }
 
   private async getListOfParticipatedEvents(
     where: EventWhereInput,

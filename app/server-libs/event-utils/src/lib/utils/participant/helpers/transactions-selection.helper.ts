@@ -4,6 +4,8 @@ export const EVENT_TRANSACTION_SELECTION = {
   id: true,
   isJoinBlocked: true,
   dateAndTime: true,
+  totalPlaces: true,
+  waitingUsers: true,
   leftPlaces: true,
   status: true,
   organizerId: true

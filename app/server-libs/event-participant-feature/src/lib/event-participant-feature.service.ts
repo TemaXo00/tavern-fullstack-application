@@ -69,21 +69,32 @@ export class EventParticipantFeatureService implements EventParticipantsServiceC
   }
 
   async LeaveEvent(data: LeaveEventInput): Promise<EventParticipantOutput> {
-    throw new Error('Method not implemented.')
+    const payload = await this.validate.Validate(data.validation)
+    const response = await this.dbUtil.leaveFromEvent('by-id', payload.id, data.slug)
+    this.messagesUtil.leave({ userId: payload.id })
+    return response
   }
 
   async AddUserToEvent(data: AddUserToEventInput): Promise<EventParticipantOutput> {
     const payload = await this.validate.Validate(data.validation)
     const response = await this.dbUtil.joinToEvent('by-nickname', data.nickname, data.slug, data.note, payload.id)
-    this.messagesUtil.addParticipant({ participantNickname: response.nickname, organizerId: payload.id, status: response.status })
+    this.messagesUtil.addParticipant({
+      participantNickname: response.nickname,
+      organizerId: payload.id,
+      status: response.status,
+    })
     return response
   }
 
-  async ChangeUserStatus(data: ChangeUserParticipantStatusInput): Promise<EventParticipantOutput> {
+  async ChangeUserStatus(_data: ChangeUserParticipantStatusInput): Promise<EventParticipantOutput> {
     throw new Error('Method not implemented.')
   }
 
   async RemoveUserFromEvent(data: RemoveUserFromEventInput): Promise<EventParticipantOutput> {
-    throw new Error('Method not implemented.')
+    const payload = await this.validate.Validate(data.validation)
+    const response = await this.dbUtil.leaveFromEvent('by-nickname', data.nickname, data.slug, payload.id)
+    const user = await this.validationUtil.checkUserExisting('by-nickname', data.nickname)
+    this.messagesUtil.deleteParticipant({ organizerId: payload.id, userId: user.userId })
+    return response
   }
 }
