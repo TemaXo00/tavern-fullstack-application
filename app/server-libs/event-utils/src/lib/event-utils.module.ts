@@ -12,7 +12,7 @@ import { RMQ_UTILS } from './utils/rmq/main'
 import { SHARED_UTILS } from './utils/shared/main'
 import { TAG_UTILS } from './utils/tag/main'
 
-const queues = ['log', 'mail']
+const queues = ['log', 'profile']
 
 @Global()
 @Module({

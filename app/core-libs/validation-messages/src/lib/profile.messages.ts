@@ -51,6 +51,12 @@ export const PROFILE_MESSAGES = {
     LOG_METHOD: 'Early Unblock',
     MESSAGE: 'The user has been unblocked due to changed circumstances',
   },
+  PARTICIPATED_EVENT: {
+    LOG_METHOD: 'Update reputation',
+    MESSAGE: (userId: string, score: number): string => {
+      return `User ${userId} successfully participated in event and gived ${score} reputation score`
+    },
+  },
   ACTIVATE_USER: 'Activate user',
   DEACTIVATE_USER: 'Deactivate user',
   REPUTATION_UNKNOWN_TYPE: 'Unknown action type',

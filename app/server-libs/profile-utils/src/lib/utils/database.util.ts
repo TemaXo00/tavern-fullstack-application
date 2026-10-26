@@ -273,7 +273,12 @@ export class ProfileDatabaseUtil {
     })
   }
 
-  async createReputationEntry(nickname: string, message: string, score: number): Promise<ReputationOutput> {
+  async createReputationEntry(
+    nickname: string,
+    message: string,
+    score: number,
+    actionType: Actions,
+  ): Promise<ReputationOutput> {
     const action = await this.db.$transaction(async (tx) => {
       const profile = await tx.profile.update({
         where: {
@@ -286,7 +291,7 @@ export class ProfileDatabaseUtil {
       return await tx.reputation.create({
         data: {
           profileId: profile.id,
-          action: 'CUSTOM',
+          action: actionType,
           score: score,
           message: message,
         },

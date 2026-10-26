@@ -93,7 +93,13 @@ export class EventParticipantFeatureService implements EventParticipantsServiceC
     this.validationUtil.checkParticipantStatusInput(data.status)
     this.validationUtil.checkStatusFixed(participantInEvent.isFixed)
     this.validationUtil.checkEventStatus(participantInEvent.eventStatus)
-    return await this.dbUtil.updateStatus(participantInEvent.userId, participantInEvent.eventId, data.status)
+    const response = await this.dbUtil.updateStatus(participantInEvent.userId, participantInEvent.eventId, data.status)
+    this.messagesUtil.changeStatus({
+      organizerId: payload.id,
+      userId: participantInEvent.userId,
+      status: response.status,
+    })
+    return response
   }
 
   async RemoveUserFromEvent(data: RemoveUserFromEventInput): Promise<EventParticipantOutput> {

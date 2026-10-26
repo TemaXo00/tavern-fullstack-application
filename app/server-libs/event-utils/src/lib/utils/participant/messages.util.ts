@@ -11,7 +11,10 @@ import {
 
 @Injectable()
 export class EventParticipantMessagesUtil {
-  constructor(@Inject('LOG_CLIENT') private readonly log: ClientProxy) {}
+  constructor(
+    @Inject('LOG_CLIENT') private readonly log: ClientProxy,
+    @Inject('PROFILE_CLIENT') private readonly profile: ClientProxy,
+  ) {}
 
   join(data: JoinEventMessage): void {
     this.log.emit(EVENT_PARTICIPANT_MESSAGES.JOIN_EVENT, data)
@@ -31,5 +34,6 @@ export class EventParticipantMessagesUtil {
 
   changeStatus(data: ChangeParticipantStatusMessage): void {
     this.log.emit(EVENT_PARTICIPANT_MESSAGES.EVENT_CHANGE_STATUS, data)
+    this.profile.emit(EVENT_PARTICIPANT_MESSAGES.EVENT_CHANGE_STATUS, data)
   }
 }

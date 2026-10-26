@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { AuthValidateService } from '@org/auth-authorization-core'
-import { Roles } from '@org/enums'
+import { Actions, Roles } from '@org/enums'
 import { ProfileCacheUtil, ProfileDatabaseUtil, ProfileMessagesUtil, ProfileValidationUtil } from '@org/profile-utils'
 
 import type {
@@ -38,7 +38,7 @@ export class ProfileReputationFeatureService implements ReputationServiceContrac
     const profile = await this.validationUtil.checkUserExisting('by-nickname', data.nickname)
     this.validationUtil.checkAddReputationNotCurrent(payload.id, profile.userId)
     this.validationUtil.checkProfileStatus(profile.currentActivity)
-    const action = await this.dbUtil.createReputationEntry(profile.nickname, data.message, data.score)
+    const action = await this.dbUtil.createReputationEntry(profile.nickname, data.message, data.score, Actions.CUSTOM)
     await this.cacheUtil.deleteCache(data.nickname)
     this.messagesUtil.sendChangeReputation({
       adminId: payload.id,
