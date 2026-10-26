@@ -86,8 +86,14 @@ export class EventParticipantFeatureService implements EventParticipantsServiceC
     return response
   }
 
-  async ChangeUserStatus(_data: ChangeUserParticipantStatusInput): Promise<EventParticipantOutput> {
-    throw new Error('Method not implemented.')
+  async ChangeUserStatus(data: ChangeUserParticipantStatusInput): Promise<EventParticipantOutput> {
+    const payload = await this.validate.Validate(data.validation)
+    const participantInEvent = await this.validationUtil.checkParticipantExisting(data.slug, data.nickname)
+    this.validationUtil.checkUserOrganizer(participantInEvent.organizerId, payload.id)
+    this.validationUtil.checkParticipantStatusInput(data.status)
+    this.validationUtil.checkStatusFixed(participantInEvent.isFixed)
+    this.validationUtil.checkEventStatus(participantInEvent.eventStatus)
+    return await this.dbUtil.updateStatus(participantInEvent.userId, participantInEvent.eventId, data.status)
   }
 
   async RemoveUserFromEvent(data: RemoveUserFromEventInput): Promise<EventParticipantOutput> {

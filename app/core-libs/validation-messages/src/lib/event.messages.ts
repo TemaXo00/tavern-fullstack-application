@@ -125,5 +125,8 @@ export const EVENT_MESSAGES = {
   USER_NOT_ACTIVE: 'User not active',
   USER_PARTICIPANT: 'You are already participant of this event',
   USER_LEAVE_NOT_PARTICIPANT: 'You cant leave from this event, cause you are not participant',
-  USER_FIXED_STATUS: 'Your status is fixed, and you cant leave from this event',
+  USER_FIXED_STATUS: 'Your status is fixed',
+  PARTICIPANT_NOT_FOUND: 'Participant not found',
+  EVENT_NOT_FINISHED: 'This event not finished',
+  INCORRECT_PARTICIPANT_STATUS_CHANGE: 'You can only fix or set not come for user'
 } as const

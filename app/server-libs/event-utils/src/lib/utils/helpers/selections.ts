@@ -141,3 +141,16 @@ export const PARTICIPANT_OUTPUT_SELECTIONS = {
   note: true,
   status: true,
 } as const satisfies EventParticipantSelect
+
+export const PARTICIPANT_IN_EVENT_SELECTIONS = {
+  userId: true,
+  eventId: true,
+  isFixed: true,
+  status: true,
+  event: {
+    select: {
+      status: true,
+      organizerId: true,
+    },
+  },
+} as const satisfies EventParticipantSelect

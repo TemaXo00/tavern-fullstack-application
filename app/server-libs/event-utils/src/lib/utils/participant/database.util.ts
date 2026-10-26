@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto'
 
 import { Injectable } from '@nestjs/common'
 import { InjectRedis } from '@nestjs-modules/ioredis'
-import { EVENT_STATUSES_TO_GRPC, EventStatuses } from '@org/enums'
+import { EVENT_STATUSES_TO_GRPC, EventStatuses, GRPC_TO_PARTICIPANT_STATUSES, ParticipantStatuses } from '@org/enums'
 import {
   EventDatabaseService,
   EventGetPayload,
@@ -26,6 +26,7 @@ import { EVENT_MESSAGES, SHARED_MESSAGES } from '@org/validation-messages'
 import Redis from 'ioredis'
 
 import {
+  PARTICIPANT_IN_EVENT_SELECTIONS,
   PARTICIPANT_IN_PAGINATION_SELECTIONS,
   PARTICIPANT_OUTPUT_SELECTIONS,
   PARTICIPATED_EVENTS_LIST_SELECTIONS,
@@ -36,6 +37,7 @@ import { EventSearchType } from './helpers/search-types.helper'
 import { EVENT_TRANSACTION_SELECTION, USER_TRANSACTION_SELECTION } from './helpers/transactions-selection.helper'
 import { EventParticipantTransactionsValidateUtil } from './transactions-validate.util'
 import { EventsCacheSharedUtil } from '../shared/cache.util'
+import { mapParticipantInEvent, ParticipantInEvent } from './helpers/participant-in-event.helper'
 
 const EVENT_LOCK_TTL_SECONDS = 30
 const EVENT_LOCK_RETRY_DELAY_MS = 50
@@ -128,6 +130,43 @@ export class EventParticipantDatabaseUtil {
       ...answer,
       status: EVENT_STATUSES_TO_GRPC[answer.status],
     }
+  }
+
+  async getParticipant(eventSlug: string, nickname: string): Promise<ParticipantInEvent | null> {
+    const response = await this.db.eventParticipant.findFirst({
+      where: {
+        event: {
+          slug: eventSlug,
+        },
+        user: {
+          nickname: nickname,
+        },
+      },
+      select: PARTICIPANT_IN_EVENT_SELECTIONS,
+    })
+    if (!response) {
+      return null
+    }
+    return mapParticipantInEvent(response)
+  }
+
+  // UPDATE methods
+
+  async updateStatus(userId: string, eventId: string, status: number): Promise<EventParticipantOutput> {
+    const response = await this.db.eventParticipant.update({
+      where: {
+        userId_eventId: {
+          userId: userId,
+          eventId: eventId,
+        },
+      },
+      data: {
+        status: GRPC_TO_PARTICIPANT_STATUSES[status],
+        isFixed: true,
+      },
+      select: PARTICIPANT_OUTPUT_SELECTIONS,
+    })
+    return mapParticipantOutput(response)
   }
 
   // JOIN/LEAVE Methods
