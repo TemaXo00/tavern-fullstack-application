@@ -120,13 +120,13 @@ export class ParticipantController implements OnModuleInit {
   async joinEvent(
     @ValidateInputParam() validation: ValidateInput,
     @Param(EVENT_PARTICIPANT_ROUTES.JOIN_EVENT.PARAM) slug: string,
-    @Body() dto: JoinEventDto
+    @Body() dto: JoinEventDto,
   ): Promise<EventParticipantSharedOutput> {
     const response = await firstValueFrom(
       this.participantContract.JoinEvent({
         validation,
         slug,
-        ...dto
+        ...dto,
       }),
     )
     return this.map.mapEventParticipantOutput(response)

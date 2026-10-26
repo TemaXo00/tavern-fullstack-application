@@ -7,5 +7,5 @@ export const PARTICIPANT_UTILS = [
   EventParticipantDatabaseUtil,
   EventParticipantValidationUtil,
   EventParticipantMessagesUtil,
-  EventParticipantTransactionsValidateUtil
+  EventParticipantTransactionsValidateUtil,
 ]

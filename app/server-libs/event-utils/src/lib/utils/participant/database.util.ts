@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto'
 
 import { Injectable } from '@nestjs/common'
 import { InjectRedis } from '@nestjs-modules/ioredis'
-import { EVENT_STATUSES_TO_GRPC, EventStatuses, GRPC_TO_PARTICIPANT_STATUSES, ParticipantStatuses } from '@org/enums'
+import { EVENT_STATUSES_TO_GRPC, EventStatuses, GRPC_TO_PARTICIPANT_STATUSES } from '@org/enums'
 import {
   EventDatabaseService,
   EventGetPayload,

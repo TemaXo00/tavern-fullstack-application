@@ -1,12 +1,7 @@
 import { status } from '@grpc/grpc-js'
 import { Injectable } from '@nestjs/common'
 import { RpcException } from '@nestjs/microservices'
-import {
-  EventStatuses,
-  GRPC_TO_PARTICIPANT_STATUSES,
-  PARTICIPANT_STATUSES_TO_GRPC,
-  ParticipantStatuses,
-} from '@org/enums'
+import { EventStatuses, GRPC_TO_PARTICIPANT_STATUSES } from '@org/enums'
 import { ParticipantInPaginatedGrpcOutput, ParticipatedEventGrpcOutput } from '@org/grpc-types'
 import { EVENT_MESSAGES } from '@org/validation-messages'
 

@@ -10,5 +10,5 @@ export const EVENT_CONFIG = {
   NOTE: {
     MIN_LENGTH: 10,
     MAX_LENGTH: 100,
-  }
+  },
 } as const

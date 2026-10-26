@@ -14,9 +14,7 @@ import type {
 
 @Injectable()
 export class EventEventsMessagesUtil {
-  constructor(
-    @Inject('LOG_CLIENT') private readonly log: ClientProxy,
-  ) {}
+  constructor(@Inject('LOG_CLIENT') private readonly log: ClientProxy) {}
 
   authorCreated(data: EventEventsAuthorManipulateMessages): void {
     this.log.emit(EVENT_EVENTS_MESSAGES.AUTHOR_CREATED, data)

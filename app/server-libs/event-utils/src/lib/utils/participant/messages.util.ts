@@ -11,9 +11,7 @@ import {
 
 @Injectable()
 export class EventParticipantMessagesUtil {
-  constructor(
-    @Inject('LOG_CLIENT') private readonly log: ClientProxy,
-  ) {}
+  constructor(@Inject('LOG_CLIENT') private readonly log: ClientProxy) {}
 
   join(data: JoinEventMessage): void {
     this.log.emit(EVENT_PARTICIPANT_MESSAGES.JOIN_EVENT, data)

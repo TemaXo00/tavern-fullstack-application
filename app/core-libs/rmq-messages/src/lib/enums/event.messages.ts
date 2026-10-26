@@ -24,5 +24,5 @@ export enum EVENT_PARTICIPANT_MESSAGES {
   LEAVE_EVENT = 'participant.leave',
   EVENT_ADD = 'participant.organizer.add',
   EVENT_DELETE = 'participant.organizer.delete',
-  EVENT_CHANGE_STATUS = 'participant.organizer.status'
+  EVENT_CHANGE_STATUS = 'participant.organizer.status',
 }
