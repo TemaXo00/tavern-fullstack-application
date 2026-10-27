@@ -12,13 +12,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Chat microservice with WebSocket support on gateway
 - File microservice (media upload)
 - Log microservice (audit consumers and log ingestion)
-- Mail microservice (email delivery)
 - Blog microservice (article API on top of the prepared database schema)
 - Forum microservice
 - Appeals microservice
 - Remaining Vue client features: event catalog, event page, profile, and admin UI
-- End-to-end tests for auth, profile, and event flows
+- End-to-end tests for auth, profile, event, and mail flows
 - Grafana + Prometheus monitoring stack
+
+## 0.3.5 - 2026-10-27
+
+### Added
+
+#### Mail microservice
+
+- Mail microservice based on NestJS, RabbitMQ, and `@nestjs-modules/mailer` with EJS templates.
+- Central `@org/mail-handler` service for sending templated emails with configurable sender, SMTP transport, and base template variables (`link`, `year`).
+- `@org/mail-auth-handler` consumers for auth and user events:
+  - Authorization events: `user.registered`, `user.login`, `user.forgot.password`, `user.restore.password`
+  - User admin events: `user.block`, `user.unblock.early`, `user.change.email`, `user.change.password`, `user.active`, `user.deleted`
+- EJS email templates for auth flows (register, login, forgot/reset password, block, unblock, set active, delete, change email to old/new, change password) with shared partials and theme.
+- Mailpit service added to local Docker Compose for email testing.
+- Mail microservice added to Docker Compose and CI build/push scripts with a dedicated Dockerfile.
+- Mail configuration variables added to environment examples.
+
+### Changed
+
+- Docker Compose and build scripts now include the mail microservice.
+- Environment examples extended with mail SMTP/client configuration.
 
 ## 0.3.0 - 2026-10-26
 

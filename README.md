@@ -143,6 +143,7 @@ curl localhost:3000/api/docs/swagger.yaml
 - [Сервис Авторизации](docs/auth.md)
 - [Сервис Профилей](docs/profile.md)
 - [Сервис Мероприятий](docs/event.md)
+- [Сервис Почты](docs/mail.md)
 
 ## Возможные ошибки
 
