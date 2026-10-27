@@ -85,7 +85,6 @@ export class AuthMessagesUtil {
   sendUserUnblockedMessage(data: AuthUserUnblockedMessage): void {
     this.profile.emit(AUTHORIZATION_MESSAGES.UNBLOCK, data)
     this.log.emit(AUTHORIZATION_MESSAGES.UNBLOCK, data)
-    this.mail.emit(AUTHORIZATION_MESSAGES.UNBLOCK, data)
     this.event.emit(AUTHORIZATION_MESSAGES.UNBLOCK, data)
   }
 
