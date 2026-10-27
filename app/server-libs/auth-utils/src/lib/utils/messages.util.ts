@@ -46,6 +46,7 @@ export class AuthMessagesUtil {
     @Inject('LOG_CLIENT') private readonly log: ClientProxy,
     @Inject('MAIL_CLIENT') private readonly mail: ClientProxy,
     @Inject('EVENT_CLIENT') private readonly event: ClientProxy,
+    @Inject('BLOG_CLIENT') private readonly blog: ClientProxy,
   ) {}
 
   // AUTHORIZATION
@@ -55,6 +56,7 @@ export class AuthMessagesUtil {
     this.log.emit(AUTHORIZATION_MESSAGES.REGISTER, data)
     this.mail.emit(AUTHORIZATION_MESSAGES.REGISTER, data)
     this.event.emit(AUTHORIZATION_MESSAGES.REGISTER, data)
+    this.blog.emit(AUTHORIZATION_MESSAGES.REGISTER, data)
   }
 
   sendUserLoginMessage(data: AuthLoginMessage): void {
@@ -187,6 +189,7 @@ export class AuthMessagesUtil {
     this.log.emit(USER_MESSAGES.DELETE, data)
     this.profile.emit(USER_MESSAGES.DELETE, data)
     this.mail.emit(USER_MESSAGES.DELETE, data)
+    this.blog.emit(USER_MESSAGES.DELETE, data)
     this.event.emit(USER_MESSAGES.DELETE, data)
   }
 }

@@ -12,7 +12,7 @@ import { AuthValidateUtil } from './utils/validate.util'
 
 const UTILS = [AuthDatabaseUtil, AuthMessagesUtil, AuthPasswordUtil, AuthValidateUtil, AuthTokenUtil, AuthMapUtil]
 
-const queues: string[] = ['profile', 'log', 'mail', 'event']
+const queues: string[] = ['profile', 'log', 'mail', 'event', 'blog']
 
 @Global()
 @Module({
