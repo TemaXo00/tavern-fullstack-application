@@ -320,7 +320,7 @@ export class AuthDatabaseUtil {
       ]
     }
 
-    if (query.state) {
+    if (query.state !== undefined) {
       where.state = GRPC_TO_TOKEN_STATE[query.state]
     }
 
@@ -346,7 +346,7 @@ export class AuthDatabaseUtil {
       where.isBlocked = query.isBlocked
     }
 
-    if (query.role) {
+    if (query.role !== undefined) {
       where.role = GRPC_TO_ROLE[query.role]
     }
 

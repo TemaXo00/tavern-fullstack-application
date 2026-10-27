@@ -12,19 +12,22 @@ export class AuthTokenUtil {
   constructor(private readonly stringUtil: StringValidationUtil) {}
 
   async generateTokens(): Promise<{ token: string; hashToken: string }> {
-    const token = randomBytes(48).toString()
+    const token = randomBytes(48).toString('hex')
+
     const hashToken = await argon2.hash(token, {
+      type: argon2.argon2id,
       timeCost: 3,
       memoryCost: 65536,
       parallelism: 4,
-      type: argon2.argon2id,
     })
+
     return { token, hashToken }
   }
 
   async validateTokenHash(token: string, tokenHash: string): Promise<void> {
     this.stringUtil.validateAnyString(token, 'Token')
-    const isValid = await argon2.verify(token, tokenHash)
+
+    const isValid = await argon2.verify(tokenHash, token)
 
     if (!isValid) {
       throw new RpcException({

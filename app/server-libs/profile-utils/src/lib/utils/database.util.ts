@@ -412,7 +412,7 @@ export class ProfileDatabaseUtil {
       ]
     }
 
-    if (query.currentActivity) {
+    if (query.currentActivity !== undefined) {
       where.currentActivity = GRPC_TO_ACTIVITY[query.currentActivity]
     }
 
@@ -448,7 +448,7 @@ export class ProfileDatabaseUtil {
       where.message = { contains: query.search, mode: 'insensitive' }
     }
 
-    if (query.action) {
+    if (query.action !== undefined) {
       where.action = GRPC_TO_ACTIONS[query.action]
     }
 
@@ -460,7 +460,7 @@ export class ProfileDatabaseUtil {
 
     where.profileId = profileId
 
-    if (query.activityType) {
+    if (query.activityType !== undefined) {
       where.status = GRPC_TO_ACTIVITY[query.activityType]
     }
 
