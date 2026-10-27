@@ -66,6 +66,7 @@ export class AuthUserFeatureService implements UserServiceContract {
     const blockedUser = await this.dbUtil.blockUser(user.id, blockedUntil, data.blockReason)
     this.messagesUtil.sendAdminBlockUser({
       adminId: payload.id,
+      email: user.email,
       userId: user.id,
       blockReason: data.blockReason,
       blockedFrom: new Date(),
@@ -83,6 +84,7 @@ export class AuthUserFeatureService implements UserServiceContract {
     await this.cacheUtil.delAllPayloads(user.id)
     this.messagesUtil.sendAdminUnblockUser({
       adminId: payload.id,
+      email: user.email,
       userId: user.id,
     })
     return this.mapUtil.mapUser(unblockedUser)
@@ -121,6 +123,7 @@ export class AuthUserFeatureService implements UserServiceContract {
     const updatedUser = await this.dbUtil.updateUserEmail(user.id, data.newEmail)
     this.messagesUtil.sendUserChangeEmail({
       userId: payload.id,
+      oldEmail: user.email,
       session: data.validation.session,
       newEmail: data.newEmail,
     })
@@ -138,6 +141,7 @@ export class AuthUserFeatureService implements UserServiceContract {
     await this.cacheUtil.delAllPayloads(user.id)
     this.messagesUtil.sendUserChangePassword({
       userId: payload.id,
+      email: user.email,
       session: data.validation.session,
     })
     return this.mapUtil.mapUser(user)
@@ -159,6 +163,7 @@ export class AuthUserFeatureService implements UserServiceContract {
     await this.cacheUtil.delAllPayloads(user.id)
     this.messagesUtil.sendAdminSetUserActive({
       adminId: payload.id,
+      email: user.email,
       userId: user.id,
     })
     return this.mapUtil.mapUser(updatedUser)

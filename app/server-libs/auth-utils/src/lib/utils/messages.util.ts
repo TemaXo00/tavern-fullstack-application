@@ -154,12 +154,10 @@ export class AuthMessagesUtil {
 
   sendAdminPromoteUser(data: AdminPromoteUserMessage): void {
     this.log.emit(USER_MESSAGES.PROMOTE, data)
-    this.mail.emit(USER_MESSAGES.PROMOTE, data)
   }
 
   sendAdminDemoteUser(data: AdminDemoteUserMessage): void {
     this.log.emit(USER_MESSAGES.DEMOTE, data)
-    this.mail.emit(USER_MESSAGES.DEMOTE, data)
   }
 
   sendUserChangeEmail(data: UserChangeEmailMessage): void {
@@ -175,7 +173,6 @@ export class AuthMessagesUtil {
   sendUserSetInactive(data: UserSetInactiveMessage): void {
     this.log.emit(USER_MESSAGES.SET_INACTIVE, data)
     this.profile.emit(USER_MESSAGES.SET_INACTIVE, data)
-    this.mail.emit(USER_MESSAGES.SET_INACTIVE, data)
     this.event.emit(USER_MESSAGES.SET_INACTIVE, data)
   }
 
