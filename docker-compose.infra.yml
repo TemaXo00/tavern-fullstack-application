@@ -158,6 +158,18 @@ services:
         condition: service_healthy
     restart: "no"
 
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: tavern-mailpit
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8025:8025"
+      - "127.0.0.1:1025:1025"
+    volumes:
+      - mailpit_data:/data
+    environment:
+      MP_DATABASE: /data/mailpit.db
+
 volumes:
   redis_data:
   auth_db_data:
@@ -165,3 +177,4 @@ volumes:
   event_db_data:
   blog_db_data:
   log_db_data:
+  mailpit_data:
