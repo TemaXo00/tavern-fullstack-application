@@ -58,6 +58,7 @@
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/nodemailer": "^8.0.2",
     "@vee-validate/zod": "^4.15.1",
     "amqp-connection-manager": "^5.0.0",
     "amqplib": "^2.0.1",

@@ -182,6 +182,9 @@
     },
     {
       "path": "./server-libs/blog-database"
+    },
+    {
+      "path": "./server-libs/mail-handler"
     }
   ],
   "compilerOptions": {}
