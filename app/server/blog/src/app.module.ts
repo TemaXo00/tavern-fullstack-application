@@ -17,7 +17,7 @@ import { SharedUtilsModule } from '@org/shared-utils'
     BlogUtilsModule,
     BlogArticleFeatureModule,
     BlogRmqHandlerModule,
-    BlogTagFeatureModule
+    BlogTagFeatureModule,
   ],
 })
 export class AppModule {}

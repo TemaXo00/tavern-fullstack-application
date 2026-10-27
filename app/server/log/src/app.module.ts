@@ -21,7 +21,7 @@ import { SharedUtilsModule } from '@org/shared-utils'
     LogProfileHandlerModule,
     LogEventHandlerModule,
     LogBlogHandlerModule,
-    LogFeatureModule
+    LogFeatureModule,
   ],
 })
 export class AppModule {}
