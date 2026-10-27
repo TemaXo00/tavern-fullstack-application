@@ -1,11 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Register Notification</title>
-</head>
-<body>
-    <h1>Welcome to TAVERN!</h1>
-    <p>Your account has been successfully registered.</p>
-</body>
-</html>
+<%
+  const theme = {}
+  const webLink = typeof link !== 'undefined' && link ? link : 'http://localhost:4200'
+  const currentYear = typeof year !== 'undefined' && year ? year : new Date().getFullYear()
+  const title = 'Welcome to TAVERN'
+  const preheader = 'Your TAVERN account is ready. Here are the details of your first session.'
+  const eyebrow = 'Account created'
+  const session = {
+    device: typeof device !== 'undefined' && device ? device : 'Unknown device',
+    browser: typeof browser !== 'undefined' && browser ? browser : 'Unknown browser',
+    os: typeof os !== 'undefined' && os ? os : 'Unknown operating system',
+  }
+-%>
+<%- include('./partials/layout/page-start', { theme, title, preheader, eyebrow, link: webLink }) %>
+
+<%- include('./partials/components/heading', { theme, text: 'Welcome to TAVERN' }) %>
+<%- include('./partials/components/paragraph', { theme, text: 'Your account has been successfully registered. You can now sign in and start using TAVERN.' }) %>
+<%- include('./partials/components/button', { theme, href: webLink, label: 'Open TAVERN' }) %>
+
+<%- include('./partials/components/divider', { theme }) %>
+<%- include('./partials/components/paragraph', { theme, text: 'Your first session', muted: true, size: '13px', lineHeight: '20px', margin: '20px 0 10px' }) %>
+<%- include('./partials/components/detail-list', { theme, items: [
+  { label: 'Device', value: session.device },
+  { label: 'Browser', value: session.browser },
+  { label: 'Operating system', value: session.os }
+] }) %>
+
+<%- include('./partials/components/callout', { theme, title: 'Was this not you?', text: 'If you did not create this account, contact TAVERN support so we can remove it.' }) %>
+
+<%- include('./partials/layout/page-end', { theme, link: webLink, year: currentYear }) %>

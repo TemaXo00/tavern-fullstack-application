@@ -1,0 +1,13 @@
+<%
+  const paragraphText = typeof text !== 'undefined' ? text : ''
+  const paragraphMuted = typeof muted !== 'undefined' ? muted : false
+  const paragraphHtml = typeof allowHtml !== 'undefined' ? allowHtml : false
+  const paragraphSize = typeof size !== 'undefined' ? size : '15px'
+  const paragraphLine = typeof lineHeight !== 'undefined' ? lineHeight : '24px'
+  const paragraphAlign = typeof align !== 'undefined' ? align : 'left'
+  const paragraphMargin = typeof margin !== 'undefined' ? margin : '0 0 16px'
+  const paragraphColor = paragraphMuted ? theme.colors.muted : theme.colors.text
+%>
+<p style="margin: <%= paragraphMargin %>; font-family: <%= theme.fonts.sans %>; font-size: <%= paragraphSize %>; line-height: <%= paragraphLine %>; color: <%= paragraphColor %>; text-align: <%= paragraphAlign %>;">
+  <% if (paragraphHtml) { %><%- paragraphText %><% } else { %><%= paragraphText %><% } %>
+</p>

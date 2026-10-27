@@ -1,0 +1,56 @@
+<%
+  const themeRef = typeof theme !== 'undefined' && theme ? theme : {}
+
+  const defaults = {
+    meta: {
+      lang: 'en',
+      brand: 'TAVERN',
+      webLinkLabel: 'Open the web interface',
+      footerNote: 'A place for events, people, and stories.',
+      copyright: 'All rights reserved.',
+    },
+    colors: {
+      page: '#f4f4f5',
+      card: '#ffffff',
+      text: '#111111',
+      muted: '#52525b',
+      subtle: '#71717a',
+      border: '#e4e4e7',
+      surface: '#f4f4f5',
+      surfaceStrong: '#e4e4e7',
+      inverse: '#111111',
+      inverseText: '#ffffff',
+      inverseMuted: '#d4d4d8',
+      inverseBorder: '#3f3f46',
+      link: '#111111',
+      linkInverse: '#ffffff',
+      button: '#111111',
+      buttonText: '#ffffff',
+      buttonSecondary: '#ffffff',
+      buttonSecondaryText: '#111111',
+      buttonSecondaryBorder: '#d4d4d8',
+    },
+    fonts: {
+      sans: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+      mono: "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace",
+    },
+    layout: {
+      width: 600,
+      pagePadding: 16,
+      cardPadding: 32,
+      footerPadding: 28,
+    },
+    radius: {
+      sm: 8,
+      md: 12,
+      lg: 16,
+      pill: 999,
+    },
+  }
+
+  themeRef.meta = Object.assign({}, defaults.meta, themeRef.meta || {})
+  themeRef.colors = Object.assign({}, defaults.colors, themeRef.colors || {})
+  themeRef.fonts = Object.assign({}, defaults.fonts, themeRef.fonts || {})
+  themeRef.layout = Object.assign({}, defaults.layout, themeRef.layout || {})
+  themeRef.radius = Object.assign({}, defaults.radius, themeRef.radius || {})
+-%>

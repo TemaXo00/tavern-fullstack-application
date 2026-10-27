@@ -1,0 +1,27 @@
+<%
+  const theme = {}
+  const webLink = typeof link !== 'undefined' && link ? link : 'http://localhost:4200'
+  const currentYear = typeof year !== 'undefined' && year ? year : new Date().getFullYear()
+  const baseLink = webLink.replace(/\/+$/, '')
+  const loginLink = baseLink + '/auth/login'
+  const title = 'Your TAVERN account has been unblocked'
+  const preheader = 'Your TAVERN account is active again.'
+  const eyebrow = 'Account restored'
+  const reference = typeof adminId !== 'undefined' && adminId ? adminId : 'Not specified'
+-%>
+<%- include('./partials/layout/page-start', { theme, title, preheader, eyebrow, link: webLink }) %>
+
+<%- include('./partials/components/heading', { theme, text: 'Your TAVERN account has been unblocked' }) %>
+<div style="margin: 0 0 16px;"><%- include('./partials/components/badge', { theme, text: 'Active', tone: 'solid' }) %></div>
+<%- include('./partials/components/paragraph', { theme, text: 'Your TAVERN account has been unblocked. You can sign in and use TAVERN again.' }) %>
+
+<%- include('./partials/components/detail-list', { theme, title: 'Restoration details', items: [
+  { label: 'Account status', value: 'Active' },
+  { label: 'Restored by', value: 'TAVERN moderation team' },
+  { label: 'Reference', value: reference }
+] }) %>
+
+<%- include('./partials/components/button', { theme, href: loginLink, label: 'Sign in to TAVERN' }) %>
+<%- include('./partials/components/callout', { theme, title: 'Keep your account secure', text: 'If you notice unusual activity, change your password and review your active sessions.' }) %>
+
+<%- include('./partials/layout/page-end', { theme, link: webLink, year: currentYear }) %>

@@ -1,0 +1,31 @@
+<%
+  const theme = {}
+  const webLink = typeof link !== 'undefined' && link ? link : 'http://localhost:4200'
+  const currentYear = typeof year !== 'undefined' && year ? year : new Date().getFullYear()
+  const title = 'Your TAVERN email address was changed'
+  const preheader = 'The email address linked to your TAVERN account has been changed.'
+  const eyebrow = 'Email address changed'
+  const newEmailValue = typeof newEmail !== 'undefined' && newEmail ? newEmail : 'Not specified'
+  const newEmailHref = newEmailValue !== 'Not specified' ? 'mailto:' + newEmailValue : null
+  const session = {
+    device: typeof device !== 'undefined' && device ? device : 'Unknown device',
+    browser: typeof browser !== 'undefined' && browser ? browser : 'Unknown browser',
+    os: typeof os !== 'undefined' && os ? os : 'Unknown operating system',
+  }
+-%>
+<%- include('./partials/layout/page-start', { theme, title, preheader, eyebrow, link: webLink }) %>
+
+<%- include('./partials/components/heading', { theme, text: 'Your TAVERN email address was changed' }) %>
+<%- include('./partials/components/paragraph', { theme, text: 'The email address linked to your TAVERN account has been changed. This address will no longer receive TAVERN notifications.' }) %>
+
+<%- include('./partials/components/detail-list', { theme, title: 'Change details', items: [
+  { label: 'New email', value: newEmailValue, href: newEmailHref },
+  { label: 'Device', value: session.device },
+  { label: 'Browser', value: session.browser },
+  { label: 'Operating system', value: session.os }
+] }) %>
+
+<%- include('./partials/components/button', { theme, href: webLink, label: 'Review my account' }) %>
+<%- include('./partials/components/callout', { theme, tone: 'inverse', title: "If this wasn't you", text: 'Your account may be compromised. Reset your password immediately and contact TAVERN support.' }) %>
+
+<%- include('./partials/layout/page-end', { theme, link: webLink, year: currentYear }) %>

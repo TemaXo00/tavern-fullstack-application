@@ -1,0 +1,67 @@
+<%- include('../theme', { theme }) -%>
+<!DOCTYPE html>
+<html lang="<%= theme.meta.lang %>">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title><%= typeof title !== 'undefined' ? title : theme.meta.brand %></title>
+  <style>
+    html,
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      background-color: <%= theme.colors.page %>;
+    }
+
+    body {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table,
+    td {
+      border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+    }
+
+    a {
+      color: <%= theme.colors.link %>;
+    }
+
+    @media screen and (max-width: 620px) {
+      .email-container {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      .email-card-padding {
+        padding: 32px <%= theme.layout.pagePadding %>px !important;
+      }
+
+      .email-header-padding {
+        padding-left: <%= theme.layout.pagePadding %>px !important;
+        padding-right: <%= theme.layout.pagePadding %>px !important;
+      }
+
+      .email-heading {
+        font-size: 24px !important;
+        line-height: 32px !important;
+      }
+    }
+  </style>
+</head>

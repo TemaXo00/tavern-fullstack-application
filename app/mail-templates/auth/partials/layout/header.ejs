@@ -1,0 +1,21 @@
+<%
+  const headerLink = typeof link !== 'undefined' && link ? link : '#'
+  const headerEyebrow = typeof eyebrow !== 'undefined' ? eyebrow : ''
+%>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td class="email-header-padding" style="padding: 26px <%= theme.layout.cardPadding %>px; border-bottom: 1px solid <%= theme.colors.border %>;">
+      <a
+        href="<%= headerLink %>"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="font-family: <%= theme.fonts.sans %>; font-size: 20px; line-height: 24px; font-weight: 800; letter-spacing: 0.18em; color: <%= theme.colors.text %>; text-decoration: none;"
+      ><%= theme.meta.brand %></a>
+    </td>
+    <% if (headerEyebrow) { %>
+    <td class="email-header-padding" align="right" style="padding: 26px <%= theme.layout.cardPadding %>px; border-bottom: 1px solid <%= theme.colors.border %>;">
+      <span style="font-family: <%= theme.fonts.sans %>; font-size: 10px; line-height: 16px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: <%= theme.colors.subtle %>;"><%= headerEyebrow %></span>
+    </td>
+    <% } %>
+  </tr>
+</table>

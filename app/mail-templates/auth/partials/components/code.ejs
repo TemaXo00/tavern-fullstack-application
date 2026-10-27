@@ -1,0 +1,17 @@
+<%
+  const codeValue = typeof value !== 'undefined' ? value : ''
+  const codeLabel = typeof label !== 'undefined' ? label : ''
+  const codeMargin = typeof margin !== 'undefined' ? margin : '8px 0 0'
+%>
+<% if (codeLabel) { %>
+<p style="margin: 20px 0 0; font-family: <%= theme.fonts.sans %>; font-size: 13px; line-height: 20px; color: <%= theme.colors.muted %>;">
+  <%= codeLabel %>
+</p>
+<% } %>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: <%= codeMargin %>;">
+  <tr>
+    <td style="padding: 14px 16px; background-color: <%= theme.colors.surface %>; border: 1px dashed <%= theme.colors.border %>; border-radius: <%= theme.radius.sm %>px; font-family: <%= theme.fonts.mono %>; font-size: 12px; line-height: 20px; color: <%= theme.colors.text %>; word-break: break-all; overflow-wrap: anywhere;">
+      <%= codeValue %>
+    </td>
+  </tr>
+</table>

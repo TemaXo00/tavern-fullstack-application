@@ -1,0 +1,29 @@
+<%
+  const buttonVariant = typeof variant !== 'undefined' ? variant : 'primary'
+  const buttonAlign = typeof align !== 'undefined' ? align : 'left'
+  const buttonTop = typeof top !== 'undefined' ? top : '24px'
+  const buttonHref = typeof href !== 'undefined' && href ? href : '#'
+  const buttonLabel = typeof label !== 'undefined' ? label : 'Open TAVERN'
+  const buttonSecondary = buttonVariant === 'secondary'
+  const buttonBackground = buttonSecondary ? theme.colors.buttonSecondary : theme.colors.button
+  const buttonForeground = buttonSecondary ? theme.colors.buttonSecondaryText : theme.colors.buttonText
+  const buttonBorder = buttonSecondary ? theme.colors.buttonSecondaryBorder : theme.colors.button
+%>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td align="<%= buttonAlign %>" style="padding-top: <%= buttonTop %>;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse: separate;">
+        <tr>
+          <td align="center" bgcolor="<%= buttonBackground %>" style="border: 1px solid <%= buttonBorder %>; border-radius: <%= theme.radius.md %>px;">
+            <a
+              href="<%= buttonHref %>"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="display: inline-block; padding: 14px 28px; font-family: <%= theme.fonts.sans %>; font-size: 15px; line-height: 20px; font-weight: 600; color: <%= buttonForeground %>; text-decoration: none; border-radius: <%= theme.radius.md %>px;"
+            ><%= buttonLabel %></a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

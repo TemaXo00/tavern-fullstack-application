@@ -1,0 +1,37 @@
+<%
+  const theme = {}
+  const webLink = typeof link !== 'undefined' && link ? link : 'http://localhost:4200'
+  const currentYear = typeof year !== 'undefined' && year ? year : new Date().getFullYear()
+  const title = 'Your TAVERN account has been blocked'
+  const preheader = 'Your TAVERN account has been blocked by a moderator.'
+  const eyebrow = 'Account restricted'
+  const reason = typeof blockReason !== 'undefined' && blockReason ? blockReason : 'Not specified'
+  const formatDate = (value) => {
+    if (!value) {
+      return 'Not specified'
+    }
+    const date = value instanceof Date ? value : new Date(value)
+    if (Number.isNaN(date.getTime())) {
+      return String(value)
+    }
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const hours = String(date.getUTCHours()).padStart(2, '0')
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0')
+    return months[date.getUTCMonth()] + ' ' + date.getUTCDate() + ', ' + date.getUTCFullYear() + ', ' + hours + ':' + minutes + ' UTC'
+  }
+-%>
+<%- include('./partials/layout/page-start', { theme, title, preheader, eyebrow, link: webLink }) %>
+
+<%- include('./partials/components/heading', { theme, text: 'Your TAVERN account has been blocked' }) %>
+<div style="margin: 0 0 16px;"><%- include('./partials/components/badge', { theme, text: 'Blocked', tone: 'solid' }) %></div>
+<%- include('./partials/components/paragraph', { theme, text: 'Your TAVERN account has been blocked by a moderator. While your account is blocked, you cannot sign in or use TAVERN.' }) %>
+
+<%- include('./partials/components/detail-list', { theme, title: 'Block details', items: [
+  { label: 'Reason', value: reason },
+  { label: 'Blocked from', value: formatDate(typeof blockedFrom !== 'undefined' ? blockedFrom : null) },
+  { label: 'Blocked until', value: formatDate(typeof blockedUntil !== 'undefined' ? blockedUntil : null) }
+] }) %>
+
+<%- include('./partials/components/callout', { theme, title: 'Think this is a mistake?', text: 'Contact TAVERN support and include the block details above so we can review your case.' }) %>
+
+<%- include('./partials/layout/page-end', { theme, link: webLink, year: currentYear }) %>

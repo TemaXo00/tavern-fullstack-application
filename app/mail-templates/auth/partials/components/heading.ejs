@@ -1,0 +1,12 @@
+<%
+  const headingLevel = typeof level !== 'undefined' && [1, 2, 3].includes(level) ? level : 1
+  const headingTag = 'h' + headingLevel
+  const headingText = typeof text !== 'undefined' ? text : ''
+  const headingAlign = typeof align !== 'undefined' ? align : 'left'
+  const headingSize = headingLevel === 1 ? '28px' : headingLevel === 2 ? '20px' : '17px'
+  const headingLine = headingLevel === 1 ? '36px' : headingLevel === 2 ? '28px' : '24px'
+  const headingMargin = typeof margin !== 'undefined' ? margin : '0 0 16px'
+%>
+<<%= headingTag %> class="email-heading" style="margin: <%= headingMargin %>; font-family: <%= theme.fonts.sans %>; font-size: <%= headingSize %>; line-height: <%= headingLine %>; font-weight: 700; letter-spacing: -0.02em; color: <%= theme.colors.text %>; text-align: <%= headingAlign %>;">
+  <%= headingText %>
+</<%= headingTag %>>

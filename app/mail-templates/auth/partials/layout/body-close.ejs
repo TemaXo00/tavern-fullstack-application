@@ -1,0 +1,17 @@
+<%
+  const closeLink = typeof link !== 'undefined' && link ? link : '#'
+  const closeYear = typeof year !== 'undefined' && year ? year : new Date().getFullYear()
+%>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%" bgcolor="<%= theme.colors.inverse %>" style="background-color: <%= theme.colors.inverse %>; padding: <%= theme.layout.footerPadding %>px 16px;">
+        <%- include('./footer', { theme, link: closeLink, year: closeYear }) %>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

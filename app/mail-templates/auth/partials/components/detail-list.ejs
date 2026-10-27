@@ -1,0 +1,30 @@
+<%
+  const detailItems = typeof items !== 'undefined' && Array.isArray(items) ? items : []
+  const detailTitle = typeof title !== 'undefined' ? title : ''
+  const detailMargin = typeof margin !== 'undefined' ? margin : '24px 0 0'
+%>
+<% if (detailItems.length) { %>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: <%= detailMargin %>; border: 1px solid <%= theme.colors.border %>; border-radius: <%= theme.radius.md %>px; border-collapse: separate; border-spacing: 0;">
+  <% if (detailTitle) { %>
+  <tr>
+    <td colspan="2" style="padding: 12px 16px; border-bottom: 1px solid <%= theme.colors.border %>; font-family: <%= theme.fonts.sans %>; font-size: 11px; line-height: 16px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: <%= theme.colors.muted %>;">
+      <%= detailTitle %>
+    </td>
+  </tr>
+  <% } %>
+  <% detailItems.forEach(function (detail, detailIndex) { %>
+  <tr>
+    <td width="38%" valign="top" style="padding: 12px 16px; border-bottom: <%= detailIndex === detailItems.length - 1 ? 'none' : '1px solid ' + theme.colors.border %>; font-family: <%= theme.fonts.sans %>; font-size: 13px; line-height: 20px; color: <%= theme.colors.muted %>;">
+      <%= detail.label %>
+    </td>
+    <td valign="top" style="padding: 12px 16px; border-bottom: <%= detailIndex === detailItems.length - 1 ? 'none' : '1px solid ' + theme.colors.border %>; font-family: <%= theme.fonts.sans %>; font-size: 13px; line-height: 20px; font-weight: 600; color: <%= theme.colors.text %>; word-break: break-word;">
+      <% if (detail.href) { %>
+      <a href="<%= detail.href %>" style="color: <%= theme.colors.link %>; text-decoration: underline;"><%= detail.value %></a>
+      <% } else { %>
+      <%= detail.value != null ? detail.value : '—' %>
+      <% } %>
+    </td>
+  </tr>
+  <% }) %>
+</table>
+<% } %>

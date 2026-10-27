@@ -1,0 +1,9 @@
+<%
+  const badgeText = typeof text !== 'undefined' ? text : ''
+  const badgeTone = typeof tone !== 'undefined' ? tone : 'outline'
+  const badgeSolid = badgeTone === 'solid'
+  const badgeBackground = badgeSolid ? theme.colors.inverse : theme.colors.card
+  const badgeForeground = badgeSolid ? theme.colors.inverseText : theme.colors.text
+  const badgeBorder = badgeSolid ? theme.colors.inverse : theme.colors.border
+%>
+<span style="display: inline-block; padding: 5px 10px; border: 1px solid <%= badgeBorder %>; border-radius: <%= theme.radius.pill %>px; background-color: <%= badgeBackground %>; color: <%= badgeForeground %>; font-family: <%= theme.fonts.sans %>; font-size: 11px; line-height: 16px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;"><%= badgeText %></span>

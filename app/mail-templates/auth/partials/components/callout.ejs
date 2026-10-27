@@ -1,0 +1,27 @@
+<%
+  const calloutTone = typeof tone !== 'undefined' ? tone : 'neutral'
+  const calloutInverse = calloutTone === 'inverse'
+  const calloutTitle = typeof title !== 'undefined' ? title : ''
+  const calloutText = typeof text !== 'undefined' ? text : ''
+  const calloutMargin = typeof margin !== 'undefined' ? margin : '28px 0 0'
+  const calloutBackground = calloutInverse ? theme.colors.inverse : theme.colors.surface
+  const calloutTitleColor = calloutInverse ? theme.colors.inverseText : theme.colors.text
+  const calloutTextColor = calloutInverse ? theme.colors.inverseMuted : theme.colors.muted
+  const calloutBorder = calloutInverse ? theme.colors.inverseText : theme.colors.text
+%>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: <%= calloutMargin %>;">
+  <tr>
+    <td bgcolor="<%= calloutBackground %>" style="padding: 16px 18px; border-left: 3px solid <%= calloutBorder %>; border-radius: 0 <%= theme.radius.sm %>px <%= theme.radius.sm %>px 0;">
+      <% if (calloutTitle) { %>
+      <p style="margin: 0 0 6px; font-family: <%= theme.fonts.sans %>; font-size: 14px; line-height: 22px; font-weight: 700; color: <%= calloutTitleColor %>;">
+        <%= calloutTitle %>
+      </p>
+      <% } %>
+      <% if (calloutText) { %>
+      <p style="margin: 0; font-family: <%= theme.fonts.sans %>; font-size: 14px; line-height: 22px; color: <%= calloutTextColor %>;">
+        <%= calloutText %>
+      </p>
+      <% } %>
+    </td>
+  </tr>
+</table>

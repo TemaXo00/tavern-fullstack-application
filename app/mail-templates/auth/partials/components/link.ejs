@@ -1,0 +1,10 @@
+<%
+  const linkHref = typeof href !== 'undefined' && href ? href : '#'
+  const linkLabel = typeof label !== 'undefined' ? label : linkHref
+  const linkMargin = typeof margin !== 'undefined' ? margin : '0 0 16px'
+  const linkMuted = typeof muted !== 'undefined' ? muted : false
+  const linkColor = linkMuted ? theme.colors.muted : theme.colors.link
+%>
+<p style="margin: <%= linkMargin %>; font-family: <%= theme.fonts.sans %>; font-size: 14px; line-height: 22px; color: <%= theme.colors.muted %>;">
+  <a href="<%= linkHref %>" target="_blank" rel="noopener noreferrer" style="color: <%= linkColor %>; font-weight: 600; text-decoration: underline;"><%= linkLabel %></a>
+</p>
