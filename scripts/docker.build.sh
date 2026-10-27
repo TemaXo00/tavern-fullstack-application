@@ -14,6 +14,7 @@ SERVICES=(
   "Auth:Auth.Dockerfile"
   "Profile:Profile.Dockerfile"
   "Event:Event.Dockerfile"
+  "Mail:Mail.Dockerfile"
   "Migrator:Db-Migrator.Dockerfile"
   "Gateway:Gateway.Dockerfile"
 )

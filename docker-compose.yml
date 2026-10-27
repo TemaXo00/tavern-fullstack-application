@@ -144,7 +144,6 @@ services:
     networks:
       - tavern-dev
     environment:
-      APPS_GLOBAL_SCOPE: "TAVERN"
       TAVERN_DEV_MODE: true
       TAVERN_JWT_SECRET: ${TAVERN_JWT_SECRET}
       TAVERN_JWT_ACCESS_TOKEN_TTL: ${TAVERN_JWT_ACCESS_TOKEN_TTL}
@@ -170,7 +169,6 @@ services:
     networks:
       - tavern-dev
     environment:
-      APPS_GLOBAL_SCOPE: "TAVERN"
       TAVERN_DEV_MODE: true
       TAVERN_JWT_SECRET: ${TAVERN_JWT_SECRET}
       TAVERN_JWT_ACCESS_TOKEN_TTL: ${TAVERN_JWT_ACCESS_TOKEN_TTL}
@@ -199,13 +197,35 @@ services:
       rabbitmq-dev:
         condition: service_healthy
 
+  mail-service-dev:
+    image: ${DOCKER_REGISTRY}/temaxo00/tavern-mail:${DOCKER_APPS_VERSION}
+    container_name: tavern-dev-mail-api
+    environment:
+      TAVERN_DEV_MODE: true
+      TAVERN_MAIL_FROM: ${TAVERN_MAIL_FROM}
+      TAVERN_MAIL_TRANSPORT_HOST: ${TAVERN_MAIL_TRANSPORT_HOST}
+      TAVERN_MAIL_TRANSPORT_PORT: ${TAVERN_MAIL_TRANSPORT_PORT}
+      TAVERN_MAIL_SECURE_ENABLE: ${TAVERN_MAIL_SECURE_ENABLE}
+      TAVERN_MAIL_USER: ${TAVERN_MAIL_USER}
+      TAVERN_MAIL_PASSWORD: ${TAVERN_MAIL_PASSWORD}
+      TAVERN_WEB_CLIENT_LINK: ${TAVERN_WEB_CLIENT_LINK}
+      TAVERN_RMQ_USER: ${TAVERN_RMQ_USER}
+      TAVERN_RMQ_PASSWORD: ${TAVERN_RMQ_PASSWORD}
+      TAVERN_RMQ_URL: ${TAVERN_RMQ_DEV_URL}
+    networks:
+      - tavern-dev
+    depends_on:
+      rabbitmq-dev:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+
   event-service-dev:
     image: ${DOCKER_REGISTRY}/temaxo00/tavern-event:${DOCKER_APPS_VERSION}
     container_name: tavern-dev-event-api
     networks:
       - tavern-dev
     environment:
-      APPS_GLOBAL_SCOPE: "TAVERN"
       TAVERN_DEV_MODE: true
       TAVERN_JWT_SECRET: ${TAVERN_JWT_SECRET}
       TAVERN_JWT_ACCESS_TOKEN_TTL: ${TAVERN_JWT_ACCESS_TOKEN_TTL}
@@ -240,7 +260,6 @@ services:
     networks:
       - tavern-dev
     environment:
-      APPS_GLOBAL_SCOPE: "TAVERN"
       TAVERN_DEV_MODE: true
       TAVERN_GATEWAY_HTTP_PORT: ${TAVERN_API_PORT}
       TAVERN_GATEWAY_CORS_ORIGINS: ${TAVERN_ALLOWED_ORIGINS}
@@ -291,6 +310,15 @@ services:
       log-db-dev:
         condition: service_healthy
     restart: "no"
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: tavern-dev-mailpit
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8025:8025"
+    networks:
+      - tavern-dev
 
 volumes:
   redis_dev_data:

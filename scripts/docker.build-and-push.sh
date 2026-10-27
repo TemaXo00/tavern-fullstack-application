@@ -15,6 +15,7 @@ SERVICES=(
   "auth:Auth.Dockerfile:./app"
   "profile:Profile.Dockerfile:./app"
   "event:Event.Dockerfile:./app"
+  "mail:Mail.Dockerfile:./app"
   "migrator:Db-Migrator.Dockerfile:."
   "gateway:Gateway.Dockerfile:./app"
 )
