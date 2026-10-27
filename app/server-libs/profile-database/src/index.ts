@@ -6,5 +6,6 @@ export type {
   ProfileActivity,
   ProfileSocial,
   Reputation,
+  Prisma
 } from './generated/prisma/client';
 export * from './generated/prisma/models';
