@@ -17,6 +17,21 @@
     },
     {
       "path": "../../server-libs/shared-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/blog-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/blog-tag-feature/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/blog-rmq-handler/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/blog-article-feature/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/auth-authorization-core/tsconfig.lib.json"
     }
   ]
 }

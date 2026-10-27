@@ -144,6 +144,7 @@
     "server-libs/*",
     "client-libs/layout-auth",
     "client-libs/auth-layout",
-    "client-libs/*"
+    "client-libs/*",
+    "blog-rmq-handler"
   ]
 }

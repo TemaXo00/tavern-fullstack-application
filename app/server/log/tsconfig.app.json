@@ -17,6 +17,27 @@
     },
     {
       "path": "../../server-libs/shared-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/log-util/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/log-profile-handler/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/log-feature/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/log-event-handler/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/log-blog-handler/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/log-auth-handler/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/auth-authorization-core/tsconfig.lib.json"
     }
   ]
 }

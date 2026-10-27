@@ -188,6 +188,36 @@
     },
     {
       "path": "./server-libs/mail-auth-handler"
+    },
+    {
+      "path": "./server-libs/blog-utils"
+    },
+    {
+      "path": "./server-libs/blog-rmq-handler"
+    },
+    {
+      "path": "./server-libs/blog-tag-feature"
+    },
+    {
+      "path": "./server-libs/blog-article-feature"
+    },
+    {
+      "path": "./server-libs/log-util"
+    },
+    {
+      "path": "./server-libs/log-auth-handler"
+    },
+    {
+      "path": "./server-libs/log-profile-handler"
+    },
+    {
+      "path": "./server-libs/log-event-handler"
+    },
+    {
+      "path": "./server-libs/log-blog-handler"
+    },
+    {
+      "path": "./server-libs/log-feature"
     }
   ],
   "compilerOptions": {}
