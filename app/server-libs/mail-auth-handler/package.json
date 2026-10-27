@@ -15,6 +15,10 @@
     }
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/microservices": "^11.2.1",
+    "@org/mail-handler": "0.0.1",
+    "@org/rmq-messages": "0.0.1"
   }
 }

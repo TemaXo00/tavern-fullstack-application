@@ -9,7 +9,7 @@ import { MailHandlerModule } from '@org/mail-handler'
       isGlobal: true,
     }),
     MailHandlerModule,
-    MailAuthHandlerModule
+    MailAuthHandlerModule,
   ],
 })
 export class AppModule {}

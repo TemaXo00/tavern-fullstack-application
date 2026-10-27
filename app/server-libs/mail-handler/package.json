@@ -15,6 +15,10 @@
     }
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs-modules/mailer": "^4.0.0",
+    "nx": "^23.1.1"
   }
 }

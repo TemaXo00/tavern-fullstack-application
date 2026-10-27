@@ -63,7 +63,7 @@ export class AuthController {
         browser: data.session.browser,
         device: data.session.device,
         os: data.session.os,
-      }
+      },
     })
   }
 }
