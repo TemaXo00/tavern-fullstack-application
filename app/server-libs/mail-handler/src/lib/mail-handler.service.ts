@@ -17,7 +17,7 @@ export class MailHandlerService {
       to: context.to,
       subject: context.subject,
       template: context.template,
-      context: context.variables,
+      context: context.variables ?? {},
     })
   }
 }

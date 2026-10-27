@@ -17,6 +17,9 @@
     },
     {
       "path": "../../server-libs/mail-handler/tsconfig.lib.json"
+    },
+    {
+      "path": "../../server-libs/mail-auth-handler/tsconfig.lib.json"
     }
   ]
 }

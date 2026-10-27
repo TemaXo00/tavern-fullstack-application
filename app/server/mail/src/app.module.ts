@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { MailAuthHandlerModule } from '@org/mail-auth-handler'
 import { MailHandlerModule } from '@org/mail-handler'
 
 @Module({
@@ -7,7 +8,8 @@ import { MailHandlerModule } from '@org/mail-handler'
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MailHandlerModule
+    MailHandlerModule,
+    MailAuthHandlerModule
   ],
 })
 export class AppModule {}
