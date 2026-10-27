@@ -13,7 +13,6 @@ COPY server-libs/mail-handler ./server-libs/mail-handler
 COPY server-libs/mail-auth-handler ./server-libs/mail-auth-handler
 
 COPY core-libs/nest-launcher ./core-libs/nest-launcher
-COPY core-libs/rmq-config ./core-libs/rmq-config
 COPY core-libs/rmq-messages ./core-libs/rmq-messages
 COPY core-libs/base-types ./core-libs/base-types
 COPY core-libs/grpc-types ./core-libs/grpc-types
@@ -43,7 +42,6 @@ COPY --from=builder /app/server-libs/mail-handler/dist ./node_modules/@org/mail-
 COPY --from=builder /app/server-libs/mail-auth-handler/dist ./node_modules/@org/mail-auth-handler
 
 COPY --from=builder /app/core-libs/nest-launcher/dist ./node_modules/@org/nest-launcher
-COPY --from=builder /app/core-libs/rmq-config/dist ./node_modules/@org/rmq-config
 COPY --from=builder /app/core-libs/rmq-messages/dist ./node_modules/@org/rmq-messages
 COPY --from=builder /app/core-libs/base-types/dist ./node_modules/@org/base-types
 COPY --from=builder /app/core-libs/grpc-types/dist ./node_modules/@org/grpc-types
