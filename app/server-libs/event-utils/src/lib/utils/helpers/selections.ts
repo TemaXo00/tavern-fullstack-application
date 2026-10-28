@@ -28,7 +28,7 @@ export const TAG_ADVANCED_OUTPUT_SELECTIONS = {
     },
     take: EVENT_CONFIG.TAG.AMOUNT_OF_NEAR_EVENTS,
     select: {
-      id: true,
+      slug: true,
       name: true,
       dateAndTime: true,
       leftPlaces: true,

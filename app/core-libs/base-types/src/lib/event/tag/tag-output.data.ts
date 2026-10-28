@@ -1,7 +1,7 @@
 import { PaginationBaseOutput } from '../../shared/pagination.type.js'
 
 interface EventShortBaseOutput {
-  id: string
+  slug: string
   name: string
   dateAndTime: Date
   leftPlaces: number
