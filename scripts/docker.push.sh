@@ -14,6 +14,8 @@ SERVICES=(
   "auth"
   "profile"
   "event"
+  "blog"
+  "log"
   "mail"
   "migrator"
   "gateway"

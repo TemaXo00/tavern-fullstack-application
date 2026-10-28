@@ -14,6 +14,8 @@ SERVICES=(
   "Auth:Auth.Dockerfile"
   "Profile:Profile.Dockerfile"
   "Event:Event.Dockerfile"
+  "Blog:Blog.Dockerfile"
+  "Log:Log.Dockerfile"
   "Mail:Mail.Dockerfile"
   "Migrator:Db-Migrator.Dockerfile"
   "Gateway:Gateway.Dockerfile"
@@ -31,7 +33,7 @@ for entry in "${SERVICES[@]}"; do
 
   echo "Build TAVERN ${NAME} Microservice"
 
-  if docker build -f "docker-files/${DOCKERFILE}" -t "$IMAGE" ./app; then
+  if docker build --no-cache -f "docker-files/${DOCKERFILE}" -t "$IMAGE" ./app; then
     echo "${NAME} built successfully"
   else
     echo "${NAME} build failed"
