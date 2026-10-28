@@ -17,7 +17,6 @@ SERVICES=(
   "Blog:Blog.Dockerfile"
   "Log:Log.Dockerfile"
   "Mail:Mail.Dockerfile"
-  "Migrator:Db-Migrator.Dockerfile"
   "Gateway:Gateway.Dockerfile"
 )
 
@@ -40,6 +39,14 @@ for entry in "${SERVICES[@]}"; do
     FAILED+=("$NAME")
   fi
 done
+
+echo "Build TAVERN DB Migrator"
+if docker build --no-cache -f "docker-files/Db-Migrator.Dockerfile" -t "${DOCKER_REGISTRY}/temaxo00/tavern-migrator:${DOCKER_APPS_VERSION}" .; then
+    echo "Migrator built successfully"
+  else
+    echo "Migrator build failed"
+    FAILED+=("Migrator")
+  fi
 
 echo "--------------------------------"
 

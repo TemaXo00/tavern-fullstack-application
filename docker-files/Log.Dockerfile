@@ -6,9 +6,9 @@ COPY package*.json ./
 COPY nx.json ./
 COPY tsconfig*.json ./
 
-COPY server/blog ./server/blog
-COPY proto/blog.proto ./proto/blog.proto
-COPY proto/blog ./proto/blog
+COPY server/log ./server/log
+COPY proto/log.proto ./proto/log.proto
+COPY proto/log ./proto/log
 COPY proto/shared ./proto/shared
 
 COPY server-libs/auth-authorization-core ./server-libs/auth-authorization-core
@@ -34,10 +34,10 @@ COPY core-libs/validation-config ./core-libs/validation-config
 COPY core-libs/validation-messages ./core-libs/validation-messages
 
 RUN npm ci
-RUN npm run blog-db:generate
+RUN npm run log-db:generate
 RUN npm run auth-db:generate
 RUN npm run nx:sync
-RUN npx nx build blog
+RUN npx nx build log
 
 FROM node:26.3-alpine AS deps
 
@@ -53,7 +53,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-COPY --from=builder /app/server/blog/dist ./dist
+COPY --from=builder /app/server/log/dist ./dist
 COPY --from=builder /app/proto ./proto
 
 COPY --from=builder /app/server-libs/auth-authorization-utils/dist ./node_modules/@org/auth-authorization-utils
