@@ -1,9 +1,24 @@
 syntax = 'proto3';
 
-import 'shared/shared.proto';
-
 package blog;
 
-service BlogService {
-    rpc Ping(shared.Empty) returns (shared.Empty);
+import 'blog/tag.proto';
+import 'blog/article.proto';
+import 'shared/shared.proto';
+
+service TagService {
+    rpc GetPaginatedTags(tag.GetPaginatedTagsInput) returns (tag.PaginatedTagsOutput);
+    rpc GetTagBySlug(tag.GetTagInput) returns (tag.TagDetailedOutput);
+    rpc CreateTag(tag.CreateTagInput) returns (tag.TagOutput);
+    rpc DeleteTag(tag.DeleteTagInput) returns (shared.Empty);
+}
+
+service ArticleService {
+    rpc GetArticles(article.GetArticlesInput) returns (article.PaginatedArticlesOutput);
+    rpc GetArticleBySlug(article.GetArticleBySlugInput) returns (article.ArticleBySlugOutput);
+    rpc CreateArticle(article.CreateArticleInput) returns (article.ArticleBySlugOutput);
+    rpc PublishArticle(article.PublishArticleInput) returns (article.ArticleBySlugOutput);
+    rpc UnpublishArticle(article.UnpublishArticleInput) returns (article.ArticleBySlugOutput);
+    rpc UpdateArticle(article.UpdateArticleInput) returns (article.ArticleBySlugOutput);
+    rpc DeleteArticle(article.DeleteArticleInput) returns (shared.Empty);
 }

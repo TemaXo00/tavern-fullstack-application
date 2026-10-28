@@ -61,7 +61,8 @@ message ArticleShortOutput {
     string slug = 1;
     string name = 2;
     string shortDesc = 3;
-    string authorNickname = 4;
+    optional string authorNickname = 4;
+    optional string authorAvatarId = 5;
 }
 
 message PaginatedTagsOutput {
@@ -72,14 +73,14 @@ message PaginatedTagsOutput {
 message TagOutput {
     string slug = 1;
     string name = 2;
-    string createdAt = 5;
-    string updatedAt = 6;
+    string createdAt = 3;
+    string updatedAt = 4;
 }
 
 message TagDetailedOutput {
     string slug = 1;
     string name = 2;
-    repeated ArticleShortOutput events = 5;
-    string createdAt = 6;
-    string updatedAt = 7;
+    repeated ArticleShortOutput articles = 3;
+    string createdAt = 4;
+    string updatedAt = 5;
 }

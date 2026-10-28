@@ -1,13 +1,78 @@
 syntax = 'proto3';
 
-import 'shared/shared.proto';
-
 package log;
 
-message HealthCheck {
-    string status = 1;
+import "google/protobuf/struct.proto";
+
+message ValidateInput {
+  string accessToken = 1;
+  SessionInput session = 2;
 }
 
-service TestService {
-    rpc Health(shared.Empty) returns (HealthCheck);
+message SessionInput {
+    string os = 1;
+    string device = 2;
+    string browser = 3;
+    string ip = 4;
+}
+
+message PaginationInput {
+    optional int32 page = 1;
+    optional int32 limit = 2;
+    optional string search = 3;
+    optional string dateFrom = 4;
+    optional string dateTo = 5;
+    optional string microserviceName = 6;
+    optional string serviceName = 7;
+    optional bool isAdminAction = 8;
+}
+
+message GetPaginatedLogsInput {
+    ValidateInput validation = 1;
+    PaginationInput pagination = 2;
+}
+
+message GetLogsByActorInput {
+    ValidateInput validation = 1;
+    string actorId = 2;
+    PaginationInput pagination = 3;
+}
+
+// Output messages
+
+message LogOutput {
+    string id = 1;
+    optional string actorId = 2;
+    string action = 3;
+    string actionDesc = 4;
+    string microserviceName = 5;
+    string serviceName = 6;
+    bool isAdminAction = 7;
+    google.protobuf.Struct logBody = 8;
+    string createdAt = 9;
+}
+
+message PaginationOutput {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 total = 3;
+    int32 totalPages = 4;
+    bool hasNext = 5;
+    bool hasPrev = 6;
+    optional string search = 7;
+    optional string dateFrom = 8;
+    optional string dateTo = 9;
+    optional string microserviceName = 10;
+    optional string serviceName = 11;
+    optional bool isAdminAction = 12;
+}
+
+message PaginatedLogsOutput {
+    PaginationOutput pagination = 1;
+    repeated LogOutput logs = 2;
+}
+
+service LogService {
+    rpc GetLogs(GetPaginatedLogsInput) returns (PaginatedLogsOutput);
+    rpc GetLogsByActor(GetLogsByActorInput) returns (PaginatedLogsOutput);
 }

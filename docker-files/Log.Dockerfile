@@ -8,8 +8,6 @@ COPY tsconfig*.json ./
 
 COPY server/log ./server/log
 COPY proto/log.proto ./proto/log.proto
-COPY proto/log ./proto/log
-COPY proto/shared ./proto/shared
 
 COPY server-libs/auth-authorization-core ./server-libs/auth-authorization-core
 COPY server-libs/auth-authorization-utils ./server-libs/auth-authorization-utils

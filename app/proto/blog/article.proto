@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+package article;
+
+// Input Messages
+
+message ValidateInput {
+  string accessToken = 1;
+  SessionInput session = 2;
+}
+
+message SessionInput {
+    string os = 1;
+    string device = 2;
+    string browser = 3;
+    string ip = 4;
+}
+
+message PaginationInput {
+    optional int32 page = 1;
+    optional int32 limit = 2;
+    optional string search = 3;
+    optional string authorNickname = 4;
+    optional string dateFrom = 5;
+    optional string dateTo = 6;
+    repeated string tags = 7;
+}
+
+message StringList {
+    repeated string values = 1;
+}
+
+message GetArticlesInput {
+    PaginationInput pagination = 1;
+}
+
+message GetArticleBySlugInput {
+    string slug = 1;
+}
+
+message CreateArticleInput {
+    ValidateInput validation = 1;
+    string name = 2;
+    string shortDesc = 3;
+    string content = 4;
+    StringList tags = 5;
+    bool isAnonim = 6;
+}
+
+message PublishArticleInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
+message UnpublishArticleInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
+message UpdateArticleInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+    optional string shortDesc = 3;
+    optional string content = 4;
+    optional StringList tags = 5;
+}
+
+message DeleteArticleInput {
+    ValidateInput validation = 1;
+    string slug = 2;
+}
+
+// Output messages
+
+message PaginationOutput {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 total = 3;
+    int32 totalPages = 4;
+    bool hasNext = 5;
+    bool hasPrev = 6;
+    optional string search = 7;
+    optional string authorNickname = 8;
+    optional string dateFrom = 9;
+    optional string dateTo = 10;
+    repeated string tags = 11;
+}
+
+message ArticleShortOutput {
+    string slug = 1;
+    string name = 2;
+    string shortDesc = 3;
+    optional string authorNickname = 4;
+    optional string authorAvatarId = 5;
+}
+
+message PaginatedArticlesOutput {
+    PaginationOutput pagination = 1;
+    repeated ArticleShortOutput articles = 2;
+}
+
+message ArticleBySlugOutput {
+    string name = 1;
+    string slug = 2;
+    string shortDesc = 3;
+    string content = 4;
+    optional string authorNickname = 5;
+    optional string authorAvatarId = 6;
+    repeated string tags = 7;
+    bool isPublished = 8;
+    bool isUpdated = 9;
+    string createdAt = 10;
+}
