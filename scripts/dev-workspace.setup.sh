@@ -17,5 +17,7 @@ npm run nx:sync
 npm run auth-db:generate
 npm run profile-db:generate
 npm run event-db:generate
+npm run blog-db:generate
+npm run log-db:generate
 npm run all:lint-fix
-npx prettier --check . --write
+npm run all:prettier-fix
