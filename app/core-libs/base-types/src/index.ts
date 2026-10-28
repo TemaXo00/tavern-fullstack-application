@@ -64,6 +64,29 @@ export * from './lib/event/participant/participant-output.data.js'
 
 // ------------------------------
 
+// BLOG MICROSERVICE BEGIN
+
+// TAG SERVICE
+
+export * from './lib/blog/tag/tag-input.data.js'
+export * from './lib/blog/tag/tag-output.data.js'
+
+// ARTICLE SERVICE
+
+export * from './lib/blog/article/article-input.data.js'
+export * from './lib/blog/article/article-output.data.js'
+
+// BLOG MICROSERVICE END
+
+// ------------------------------
+
+// LOG MICROSERVICE BEGIN
+
+export * from './lib/log/log-input.data.js'
+export * from './lib/log/log-output.data.js'
+
+// LOG MICROSERVICE END
+
 // SHARED
 
 export * from './lib/shared/pagination.type.js'

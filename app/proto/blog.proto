@@ -14,7 +14,7 @@ service TagService {
 }
 
 service ArticleService {
-    rpc GetArticles(article.GetArticlesInput) returns (article.PaginatedArticlesOutput);
+    rpc GetArticles(article.GetPaginatedArticlesInput) returns (article.PaginatedArticlesOutput);
     rpc GetArticleBySlug(article.GetArticleBySlugInput) returns (article.ArticleBySlugOutput);
     rpc CreateArticle(article.CreateArticleInput) returns (article.ArticleBySlugOutput);
     rpc PublishArticle(article.PublishArticleInput) returns (article.ArticleBySlugOutput);

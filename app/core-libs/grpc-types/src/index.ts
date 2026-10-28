@@ -76,6 +76,36 @@ export * from './lib/event/event.contract.js'
 
 // ------------------------------
 
+// BLOG MICROSERVICE BEGIN
+
+// TAG SERVICE
+
+export * from './lib/blog/tag/tag-input.data.js'
+export * from './lib/blog/tag/tag-output.data.js'
+
+// ARTICLE SERVICE
+
+export * from './lib/blog/article/article-input.data.js'
+export * from './lib/blog/article/article-output.data.js'
+
+// CONTRACTS
+
+export * from './lib/blog/blog.contract.js'
+
+// BLOG MICROSERVICE END
+
+// ------------------------------
+
+// LOG MICROSERVICE BEGIN
+
+export * from './lib/log/log-input.data.js'
+export * from './lib/log/log-output.data.js'
+export * from './lib/log/log.contract.js'
+
+// LOG MICROSERVICE END
+
+// ------------------------------
+
 // SHARED
 
 export * from './lib/shared/empty.type.js'
