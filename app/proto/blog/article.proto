@@ -26,10 +26,6 @@ message PaginationInput {
     repeated string tags = 7;
 }
 
-message StringList {
-    repeated string values = 1;
-}
-
 message GetArticlesInput {
     PaginationInput pagination = 1;
 }
@@ -43,7 +39,7 @@ message CreateArticleInput {
     string name = 2;
     string shortDesc = 3;
     string content = 4;
-    StringList tags = 5;
+    repeated string tags = 5;
     bool isAnonim = 6;
 }
 
@@ -62,7 +58,7 @@ message UpdateArticleInput {
     string slug = 2;
     optional string shortDesc = 3;
     optional string content = 4;
-    optional StringList tags = 5;
+    repeated string tags = 5;
 }
 
 message DeleteArticleInput {
