@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common'
 
+import { BlogArticleFeatureController } from './blog-article-feature.controller'
+import { BlogArticleFeatureService } from './blog-article-feature.service'
+
 @Module({
-  controllers: [],
-  providers: [],
+  controllers: [BlogArticleFeatureController],
+  providers: [BlogArticleFeatureService],
 })
 export class BlogArticleFeatureModule {}
