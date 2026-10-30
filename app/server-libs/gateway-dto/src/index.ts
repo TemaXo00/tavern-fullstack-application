@@ -48,3 +48,10 @@ export * from './lib/event/participant/join-event.dto.js'
 // LOG
 
 export * from './lib/log/logs-pagination.dto.js'
+
+// BLOG
+
+export * from './lib/blog/article/article-pagination.dto.js'
+
+export * from './lib/blog/tag/tag-pagination.dto.js'
+export * from './lib/blog/tag/create-blog-tag.dto.js'
