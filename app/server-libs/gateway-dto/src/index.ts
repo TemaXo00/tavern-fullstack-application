@@ -44,3 +44,7 @@ export * from './lib/event/participant/add-participant.dto.js'
 export * from './lib/event/participant/change-participant-status.dto.js'
 export * from './lib/event/participant/delete-participant.dto.js'
 export * from './lib/event/participant/join-event.dto.js'
+
+// LOG
+
+export * from './lib/log/logs-pagination.dto.js'

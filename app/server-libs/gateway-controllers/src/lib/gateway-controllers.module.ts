@@ -6,10 +6,12 @@ import { ClientsModule, Transport, GrpcOptions } from '@nestjs/microservices'
 import { workspaceRoot } from 'nx/src/utils/workspace-root'
 
 import { AUTH_CONTROLLERS } from './auth/main'
+import { BLOG_CONTROLLERS } from './blog/main'
 import { EVENT_CONTROLLERS } from './event/main'
+import { LOG_CONTROLLERS } from './log/main'
 import { PROFILE_CONTROLLERS } from './profile/main'
 
-const SERVICES: string[] = ['AUTH', 'PROFILE', 'EVENT']
+const SERVICES: string[] = ['AUTH', 'PROFILE', 'EVENT', 'BLOG', 'LOG']
 
 @Module({
   imports: [
@@ -29,6 +31,12 @@ const SERVICES: string[] = ['AUTH', 'PROFILE', 'EVENT']
       })),
     ),
   ],
-  controllers: [...AUTH_CONTROLLERS, ...PROFILE_CONTROLLERS, ...EVENT_CONTROLLERS],
+  controllers: [
+    ...AUTH_CONTROLLERS,
+    ...PROFILE_CONTROLLERS,
+    ...EVENT_CONTROLLERS,
+    ...LOG_CONTROLLERS,
+    ...BLOG_CONTROLLERS,
+  ],
 })
 export class GatewayControllersModule {}
