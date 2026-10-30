@@ -31,7 +31,7 @@ export class BlogArticleFeatureController implements BlogArticleServiceContract 
     return await this.service.GetArticleBySlug(data)
   }
 
-  @GrpcMethod('ArticleService', 'GetArticleBySlug')
+  @GrpcMethod('ArticleService', 'CreateArticle')
   async CreateArticle(data: CreateBlogArticleInput): Promise<BlogArticleBySlugOutput> {
     return await this.service.CreateArticle(data)
   }
