@@ -52,6 +52,8 @@ export * from './lib/log/logs-pagination.dto.js'
 // BLOG
 
 export * from './lib/blog/article/article-pagination.dto.js'
+export * from './lib/blog/article/create-article.dto.js'
+export * from './lib/blog/article/update-article.dto.js'
 
 export * from './lib/blog/tag/tag-pagination.dto.js'
 export * from './lib/blog/tag/create-blog-tag.dto.js'

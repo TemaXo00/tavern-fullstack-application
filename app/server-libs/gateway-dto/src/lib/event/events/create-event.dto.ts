@@ -9,7 +9,7 @@ import { Name } from '../../decorators/shared/name.decorator.js'
 export class CreateEventDto implements CreateEventSharedInput {
   @Name()
   name: string
-  @Description()
+  @Description(false)
   description?: string
   @EventDate(true)
   dateAndTime: Date

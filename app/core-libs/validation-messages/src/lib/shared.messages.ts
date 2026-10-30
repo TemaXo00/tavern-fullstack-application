@@ -27,6 +27,7 @@ export const SHARED_MESSAGES = {
     UUID: 'ID should have correct format',
   },
   DESCRIPTION_VALIDATION: {
+    NOT_EMPTY: 'Description cannot be empty string',
     TYPE: 'Description should be a string',
     MIN_LENGTH: `Minimal length of description is ${SHARED_CONFIG.DESCRIPTION.MIN_LENGTH}`,
     MAX_LENGTH: `Maximum length of description is ${SHARED_CONFIG.DESCRIPTION.MAX_LENGTH}`,

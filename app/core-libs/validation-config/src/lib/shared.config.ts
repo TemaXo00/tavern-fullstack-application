@@ -5,7 +5,7 @@ export const SHARED_CONFIG = {
   },
   DESCRIPTION: {
     MIN_LENGTH: 1,
-    MAX_LENGTH: 255,
+    MAX_LENGTH: 200,
   },
   NAME: {
     MIN_LENGTH: 2,

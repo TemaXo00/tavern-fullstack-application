@@ -7,7 +7,7 @@ import { Name } from '../../decorators/shared/name.decorator.js'
 export class CreateEventTagDto implements CreateEventTagSharedInput {
   @Name()
   name: string
-  @Description()
+  @Description(false)
   description?: string
   @Color()
   color?: string

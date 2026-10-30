@@ -17,7 +17,7 @@ export class UpdateProfileDto implements UpdateProfileSharedInput {
   @Surname()
   surname?: string
 
-  @Description()
+  @Description(false)
   description?: string
 
   @BirthDate(false)

@@ -3,4 +3,8 @@ export const BLOG_CONFIG = {
     AMOUNT_OF_NEAR_EVENTS: 5,
     ARRAY_MAX_SIZE: 20,
   },
+  CONTENT: {
+    MIN_LENGTH: 300,
+    MAX_LENGTH: 3000,
+  },
 } as const

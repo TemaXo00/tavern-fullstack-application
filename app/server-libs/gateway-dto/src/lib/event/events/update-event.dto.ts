@@ -6,7 +6,7 @@ import { EventTags } from '../../decorators/event/event-tags.decorator.js'
 import { Description } from '../../decorators/shared/description.decorator.js'
 
 export class UpdateEventDto implements UpdateEventDataSharedInput {
-  @Description()
+  @Description(false)
   description?: string
   @EventDate(false)
   dateAndTime?: Date

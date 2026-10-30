@@ -14,4 +14,13 @@ export const BLOG_MESSAGES = {
     TYPE: 'Date should be in correct format. Example: 2026-06-15T00:00:00.000Z',
     MAX: 'Date cannot be in future',
   },
+  IS_ANONIM_VALIDATION: {
+    NOT_EMPTY: 'Is anonim cannot be empty',
+  },
+  CONTENT_VALIDATION: {
+    NOT_EMPTY: 'Article content cannot be empty string',
+    TYPE: 'Article content should be a string',
+    MIN_LENGTH: `Minimal length of content is ${BLOG_CONFIG.CONTENT.MIN_LENGTH}`,
+    MAX_LENGTH: `Maximum length of content is ${BLOG_CONFIG.CONTENT.MAX_LENGTH}`,
+  },
 } as const
