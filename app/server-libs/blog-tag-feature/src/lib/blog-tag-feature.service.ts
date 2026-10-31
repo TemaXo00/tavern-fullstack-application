@@ -37,7 +37,7 @@ export class BlogTagFeatureService implements BlogTagServiceContract {
   async CreateTag(data: CreateBlogTagInput): Promise<BlogTagOutput> {
     const payload = await this.validate.validateWithRoles(data.validation, [Roles.ADMIN])
     const slug = this.slug.createSlug(data.name)
-    await this.validationUtil.checkSlugUnique(slug)
+    await this.validationUtil.checkTagSlugUnique(slug)
     const response = await this.dbUtil.createTag(data, slug)
     this.messagesUtil.createTag({ adminId: payload.id, tagSlug: slug })
     return response

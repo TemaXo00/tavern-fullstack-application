@@ -14,6 +14,8 @@
     "all:typecheck": "nx run-many -t typecheck",
     "all:lint-fix": "nx run-many -t lint --fix",
     "all:prettier-fix": "prettier --check . --write",
+    "all:migrate-reset": "prisma migrate reset --config server-libs/auth-database/prisma.config.ts && prisma migrate reset --config server-libs/blog-database/prisma.config.ts && prisma migrate reset --config server-libs/event-database/prisma.config.ts && prisma migrate reset --config server-libs/log-database/prisma.config.ts && prisma migrate reset --config server-libs/profile-database/prisma.config.ts",
+    "all:migrate-deploy": "prisma migrate deploy --config server-libs/auth-database/prisma.config.ts && prisma migrate deploy --config server-libs/blog-database/prisma.config.ts && prisma migrate deploy --config server-libs/event-database/prisma.config.ts && prisma migrate deploy --config server-libs/log-database/prisma.config.ts && prisma migrate deploy --config server-libs/profile-database/prisma.config.ts",
     "auth-db:generate": "prisma generate --config server-libs/auth-database/prisma.config.ts",
     "auth-db:migrate-dev": "prisma migrate dev --config server-libs/auth-database/prisma.config.ts",
     "auth-db:migrate-deploy": "prisma migrate deploy --config server-libs/auth-database/prisma.config.ts",

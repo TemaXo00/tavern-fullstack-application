@@ -14,9 +14,14 @@ export const BLOG_TAGS_ROUTES = {
 
 export const BLOG_ARTICLE_ROUTES = {
   BASE_URL: 'blog/article',
-  GET_PAGINATED_ARTICLES: '',
+  GET_PAGINATED_ARTICLES: 'public',
+  GET_MY_PAGINATION_ARTICLES: 'me',
   GET_ARTICLE_BY_SLUG: {
-    PATH: ':slug',
+    PATH: 'public/:slug',
+    PARAM: 'slug',
+  },
+  GET_MY_ARTICLE_BY_SLUG: {
+    PATH: 'me/:slug',
     PARAM: 'slug',
   },
   CREATE: '',

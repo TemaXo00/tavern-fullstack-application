@@ -30,8 +30,18 @@ message GetPaginatedArticlesInput {
     PaginationInput pagination = 1;
 }
 
+message GetPaginatedMyArticlesInput {
+    ValidateInput validation = 1;
+    PaginationInput pagination = 2;
+}
+
 message GetArticleBySlugInput {
     string slug = 1;
+}
+
+message GetMyArticleBySlugInput {
+    ValidateInput validation = 1;
+    string slug = 2;
 }
 
 message CreateArticleInput {
@@ -88,6 +98,7 @@ message ArticleShortOutput {
     string shortDesc = 3;
     optional string authorNickname = 4;
     optional string authorAvatarId = 5;
+    bool isPublished = 6;
 }
 
 message PaginatedArticlesOutput {
@@ -95,15 +106,22 @@ message PaginatedArticlesOutput {
     repeated ArticleShortOutput articles = 2;
 }
 
+message TagListOutput {
+    string slug = 1;
+    string name = 2;
+}
+
 message ArticleBySlugOutput {
     string name = 1;
     string slug = 2;
     string shortDesc = 3;
     string content = 4;
-    optional string authorNickname = 5;
-    optional string authorAvatarId = 6;
-    repeated string tags = 7;
-    bool isPublished = 8;
-    bool isUpdated = 9;
-    string createdAt = 10;
+    optional string authorId = 5;
+    optional string authorNickname = 6;
+    optional string authorAvatarId = 7;
+    repeated TagListOutput tags = 8;
+    bool isPublished = 9;
+    bool isUpdated = 10;
+    string createdAt = 11;
+    string updatedAt = 12;
 }

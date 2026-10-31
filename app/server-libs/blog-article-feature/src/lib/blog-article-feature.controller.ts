@@ -10,6 +10,8 @@ import type {
   DeleteBlogArticleInput,
   Empty,
   GetBlogArticleBySlugInput,
+  GetMyBlogArticleBySlugInput,
+  GetMyPaginatedBlogArticles,
   GetPaginatedBlogArticlesInput,
   PaginatedBlogArticlesOutput,
   PublishBlogArticleInput,
@@ -26,9 +28,19 @@ export class BlogArticleFeatureController implements BlogArticleServiceContract 
     return await this.service.GetArticles(data)
   }
 
+  @GrpcMethod('ArticleService', 'GetMyArticles')
+  async GetMyArticles(data: GetMyPaginatedBlogArticles): Promise<PaginatedBlogArticlesOutput> {
+    return await this.service.GetMyArticles(data)
+  }
+
   @GrpcMethod('ArticleService', 'GetArticleBySlug')
   async GetArticleBySlug(data: GetBlogArticleBySlugInput): Promise<BlogArticleBySlugOutput> {
     return await this.service.GetArticleBySlug(data)
+  }
+
+  @GrpcMethod('ArticleService', 'GetMyArticleBySlug')
+  async GetMyArticleBySlug(data: GetMyBlogArticleBySlugInput): Promise<BlogArticleBySlugOutput> {
+    return await this.service.GetMyArticleBySlug(data)
   }
 
   @GrpcMethod('ArticleService', 'CreateArticle')

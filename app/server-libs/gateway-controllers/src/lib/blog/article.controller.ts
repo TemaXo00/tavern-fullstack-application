@@ -3,11 +3,13 @@ import { Roles } from '@org/enums'
 import {
   DELETEProtectedMethod,
   GETMethod,
+  GETProtectedMethod,
   HTTPController,
   PATCHProtectedMethod,
   POSTProtected,
   PUTProtectedMethod,
   QUERYMethod,
+  QUERYProtectedMethod,
   ValidateInputParam,
 } from '@org/gateway-decorators'
 import { BlogArticlePaginationDto, CreateBlogArticleDto, UpdateBlogArticleDto } from '@org/gateway-dto'
@@ -40,16 +42,42 @@ export class ArticleController implements OnModuleInit {
     return await firstValueFrom(this.articleContract.GetArticles({ pagination }))
   }
 
+  @QUERYProtectedMethod({
+    path: BLOG_ARTICLE_ROUTES.GET_MY_PAGINATION_ARTICLES,
+    summary: 'Get paginated my articles',
+    operationDesc: 'Returns paginated articles by current user. Only admin method. Returns all types of articles',
+    roles: [Roles.ADMIN],
+  })
+  async getMyArticles(
+    @ValidateInputParam() validation: ValidateInput,
+    @Body() pagination: BlogArticlePaginationDto,
+  ): Promise<PaginatedBlogArticlesSharedOutput> {
+    return await firstValueFrom(this.articleContract.GetMyArticles({ validation, pagination }))
+  }
+
   @GETMethod({
     path: BLOG_ARTICLE_ROUTES.GET_ARTICLE_BY_SLUG.PATH,
     summary: 'Get article by slug',
-    operationDesc:
-      'Returns article by slug. If not exists - return 404 error. Only owner can check unpublished articles',
+    operationDesc: 'Returns article by slug. If not exists - return 404 error',
   })
   async getArticleBySlug(
     @Param(BLOG_ARTICLE_ROUTES.GET_ARTICLE_BY_SLUG.PARAM) slug: string,
   ): Promise<BlogArticleBySlugSharedOutput> {
     return await firstValueFrom(this.articleContract.GetArticleBySlug({ slug }))
+  }
+
+  @GETProtectedMethod({
+    path: BLOG_ARTICLE_ROUTES.GET_MY_ARTICLE_BY_SLUG.PATH,
+    summary: 'Get my article by slug',
+    operationDesc:
+      'Returns article by slug. If not exists - return 404 error. Only owner can check unpublished articles. Admin method',
+    roles: [Roles.ADMIN],
+  })
+  async getMyArticleBySlug(
+    @ValidateInputParam() validation: ValidateInput,
+    @Param(BLOG_ARTICLE_ROUTES.GET_MY_ARTICLE_BY_SLUG.PARAM) slug: string,
+  ): Promise<BlogArticleBySlugSharedOutput> {
+    return await firstValueFrom(this.articleContract.GetMyArticleBySlug({ validation, slug }))
   }
 
   @POSTProtected({
@@ -89,7 +117,7 @@ export class ArticleController implements OnModuleInit {
   })
   async unpublishArticle(
     @ValidateInputParam() validation: ValidateInput,
-    @Param(BLOG_ARTICLE_ROUTES.PUBLISH.PARAM) slug: string,
+    @Param(BLOG_ARTICLE_ROUTES.UNPUBLISH.PARAM) slug: string,
   ): Promise<BlogArticleBySlugSharedOutput> {
     return await firstValueFrom(this.articleContract.UnpublishArticle({ validation, slug }))
   }
@@ -114,6 +142,7 @@ export class ArticleController implements OnModuleInit {
     summary: 'Delete article',
     operationDesc:
       'Only admin route. Only admin can delete other articles by their slug. You can delete only published articles',
+    roles: [Roles.ADMIN]
   })
   async deleteArticle(
     @ValidateInputParam() validation: ValidateInput,

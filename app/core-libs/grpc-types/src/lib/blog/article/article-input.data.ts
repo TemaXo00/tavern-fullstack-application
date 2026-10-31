@@ -10,7 +10,9 @@ import type {
 export type BlogArticlePaginationGrpcInput = BlogArticlePaginationBaseInput
 
 export type GetPaginatedBlogArticlesInput = { pagination: BlogArticlePaginationBaseInput }
+export type GetMyPaginatedBlogArticles = Protected<GetPaginatedBlogArticlesInput>
 export type GetBlogArticleBySlugInput = BlogArticleBySlugBaseInput
+export type GetMyBlogArticleBySlugInput = Protected<GetBlogArticleBySlugInput>
 export type CreateBlogArticleInput = Protected<CreateBlogArticleBaseInput>
 export type PublishBlogArticleInput = Protected<BlogArticleBySlugBaseInput>
 export type UnpublishBlogArticleInput = Protected<BlogArticleBySlugBaseInput>

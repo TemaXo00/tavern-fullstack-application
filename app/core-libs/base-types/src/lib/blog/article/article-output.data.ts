@@ -1,4 +1,5 @@
 import { PaginationBaseOutput } from '../../shared/pagination.type.js'
+import { BlogTagListBaseOutput } from '../tag/tag-output.data.js'
 
 export interface BlogArticlePaginationBaseOutput extends PaginationBaseOutput {
   authorNickname?: string
@@ -13,6 +14,7 @@ export interface BlogArticleShortBaseOutput {
   shortDesc: string
   authorNickname: string | null
   authorAvatarId: string | null
+  isPublished: boolean
 }
 
 export interface PaginatedBlogArticlesBaseOutput {
@@ -25,10 +27,12 @@ export interface BlogArticleBySlugBaseOutput {
   slug: string
   shortDesc: string
   content: string
+  authorId: string | null
   authorNickname: string | null
   authorAvatarId: string | null
-  tags: string[]
+  tags: BlogTagListBaseOutput[]
   isPublished: boolean
   isUpdated: boolean
   createdAt: Date
+  updatedAt: Date
 }

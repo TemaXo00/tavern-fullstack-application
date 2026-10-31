@@ -26,44 +26,42 @@ export const BLOG_MESSAGES = {
   USER_SNAPSHOT_EXISTING_ERROR: {
     CONTEXT: 'ManipulateUserSnapshot',
     METHOD: 'FindUserByID',
-    MESSAGE: (id: string): string => {
-      return `User with id ${id} does not exists`
-    },
+    MESSAGE: (id: string): string => `User with id ${id} does not exists`,
   },
   USER_SNAPSHOT_NICKNAME_EXISTING_ERROR: {
     CONTEXT: 'ManipulateUserSnapshot',
     METHOD: 'FindUserByNickname',
-    MESSAGE: (nickname: string): string => {
-      return `User with ${nickname} existsing`
-    },
+    MESSAGE: (nickname: string): string => `User with ${nickname} existsing`,
   },
   USER_SHAPSHOT_CREATE_SUCCESS: {
     CONTEXT: 'CreateUserSnapshot',
-    METHOD: (id: string): string => {
-      return `CreateUser ${id}`
-    },
+    METHOD: (id: string): string => `CreateUser ${id}`,
   },
   USER_CHANGE_NICKNAME_SUCCESS: {
     CONTEXT: 'ChangeNickname',
-    METHOD: (userId: string) => {
-      return `Change nickname of ${userId}}`
-    },
+    METHOD: (userId: string) => `Change nickname of ${userId}}`,
   },
   USER_CHANGE_NICKNAME_WARNING: {
     CONTEXT: 'ChangeNickname',
-    METHOD: (userId: string) => {
-      return `Change nickname of ${userId}}`
-    },
+    METHOD: (userId: string) => `Change nickname of ${userId}}`,
     MESSAGE: 'Nickname does not found in payload',
   },
   USER_DELETE_SUCCESS: {
     CONTEXT: 'DeleteUser',
-    METHOD: (userId: string) => {
-      return `Delete of ${userId}}`
-    },
+    METHOD: (userId: string) => `Delete of ${userId}}`,
   },
   INVALID_TAG_SLUG_STRING: 'Slug',
   INVALID_TAG_NAME_STRING: 'Name',
+  INVALID_ARTICLE_SLUG_STRING: 'Article slug',
+  INVALID_ARTICLE_NAME_STRING: 'Article name',
+  INVALID_ARTICLE_SHORT_DESC_STRING: 'Article short description',
+  INVALID_ARTICLE_CONTENT_STRING: 'Article content',
+  INVALID_NICKNAME_STRING: 'Nickname',
   TAG_NOT_FOUND: 'Tag not found',
   TAG_SLUG_EXISTING: 'Tag with this name or slug already existing. Please, change name',
+  ARTICLE_NOT_FOUND: 'Article not found',
+  AUTHOR_NOT_FOUND: 'This article does not have author',
+  ONE_OR_MANY_TAGS_NOT_FOUND: 'One or many tags for this article not found. Please, check tags',
+  ARTICLE_SLUG_EXISTING: 'Article with this name or slug already existing. Please, change name',
+  ARTICLE_STATUS_CONFLICT: 'You cant set same status on this article',
 } as const

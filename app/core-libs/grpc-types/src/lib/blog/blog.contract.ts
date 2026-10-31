@@ -4,6 +4,8 @@ import type {
   CreateBlogArticleInput,
   DeleteBlogArticleInput,
   GetBlogArticleBySlugInput,
+  GetMyBlogArticleBySlugInput,
+  GetMyPaginatedBlogArticles,
   GetPaginatedBlogArticlesInput,
   PublishBlogArticleInput,
   UnpublishBlogArticleInput,
@@ -27,7 +29,9 @@ export interface BlogTagServiceContract {
 
 export interface BlogArticleServiceContract {
   GetArticles(data: GetPaginatedBlogArticlesInput): Promise<PaginatedBlogArticlesOutput>
+  GetMyArticles(data: GetMyPaginatedBlogArticles): Promise<PaginatedBlogArticlesOutput>
   GetArticleBySlug(data: GetBlogArticleBySlugInput): Promise<BlogArticleBySlugOutput>
+  GetMyArticleBySlug(data: GetMyBlogArticleBySlugInput): Promise<BlogArticleBySlugOutput>
   CreateArticle(data: CreateBlogArticleInput): Promise<BlogArticleBySlugOutput>
   PublishArticle(data: PublishBlogArticleInput): Promise<BlogArticleBySlugOutput>
   UnpublishArticle(data: UnpublishBlogArticleInput): Promise<BlogArticleBySlugOutput>

@@ -25,3 +25,4 @@ export * from './lib/events/participant-messages.js'
 export * from './lib/enums/blog.messages.js'
 
 export * from './lib/blog/tag-messages.js'
+export * from './lib/blog/article-messages.js'
