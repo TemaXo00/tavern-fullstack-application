@@ -1,4 +1,11 @@
-import type { BlogTagBaseOutput, BlogTagDetailedBaseOutput, PaginatedBlogTagsBaseOutput } from '@org/base-types'
+import type {
+  BlogTagBaseOutput,
+  BlogTagDetailedBaseOutput,
+  BlogTagListBaseOutput,
+  PaginatedBlogTagsBaseOutput,
+} from '@org/base-types'
+
+export type BlogTagListGrpcOutput = BlogTagListBaseOutput
 
 export type PaginatedBlogTagsOutput = PaginatedBlogTagsBaseOutput
 export type BlogTagOutput = BlogTagBaseOutput

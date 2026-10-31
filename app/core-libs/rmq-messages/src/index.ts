@@ -19,3 +19,9 @@ export * from './lib/enums/event.messages.js'
 export * from './lib/events/tag-messages.js'
 export * from './lib/events/event-messages.js'
 export * from './lib/events/participant-messages.js'
+
+// BLOG
+
+export * from './lib/enums/blog.messages.js'
+
+export * from './lib/blog/tag-messages.js'

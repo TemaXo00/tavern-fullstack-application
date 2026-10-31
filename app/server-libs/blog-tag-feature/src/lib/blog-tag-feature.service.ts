@@ -1,4 +1,8 @@
 import { Injectable } from '@nestjs/common'
+import { AuthValidateService } from '@org/auth-authorization-core'
+import { BlogDatabaseUtil, BlogMessagesUtil, BlogValidationUtil } from '@org/blog-utils'
+import { Roles } from '@org/enums'
+import { SlugUtil } from '@org/shared-utils'
 
 import type {
   BlogTagDetailedOutput,
@@ -14,19 +18,36 @@ import type {
 
 @Injectable()
 export class BlogTagFeatureService implements BlogTagServiceContract {
-  async GetPaginatedTags(_data: BlogTagPaginationInput): Promise<PaginatedBlogTagsOutput> {
-    throw new Error('Method not implemented.')
+  constructor(
+    private readonly dbUtil: BlogDatabaseUtil,
+    private readonly validationUtil: BlogValidationUtil,
+    private readonly messagesUtil: BlogMessagesUtil,
+    private readonly validate: AuthValidateService,
+    private readonly slug: SlugUtil,
+  ) {}
+
+  async GetPaginatedTags(data: BlogTagPaginationInput): Promise<PaginatedBlogTagsOutput> {
+    return await this.dbUtil.getPaginatedTags(data.pagination)
   }
 
-  async GetTagBySlug(_data: GetBlogTagInput): Promise<BlogTagDetailedOutput> {
-    throw new Error('Method not implemented.')
+  async GetTagBySlug(data: GetBlogTagInput): Promise<BlogTagDetailedOutput> {
+    return await this.validationUtil.checkTagExisting(data.slug)
   }
 
-  async CreateTag(_data: CreateBlogTagInput): Promise<BlogTagOutput> {
-    throw new Error('Method not implemented.')
+  async CreateTag(data: CreateBlogTagInput): Promise<BlogTagOutput> {
+    const payload = await this.validate.validateWithRoles(data.validation, [Roles.ADMIN])
+    const slug = this.slug.createSlug(data.name)
+    await this.validationUtil.checkSlugUnique(slug)
+    const response = await this.dbUtil.createTag(data, slug)
+    this.messagesUtil.createTag({ adminId: payload.id, tagSlug: slug })
+    return response
   }
 
-  async DeleteTag(_data: DeleteBlogTagInput): Promise<Empty> {
-    throw new Error('Method not implemented.')
+  async DeleteTag(data: DeleteBlogTagInput): Promise<Empty> {
+    const payload = await this.validate.validateWithRoles(data.validation, [Roles.ADMIN])
+    await this.validationUtil.checkTagExisting(data.slug)
+    await this.dbUtil.deleteTag(data.slug)
+    this.messagesUtil.deleteTag({ adminId: payload.id, tagSlug: data.slug })
+    return {}
   }
 }

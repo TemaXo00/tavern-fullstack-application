@@ -1,4 +1,7 @@
+import { status } from '@grpc/grpc-js'
 import { Injectable } from '@nestjs/common'
+import { RpcException } from '@nestjs/microservices'
+import { BlogTagDetailedOutput } from '@org/grpc-types'
 import { RmqLoggerUtil } from '@org/shared-utils'
 import { BLOG_MESSAGES } from '@org/validation-messages'
 
@@ -33,5 +36,26 @@ export class BlogValidationUtil {
       return false
     }
     return true
+  }
+
+  async checkTagExisting(slug: string): Promise<BlogTagDetailedOutput> {
+    const tag = await this.dbUtil.getTagBySlug(slug)
+    if (!tag) {
+      throw new RpcException({
+        message: BLOG_MESSAGES.TAG_NOT_FOUND,
+        code: status.NOT_FOUND,
+      })
+    }
+    return tag
+  }
+
+  async checkSlugUnique(slug: string): Promise<void> {
+    const tag = await this.dbUtil.getTagBySlug(slug)
+    if (tag) {
+      throw new RpcException({
+        message: BLOG_MESSAGES.TAG_SLUG_EXISTING,
+        code: status.ALREADY_EXISTS,
+      })
+    }
   }
 }
