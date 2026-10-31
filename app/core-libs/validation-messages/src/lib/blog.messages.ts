@@ -23,4 +23,43 @@ export const BLOG_MESSAGES = {
     MIN_LENGTH: `Minimal length of content is ${BLOG_CONFIG.CONTENT.MIN_LENGTH}`,
     MAX_LENGTH: `Maximum length of content is ${BLOG_CONFIG.CONTENT.MAX_LENGTH}`,
   },
+  USER_SNAPSHOT_EXISTING_ERROR: {
+    CONTEXT: 'ManipulateUserSnapshot',
+    METHOD: 'FindUserByID',
+    MESSAGE: (id: string): string => {
+      return `User with id ${id} does not exists`
+    },
+  },
+  USER_SNAPSHOT_NICKNAME_EXISTING_ERROR: {
+    CONTEXT: 'ManipulateUserSnapshot',
+    METHOD: 'FindUserByNickname',
+    MESSAGE: (nickname: string): string => {
+      return `User with ${nickname} existsing`
+    },
+  },
+  USER_SHAPSHOT_CREATE_SUCCESS: {
+    CONTEXT: 'CreateUserSnapshot',
+    METHOD: (id: string): string => {
+      return `CreateUser ${id}`
+    },
+  },
+  USER_CHANGE_NICKNAME_SUCCESS: {
+    CONTEXT: 'ChangeNickname',
+    METHOD: (userId: string) => {
+      return `Change nickname of ${userId}}`
+    },
+  },
+  USER_CHANGE_NICKNAME_WARNING: {
+    CONTEXT: 'ChangeNickname',
+    METHOD: (userId: string) => {
+      return `Change nickname of ${userId}}`
+    },
+    MESSAGE: 'Nickname does not found in payload',
+  },
+  USER_DELETE_SUCCESS: {
+    CONTEXT: 'DeleteUser',
+    METHOD: (userId: string) => {
+      return `Delete of ${userId}}`
+    },
+  },
 } as const
