@@ -18,7 +18,7 @@ export class LogDatabaseUtil {
   constructor(
     private readonly db: LogDatabaseService,
     private readonly paginationUtil: PaginationUtil,
-    private readonly stringUtil: StringValidationUtil
+    private readonly stringUtil: StringValidationUtil,
   ) {}
 
   // GET Methods

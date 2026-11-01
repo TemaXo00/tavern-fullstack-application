@@ -16,6 +16,9 @@
   },
   "dependencies": {
     "tslib": "^2.3.0",
-    "@nestjs/common": "^11.0.0"
+    "@nestjs/common": "^11.0.0",
+    "@org/grpc-types": "0.0.1",
+    "@org/log-database": "0.0.1",
+    "@org/shared-utils": "0.0.1"
   }
 }

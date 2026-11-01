@@ -13,7 +13,6 @@ export class LogGatewayMapService {
   }
 
   mapLogsOutput(logs: LogGrpcOutput[]): LogSharedOutput[] {
-
     if (!logs || !Array.isArray(logs)) {
       return []
     }

@@ -1,6 +1,5 @@
 import { PaginationBaseOutput } from '../shared/pagination.type.js'
 
-
 export interface LogBaseOutput {
   id: string
   actorId: string | null

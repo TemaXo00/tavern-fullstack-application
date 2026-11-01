@@ -142,7 +142,7 @@ export class ArticleController implements OnModuleInit {
     summary: 'Delete article',
     operationDesc:
       'Only admin route. Only admin can delete other articles by their slug. You can delete only published articles',
-    roles: [Roles.ADMIN]
+    roles: [Roles.ADMIN],
   })
   async deleteArticle(
     @ValidateInputParam() validation: ValidateInput,

@@ -55,6 +55,6 @@ export function mapArticleBySlugOutput(
     authorNickname: response.author ? response.author.nickname : null,
     authorAvatarId: response.author ? response.author.avatarId : null,
     createdAt: response.createdAt,
-    updatedAt: response.updatedAt
+    updatedAt: response.updatedAt,
   }
 }

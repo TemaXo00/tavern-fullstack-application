@@ -57,6 +57,7 @@ export class AuthDatabaseUtil {
     return await this.db.token.findFirst({
       where: {
         email,
+        state: 'ACTIVE',
       },
       orderBy: {
         createdAt: 'desc',
