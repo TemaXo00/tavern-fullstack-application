@@ -1,0 +1,26 @@
+info:
+  name: GetMyArticleBySlug
+  type: grpc
+  seq: 4
+
+grpc:
+  url: "{{BLOG_GRPC_URL}}"
+  method: /blog.ArticleService/GetMyArticleBySlug
+  methodType: unary
+  protoFilePath: ../../../app/proto/blog.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "slug": "first-dnd-session"
+        }
+  auth: inherit

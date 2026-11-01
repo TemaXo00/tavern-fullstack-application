@@ -24,6 +24,9 @@ variables:
   - name: USER_OS
     value: linux
     description: ""
+  - name: USER_ID
+    value: "01a1931a-59c7-709c-ad64-a53430376cac"
+    description: ""
   - name: GATEWAY_URL
     value: localhost:3000
     description: ""

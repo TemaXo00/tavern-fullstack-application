@@ -1,0 +1,35 @@
+info:
+  name: GetLogs
+  type: grpc
+  seq: 1
+
+grpc:
+  url: "{{LOG_GRPC_URL}}"
+  method: /log.LogService/GetLogs
+  methodType: unary
+  protoFilePath: ../../../app/proto/log.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "pagination": {
+            "page": 1,
+            "limit": 20,
+            "search": "auth",
+            "dateFrom": "2026-01-01T00:00:00.000Z",
+            "dateTo": "2026-12-31T23:59:59.000Z",
+            "microserviceName": "Auth",
+            "serviceName": "Auth",
+            "isAdminAction": false
+          }
+        }
+  auth: inherit

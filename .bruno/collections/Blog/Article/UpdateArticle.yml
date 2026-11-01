@@ -1,0 +1,29 @@
+info:
+  name: UpdateArticle
+  type: grpc
+  seq: 8
+
+grpc:
+  url: "{{BLOG_GRPC_URL}}"
+  method: /blog.ArticleService/UpdateArticle
+  methodType: unary
+  protoFilePath: ../../../app/proto/blog.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "slug": "how-to-run-your-first-dnd-session",
+          "shortDesc": "An updated guide to preparing and running your first tabletop session.",
+          "content": "Tabletop role-playing games have become a popular way to spend an evening with friends. In this updated article we look at how to prepare a first session, choose a system that fits your group, and keep the story moving without overwhelming the players. We also cover the basic rules of the dungeon master role, describe a simple adventure structure, and share a checklist for the materials you need at the table. Whether you prefer classic fantasy or a modern setting, the advice below will help you run a memorable game and keep everyone engaged from the opening scene to the final encounter.",
+          "tags": ["news"]
+        }
+  auth: inherit

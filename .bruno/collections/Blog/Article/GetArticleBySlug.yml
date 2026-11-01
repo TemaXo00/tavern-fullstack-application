@@ -1,0 +1,17 @@
+info:
+  name: GetArticleBySlug
+  type: grpc
+  seq: 3
+
+grpc:
+  url: "{{BLOG_GRPC_URL}}"
+  method: /blog.ArticleService/GetArticleBySlug
+  methodType: unary
+  protoFilePath: ../../../app/proto/blog.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "slug": "first-dnd-session"
+        }
+  auth: inherit

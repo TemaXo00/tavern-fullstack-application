@@ -1,11 +1,11 @@
 info:
-  name: getlogs
+  name: GetLogsByActor
   type: grpc
-  seq: 4
+  seq: 2
 
 grpc:
-  url: localhost:5003
-  method: /log.LogService/GetLogs
+  url: "{{LOG_GRPC_URL}}"
+  method: /log.LogService/GetLogsByActor
   methodType: unary
   protoFilePath: ../../../app/proto/log.proto
   message:
@@ -20,6 +20,17 @@ grpc:
               "os": "{{USER_OS}}",
               "browser": "{{USER_BROWSER}}"
             }
+          },
+          "actorId": "{{USER_ID}}",
+          "pagination": {
+            "page": 1,
+            "limit": 20,
+            "search": "auth",
+            "dateFrom": "2026-01-01T00:00:00.000Z",
+            "dateTo": "2026-12-31T23:59:59.000Z",
+            "microserviceName": "Auth",
+            "serviceName": "Auth",
+            "isAdminAction": false
           }
         }
   auth: inherit

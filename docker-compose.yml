@@ -252,6 +252,66 @@ services:
       rabbitmq-dev:
         condition: service_healthy
 
+  blog-service-dev:
+    image: ${DOCKER_REGISTRY}/temaxo00/tavern-blog:${DOCKER_APPS_VERSION}
+    container_name: tavern-dev-blog-api
+    networks:
+      - tavern-dev
+    environment:
+      TAVERN_DEV_MODE: true
+      TAVERN_JWT_SECRET: ${TAVERN_JWT_SECRET}
+      TAVERN_JWT_ACCESS_TOKEN_TTL: ${TAVERN_JWT_ACCESS_TOKEN_TTL}
+      TAVERN_JWT_REFRESH_TOKEN_TTL: ${TAVERN_JWT_REFRESH_TOKEN_TTL}
+      TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_DEV_URL}
+      TAVERN_BLOG_DB_URL: ${TAVERN_BLOG_DB_DEV_URL}
+      TAVERN_RMQ_USER: ${TAVERN_RMQ_USER}
+      TAVERN_RMQ_PASSWORD: ${TAVERN_RMQ_PASSWORD}
+      TAVERN_RMQ_URL: ${TAVERN_RMQ_DEV_URL}
+      TAVERN_REDIS_URL: ${TAVERN_REDIS_DEV_URL}
+      TAVERN_REDIS_PASSWORD: ${TAVERN_REDIS_PASSWORD}
+      TAVERN_BLOG_TAG_CACHE_TTL: ${TAVERN_BLOG_TAG_CACHE_TTL}
+      TAVERN_BLOG_ARTICLE_CACHE_TTL: ${TAVERN_BLOG_ARTICLE_CACHE_TTL}
+    depends_on:
+      auth-service-dev:
+        condition: service_started
+      auth-db-dev:
+        condition: service_healthy
+      blog-db-dev:
+        condition: service_healthy
+      redis-dev:
+        condition: service_healthy
+      rabbitmq-dev:
+        condition: service_healthy
+
+  log-service-dev:
+    image: ${DOCKER_REGISTRY}/temaxo00/tavern-log:${DOCKER_APPS_VERSION}
+    container_name: tavern-dev-log-api
+    networks:
+      - tavern-dev
+    environment:
+      TAVERN_DEV_MODE: true
+      TAVERN_JWT_SECRET: ${TAVERN_JWT_SECRET}
+      TAVERN_JWT_ACCESS_TOKEN_TTL: ${TAVERN_JWT_ACCESS_TOKEN_TTL}
+      TAVERN_JWT_REFRESH_TOKEN_TTL: ${TAVERN_JWT_REFRESH_TOKEN_TTL}
+      TAVERN_AUTH_DB_URL: ${TAVERN_AUTH_DB_DEV_URL}
+      TAVERN_LOG_DB_URL: ${TAVERN_LOG_DB_DEV_URL}
+      TAVERN_RMQ_USER: ${TAVERN_RMQ_USER}
+      TAVERN_RMQ_PASSWORD: ${TAVERN_RMQ_PASSWORD}
+      TAVERN_RMQ_URL: ${TAVERN_RMQ_DEV_URL}
+      TAVERN_REDIS_URL: ${TAVERN_REDIS_DEV_URL}
+      TAVERN_REDIS_PASSWORD: ${TAVERN_REDIS_PASSWORD}
+    depends_on:
+      auth-service-dev:
+        condition: service_started
+      auth-db-dev:
+        condition: service_healthy
+      log-db-dev:
+        condition: service_healthy
+      redis-dev:
+        condition: service_healthy
+      rabbitmq-dev:
+        condition: service_healthy
+
   gateway-dev:
     image: ${DOCKER_REGISTRY}/temaxo00/tavern-gateway:${DOCKER_APPS_VERSION}
     container_name: tavern-dev-gateway-api
@@ -275,12 +335,18 @@ services:
       TAVERN_AUTH_GRPC_URL: ${TAVERN_AUTH_GRPC_DEV_URL}
       TAVERN_PROFILE_GRPC_URL: ${TAVERN_PROFILE_GRPC_DEV_URL}
       TAVERN_EVENT_GRPC_URL: ${TAVERN_EVENT_GRPC_DEV_URL}
+      TAVERN_BLOG_GRPC_URL: ${TAVERN_BLOG_GRPC_DEV_URL}
+      TAVERN_LOG_GRPC_URL: ${TAVERN_LOG_GRPC_DEV_URL}
     depends_on:
       auth-service-dev:
         condition: service_started
       profile-service-dev:
         condition: service_started
       event-service-dev:
+        condition: service_started
+      blog-service-dev:
+        condition: service_started
+      log-service-dev:
         condition: service_started
       redis-dev:
         condition: service_healthy

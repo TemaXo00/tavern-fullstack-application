@@ -1,0 +1,17 @@
+info:
+  name: GetTagBySlug
+  type: grpc
+  seq: 2
+
+grpc:
+  url: "{{BLOG_GRPC_URL}}"
+  method: /blog.TagService/GetTagBySlug
+  methodType: unary
+  protoFilePath: ../../../app/proto/blog.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "slug": "news"
+        }
+  auth: inherit

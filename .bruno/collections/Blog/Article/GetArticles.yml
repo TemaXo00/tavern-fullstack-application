@@ -1,0 +1,25 @@
+info:
+  name: GetArticles
+  type: grpc
+  seq: 1
+
+grpc:
+  url: "{{BLOG_GRPC_URL}}"
+  method: /blog.ArticleService/GetArticles
+  methodType: unary
+  protoFilePath: ../../../app/proto/blog.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "pagination": {
+            "page": 1,
+            "limit": 20,
+            "search": "dnd",
+            "authorNickname": "temaxo",
+            "dateFrom": "2026-01-01T00:00:00.000Z",
+            "dateTo": "2026-12-31T23:59:59.000Z",
+            "tags": ["news"]
+          }
+        }
+  auth: inherit

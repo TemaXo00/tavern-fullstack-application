@@ -7,8 +7,6 @@ config:
     protoFiles:
       - type: file
         path: ../../../app/proto/event.proto
-      - type: file
-        path: ../../../app/proto/log.proto
   proxy:
     inherit: true
     config:

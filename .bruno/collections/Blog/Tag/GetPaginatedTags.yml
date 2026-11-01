@@ -1,0 +1,21 @@
+info:
+  name: GetPaginatedTags
+  type: grpc
+  seq: 1
+
+grpc:
+  url: "{{BLOG_GRPC_URL}}"
+  method: /blog.TagService/GetPaginatedTags
+  methodType: unary
+  protoFilePath: ../../../app/proto/blog.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "pagination": {
+            "page": 1,
+            "limit": 20,
+            "search": "news"
+          }
+        }
+  auth: inherit

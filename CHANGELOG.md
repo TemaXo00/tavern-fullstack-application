@@ -11,13 +11,82 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Chat microservice with WebSocket support on gateway
 - File microservice (media upload)
-- Log microservice (audit consumers and log ingestion)
-- Blog microservice (article API on top of the prepared database schema)
 - Forum microservice
 - Appeals microservice
 - Remaining Vue client features: event catalog, event page, profile, and admin UI
-- End-to-end tests for auth, profile, event, and mail flows
+- End-to-end tests for auth, profile, event, blog, log, and mail flows
 - Grafana + Prometheus monitoring stack
+
+## 0.5.0 - 2026-11-01
+
+### Added
+
+#### Blog microservice
+
+- Blog microservice with `TagService` and `ArticleService` gRPC APIs and complete proto contracts.
+- Blog database schema with `UserSnapshot`, `Tag`, and `Article` models, generated Prisma client, and initial migration.
+- Blog feature libraries: `@org/blog-database`, `@org/blog-utils`, `@org/blog-tag-feature`, `@org/blog-article-feature`, and `@org/blog-rmq-handler`.
+- Blog HTTP API with 13 endpoints:
+  - 4 tag endpoints: paginated list, detail by slug, create, and delete
+  - 9 article endpoints: public and own lists, public and own detail by slug, create, publish, unpublish, update, and delete
+- Article lifecycle with automatic slug generation, unique slug validation, tag validation, publication status, and the `isUpdated` flag.
+- Anonymous article support: anonymous articles are published immediately and are not linked to an author.
+- Redis caching for tags and articles with configurable TTLs and invalidation on create, update, delete, publish, and unpublish.
+- Blog user snapshot synchronization through RabbitMQ events from auth and profile services: registration, account deletion, and nickname changes.
+- Blog audit events for tags and articles published to the log queue.
+- Blog Dockerfile, Docker Compose service, environment variables, and CI build/push coverage.
+
+#### Log microservice
+
+- Log microservice with the `LogService` gRPC API (`GetLogs`, `GetLogsByActor`) and complete proto contract.
+- Log database schema with the `Log` model, indexes for date, actor, and action queries, generated Prisma client, and initial migration.
+- Log feature and utility libraries: `@org/log-feature`, `@org/log-util`, `@org/log-auth-handler`, `@org/log-blog-handler`, `@org/log-event-handler`, and `@org/log-profile-handler`.
+- Audit consumers for all 57 events:
+  - 26 auth events across authorization, session, token, and user services
+  - 7 blog events across article and tag services
+  - 20 event events across event, participant, and tag services
+  - 4 profile events across profile and reputation services
+- Log HTTP API with 2 admin-only endpoints: all logs and logs by actor ID.
+- Filtering by search, microservice, service, date range, and administrator-action flag with paginated responses.
+- Log Dockerfile, Docker Compose service, environment variables, and CI build/push coverage.
+
+#### Shared contracts and gateway
+
+- Full proto specifications for auth, blog, event, log, profile, and shared types.
+- gRPC type contracts for blog and log services, plus HTTP shared types and mapping services.
+- Gateway clients for blog and log microservices with `TAVERN_BLOG_GRPC_URL` and `TAVERN_LOG_GRPC_URL`.
+- Blog and log DTOs, decorators, route constants, controllers, and Swagger documentation.
+- `USER_ID` Bruno environment variable for actor-based log requests.
+
+#### Documentation and API collection
+
+- `docs/blog.md` with blog routes, roles, validation rules, publication logic, caching, RabbitMQ integration, and database models.
+- `docs/log.md` with audit event sources, action reference, filtering, roles, and database model.
+- `docs/README.md` documentation index and updated root README links.
+- Bruno collections for all 86 gRPC methods: 29 auth, 31 event, 11 profile, 13 blog, and 2 log requests.
+- Separate Blog and Log Bruno collections with workspace registration and proto file configuration.
+
+### Changed
+
+- Docker Compose now includes `blog-service-dev` and `log-service-dev`, their databases, volumes, and gateway dependencies.
+- Gateway service receives blog and log gRPC URLs and waits for the new services on startup.
+- Environment examples include blog and log gRPC URLs, database URLs, ports, and cache TTLs.
+- Documentation for the gateway now describes all five gRPC clients, the full decorator set, response envelopes, and error mapping.
+- The log microservice is now a full audit consumer and read API instead of a scaffold.
+- `docker.build.sh`, `docker.push.sh`, `docker.build-and-push.sh`, `migrator.sh`, `clean-cache.sh`, and `dev-workspace.setup.sh` cover all services and databases.
+
+### Fixed
+
+- Blog article creation now maps the RPC method to the correct service handler.
+- Event tag proto now uses `repeated string` for tag lists.
+- Docker builds for blog and log services.
+- Docker Compose service wiring for the new microservices.
+
+### Security
+
+- Blog management routes require the `ADMIN` role, with additional ownership checks for article updates, status changes, and unpublished article deletion.
+- Log routes require the `ADMIN` role at both the gateway and gRPC-service levels.
+- Log records preserve the actor, action source, and administrator-action flag for audit review.
 
 ## 0.3.5 - 2026-10-27
 

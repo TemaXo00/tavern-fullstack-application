@@ -139,10 +139,13 @@ curl localhost:3000/api/docs/swagger.yaml
 
 Документация по каждому сервису приложения представлена в следующих файлах:
 
+- [Общий индекс документации](docs/README.md)
 - [API Gateway](docs/gateway.md)
 - [Сервис Авторизации](docs/auth.md)
 - [Сервис Профилей](docs/profile.md)
 - [Сервис Мероприятий](docs/event.md)
+- [Сервис Блога](docs/blog.md)
+- [Сервис Логов](docs/log.md)
 - [Сервис Почты](docs/mail.md)
 
 ## Возможные ошибки

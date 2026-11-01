@@ -10,6 +10,10 @@ collections:
     path: "collections/Profile"
   - name: "Event"
     path: "collections/Event"
+  - name: "Blog"
+    path: "collections/Blog"
+  - name: "Log"
+    path: "collections/Log"
 
 specs:
 

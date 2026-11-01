@@ -1,0 +1,26 @@
+info:
+  name: UnpublishArticle
+  type: grpc
+  seq: 7
+
+grpc:
+  url: "{{BLOG_GRPC_URL}}"
+  method: /blog.ArticleService/UnpublishArticle
+  methodType: unary
+  protoFilePath: ../../../app/proto/blog.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "slug": "how-to-run-your-first-dnd-session"
+        }
+  auth: inherit
