@@ -1,3 +1,10 @@
-import type { PaginatedLogsBaseOutput } from '@org/base-types'
+import { Replace } from '../utils/replace.js'
 
-export type PaginatedLogsSharedOutput = PaginatedLogsBaseOutput
+import type { LogBaseOutput, LogPaginationBaseOutput } from '@org/base-types'
+
+export type LogSharedOutput = Replace<LogBaseOutput, { logBody: unknown }>
+
+export interface PaginatedLogsSharedOutput {
+  pagination: LogPaginationBaseOutput
+  logs: LogSharedOutput[]
+}

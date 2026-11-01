@@ -16,5 +16,15 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../shared-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../log-database/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/grpc-types/tsconfig.lib.json"
+    }
+  ]
 }

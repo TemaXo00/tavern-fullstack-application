@@ -1,13 +1,15 @@
 import { PaginationBaseOutput } from '../shared/pagination.type.js'
 
+
 export interface LogBaseOutput {
   id: string
   actorId: string | null
+  action: string
   actionDesc: string
   microserviceName: string
   serviceName: string
   isAdminAction: boolean
-  logBody: object
+  logBody: string
   createdAt: Date
 }
 

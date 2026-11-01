@@ -2,6 +2,7 @@ import { Body, Inject, OnModuleInit, Param } from '@nestjs/common'
 import { Roles } from '@org/enums'
 import { HTTPController, QUERYProtectedMethod, ValidateInputParam } from '@org/gateway-decorators'
 import { LogsPaginationDto } from '@org/gateway-dto'
+import { LogGatewayMapService } from '@org/gateway-map'
 import { LOG_ROUTES } from '@org/routes-config'
 import { PaginatedLogsSharedOutput } from '@org/shared-types'
 import { firstValueFrom } from 'rxjs'
@@ -16,7 +17,10 @@ import type { LogServiceObservableContract, ValidateInput } from '@org/grpc-type
 export class LogsController implements OnModuleInit {
   private logsContract!: LogServiceObservableContract
 
-  constructor(@Inject('LOG_CLIENT') private readonly client: ClientGrpc) {}
+  constructor(
+    @Inject('LOG_CLIENT') private readonly client: ClientGrpc,
+    private readonly map: LogGatewayMapService,
+  ) {}
 
   onModuleInit(): void {
     this.logsContract = this.client.getService('LogService')
@@ -33,7 +37,11 @@ export class LogsController implements OnModuleInit {
     @ValidateInputParam() validation: ValidateInput,
     @Body() pagination: LogsPaginationDto,
   ): Promise<PaginatedLogsSharedOutput> {
-    return await firstValueFrom(this.logsContract.GetLogs({ validation, pagination }))
+    const response = await firstValueFrom(this.logsContract.GetLogs({ validation, pagination }))
+    return {
+      pagination: response.pagination,
+      logs: this.map.mapLogsOutput(response.logs),
+    }
   }
 
   @QUERYProtectedMethod({
@@ -48,6 +56,10 @@ export class LogsController implements OnModuleInit {
     @Body() pagination: LogsPaginationDto,
     @Param(LOG_ROUTES.GET_BY_ACTOR_ID.PARAM) actorId: string,
   ): Promise<PaginatedLogsSharedOutput> {
-    return await firstValueFrom(this.logsContract.GetLogsByActor({ validation, pagination, actorId }))
+    const response = await firstValueFrom(this.logsContract.GetLogsByActor({ validation, pagination, actorId }))
+    return {
+      pagination: response.pagination,
+      logs: this.map.mapLogsOutput(response.logs),
+    }
   }
 }

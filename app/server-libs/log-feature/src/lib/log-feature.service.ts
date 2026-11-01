@@ -1,4 +1,7 @@
 import { Injectable } from '@nestjs/common'
+import { AuthValidateService } from '@org/auth-authorization-core'
+import { Roles } from '@org/enums'
+import { LogDatabaseUtil } from '@org/log-util'
 
 import type {
   GetLogsByActorInput,
@@ -9,11 +12,18 @@ import type {
 
 @Injectable()
 export class LogFeatureService implements LogServiceContract {
-  async GetLogs(_data: GetPaginatedLogsInput): Promise<PaginatedLogsOutput> {
-    throw new Error('Method not implemented.')
+  constructor(
+    private readonly dbUtil: LogDatabaseUtil,
+    private readonly validate: AuthValidateService,
+  ) {}
+
+  async GetLogs(data: GetPaginatedLogsInput): Promise<PaginatedLogsOutput> {
+    await this.validate.validateWithRoles(data.validation, [Roles.ADMIN])
+    return await this.dbUtil.getPaginatedLogs(data.pagination)
   }
 
-  async GetLogsByActor(_data: GetLogsByActorInput): Promise<PaginatedLogsOutput> {
-    throw new Error('Method not implemented.')
+  async GetLogsByActor(data: GetLogsByActorInput): Promise<PaginatedLogsOutput> {
+    await this.validate.validateWithRoles(data.validation, [Roles.ADMIN])
+    return await this.dbUtil.getPaginatedLogs(data.pagination, data.actorId)
   }
 }

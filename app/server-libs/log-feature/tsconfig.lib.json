@@ -18,6 +18,15 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
+      "path": "../log-util/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core-libs/enums/tsconfig.lib.json"
+    },
+    {
+      "path": "../auth-authorization-core/tsconfig.lib.json"
+    },
+    {
       "path": "../../core-libs/grpc-types/tsconfig.lib.json"
     }
   ]
