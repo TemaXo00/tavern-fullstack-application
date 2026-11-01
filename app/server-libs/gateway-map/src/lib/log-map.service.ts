@@ -13,6 +13,11 @@ export class LogGatewayMapService {
   }
 
   mapLogsOutput(logs: LogGrpcOutput[]): LogSharedOutput[] {
+
+    if (!logs || !Array.isArray(logs)) {
+      return []
+    }
+
     return logs.map((log) => {
       return {
         ...log,

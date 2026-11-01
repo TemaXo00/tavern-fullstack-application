@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { LogGrpcOutput, PaginatedLogsGrpcInput, PaginatedLogsOutput } from '@org/grpc-types'
 import { LogDatabaseService, LogWhereInput } from '@org/log-database'
-import { PaginationUtil } from '@org/shared-utils'
-import { InputJsonValue } from '@prisma/client/runtime/client'
+import { PaginationUtil, StringValidationUtil } from '@org/shared-utils'
 
 interface CreateLog {
   actorId?: string
@@ -11,7 +10,7 @@ interface CreateLog {
   microserviceName: string
   serviceName: string
   isAdminAction: boolean
-  logBody: InputJsonValue
+  logBody: unknown
 }
 
 @Injectable()
@@ -19,6 +18,7 @@ export class LogDatabaseUtil {
   constructor(
     private readonly db: LogDatabaseService,
     private readonly paginationUtil: PaginationUtil,
+    private readonly stringUtil: StringValidationUtil
   ) {}
 
   // GET Methods
@@ -50,6 +50,10 @@ export class LogDatabaseUtil {
   }
 
   async getPaginatedLogs(pagination: PaginatedLogsGrpcInput, actorId?: string): Promise<PaginatedLogsOutput> {
+    if (actorId) {
+      this.stringUtil.validateUUIDV7(actorId)
+    }
+
     const safePagination = pagination || {}
     const where = this.buildPaginationQuery(safePagination, actorId)
     const total = await this.db.log.count({ where })
@@ -70,7 +74,14 @@ export class LogDatabaseUtil {
   }
 
   async createLog(data: CreateLog): Promise<void> {
-    await this.db.log.create({ data })
+    const logBody = JSON.parse(JSON.stringify(data.logBody ?? {}))
+
+    await this.db.log.create({
+      data: {
+        ...data,
+        logBody,
+      },
+    })
   }
 
   buildPaginationQuery(query: PaginatedLogsGrpcInput, actorId?: string): LogWhereInput {
