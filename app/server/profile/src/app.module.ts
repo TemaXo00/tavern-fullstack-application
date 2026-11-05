@@ -5,6 +5,7 @@ import { ProfileActivityFeatureModule } from '@org/profile-activity-feature'
 import { ProfileProfilesFeatureModule } from '@org/profile-profiles-feature'
 import { ProfileReputationFeatureModule } from '@org/profile-reputation-feature'
 import { ProfileRmqHandlerModule } from '@org/profile-rmq-handler'
+import { ProfileSocialsFeatureModule } from '@org/profile-socials-feature'
 import { ProfileUtilsModule } from '@org/profile-utils'
 import { SharedUtilsModule } from '@org/shared-utils'
 
@@ -20,6 +21,7 @@ import { SharedUtilsModule } from '@org/shared-utils'
     ProfileProfilesFeatureModule,
     ProfileReputationFeatureModule,
     ProfileActivityFeatureModule,
+    ProfileSocialsFeatureModule
   ],
 })
 export class AppModule {}

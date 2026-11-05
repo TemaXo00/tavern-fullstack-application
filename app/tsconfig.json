@@ -218,6 +218,9 @@
     },
     {
       "path": "./server-libs/log-feature"
+    },
+    {
+      "path": "./server-libs/profile-socials-feature"
     }
   ],
   "compilerOptions": {}

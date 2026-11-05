@@ -21,6 +21,7 @@ COPY server-libs/profile-utils ./server-libs/profile-utils
 COPY server-libs/profile-profiles-feature ./server-libs/profile-profiles-feature
 COPY server-libs/profile-activity-feature ./server-libs/profile-activity-feature
 COPY server-libs/profile-reputation-feature ./server-libs/profile-reputation-feature
+COPY server-libs/profile-socials-feature ./server-libs/profile-socials-feature
 COPY server-libs/profile-rmq-handler ./server-libs/profile-rmq-handler
 
 COPY core-libs/nest-launcher ./core-libs/nest-launcher
@@ -65,6 +66,7 @@ COPY --from=builder /app/server-libs/profile-utils/dist ./node_modules/@org/prof
 COPY --from=builder /app/server-libs/profile-profiles-feature/dist ./node_modules/@org/profile-profiles-feature
 COPY --from=builder /app/server-libs/profile-activity-feature/dist ./node_modules/@org/profile-activity-feature
 COPY --from=builder /app/server-libs/profile-reputation-feature/dist ./node_modules/@org/profile-reputation-feature
+COPY --from=builder /app/server-libs/profile-socials-feature/dist ./node_modules/@org/profile-socials-feature
 COPY --from=builder /app/server-libs/profile-rmq-handler/dist ./node_modules/@org/profile-rmq-handler
 
 COPY --from=builder /app/core-libs/nest-launcher/dist ./node_modules/@org/nest-launcher
