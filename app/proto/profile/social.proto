@@ -1,0 +1,47 @@
+syntax = 'proto3';
+
+package social;
+
+message ValidateInput {
+  string accessToken = 1;
+  SessionInput session = 2;
+}
+
+message SessionInput {
+    string os = 1;
+    string device = 2;
+    string browser = 3;
+    string ip = 4;
+}
+
+message GetMySocialsInput {
+    ValidateInput validation = 1;
+}
+
+message GetOtherUserSocialsOutput {
+    string nickname = 1;
+}
+
+message CreateSocialInput {
+    ValidateInput validation = 1;
+    string socialName = 2;
+    string socialUrl = 3;
+}
+
+message DeleteSocialInput {
+    ValidateInput validation = 1;
+    string socialId = 2;
+}
+
+// Output messages
+
+message SocialOutput {
+    string id = 1;
+    string profileId = 2;
+    string socialName = 3;
+    string socialUrl = 4;
+}
+
+message AllSocialsOutput {
+    repeated SocialOutput socials = 1;
+}

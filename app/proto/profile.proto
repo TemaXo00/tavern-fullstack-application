@@ -3,6 +3,8 @@ syntax = 'proto3';
 import 'profile/profiles.proto';
 import 'profile/reputation.proto';
 import 'profile/activity.proto';
+import 'profile/social.proto';
+import "shared/shared.proto";
 
 package profile;
 
@@ -24,4 +26,12 @@ service ReputationService {
 service ActivityService {
     rpc GetMyLogs(activity.GetMyActivityInput) returns (activity.PaginatedActivityOutput);
     rpc GetActivityByNickname(activity.GetActivityByNicknameInput) returns (activity.PaginatedActivityOutput);
+}
+
+service SocialService {
+    rpc GetMySocials(social.GetMySocialsInput) returns (social.AllSocialsOutput);
+    rpc GetSocialsByNickname(social.GetOtherUserSocialsOutput) returns (social.AllSocialsOutput);
+    rpc CreateSocial(social.CreateSocialInput) returns (social.SocialOutput);
+    rpc DeleteSocial(social.DeleteSocialInput) returns (shared.Empty);
+
 }
