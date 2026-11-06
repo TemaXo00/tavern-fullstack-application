@@ -35,3 +35,17 @@ export const PROFILE_REPUTATION_ROUTES = {
     PARAM: 'nickname',
   },
 } as const
+
+export const PROFILE_SOCIALS_ROUTES = {
+  BASE_URL: 'profile/social',
+  GET_ME: 'me',
+  GET_BY_NICKNAME: {
+    PATH: ':nickname',
+    PARAM: 'nickname',
+  },
+  CREATE: '',
+  DELETE: {
+    PATH: ':id',
+    PARAM: 'id',
+  },
+} as const

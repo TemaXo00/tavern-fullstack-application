@@ -68,6 +68,11 @@ export * from './lib/event/events/event-output.data.js'
 export * from './lib/event/participant/participant-input.data.js'
 export * from './lib/event/participant/participant-output.data.js'
 
+// SOCIAL SERVICE
+
+export * from './lib/profile/socials/socials-input.data.js'
+export * from './lib/profile/socials/socials-output.data.js'
+
 // CONTRACTS
 
 export * from './lib/event/event.contract.js'

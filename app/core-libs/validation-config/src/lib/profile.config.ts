@@ -15,4 +15,7 @@ export const PROFILE_CONFIG = {
     MIN_LENGTH: 3,
     MAX_LENGTH: 300,
   },
+  SOCIAL_URL: {
+    MAX_LENGTH: 200,
+  }
 } as const

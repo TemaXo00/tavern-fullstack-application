@@ -30,7 +30,7 @@ service ActivityService {
 
 service SocialService {
     rpc GetMySocials(social.GetMySocialsInput) returns (social.AllSocialsOutput);
-    rpc GetSocialsByNickname(social.GetOtherUserSocialsOutput) returns (social.AllSocialsOutput);
+    rpc GetSocialsByNickname(social.GetOtherUserSocialsInput) returns (social.AllSocialsOutput);
     rpc CreateSocial(social.CreateSocialInput) returns (social.SocialOutput);
     rpc DeleteSocial(social.DeleteSocialInput) returns (shared.Empty);
 

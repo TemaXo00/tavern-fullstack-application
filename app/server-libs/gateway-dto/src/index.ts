@@ -25,6 +25,8 @@ export * from './lib/profile/activity/activity-pagination.dto.js'
 export * from './lib/profile/reputation/reputation-pagination.dto.js'
 export * from './lib/profile/reputation/add-reputation.dto.js'
 
+export * from './lib/profile/socials/create-social.dto.js'
+
 // EVENT
 
 export * from './lib/event/tag/create-tag.dto.js'

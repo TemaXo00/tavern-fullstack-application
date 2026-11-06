@@ -21,6 +21,14 @@ import type {
   GetReputationByNicknameInput,
 } from './reputation/reputation-input.data.js'
 import type { PaginatedReputationOutput, ReputationOutput } from './reputation/reputation-output.data.js'
+import type {
+  CreateSocialInput,
+  DeleteSocialInput,
+  GetMySocialsInput,
+  GetOtherUserSocialsInput,
+} from './socials/socials-input.data.js'
+import type { AllSocialsOutput, SocialOutput } from './socials/socials-output.data.js'
+import type { Empty } from '../shared/empty.type.js'
 
 export interface ProfileServiceContract {
   GetMe(data: GetMeInput): Promise<ProfileAdvancedOutput>
@@ -42,6 +50,14 @@ export interface ReputationServiceContract {
   AddReputation(data: AddReputationInput): Promise<ReputationOutput>
 }
 
+export interface SocialServiceContract {
+  GetMySocials(data: GetMySocialsInput): Promise<AllSocialsOutput>
+  GetSocialsByNickname(data: GetOtherUserSocialsInput): Promise<AllSocialsOutput>
+  CreateSocial(data: CreateSocialInput): Promise<SocialOutput>
+  DeleteSocial(data: DeleteSocialInput): Promise<Empty>
+}
+
 export type ProfileServiceObservableContract = ToObservable<ProfileServiceContract>
 export type ReputationServiceObservableContract = ToObservable<ReputationServiceContract>
 export type ActivityServiceObservableContract = ToObservable<ActivityServiceContract>
+export type SocialServiceObservableContract = ToObservable<SocialServiceContract>

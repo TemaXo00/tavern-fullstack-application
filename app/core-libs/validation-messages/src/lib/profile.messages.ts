@@ -101,6 +101,11 @@ export const PROFILE_MESSAGES = {
     MIN_LENGTH: `Minimum length of message is ${PROFILE_CONFIG.REPUTATION_SCORE.MIN}`,
     MAX_LENGTH: `Maximum length of message is ${PROFILE_CONFIG.REPUTATION_SCORE.MAX}`,
   },
+  SOCIAL_URL_VALIDATION: {
+    NOT_EMPTY: 'Social URL cannot be empty string',
+    MAX_LENGTH: `Maximum length of URL is ${PROFILE_CONFIG.SOCIAL_URL.MAX_LENGTH}`,
+    NOT_URL: 'URL is in invalid format. Example: https://github.com/TemaXo00',
+  },
   USER_BLOCKED_OR_INACTIVE: 'This user is blocked or inactive. You cant do this action',
   ADD_YOURSELF: 'You cannot add reputation to yourself',
 } as const
