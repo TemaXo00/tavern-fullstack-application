@@ -21,19 +21,19 @@ export class ProfileSocialsFeatureService implements SocialServiceContract {
     private readonly messagesUtil: ProfileMessagesUtil,
   ) {}
 
-  async GetMySocials(data: GetMySocialsInput): Promise<AllSocialsOutput> {
+  async GetMySocials(_data: GetMySocialsInput): Promise<AllSocialsOutput> {
     throw new Error('Method not implemented.')
   }
 
-  async GetSocialsByNickname(data: GetOtherUserSocialsInput): Promise<AllSocialsOutput> {
+  async GetSocialsByNickname(_data: GetOtherUserSocialsInput): Promise<AllSocialsOutput> {
     throw new Error('Method not implemented.')
   }
 
-  async CreateSocial(data: CreateSocialInput): Promise<SocialOutput> {
+  async CreateSocial(_data: CreateSocialInput): Promise<SocialOutput> {
     throw new Error('Method not implemented.')
   }
 
-  async DeleteSocial(data: DeleteSocialInput): Promise<Empty> {
+  async DeleteSocial(_data: DeleteSocialInput): Promise<Empty> {
     throw new Error('Method not implemented.')
   }
 }

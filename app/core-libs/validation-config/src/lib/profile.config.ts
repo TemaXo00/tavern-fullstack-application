@@ -17,5 +17,5 @@ export const PROFILE_CONFIG = {
   },
   SOCIAL_URL: {
     MAX_LENGTH: 200,
-  }
+  },
 } as const

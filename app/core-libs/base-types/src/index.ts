@@ -39,12 +39,10 @@ export * from './lib/profile/activity/activity-output.data.js'
 export * from './lib/profile/reputation/reputation-input.data.js'
 export * from './lib/profile/reputation/reputation-output.data.js'
 
-
 // SOCIAL SERVICE
 
 export * from './lib/profile/socials/socials-input.data.js'
 export * from './lib/profile/socials/socials-output.data.js'
-
 
 // PROFILE MICROSERVICE END
 

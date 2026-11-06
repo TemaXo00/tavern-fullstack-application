@@ -21,7 +21,7 @@ import { SharedUtilsModule } from '@org/shared-utils'
     ProfileProfilesFeatureModule,
     ProfileReputationFeatureModule,
     ProfileActivityFeatureModule,
-    ProfileSocialsFeatureModule
+    ProfileSocialsFeatureModule,
   ],
 })
 export class AppModule {}

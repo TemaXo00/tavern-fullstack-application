@@ -22,6 +22,9 @@
       "path": "../../server-libs/profile-utils/tsconfig.lib.json"
     },
     {
+      "path": "../../server-libs/profile-socials-feature/tsconfig.lib.json"
+    },
+    {
       "path": "../../server-libs/profile-rmq-handler/tsconfig.lib.json"
     },
     {
