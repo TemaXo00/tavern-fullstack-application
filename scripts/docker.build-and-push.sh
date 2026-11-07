@@ -34,7 +34,7 @@ for entry in "${SERVICES[@]}"; do
 
   echo "Build TAVERN ${NAME} Microservice"
 
-  if docker build --no-cache -f "docker-files/${DOCKERFILE}" -t "$FIRST_IMAGE" -t "$SECOND_IMAGE" "$CONTEXT"; then
+  if docker build -f "docker-files/${DOCKERFILE}" -t "$FIRST_IMAGE" -t "$SECOND_IMAGE" "$CONTEXT"; then
     echo "${NAME} built successfully"
   else
     echo "${NAME} build failed"

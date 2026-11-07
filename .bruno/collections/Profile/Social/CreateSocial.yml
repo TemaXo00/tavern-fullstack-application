@@ -1,0 +1,27 @@
+info:
+  name: CreateSocial
+  type: grpc
+  seq: 3
+
+grpc:
+  url: "{{PROFILE_GRPC_URL}}"
+  method: /profile.SocialService/CreateSocial
+  methodType: unary
+  protoFilePath: ../../../app/proto/profile.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "socialName": "GitHub",
+          "socialUrl": "https://github.com/TemaXo00"
+        }
+  auth: inherit

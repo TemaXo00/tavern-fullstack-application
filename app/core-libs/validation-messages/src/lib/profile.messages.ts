@@ -113,5 +113,5 @@ export const PROFILE_MESSAGES = {
   },
   SOCIAL_UNIQUE: 'Social with same name existing',
   SOCIAL_NOT_FOUND: 'Social not found',
-  SOCIAL_NOT_CURRENT_PROFILE: 'You cannot manipulate with this social, cause you are not owner of this'
+  SOCIAL_NOT_CURRENT_PROFILE: 'You cannot manipulate with this social, cause you are not owner of this',
 } as const

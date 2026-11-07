@@ -32,7 +32,7 @@ for entry in "${SERVICES[@]}"; do
 
   echo "Build TAVERN ${NAME} Microservice"
 
-  if docker build --no-cache -f "docker-files/${DOCKERFILE}" -t "$IMAGE" ./app; then
+  if docker build -f "docker-files/${DOCKERFILE}" -t "$IMAGE" ./app; then
     echo "${NAME} built successfully"
   else
     echo "${NAME} build failed"
@@ -41,7 +41,7 @@ for entry in "${SERVICES[@]}"; do
 done
 
 echo "Build TAVERN DB Migrator"
-if docker build --no-cache -f "docker-files/Db-Migrator.Dockerfile" -t "${DOCKER_REGISTRY}/temaxo00/tavern-migrator:${DOCKER_APPS_VERSION}" .; then
+if docker build -f "docker-files/Db-Migrator.Dockerfile" -t "${DOCKER_REGISTRY}/temaxo00/tavern-migrator:${DOCKER_APPS_VERSION}" .; then
     echo "Migrator built successfully"
   else
     echo "Migrator build failed"

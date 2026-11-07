@@ -17,6 +17,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - End-to-end tests for auth, profile, event, blog, log, and mail flows
 - Grafana + Prometheus monitoring stack
 
+## 0.5.5 - 2026-11-07
+
+### Added
+
+#### Profile socials
+
+- `SocialService` gRPC API in `app/proto/profile.proto` with four methods: `GetMySocials`, `GetSocialsByNickname`, `CreateSocial`, and `DeleteSocial`.
+- `app/proto/profile/social.proto` contract with validation, create, delete, and social output messages.
+- `@org/profile-socials-feature` library with the socials service implementation and profile feature controller.
+- HTTP API for socials through the gateway:
+  - `GET /api/profile/social/me` — own socials for the authenticated user
+  - `GET /api/profile/social/:nickname` — public socials by nickname
+  - `POST /api/profile/social` — create a social link
+  - `DELETE /api/profile/social/:id` — delete an owned social link
+- `CreateSocialDto` with `socialName` validation (2–90 characters) and `socialUrl` validation (HTTPS URL, up to 200 characters).
+- Social link business rules: per-profile name uniqueness, configurable socials limit, ownership check on delete, and explicit not-found errors.
+- `ProfileSocial` Prisma model mapped to `profile_socials` with a unique `[profileId, socialName]` constraint, an index on `profileId`, and cascade delete from `Profile`.
+- Migration `20261106072957_008_add_unique_constraint_for_socials`.
+- `TAVERN_SOCIALS_MAX_COUNT` environment variable (default `5`) in the root and app env examples and Docker Compose.
+- Bruno requests for all four socials methods in `.bruno/collections/Profile/Social`, bringing the workspace to 90 covered gRPC methods.
+
+#### Documentation
+
+- Extended `docs/profile.md` with socials functionality, HTTP routes, roles, DTO constraints, response formats, `ProfileSocial` database model, and the new environment variable.
+- Updated `docs/README.md` profile description to include socials.
+
+### Changed
+
+- Split Docker Compose and environment configuration into production and infrastructure sections with `TAVERN_INFRA_*` variables.
+- Docker Compose now runs separate development and production service definitions with a shared infrastructure network.
+
+### Fixed
+
+- Corrected Docker Compose infrastructure database URLs and service hostnames.
+
 ## 0.5.0 - 2026-11-01
 
 ### Added

@@ -1,0 +1,26 @@
+info:
+  name: DeleteSocial
+  type: grpc
+  seq: 4
+
+grpc:
+  url: "{{PROFILE_GRPC_URL}}"
+  method: /profile.SocialService/DeleteSocial
+  methodType: unary
+  protoFilePath: ../../../app/proto/profile.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "validation": {
+            "accessToken": "{{USER_ACCESS_TOKEN}}",
+            "session": {
+              "device": "{{USER_DEVICE}}",
+              "ip": "{{USER_IP}}",
+              "os": "{{USER_OS}}",
+              "browser": "{{USER_BROWSER}}"
+            }
+          },
+          "socialId": "01a1931a-59c7-709c-ad64-a53430376cac"
+        }
+  auth: inherit
