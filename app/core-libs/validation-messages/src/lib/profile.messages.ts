@@ -108,4 +108,10 @@ export const PROFILE_MESSAGES = {
   },
   USER_BLOCKED_OR_INACTIVE: 'This user is blocked or inactive. You cant do this action',
   ADD_YOURSELF: 'You cannot add reputation to yourself',
+  CANT_ADD_SOCIAL: (currentCount: number): string => {
+    return `You cannot add new social. Max count is ${currentCount} socials per user`
+  },
+  SOCIAL_UNIQUE: 'Social with same name existing',
+  SOCIAL_NOT_FOUND: 'Social not found',
+  SOCIAL_NOT_CURRENT_PROFILE: 'You cannot manipulate with this social, cause you are not owner of this'
 } as const

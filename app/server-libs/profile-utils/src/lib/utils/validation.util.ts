@@ -1,7 +1,8 @@
 import { status } from '@grpc/grpc-js'
 import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { RpcException } from '@nestjs/microservices'
-import { UpdateProfileRequestInput } from '@org/grpc-types'
+import { SocialOutput, UpdateProfileRequestInput } from '@org/grpc-types'
 import { ActivityType, Profile } from '@org/profile-database'
 import { PROFILE_MESSAGES } from '@org/validation-messages'
 
@@ -10,7 +11,14 @@ import { SearchUserHelperType } from './helpers/types.helper'
 
 @Injectable()
 export class ProfileValidationUtil {
-  constructor(private readonly db: ProfileDatabaseUtil) {}
+  private MAX_COUNT_OF_SOCIALS: number
+
+  constructor(
+    private readonly db: ProfileDatabaseUtil,
+    protected readonly config: ConfigService,
+  ) {
+    this.MAX_COUNT_OF_SOCIALS = config.get<number>('TAVERN_SOCIALS_MAX_COUNT', 5)
+  }
 
   async checkUserExisting(type: SearchUserHelperType, input: string): Promise<Profile> {
     const profile = await this.db.getProfile(type, input)
@@ -96,6 +104,46 @@ export class ProfileValidationUtil {
       throw new RpcException({
         message: PROFILE_MESSAGES.ADD_YOURSELF,
         code: status.INVALID_ARGUMENT,
+      })
+    }
+  }
+
+  async checkSocialsCount(profileId: string): Promise<void> {
+    const count = await this.db.getCountOfSocials(profileId)
+    if (count >= this.MAX_COUNT_OF_SOCIALS) {
+      throw new RpcException({
+        message: PROFILE_MESSAGES.CANT_ADD_SOCIAL(this.MAX_COUNT_OF_SOCIALS),
+        code: status.ABORTED,
+      })
+    }
+  }
+
+  async checkSocialUnique(profileId: string, socialName: string): Promise<void> {
+    const social = await this.db.getUniqueSocial(profileId, socialName)
+    if (social) {
+      throw new RpcException({
+        message: PROFILE_MESSAGES.SOCIAL_UNIQUE,
+        code: status.ALREADY_EXISTS,
+      })
+    }
+  }
+
+  async checkSocialExisting(id: string): Promise<SocialOutput> {
+    const social = await this.db.getSocialById(id)
+    if (!social) {
+      throw new RpcException({
+        message: PROFILE_MESSAGES.SOCIAL_NOT_FOUND,
+        code: status.NOT_FOUND,
+      })
+    }
+    return social
+  }
+
+  checkSocialOwner(profileId: string, socialProfileId: string): void {
+    if (profileId !== socialProfileId) {
+      throw new RpcException({
+        message: PROFILE_MESSAGES.SOCIAL_NOT_CURRENT_PROFILE,
+        code: status.PERMISSION_DENIED,
       })
     }
   }

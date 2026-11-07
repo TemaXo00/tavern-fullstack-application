@@ -3,6 +3,8 @@ import { ACTIONS_TO_GRPC, ACTIVITY_TO_GRPC, GRPC_TO_ACTIONS, GRPC_TO_ACTIVITY, A
 import {
   ActivityOutput,
   ActivityPaginationInput,
+  AllSocialsOutput,
+  CreateSocialGrpcInput,
   PaginatedActivityOutput,
   PaginatedProfilesAdvancedOutput,
   PaginatedProfilesBaseOutput,
@@ -13,6 +15,7 @@ import {
   ProfilePaginationBaseInput,
   ReputationOutput,
   ReputationPaginationInput,
+  SocialOutput,
   UpdateProfileRequestInput,
 } from '@org/grpc-types'
 import {
@@ -226,6 +229,58 @@ export class ProfileDatabaseUtil {
     }
   }
 
+  async getListOfSocials(profileId: string): Promise<AllSocialsOutput> {
+    const response = await this.db.profileSocial.findMany({
+      where: {
+        profileId,
+      },
+      select: {
+        id: true,
+        profileId: true,
+        socialName: true,
+        socialUrl: true,
+      },
+    })
+    return {
+      socials: response,
+    }
+  }
+
+  async getCountOfSocials(profileId: string): Promise<number> {
+    return await this.db.profileSocial.count({ where: { profileId } })
+  }
+
+  async getUniqueSocial(profileId: string, name: string): Promise<SocialOutput | null> {
+    return await this.db.profileSocial.findUnique({
+      where: {
+        profileId_socialName: {
+          profileId: profileId,
+          socialName: name,
+        },
+      },
+      select: {
+        id: true,
+        profileId: true,
+        socialName: true,
+        socialUrl: true,
+      },
+    })
+  }
+
+  async getSocialById(id: string): Promise<SocialOutput | null> {
+    return await this.db.profileSocial.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        profileId: true,
+        socialName: true,
+        socialUrl: true,
+      },
+    })
+  }
+
   // CREATE Methods
 
   async createProfile(data: AuthRegisteredMessage): Promise<void> {
@@ -309,6 +364,15 @@ export class ProfileDatabaseUtil {
     }
   }
 
+  async createSocial(profileId: string, data: CreateSocialGrpcInput): Promise<SocialOutput> {
+    return await this.db.profileSocial.create({
+      data: {
+        ...data,
+        profileId,
+      },
+    })
+  }
+
   // UPDATE Methods
 
   async blockUser(data: AdminBlockUserProfile, reputationScore: number): Promise<void> {
@@ -385,6 +449,10 @@ export class ProfileDatabaseUtil {
         userId,
       },
     })
+  }
+
+  async deleteSocial(id: string): Promise<void> {
+    await this.db.profileSocial.delete({ where: { id } })
   }
 
   // QUERY BUILDERS
